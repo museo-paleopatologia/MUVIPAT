@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Museo Virtual de Paleopatología · UAM</title>
+  <meta name="description" content="Museo Virtual de Paleopatología de la Universidad Autónoma de Madrid. Explora la colección osteológica del Laboratorio de Antropología de Poblaciones del Pasado." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════
+     NAVEGACIÓN GLOBAL
+════════════════════════════════════════════ -->
+<nav id="main-nav">
+  <div class="nav-inner">
+    <div class="nav-logo" data-page="home">
+      <div class="nav-logo-mark">MVP</div>
+      <div class="nav-logo-text">
+        <span class="nav-logo-main">Museo Virtual de Paleopatología</span>
+        <span class="nav-logo-sub">Universidad Autónoma de Madrid</span>
+      </div>
+    </div>
+
+    <ul class="nav-links">
+      <li><a class="nav-link" data-page="anatomy">Módulo Anatómico</a></li>
+      <li><a class="nav-link" data-page="pathology">Patologías</a></li>
+      <li><a class="nav-link" data-page="collection">Colección</a></li>
+      <li><a class="nav-link" data-page="classroom">Aula Virtual</a></li>
+      <li><a class="nav-link" data-page="news">Actualidad</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <button class="nav-search-btn" onclick="openSearch()" aria-label="Buscar">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+      </button>
+      <button class="btn btn-primary" data-page="collection" style="padding: 0.5rem 1.25rem; font-size: 0.8rem;">
+        Ver Colección
+      </button>
+      <button class="nav-hamburger" onclick="toggleMobileMenu()" aria-label="Menú">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════════════════
+     MENÚ MÓVIL
+════════════════════════════════════════════ -->
+<div id="mobile-menu">
+  <a class="mobile-nav-link" data-page="home">Inicio</a>
+  <a class="mobile-nav-link" data-page="anatomy">Módulo Anatómico</a>
+  <a class="mobile-nav-link" data-page="pathology">Patologías</a>
+  <a class="mobile-nav-link" data-page="collection">Colección</a>
+  <a class="mobile-nav-link" data-page="classroom">Aula Virtual</a>
+  <a class="mobile-nav-link" data-page="news">Actualidad</a>
+</div>
+
+<!-- ════════════════════════════════════════════
+     BUSCADOR OVERLAY
+════════════════════════════════════════════ -->
+<div id="search-overlay">
+  <div class="search-box">
+    <div class="search-input-wrapper">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="search-input" class="search-input" placeholder="Buscar en la colección..." autocomplete="off" />
+      <button class="search-close" onclick="closeSearch()">✕</button>
+    </div>
+    <p class="search-hint">Escribe el nombre de una patología, región anatómica o código de pieza.<br><small style="opacity:0.6">Pulsa ESC para cerrar · Ctrl+K para abrir</small></p>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     PÁGINA INICIO – HERO
+════════════════════════════════════════════ -->
+<section id="hero" class="page active">
+  <div class="hero-bg"></div>
+  <div class="hero-grid-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-text">
+      <div class="hero-eyebrow">
+        <span class="hero-tag">LAPP · UAM</span>
+        <span class="hero-year">Colección Osteológica</span>
+      </div>
+      <h1 class="hero-title">
+        Museo Virtual
+        <em class="line-accent">de Paleopatología</em>
+      </h1>
+      <p class="hero-subtitle">
+        Explora la colección osteológica del Laboratorio de Antropología de Poblaciones del Pasado.
+        Huesos que cuentan historias de vida, enfermedad y supervivencia en el pasado humano.
+      </p>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <span class="hero-meta-value">+10</span>
+          <span class="hero-meta-label">Piezas catalogadas</span>
+        </div>
+        <span class="hero-meta-sep"></span>
+        <div class="hero-meta-item">
+          <span class="hero-meta-value">7</span>
+          <span class="hero-meta-label">Categorías patológicas</span>
+        </div>
+        <span class="hero-meta-sep"></span>
+        <div class="hero-meta-item">
+          <span class="hero-meta-value">4</span>
+          <span class="hero-meta-label">Regiones anatómicas</span>
+        </div>
+      </div>
+      <div class="hero-cta">
+        <button class="btn btn-primary" data-page="collection">
+          Explorar Colección
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+        <button class="btn btn-outline" data-page="classroom">Aula Virtual</button>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-skeleton-wrapper">
+        <div class="hero-skeleton-glow"></div>
+        <svg class="skeleton-svg-hero" viewBox="0 0 200 480" xmlns="http://www.w3.org/2000/svg">
+          <!-- Cráneo -->
+          <ellipse cx="100" cy="45" rx="32" ry="38" fill="rgba(232,220,200,0.12)" stroke="rgba(200,134,10,0.6)" stroke-width="1.5"/>
+          <ellipse cx="100" cy="60" rx="20" ry="12" fill="rgba(232,220,200,0.08)" stroke="rgba(200,134,10,0.4)" stroke-width="1"/>
+          <!-- Mandíbula -->
+          <path d="M 80 75 Q 100 90 120 75" fill="none" stroke="rgba(232,220,200,0.4)" stroke-width="1.5"/>
+          <!-- Columna -->
+          <rect x="95" y="95" width="10" height="180" rx="5" fill="rgba(232,220,200,0.08)" stroke="rgba(232,220,200,0.3)" stroke-width="1"/>
+          <!-- Costillas -->
+          <path d="M 100 115 Q 75 120 68 135 Q 75 130 100 130" fill="none" stroke="rgba(232,220,200,0.35)" stroke-width="1.2"/>
+          <path d="M 100 115 Q 125 120 132 135 Q 125 130 100 130" fill="none" stroke="rgba(232,220,200,0.35)" stroke-width="1.2"/>
+          <path d="M 100 128 Q 72 133 64 148 Q 72 143 100 143" fill="none" stroke="rgba(232,220,200,0.35)" stroke-width="1.2"/>
+          <path d="M 100 128 Q 128 133 136 148 Q 128 143 100 143" fill="none" stroke="rgba(232,220,200,0.35)" stroke-width="1.2"/>
+          <path d="M 100 141 Q 70 146 62 161 Q 70 156 100 156" fill="none" stroke="rgba(232,220,200,0.35)" stroke-width="1.2"/>
+          <path d="M 100 141 Q 130 146 138 161 Q 130 156 100 156" fill="none" stroke="rgba(232,220,200,0.35)" stroke-width="1.2"/>
+          <path d="M 100 154 Q 68 159 60 174 Q 68 169 100 169" fill="none" stroke="rgba(232,220,200,0.3)" stroke-width="1.2"/>
+          <path d="M 100 154 Q 132 159 140 174 Q 132 169 100 169" fill="none" stroke="rgba(232,220,200,0.3)" stroke-width="1.2"/>
+          <!-- Pelvis -->
+          <ellipse cx="100" cy="290" rx="38" ry="22" fill="rgba(232,220,200,0.06)" stroke="rgba(232,220,200,0.3)" stroke-width="1.2"/>
+          <!-- Escápulas -->
+          <polygon points="60,100 45,120 65,130" fill="rgba(232,220,200,0.08)" stroke="rgba(232,220,200,0.3)" stroke-width="1"/>
+          <polygon points="140,100 155,120 135,130" fill="rgba(232,220,200,0.08)" stroke="rgba(232,220,200,0.3)" stroke-width="1"/>
+          <!-- Húmeros -->
+          <rect x="50" y="115" width="8" height="85" rx="4" fill="rgba(232,220,200,0.08)" stroke="rgba(232,220,200,0.3)" stroke-width="1"/>
+          <rect x="142" y="115" width="8" height="85" rx="4" fill="rgba(232,220,200,0.08)" stroke="rgba(232,220,200,0.3)" stroke-width="1"/>
+          <!-- Radios/Cúbitos -->
+          <rect x="44" y="205" width="6" height="65" rx="3" fill="rgba(232,220,200,0.07)" stroke="rgba(232,220,200,0.25)" stroke-width="1"/>
+          <rect x="52" y="205" width="6" height="65" rx="3" fill="rgba(232,220,200,0.07)" stroke="rgba(232,220,200,0.25)" stroke-width="1"/>
+          <rect x="142" y="205" width="6" height="65" rx="3" fill="rgba(232,220,200,0.07)" stroke="rgba(232,220,200,0.25)" stroke-width="1"/>
+          <rect x="150" y="205" width="6" height="65" rx="3" fill="rgba(232,220,200,0.07)" stroke="rgba(232,220,200,0.25)" stroke-width="1"/>
+          <!-- Fémures -->
+          <rect x="80" y="308" width="14" height="95" rx="7" fill="rgba(232,220,200,0.08)" stroke="rgba(232,220,200,0.3)" stroke-width="1.2"/>
+          <rect x="106" y="308" width="14" height="95" rx="7" fill="rgba(232,220,200,0.08)" stroke="rgba(232,220,200,0.3)" stroke-width="1.2"/>
+          <!-- Tibias/Peronés -->
+          <rect x="81" y="408" width="10" height="65" rx="5" fill="rgba(232,220,200,0.07)" stroke="rgba(232,220,200,0.25)" stroke-width="1"/>
+          <rect x="93" y="408" width="7" height="65" rx="3.5" fill="rgba(232,220,200,0.05)" stroke="rgba(232,220,200,0.2)" stroke-width="1"/>
+          <rect x="108" y="408" width="10" height="65" rx="5" fill="rgba(232,220,200,0.07)" stroke="rgba(232,220,200,0.25)" stroke-width="1"/>
+          <rect x="120" y="408" width="7" height="65" rx="3.5" fill="rgba(232,220,200,0.05)" stroke="rgba(232,220,200,0.2)" stroke-width="1"/>
+          <!-- Glowing dots -->
+          <circle cx="100" cy="45" r="4" fill="rgba(200,134,10,0.8)">
+            <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="100" cy="185" r="3" fill="rgba(200,134,10,0.6)">
+            <animate attributeName="opacity" values="0.3;0.8;0.3" dur="2.5s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="100" cy="290" r="3" fill="rgba(200,134,10,0.5)">
+            <animate attributeName="opacity" values="0.4;0.9;0.4" dur="3s" repeatCount="indefinite"/>
+          </circle>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll-hint" id="hero-scroll-hint">
+    <div class="scroll-line"></div>
+    <span>Explorar</span>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+     MÓDULOS PRINCIPALES (HOME)
+════════════════════════════════════════════ -->
+<section id="home-modules" class="page active">
+  <div class="container">
+    <div class="modules-header">
+      <div class="modules-header-text">
+        <span class="section-label">Módulos del museo</span>
+        <h2 class="section-title">Explora la colección<br><em>desde múltiples perspectivas</em></h2>
+      </div>
+      <button class="btn btn-outline" data-page="collection">Ver toda la colección →</button>
+    </div>
+
+    <div class="modules-grid">
+      <!-- Módulo Anatómico -->
+      <div class="module-card featured" data-module="anatomy">
+        <div style="display:flex; gap: 1rem; align-items: flex-start;">
+          <div class="module-icon">💀</div>
+          <div>
+            <div class="module-number">01</div>
+            <div class="module-title">Módulo Anatómico</div>
+          </div>
+        </div>
+        <p class="module-desc">Navega el esqueleto humano de forma interactiva. Selecciona una región anatómica para explorar las piezas catalogadas de esa zona: cráneo, tórax, extremidades superiores e inferiores.</p>
+        <div class="module-tags">
+          <span class="module-tag">Cráneo</span>
+          <span class="module-tag">Tórax</span>
+          <span class="module-tag">Extremidades</span>
+          <span class="module-tag">Pelvis</span>
+        </div>
+        <div class="module-arrow">→</div>
+      </div>
+
+      <!-- Módulo Patológico -->
+      <div class="module-card" data-module="pathology">
+        <div class="module-icon">🔬</div>
+        <div class="module-number">02</div>
+        <div class="module-title">Módulo Patológico</div>
+        <p class="module-desc">Accede a la colección filtrada por categoría diagnóstica. Desde lesiones traumáticas hasta procesos oncológicos, infecciosos y congénitos.</p>
+        <div class="module-tags">
+          <span class="module-tag">7 categorías</span>
+          <span class="module-tag">Diagnóstico</span>
+        </div>
+        <div class="module-arrow">→</div>
+      </div>
+
+      <!-- Colección -->
+      <div class="module-card" data-module="collection">
+        <div class="module-icon">🏺</div>
+        <div class="module-number">03</div>
+        <div class="module-title">Colección Completa</div>
+        <p class="module-desc">Accede a la totalidad de piezas con filtrado combinado anatómico y patológico simultáneo. Explora modelos 3D y comparativas.</p>
+        <div class="module-tags">
+          <span class="module-tag">Filtros combinados</span>
+          <span class="module-tag">3D</span>
+        </div>
+        <div class="module-arrow">→</div>
+      </div>
+
+      <!-- Aula Virtual -->
+      <div class="module-card" data-module="classroom">
+        <div class="module-icon">📚</div>
+        <div class="module-number">04</div>
+        <div class="module-title">Aula Virtual</div>
+        <p class="module-desc">Conceptos básicos de paleopatología, bibliografía científica y recursos educativos interactivos: quizzes, fichas y material descargable.</p>
+        <div class="module-tags">
+          <span class="module-tag">Quiz</span>
+          <span class="module-tag">Bibliografía</span>
+          <span class="module-tag">Recursos</span>
+        </div>
+        <div class="module-arrow">→</div>
+      </div>
+
+      <!-- Actualidad -->
+      <div class="module-card" data-module="news">
+        <div class="module-icon">📰</div>
+        <div class="module-number">05</div>
+        <div class="module-title">Actualidad</div>
+        <p class="module-desc">Novedades del LAPP, publicaciones del Departamento de Antropología de la UAM y noticias de investigación en paleopatología ibérica.</p>
+        <div class="module-tags">
+          <span class="module-tag">LAPP</span>
+          <span class="module-tag">UAM</span>
+          <span class="module-tag">Investigación</span>
+        </div>
+        <div class="module-arrow">→</div>
+      </div>
+
+    </div><!-- /modules-grid -->
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+     PIE DE PÁGINA (siempre visible en home)
+════════════════════════════════════════════ -->
+<footer id="site-footer" class="page active">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="nav-logo" style="cursor:default">
+          <div class="nav-logo-mark">MVP</div>
+          <div class="nav-logo-text">
+            <span class="nav-logo-main">Museo Virtual de Paleopatología</span>
+            <span class="nav-logo-sub">Universidad Autónoma de Madrid</span>
+          </div>
+        </div>
+        <p class="footer-brand-desc">Proyecto del Laboratorio de Antropología de Poblaciones del Pasado (LAPP) del Departamento de Biología de la UAM. Investigación, difusión y educación en paleopatología.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Módulos</div>
+        <a class="footer-link" data-page="anatomy">Módulo Anatómico</a>
+        <a class="footer-link" data-page="pathology">Módulo Patológico</a>
+        <a class="footer-link" data-page="collection">Colección</a>
+        <a class="footer-link" data-page="classroom">Aula Virtual</a>
+        <a class="footer-link" data-page="news">Actualidad</a>
+      </div>
+      <div>
+        <div class="footer-col-title">Departamento</div>
+        <a class="footer-link" href="#" onclick="return false">Biología UAM</a>
+        <a class="footer-link" href="#" onclick="return false">Laboratorio LAPP</a>
+        <a class="footer-link" href="#" onclick="return false">Investigadores</a>
+        <a class="footer-link" href="#" onclick="return false">Publicaciones</a>
+      </div>
+      <div>
+        <div class="footer-col-title">Recursos</div>
+        <a class="footer-link" data-page="classroom">Conceptos básicos</a>
+        <a class="footer-link" data-page="classroom">Bibliografía</a>
+        <a class="footer-link" data-page="classroom">Quiz interactivo</a>
+        <a class="footer-link" href="#" onclick="return false">Contacto</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2024 LAPP · Departamento de Biología, Universidad Autónoma de Madrid</span>
+      <div class="footer-uam">
+        <div class="footer-uam-logo">UAM</div>
+        <span>Universidad Autónoma de Madrid</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ════════════════════════════════════════════
+     PÁGINA: MÓDULO ANATÓMICO
+════════════════════════════════════════════ -->
+<div id="page-anatomy" class="page">
+  <div class="anatomy-hero">
+    <div class="container">
+      <span class="section-label">Módulo 01</span>
+      <h1 class="section-title" style="margin-top: 0.75rem;">Exploración <em>Anatómica</em></h1>
+      <p style="color: var(--clr-bone-dark); margin-top: 1rem; max-width: 580px; font-size: 0.95rem; line-height: 1.7;">
+        Navega el esqueleto humano por regiones. Selecciona una zona para acceder a las piezas de la colección correspondientes a esa área anatómica.
+      </p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="anatomy-layout">
+      <!-- Panel izquierdo: listado de regiones -->
+      <div class="anatomy-info">
+        <h2 style="font-family: var(--ff-display); font-size: 1.25rem; font-weight: 700; color: var(--clr-white); margin-bottom: 0.75rem;">Regiones anatómicas</h2>
+        <p style="font-size: 0.875rem; color: var(--clr-slate-light); margin-bottom: 1.5rem; line-height: 1.7;">
+          El esqueleto humano adulto comprende 206 huesos agrupados en regiones funcionales. Cada región presenta patrones patológicos específicos reflejando diferentes aspectos de la vida en el pasado.
+        </p>
+        <div class="anatomy-regions" id="anatomy-regions">
+          <!-- Renderizado por JS -->
+        </div>
+        <div style="margin-top: 2rem; padding: 1.25rem; background: rgba(200,134,10,0.06); border: 1px solid rgba(200,134,10,0.15); border-radius: 12px;">
+          <div style="font-size: 0.75rem; font-weight: 700; color: var(--clr-amber); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem;">💡 Navegación combinada</div>
+          <p style="font-size: 0.8rem; color: var(--clr-bone-dark); line-height: 1.6;">
+            En la colección puedes combinar los filtros anatómico y patológico simultáneamente para búsquedas más precisas.
+          </p>
+          <button class="btn btn-ghost" style="margin-top: 0.75rem; font-size: 0.8rem;" data-page="collection">Ir a la colección →</button>
+        </div>
+      </div>
+
+      <!-- Esqueleto interactivo SVG -->
+      <div class="skeleton-container">
+        <svg class="skeleton-svg-main" viewBox="0 0 240 560" xmlns="http://www.w3.org/2000/svg">
+          <!-- HOTSPOT: Cráneo -->
+          <g class="hotspot" data-region="Cráneo">
+            <ellipse class="hotspot-area" cx="120" cy="52" rx="38" ry="44"/>
+            <!-- Cráneo -->
+            <ellipse cx="120" cy="50" rx="35" ry="40" fill="rgba(232,220,200,0.15)" stroke="rgba(232,220,200,0.5)" stroke-width="1.5"/>
+            <ellipse cx="120" cy="66" rx="22" ry="14" fill="rgba(232,220,200,0.1)" stroke="rgba(232,220,200,0.4)" stroke-width="1"/>
+            <!-- Órbitas -->
+            <ellipse cx="110" cy="55" rx="7" ry="5" fill="rgba(26,24,20,0.5)"/>
+            <ellipse cx="130" cy="55" rx="7" ry="5" fill="rgba(26,24,20,0.5)"/>
+            <!-- Nariz -->
+            <path d="M 118 62 L 115 70 L 125 70 L 122 62" fill="rgba(26,24,20,0.3)"/>
+            <!-- Dientes -->
+            <path d="M 108 78 Q 120 84 132 78" fill="none" stroke="rgba(232,220,200,0.5)" stroke-width="1.5"/>
+            <text x="120" y="38" text-anchor="middle" font-size="9" fill="rgba(200,134,10,0.9)" font-family="sans-serif" font-weight="bold">Cráneo</text>
+          </g>
+
+          <!-- Columna cervical -->
+          <rect x="114" y="100" width="12" height="30" rx="6" fill="rgba(232,220,200,0.1)" stroke="rgba(232,220,200,0.3)" stroke-width="1"/>
+
+          <!-- HOTSPOT: Tórax -->
+          <g class="hotspot" data-region="Tórax">
+            <rect class="hotspot-area" x="72" y="128" width="96" height="110" rx="8"/>
+            <!-- Columna torácica -->
+            <rect x="114" y="130" width="12" height="110" rx="6" fill="rgba(232,220,200,0.1)" stroke="rgba(232,220,200,0.3)" stroke-width="1"/>
+            <!-- Esternón -->
+            <rect x="112" y="135" width="16" height="85" rx="4" fill="rgba(232,220,200,0.12)" stroke="rgba(232,220,200,0.35)" stroke-width="1.2"/>
+            <!-- Costillas izq -->
+            <path d="M 120 140 C 95 145, 82 155, 79 168 C 85 162, 100 158, 120 158" fill="none" stroke="rgba(232,220,200,0.4)" stroke-width="1.5"/>
+            <path d="M 120 155 C 92 160, 78 170, 74 184 C 82 177, 100 173, 120 173" fill="none" stroke="rgba(232,220,200,0.4)" stroke-width="1.5"/>
+            <path d="M 120 170 C 88 175, 75 186, 70 200 C 79 193, 99 189, 120 188" fill="none" stroke="rgba(232,220,200,0.4)" stroke-width="1.5"/>
+            <path d="M 120 185 C 86 190, 73 201, 68 215 C 78 208, 99 204, 120 203" fill="none" stroke="rgba(232,220,200,0.35)" stroke-width="1.2"/>
+            <!-- Costillas der -->
+            <path d="M 120 140 C 145 145, 158 155, 161 168 C 155 162, 140 158, 120 158" fill="none" stroke="rgba(232,220,200,0.4)" stroke-width="1.5"/>
+            <path d="M 120 155 C 148 160, 162 170, 166 184 C 158 177, 140 173, 120 173" fill="none" stroke="rgba(232,220,200,0.4)" stroke-width="1.5"/>
+            <path d="M 120 170 C 152 175, 165 186, 170 200 C 161 193, 141 189, 120 188" fill="none" stroke="rgba(232,220,200,0.4)" stroke-width="1.5"/>
+            <path d="M 120 185 C 154 190, 167 201, 172 215 C 162 208, 141 204, 120 203" fill="none" stroke="rgba(232,220,200,0.35)" stroke-width="1.2"/>
+            <text x="120" y="126" text-anchor="middle" font-size="9" fill="rgba(200,134,10,0.9)" font-family="sans-serif" font-weight="bold">Tórax</text>
+          </g>
+
+          <!-- Escápulas -->
+          <polygon points="74,120 56,148 78,158" fill="rgba(232,220,200,0.08)" stroke="rgba(232,220,200,0.3)" stroke-width="1"/>
+          <polygon points="166,120 184,148 162,158" fill="rgba(232,220,200,0.08)" stroke="rgba(232,220,200,0.3)" stroke-width="1"/>
+
+          <!-- HOTSPOT: Extremidades Superiores -->
+          <g class="hotspot" data-region="Extremidades Superiores">
+            <rect class="hotspot-area" x="34" y="112" width="40" height="185" rx="6"/>
+            <rect class="hotspot-area" x="166" y="112" width="40" height="185" rx="6"/>
+            <!-- Húmeros -->
+            <rect x="56" y="130" width="12" height="90" rx="6" fill="rgba(232,220,200,0.12)" stroke="rgba(232,220,200,0.35)" stroke-width="1.2"/>
+            <rect x="172" y="130" width="12" height="90" rx="6" fill="rgba(232,220,200,0.12)" stroke="rgba(232,220,200,0.35)" stroke-width="1.2"/>
+            <!-- Radios -->
+            <rect x="50" y="225" width="8" height="70" rx="4" fill="rgba(232,220,200,0.1)" stroke="rgba(232,220,200,0.3)" stroke-width="1"/>
+            <rect x="60" y="225" width="8" height="70" rx="4" fill="rgba(232,220,200,0.1)" stroke="rgba(232,220,200,0.3)" stroke-width="1"/>
+            <rect x="172" y="225" width="8" height="70" rx="4" fill="rgba(232,220,200,0.1)" stroke="rgba(232,220,200,0.3)" stroke-width="1"/>
+            <rect x="182" y="225" width="8" height="70" rx="4" fill="rgba(232,220,200,0.1)" stroke="rgba(232,220,200,0.3)" stroke-width="1"/>
+            <!-- Manos -->
+            <ellipse cx="62" cy="305" rx="14" ry="10" fill="rgba(232,220,200,0.08)" stroke="rgba(232,220,200,0.25)" stroke-width="1"/>
+            <ellipse cx="178" cy="305" rx="14" ry="10" fill="rgba(232,220,200,0.08)" stroke="rgba(232,220,200,0.25)" stroke-width="1"/>
+            <text x="48" y="314" text-anchor="middle" font-size="7.5" fill="rgba(200,134,10,0.9)" font-family="sans-serif" font-weight="bold">Sup.</text>
+            <text x="190" y="314" text-anchor="middle" font-size="7.5" fill="rgba(200,134,10,0.9)" font-family="sans-serif" font-weight="bold">Sup.</text>
+          </g>
+
+          <!-- Columna lumbar + sacro -->
+          <rect x="114" y="240" width="12" height="75" rx="6" fill="rgba(232,220,200,0.1)" stroke="rgba(232,220,200,0.3)" stroke-width="1"/>
+          <!-- Pelvis -->
+          <ellipse cx="120" cy="332" rx="46" ry="26" fill="rgba(232,220,200,0.08)" stroke="rgba(232,220,200,0.35)" stroke-width="1.5"/>
+          <ellipse cx="120" cy="328" rx="18" ry="18" fill="rgba(26,24,20,0.4)" stroke="rgba(232,220,200,0.2)" stroke-width="1"/>
+
+          <!-- HOTSPOT: Extremidades Inferiores -->
+          <g class="hotspot" data-region="Extremidades Inferiores">
+            <rect class="hotspot-area" x="80" y="350" width="80" height="210" rx="6"/>
+            <!-- Fémures -->
+            <rect x="94" y="355" width="16" height="105" rx="8" fill="rgba(232,220,200,0.12)" stroke="rgba(232,220,200,0.4)" stroke-width="1.5"/>
+            <rect x="130" y="355" width="16" height="105" rx="8" fill="rgba(232,220,200,0.12)" stroke="rgba(232,220,200,0.4)" stroke-width="1.5"/>
+            <!-- Rótulas -->
+            <circle cx="102" cy="462" r="7" fill="rgba(232,220,200,0.1)" stroke="rgba(232,220,200,0.3)" stroke-width="1"/>
+            <circle cx="138" cy="462" r="7" fill="rgba(232,220,200,0.1)" stroke="rgba(232,220,200,0.3)" stroke-width="1"/>
+            <!-- Tibias -->
+            <rect x="95" y="470" width="13" height="80" rx="6.5" fill="rgba(232,220,200,0.1)" stroke="rgba(232,220,200,0.35)" stroke-width="1.2"/>
+            <rect x="110" y="470" width="8" height="80" rx="4" fill="rgba(232,220,200,0.07)" stroke="rgba(232,220,200,0.25)" stroke-width="1"/>
+            <rect x="132" y="470" width="13" height="80" rx="6.5" fill="rgba(232,220,200,0.1)" stroke="rgba(232,220,200,0.35)" stroke-width="1.2"/>
+            <rect x="147" y="470" width="8" height="80" rx="4" fill="rgba(232,220,200,0.07)" stroke="rgba(232,220,200,0.25)" stroke-width="1"/>
+            <!-- Pies -->
+            <ellipse cx="102" cy="555" rx="14" ry="8" fill="rgba(232,220,200,0.08)" stroke="rgba(232,220,200,0.25)" stroke-width="1"/>
+            <ellipse cx="139" cy="555" rx="14" ry="8" fill="rgba(232,220,200,0.08)" stroke="rgba(232,220,200,0.25)" stroke-width="1"/>
+            <text x="120" y="548" text-anchor="middle" font-size="9" fill="rgba(200,134,10,0.9)" font-family="sans-serif" font-weight="bold">Inferiores</text>
+          </g>
+        </svg>
+        <div class="skeleton-legend">
+          <span><span class="legend-dot"></span>Haz clic en una región para explorar</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     PÁGINA: MÓDULO PATOLÓGICO
+════════════════════════════════════════════ -->
+<div id="page-pathology" class="page">
+  <div class="path-hero">
+    <div class="container">
+      <span class="section-label">Módulo 02</span>
+      <h1 class="section-title" style="margin-top: 0.75rem;">Exploración <em>Patológica</em></h1>
+      <p style="color: var(--clr-bone-dark); margin-top: 1rem; max-width: 580px; font-size: 0.95rem; line-height: 1.7;">
+        Accede a la colección organizada por categoría diagnóstica. Selecciona una patología para filtrar las piezas correspondientes y acceder a sus fichas detalladas.
+      </p>
+    </div>
+  </div>
+  <div class="container">
+    <div id="pathology-grid" class="pathology-grid">
+      <!-- Renderizado por JS -->
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     PÁGINA: COLECCIÓN
+════════════════════════════════════════════ -->
+<div id="page-collection" class="page">
+  <div class="collection-hero">
+    <div class="container">
+      <div class="collection-hero-inner">
+        <div>
+          <span class="section-label">Módulo 03</span>
+          <h1 class="section-title" style="margin-top: 0.75rem;">La <em>Colección</em></h1>
+          <p style="color: var(--clr-bone-dark); margin-top: 1rem; font-size: 0.95rem; line-height: 1.7; max-width: 500px;">
+            El Laboratorio de Antropología de Poblaciones del Pasado (LAPP-UAM) alberga una colección osteológica de referencia procedente de excavaciones arqueológicas en la Península Ibérica, con cronologías que van desde el Neolítico hasta la época moderna.
+          </p>
+          <p style="color: var(--clr-bone-dark); margin-top: 0.75rem; font-size: 0.875rem; line-height: 1.7; max-width: 500px;">
+            Los materiales han sido analizados siguiendo los estándares metodológicos de Buikstra y Ubelaker (1994) y documentados con fotografía macroscópica, radiología y, en casos seleccionados, tomografía computerizada y digitalización 3D.
+          </p>
+        </div>
+        <div class="featured-specimen">
+          <div class="featured-specimen-media">
+            <span class="featured-badge">Pieza destacada</span>
+            💀
+          </div>
+          <div class="featured-specimen-info">
+            <div class="featured-specimen-title">Cráneo con trepanación · UAM-001</div>
+            <div class="featured-specimen-meta">Bronce Medio · Patología Traumática · Región: Cráneo</div>
+            <button class="btn btn-primary" style="font-size: 0.8rem;" onclick="navigate('bone-detail',{bone:'UAM-001'})">
+              Ver ficha completa →
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Barra de filtros -->
+  <div class="filter-section">
+    <div class="container">
+      <div class="filter-bar" id="filter-bar-inner">
+        <!-- Renderizado por JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Cuadrícula de piezas -->
+  <div class="specimens-area">
+    <div class="container">
+      <div id="specimens-grid" class="specimens-grid">
+        <!-- Renderizado por JS -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     PÁGINA: DETALLE DE PIEZA
+════════════════════════════════════════════ -->
+<div id="page-bone-detail" class="page">
+  <div class="container">
+    <div class="bone-breadcrumb"></div>
+    <div class="bone-layout">
+      <!-- Sidebar -->
+      <div class="bone-sidebar">
+        <div class="bone-3d-viewer">
+          <div class="bone-3d-placeholder">
+            <span>🦴</span>
+            <span class="bone-3d-label">Visor 3D · Próximamente</span>
+          </div>
+        </div>
+        <div class="bone-info-table">
+          <!-- Renderizado por JS -->
+        </div>
+      </div>
+      <!-- Contenido principal -->
+      <div class="bone-main">
+        <div class="bone-header"></div>
+        <div id="bone-sections"></div>
+      </div>
+    </div>
+    <!-- Piezas relacionadas -->
+    <div class="related-section">
+      <span class="section-label">Exploración lateral</span>
+      <h2 class="section-title" style="margin-top: 0.75rem; font-size: 1.5rem;">Piezas <em>relacionadas</em></h2>
+      <div id="related-bones" class="related-grid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     PÁGINA: AULA VIRTUAL
+════════════════════════════════════════════ -->
+<div id="page-classroom" class="page">
+  <div class="classroom-hero">
+    <div class="container">
+      <span class="section-label">Módulo 04</span>
+      <h1 class="section-title" style="margin-top: 0.75rem;">Aula <em>Virtual</em></h1>
+      <p style="color: var(--clr-bone-dark); margin-top: 1rem; max-width: 580px; font-size: 0.95rem; line-height: 1.7;">
+        Recursos educativos sobre paleopatología y osteología. Desde conceptos fundamentales hasta bibliografía científica y materiales interactivos para estudiantes y público general.
+      </p>
+    </div>
+  </div>
+  <div class="container">
+    <div class="classroom-tabs">
+      <button class="classroom-tab active" data-tab="concepts">📖 Conceptos Básicos</button>
+      <button class="classroom-tab" data-tab="bibliography">📚 Bibliografía</button>
+      <button class="classroom-tab" data-tab="resources">🗂️ Recursos Educativos</button>
+      <button class="classroom-tab" data-tab="quiz">🎮 Quiz Interactivo</button>
+    </div>
+  </div>
+  <div id="panel-concepts" class="classroom-panel active"></div>
+  <div id="panel-bibliography" class="classroom-panel"></div>
+  <div id="panel-resources" class="classroom-panel"></div>
+  <div id="panel-quiz" class="classroom-panel"></div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     PÁGINA: ACTUALIDAD
+════════════════════════════════════════════ -->
+<div id="page-news" class="page">
+  <div class="news-hero">
+    <div class="container">
+      <span class="section-label">Módulo 05</span>
+      <h1 class="section-title" style="margin-top: 0.75rem;"><em>Actualidad</em> · LAPP-UAM</h1>
+      <p style="color: var(--clr-bone-dark); margin-top: 1rem; max-width: 580px; font-size: 0.95rem; line-height: 1.7;">
+        Últimas noticias del Laboratorio de Antropología de Poblaciones del Pasado, publicaciones del Departamento de Biología de la UAM y novedades en paleopatología.
+      </p>
+    </div>
+  </div>
+  <div class="container">
+    <div class="news-layout">
+      <div id="news-list" class="news-list">
+        <!-- Renderizado por JS -->
+      </div>
+      <div class="news-sidebar">
+        <div class="news-sidebar-card">
+          <div class="news-sidebar-title">Temas</div>
+          <div class="news-topic" onclick="navigate('pathology')">Patología ósea <span>→</span></div>
+          <div class="news-topic" onclick="navigate('collection')">Colección UAM <span>→</span></div>
+          <div class="news-topic" onclick="navigate('classroom')">Recursos docentes <span>→</span></div>
+          <div class="news-topic">Publicaciones <span>→</span></div>
+          <div class="news-topic">Excavaciones <span>→</span></div>
+          <div class="news-topic">Divulgación <span>→</span></div>
+        </div>
+        <div class="news-sidebar-card">
+          <div class="news-sidebar-title">Sobre el LAPP</div>
+          <p style="font-size: 0.8rem; color: var(--clr-slate-light); line-height: 1.7;">
+            El Laboratorio de Antropología de Poblaciones del Pasado es una unidad de investigación del Departamento de Biología de la UAM especializada en bioarqueología, paleopatología y paleodemografía.
+          </p>
+          <button class="btn btn-outline" style="margin-top: 1rem; font-size: 0.8rem; width: 100%; justify-content: center;" data-page="collection">Ver colección →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
