@@ -1156,7 +1156,7 @@ h1, h2, h3, h4, h5, h6 {
    PANEL OVERLAY
 ══════════════════════════════════════════════════ */
 .panel-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.7); backdrop-filter:blur(3px); z-index:140; opacity:0; pointer-events:none; transition:opacity .3s; }
-.panel-overlay.is-visible { opacity:1; pointer-events:all; }
+.panel-overlay.is-visible { display:block; opacity:1; pointer-events:all; }
 
 /* ══════════════════════════════════════════════════
    RESPONSIVE — punto de quiebre principal: 1024px
@@ -1220,7 +1220,6 @@ h1, h2, h3, h4, h5, h6 {
   .expl-results.is-open { transform: translateX(0); }
 
   /* Mostrar FABs y overlay */
-  .panel-overlay { display: block; }
   .mob-fab-bar   { display: flex; }
 }
 
