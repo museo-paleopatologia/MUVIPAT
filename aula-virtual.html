@@ -1,0 +1,1466 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Aula Virtual de Paleopatología — glosario, bibliografía y quizzes interactivos." />
+  <title>Aula Virtual · PaleoMuseo</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lexend:wght@300;400;500;600;700;800&family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+
+  <link rel="stylesheet" href="/prueba-museo/css/style.css" />
+
+  <style>
+    /* ═══════════════════════════════════════
+       AULA VIRTUAL — variables locales
+    ═══════════════════════════════════════ */
+    :root {
+      --au-bg:     #f4f1ea;
+      --au-ink:    #0d0d0d;
+      --au-mid:    #6b5a43;
+      --au-bone:   #e8dfc8;
+      --au-border: 4px solid #0d0d0d;
+      --au-shadow: 5px 5px 0px #0d0d0d;
+      --au-shadow-sm: 3px 3px 0px #0d0d0d;
+    }
+    body { background: var(--au-bg); }
+
+    /* ═══════════════════════════════════════
+       PAGE HEADER
+    ═══════════════════════════════════════ */
+    .au-header {
+      background: var(--au-ink);
+      border-bottom: var(--au-border);
+      padding-top: clamp(56px, 7vw, 70px);
+    }
+    .au-header__inner {
+      width: min(1400px, 96vw);
+      margin-inline: auto;
+      padding-inline: clamp(1rem, 3vw, 2rem);
+      padding-block: clamp(2.5rem, 5vw, 4rem);
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+    .au-header__eyebrow {
+      font-family: var(--font-head);
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--green);
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      margin-bottom: .75rem;
+    }
+    .au-header__eyebrow::before {
+      content: '';
+      display: block;
+      width: 28px; height: 2px;
+      background: var(--green);
+    }
+    .au-header__title {
+      font-family: var(--font-head);
+      font-size: clamp(2.2rem, 5vw, 4.5rem);
+      font-weight: 900;
+      line-height: .95;
+      letter-spacing: -.04em;
+      color: var(--ivory);
+    }
+    .au-header__title em {
+      font-family: var(--font-display);
+      font-style: italic;
+      color: var(--green);
+      font-size: .8em;
+      display: block;
+    }
+
+    /* Tab nav dentro del header */
+    .au-tabs {
+      display: flex;
+      gap: 0;
+      border: var(--au-border);
+      border-radius: 2px;
+      overflow: hidden;
+      flex-shrink: 0;
+      align-self: flex-end;
+    }
+    .au-tab {
+      display: flex;
+      align-items: center;
+      gap: .45rem;
+      padding: .65rem 1.3rem;
+      font-family: var(--font-head);
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      color: var(--bone-500);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: background .2s, color .2s;
+      white-space: nowrap;
+    }
+    .au-tab + .au-tab { border-left: 2px solid rgba(255,255,255,.1); }
+    .au-tab:hover { background: rgba(255,255,255,.05); color: var(--ivory); }
+    .au-tab.active { background: var(--green); color: var(--au-ink); }
+    .au-tab svg { flex-shrink: 0; }
+
+    /* ═══════════════════════════════════════
+       LAYOUT PRINCIPAL — tabs + contenido
+    ═══════════════════════════════════════ */
+    .au-main {
+      width: min(1400px, 96vw);
+      margin-inline: auto;
+      padding-inline: clamp(1rem, 3vw, 2rem);
+      padding-block: clamp(3rem, 6vw, 5rem);
+    }
+
+    .au-panel { display: none; }
+    .au-panel.active { display: block; }
+
+    /* Search + filter bar (compartida) */
+    .au-search-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+    .au-search-box {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      flex: 1;
+      min-width: 220px;
+      background: #fff;
+      border: var(--au-border);
+      border-radius: 2px;
+      padding: .65rem 1rem;
+      box-shadow: var(--au-shadow-sm);
+      transition: box-shadow .2s;
+    }
+    .au-search-box:focus-within { box-shadow: var(--au-shadow); }
+    .au-search-box input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-family: var(--font-ui);
+      font-size: .9rem;
+      color: var(--au-ink);
+      background: transparent;
+    }
+    .au-search-box input::placeholder { color: #b08d55; }
+
+    .au-filter-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .45rem;
+    }
+    .au-pill {
+      font-family: var(--font-head);
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: .3em .85em;
+      border: 2px solid var(--au-ink);
+      border-radius: 2px;
+      background: transparent;
+      color: var(--au-ink);
+      cursor: pointer;
+      transition: background .15s, color .15s, transform .12s, box-shadow .12s;
+      box-shadow: 2px 2px 0 var(--au-ink);
+    }
+    .au-pill:hover { transform: translate(-1px,-1px); box-shadow: 3px 3px 0 var(--au-ink); }
+    .au-pill.active { background: var(--au-ink); color: var(--ivory); }
+
+    .au-count-label {
+      font-family: var(--font-head);
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--au-mid);
+      white-space: nowrap;
+    }
+    .au-count-label strong { color: var(--crimson); }
+
+    /* ═══════════════════════════════════════
+       GLOSARIO
+    ═══════════════════════════════════════ */
+    .glos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.1rem;
+    }
+    .glos-card {
+      background: #fff;
+      border: var(--au-border);
+      border-radius: 4px;
+      padding: 1.1rem 1.2rem;
+      box-shadow: var(--au-shadow-sm);
+      transition: transform .15s ease, box-shadow .15s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .glos-card:hover { transform: translate(-2px,-2px); box-shadow: var(--au-shadow); }
+    .glos-card__accent {
+      position: absolute;
+      top: 0; left: 0;
+      width: 4px; height: 100%;
+    }
+    .glos-card__term {
+      font-family: var(--font-head);
+      font-size: .95rem;
+      font-weight: 800;
+      color: var(--au-ink);
+      letter-spacing: -.02em;
+      margin-bottom: .2rem;
+      padding-left: .6rem;
+    }
+    .glos-card__cat {
+      font-family: var(--font-head);
+      font-size: .55rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding-left: .6rem;
+      margin-bottom: .6rem;
+    }
+    .glos-card__def {
+      font-size: .82rem;
+      line-height: 1.65;
+      color: #3d3d3d;
+      font-weight: 300;
+      padding-left: .6rem;
+    }
+    .glos-card__def strong { font-weight: 700; color: var(--au-ink); }
+    .glos-empty {
+      grid-column: 1/-1;
+      text-align: center;
+      padding: 3rem;
+      color: var(--au-mid);
+      font-family: var(--font-head);
+      font-size: .85rem;
+    }
+
+    /* ═══════════════════════════════════════
+       BIBLIOGRAFÍA
+    ═══════════════════════════════════════ */
+    .biblio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1.1rem;
+    }
+    .biblio-card {
+      background: #fff;
+      border: var(--au-border);
+      border-radius: 4px;
+      padding: 1.2rem 1.3rem;
+      box-shadow: var(--au-shadow-sm);
+      transition: transform .15s ease, box-shadow .15s ease;
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+    }
+    .biblio-card:hover { transform: translate(-2px,-2px); box-shadow: var(--au-shadow); }
+    .biblio-card__tag {
+      font-family: var(--font-head);
+      font-size: .56rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: .2em .6em;
+      border: 1.5px solid;
+      border-radius: 2px;
+      display: inline-flex;
+      align-self: flex-start;
+    }
+    .biblio-card__ref {
+      font-size: .82rem;
+      line-height: 1.7;
+      color: #3d3d3d;
+      font-weight: 400;
+    }
+    .biblio-card__ref em { font-style: italic; }
+    .biblio-card__ref strong { color: var(--au-ink); font-weight: 700; }
+    .biblio-card__doi {
+      display: inline-flex;
+      align-items: center;
+      gap: .35rem;
+      font-family: var(--font-head);
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--blue);
+      text-decoration: none;
+      margin-top: .25rem;
+      transition: gap .15s;
+    }
+    .biblio-card__doi:hover { gap: .55rem; }
+
+    /* ═══════════════════════════════════════
+       QUIZZES
+    ═══════════════════════════════════════ */
+    .quiz-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    /* Sidebar de quizzes */
+    .quiz-sidebar {
+      position: sticky;
+      top: calc(clamp(56px,7vw,70px) + 1rem);
+    }
+    .quiz-sidebar__title {
+      font-family: var(--font-head);
+      font-size: .62rem;
+      font-weight: 800;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--au-mid);
+      margin-bottom: .85rem;
+      padding-bottom: .5rem;
+      border-bottom: 2px solid var(--au-ink);
+    }
+    .quiz-list { display: flex; flex-direction: column; gap: .5rem; }
+    .quiz-list-item {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      padding: .65rem .85rem;
+      background: #fff;
+      border: var(--au-border);
+      border-radius: 2px;
+      box-shadow: var(--au-shadow-sm);
+      cursor: pointer;
+      transition: transform .15s, box-shadow .15s;
+      font-family: var(--font-head);
+      font-size: .72rem;
+      font-weight: 700;
+      color: var(--au-ink);
+      text-align: left;
+    }
+    .quiz-list-item:hover { transform: translate(-2px,-2px); box-shadow: var(--au-shadow); }
+    .quiz-list-item.active { background: var(--au-ink); color: var(--ivory); }
+    .quiz-list-item__dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .quiz-list-item__type {
+      font-size: .52rem;
+      opacity: .55;
+      margin-left: auto;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    /* Área principal del quiz */
+    .quiz-area { min-height: 400px; }
+    .quiz-card {
+      background: #fff;
+      border: var(--au-border);
+      border-radius: 4px;
+      box-shadow: var(--au-shadow);
+      overflow: hidden;
+    }
+    .quiz-card__header {
+      background: var(--au-ink);
+      padding: 1.2rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .quiz-card__title {
+      font-family: var(--font-head);
+      font-size: .85rem;
+      font-weight: 800;
+      color: var(--ivory);
+      letter-spacing: -.01em;
+    }
+    .quiz-card__badge {
+      font-family: var(--font-head);
+      font-size: .58rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: .22em .65em;
+      border: 2px solid;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    /* Progress bar */
+    .quiz-progress {
+      height: 4px;
+      background: rgba(0,0,0,.1);
+      position: relative;
+    }
+    .quiz-progress__bar {
+      height: 100%;
+      background: var(--green);
+      transition: width .4s ease;
+    }
+
+    .quiz-body { padding: 1.5rem; }
+
+    /* Pregunta */
+    .quiz-question {
+      font-family: var(--font-head);
+      font-size: clamp(.9rem, 1.5vw, 1.05rem);
+      font-weight: 700;
+      color: var(--au-ink);
+      margin-bottom: 1.5rem;
+      line-height: 1.4;
+    }
+    .quiz-question-num {
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--au-mid);
+      display: block;
+      margin-bottom: .5rem;
+    }
+
+    /* Opciones múltiple */
+    .quiz-options { display: flex; flex-direction: column; gap: .6rem; margin-bottom: 1.5rem; }
+    .quiz-option {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      padding: .8rem 1rem;
+      background: var(--au-bg);
+      border: 2px solid var(--au-ink);
+      border-radius: 2px;
+      cursor: pointer;
+      font-family: var(--font-ui);
+      font-size: .85rem;
+      font-weight: 500;
+      color: var(--au-ink);
+      transition: background .15s, transform .12s, box-shadow .12s;
+      text-align: left;
+    }
+    .quiz-option:hover:not(:disabled) {
+      background: var(--au-bone);
+      transform: translateX(3px);
+    }
+    .quiz-option.correct  { background: rgba(0,230,118,.12); border-color: var(--green); color: var(--au-ink); }
+    .quiz-option.wrong    { background: rgba(192,0,60,.08);  border-color: var(--crimson); color: var(--crimson); }
+    .quiz-option:disabled { cursor: default; }
+    .quiz-option__letter {
+      width: 26px; height: 26px;
+      border: 2px solid var(--au-ink);
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-head);
+      font-size: .65rem;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+    .quiz-option.correct .quiz-option__letter { border-color: var(--green); color: var(--green); }
+    .quiz-option.wrong   .quiz-option__letter { border-color: var(--crimson); }
+
+    /* V/F buttons */
+    .quiz-vf { display: flex; gap: 1rem; margin-bottom: 1.5rem; }
+    .quiz-vf-btn {
+      flex: 1;
+      padding: 1rem;
+      font-family: var(--font-head);
+      font-size: .85rem;
+      font-weight: 800;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      border: var(--au-border);
+      border-radius: 2px;
+      cursor: pointer;
+      transition: background .15s, transform .12s, box-shadow .12s;
+      box-shadow: var(--au-shadow-sm);
+    }
+    .quiz-vf-btn:hover:not(:disabled) { transform: translate(-2px,-2px); box-shadow: var(--au-shadow); }
+    .quiz-vf-btn--v { background: rgba(0,230,118,.1); color: #006633; }
+    .quiz-vf-btn--f { background: rgba(192,0,60,.08);  color: var(--crimson); }
+    .quiz-vf-btn.correct { background: var(--green) !important; color: var(--au-ink) !important; }
+    .quiz-vf-btn.wrong   { background: var(--crimson) !important; color: #fff !important; }
+    .quiz-vf-btn:disabled { cursor: default; opacity: .7; }
+
+    /* Relacionar conceptos */
+    .quiz-match {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .75rem 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .quiz-match__col-title {
+      font-family: var(--font-head);
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--au-mid);
+      margin-bottom: .5rem;
+      padding-bottom: .4rem;
+      border-bottom: 1.5px solid rgba(0,0,0,.1);
+    }
+    .quiz-match__item {
+      padding: .65rem .85rem;
+      background: var(--au-bg);
+      border: 2px solid var(--au-ink);
+      border-radius: 2px;
+      font-size: .8rem;
+      font-family: var(--font-ui);
+      font-weight: 500;
+      cursor: pointer;
+      transition: background .15s, border-color .15s, transform .1s;
+      margin-bottom: .4rem;
+    }
+    .quiz-match__item:hover  { background: var(--au-bone); transform: translateX(2px); }
+    .quiz-match__item.selected { background: rgba(0,229,255,.1); border-color: var(--cyan); }
+    .quiz-match__item.matched  { background: rgba(0,230,118,.1); border-color: var(--green); cursor: default; }
+    .quiz-match__item.wrong    { background: rgba(192,0,60,.08); border-color: var(--crimson); }
+    .quiz-match__item.right-item.highlighted { background: rgba(0,229,255,.15); border-color: var(--cyan); }
+
+    /* Feedback */
+    .quiz-feedback {
+      padding: .9rem 1rem;
+      border-radius: 2px;
+      font-family: var(--font-head);
+      font-size: .78rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      display: none;
+      align-items: flex-start;
+      gap: .5rem;
+      line-height: 1.5;
+    }
+    .quiz-feedback.show { display: flex; }
+    .quiz-feedback--correct { background: rgba(0,230,118,.1); border: 2px solid var(--green); color: #00662b; }
+    .quiz-feedback--wrong   { background: rgba(192,0,60,.08);  border: 2px solid var(--crimson); color: var(--crimson); }
+    .quiz-feedback__icon { font-size: 1rem; flex-shrink: 0; }
+
+    /* Controles quiz */
+    .quiz-controls { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+    .quiz-score {
+      font-family: var(--font-head);
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--au-mid);
+    }
+    .quiz-score strong { color: var(--green); font-size: .9rem; }
+
+    /* Resultado final */
+    .quiz-result {
+      text-align: center;
+      padding: 2.5rem 1.5rem;
+      display: none;
+    }
+    .quiz-result.show { display: block; }
+    .quiz-result__score {
+      font-family: var(--font-head);
+      font-size: 4rem;
+      font-weight: 900;
+      letter-spacing: -.05em;
+      color: var(--au-ink);
+      line-height: 1;
+      margin-bottom: .5rem;
+    }
+    .quiz-result__label {
+      font-family: var(--font-head);
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--au-mid);
+      margin-bottom: 1.5rem;
+    }
+    .quiz-result__msg {
+      font-size: .9rem;
+      color: #3d3d3d;
+      margin-bottom: 2rem;
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    /* ═══════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════ */
+    @media (max-width: 900px) {
+      .quiz-layout { grid-template-columns: 1fr; }
+      .quiz-sidebar { position: static; }
+      .quiz-list { flex-direction: row; flex-wrap: wrap; }
+      .quiz-list-item { flex: 1; min-width: 140px; }
+    }
+    @media (max-width: 640px) {
+      .au-tabs { width: 100%; }
+      .au-tab  { flex: 1; justify-content: center; padding: .6rem .5rem; font-size: .62rem; }
+      .glos-grid   { grid-template-columns: 1fr; }
+      .biblio-grid { grid-template-columns: 1fr; }
+      .quiz-match  { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════════════════════
+       HEADER GLOBAL
+  ══════════════════════════════════ -->
+  <header class="site-header" id="site-header">
+    <div class="container">
+      <nav class="nav" role="navigation" aria-label="Navegación principal">
+        <a href="/prueba-museo/index.html" class="nav__logo" aria-label="PaleoMuseo — Inicio">
+          <div class="nav__logo-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 4C5.3 4 4 5.3 4 7c0 .9.4 1.7 1 2.2V14.8C4.4 15.3 4 16.1 4 17c0 1.7 1.3 3 3 3s3-1.3 3-3c0-.4-.1-.8-.2-1.1L12 14l2.2 1.9c-.1.3-.2.7-.2 1.1 0 1.7 1.3 3 3 3s3-1.3 3-3c0-.9-.4-1.7-1-2.2V9.2c.6-.5 1-1.3 1-2.2 0-1.7-1.3-3-3-3s-3 1.3-3 3c0 .4.1.8.2 1.1L12 10 9.8 8.1C9.9 7.8 10 7.4 10 7c0-1.7-1.3-3-3-3z"/>
+            </svg>
+          </div>
+          <div>
+            <div>Paleo<strong>Museo</strong></div>
+            <div style="font-size:0.6em;font-weight:400;opacity:0.5;letter-spacing:0.1em">PALEOPATOLOGÍA</div>
+          </div>
+        </a>
+        <ul class="nav__links" role="list">
+          <li><a href="/prueba-museo/exploracion.html" class="nav__link">Exploración</a></li>
+          <li><a href="/prueba-museo/coleccion.html"   class="nav__link">Colección</a></li>
+          <li><a href="/prueba-museo/aula.html"        class="nav__link active">Aula Virtual</a></li>
+          <li><a href="/prueba-museo/actualidad.html"  class="nav__link">Actualidad</a></li>
+          <li><a href="/prueba-museo/index.html#proyecto" class="nav__link">Proyecto</a></li>
+        </ul>
+        <div class="nav__actions">
+          <a href="/prueba-museo/coleccion.html#buscados" class="btn btn--cyan" style="font-size:.78rem;padding:.55em 1.2em;">
+            <span>Buscar pieza</span>
+          </a>
+        </div>
+        <button class="nav__hamburger" id="nav-hamburger" aria-label="Abrir menú" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </nav>
+    </div>
+    <div class="nav__mobile" id="nav-mobile">
+      <ul role="list" style="display:flex;flex-direction:column;align-items:center;gap:2rem;text-align:center;">
+        <li><a href="/prueba-museo/exploracion.html" class="nav__link" style="font-size:1.6rem">Exploración</a></li>
+        <li><a href="/prueba-museo/coleccion.html"   class="nav__link" style="font-size:1.6rem">Colección</a></li>
+        <li><a href="/prueba-museo/aula.html"        class="nav__link" style="font-size:1.6rem">Aula Virtual</a></li>
+        <li><a href="/prueba-museo/actualidad.html"  class="nav__link" style="font-size:1.6rem">Actualidad</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- ══════════════════════════════════
+       PAGE HEADER + TABS
+  ══════════════════════════════════ -->
+  <div class="au-header">
+    <div class="au-header__inner">
+      <div>
+        <p class="au-header__eyebrow">Módulo 04</p>
+        <h1 class="au-header__title">Aula<br><em>Virtual</em></h1>
+      </div>
+      <div class="au-tabs" role="tablist" aria-label="Secciones del aula">
+        <button class="au-tab active" data-tab="glosario" role="tab" aria-selected="true">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
+          Glosario
+        </button>
+        <button class="au-tab" data-tab="bibliografia" role="tab" aria-selected="false">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg>
+          Bibliografía
+        </button>
+        <button class="au-tab" data-tab="quizzes" role="tab" aria-selected="false">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg>
+          Quizzes
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       CONTENIDO PRINCIPAL
+  ══════════════════════════════════ -->
+  <main class="au-main">
+
+    <!-- ────────────────────────────────
+         PANEL: GLOSARIO
+    ──────────────────────────────── -->
+    <div class="au-panel active" id="panel-glosario" role="tabpanel">
+
+      <div class="au-search-row">
+        <div class="au-search-box">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input type="search" id="glos-search" placeholder="Buscar término…" autocomplete="off" />
+        </div>
+        <div class="au-filter-pills" id="glos-pills">
+          <button class="au-pill active" data-gf="all">Todos</button>
+          <button class="au-pill" data-gf="anatomia">Anatomía</button>
+          <button class="au-pill" data-gf="patologia">Patología</button>
+          <button class="au-pill" data-gf="metodo">Metodología</button>
+          <button class="au-pill" data-gf="cronologia">Cronología</button>
+        </div>
+        <span class="au-count-label"><strong id="glos-count">0</strong> términos</span>
+      </div>
+
+      <div class="glos-grid" id="glos-grid"></div>
+    </div>
+
+    <!-- ────────────────────────────────
+         PANEL: BIBLIOGRAFÍA
+    ──────────────────────────────── -->
+    <div class="au-panel" id="panel-bibliografia" role="tabpanel">
+
+      <div class="au-search-row">
+        <div class="au-search-box">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input type="search" id="biblio-search" placeholder="Autor, título, año…" autocomplete="off" />
+        </div>
+        <div class="au-filter-pills" id="biblio-pills">
+          <button class="au-pill active" data-bf="all">Todas</button>
+          <button class="au-pill" data-bf="paleopatologia">Paleopatología</button>
+          <button class="au-pill" data-bf="metodologia">Metodología</button>
+          <button class="au-pill" data-bf="bioarqueologia">Bioarqueología</button>
+          <button class="au-pill" data-bf="digital">Digitalización 3D</button>
+        </div>
+        <span class="au-count-label"><strong id="biblio-count">0</strong> referencias</span>
+      </div>
+
+      <div class="biblio-grid" id="biblio-grid"></div>
+    </div>
+
+    <!-- ────────────────────────────────
+         PANEL: QUIZZES
+    ──────────────────────────────── -->
+    <div class="au-panel" id="panel-quizzes" role="tabpanel">
+      <div class="quiz-layout">
+
+        <!-- Sidebar lista de quizzes -->
+        <aside class="quiz-sidebar">
+          <p class="quiz-sidebar__title">Tests disponibles</p>
+          <div class="quiz-list" id="quiz-list"></div>
+        </aside>
+
+        <!-- Área quiz activa -->
+        <div class="quiz-area" id="quiz-area">
+          <div style="display:flex;align-items:center;justify-content:center;height:300px;color:var(--au-mid);font-family:var(--font-head);font-size:.82rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;text-align:center;flex-direction:column;gap:1rem">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor" opacity=".2"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg>
+            Selecciona un test para comenzar
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+
+  <!-- ══════════════════════════════════
+       DATA + SCRIPTS
+  ══════════════════════════════════ -->
+  <script>
+  /* ═══════════════════════════════════════════════════════
+     DATOS — Glosario (35 términos)
+  ═══════════════════════════════════════════════════════ */
+  const GLOSARIO = [
+    { term:'Paleopatología',       cat:'patologia',  def:'Disciplina científica que estudia las enfermedades y lesiones en restos esqueléticos y momias de poblaciones del pasado.' },
+    { term:'Trepanación',          cat:'patologia',  def:'Intervención quirúrgica que consiste en la perforación del cráneo mediante raspado, corte o taladro. Es la cirugía más antigua documentada arqueológicamente.' },
+    { term:'Cribra orbitalia',     cat:'patologia',  def:'Lesión hipervascular en forma de porosidad en el techo de las órbitas oculares, indicador de anemia ferropénica o déficit vitamínico durante la infancia.' },
+    { term:'Hiperostosis porótica',cat:'patologia',  def:'Engrosamiento y porosidad de los huesos de la bóveda craneal, asociado a anemias hemolíticas, déficit nutricional o infecciones crónicas.' },
+    { term:'Periostitis',          cat:'patologia',  def:'Inflamación del periostio que genera formación de hueso nuevo en la superficie cortical. Puede ser reactiva a infecciones, traumatismos o escorbuto.' },
+    { term:'Osteomielitis',        cat:'patologia',  def:'Infección bacteriana del tejido óseo que provoca necrosis, formación de secuestro y cloaca de drenaje. Frecuentemente causada por Staphylococcus.' },
+    { term:'Espondilitis',         cat:'patologia',  def:'Inflamación de los cuerpos vertebrales. La espondilitis tuberculosa o Mal de Pott produce colapso vertebral con formación de giba angular.' },
+    { term:'Osteoartritis',        cat:'patologia',  def:'Enfermedad degenerativa articular caracterizada por erosión del cartílago, eburnación, osteofitosis y quistes subcondrales. Indicador de edad avanzada y actividad física.' },
+    { term:'Entesopatía',          cat:'patologia',  def:'Alteración ósea en el punto de inserción de tendones o ligamentos. Usada como marcador de actividad ocupacional o deportiva intensa y repetitiva.' },
+    { term:'Raquitismo',           cat:'patologia',  def:'Alteración metabólica por déficit de vitamina D que produce reblandecimiento óseo, deformidades en huesos largos y porosidad generalizada. Afecta principalmente a individuos subadultos.' },
+    { term:'Norma faciei',         cat:'anatomia',   def:'Vista frontal del cráneo utilizada para el análisis morfológico de la cara, órbitas, abertura nasal y arcos cigomáticos.' },
+    { term:'Norma verticalis',     cat:'anatomia',   def:'Vista superior del cráneo que permite apreciar la forma de la bóveda craneal, el índice cefálico y las suturas craneales.' },
+    { term:'Norma occipitalis',    cat:'anatomia',   def:'Vista posterior del cráneo. Permite analizar el occipital, la protuberancia occipital externa y la anchura máxima del neurocráneo.' },
+    { term:'Índice cefálico',      cat:'metodo',     def:'Razón entre la anchura máxima y la longitud máxima del cráneo, multiplicada por 100. Clasifica los cráneos en dolicocéfalos (<75), mesocéfalos (75–80) y braquicéfalos (>80).' },
+    { term:'Dolicocéfalo',         cat:'anatomia',   def:'Morfología craneal con índice cefálico inferior a 75, caracterizada por una forma alargada anteroposterior.' },
+    { term:'Braquicéfalo',         cat:'anatomia',   def:'Morfología craneal con índice cefálico superior a 80, caracterizada por una forma redondeada o ancha transversalmente.' },
+    { term:'Eburnación',           cat:'patologia',  def:'Pulido patológico de la superficie articular tras la destrucción total del cartílago. Produce un aspecto brillante y duro característico de la osteoartritis avanzada.' },
+    { term:'Osteofito',            cat:'patologia',  def:'Proliferación ósea de neoformación en los márgenes articulares o en la superficie de los cuerpos vertebrales. Signo de degeneración articular.' },
+    { term:'Callo óseo',           cat:'patologia',  def:'Tejido óseo de reparación que se forma durante la consolidación de una fractura. Su morfología permite estimar el tiempo transcurrido desde la lesión.' },
+    { term:'Fractura perimortem',  cat:'patologia',  def:'Fractura producida en el momento de la muerte o inmediatamente antes, cuando el hueso conserva aún sus propiedades biomecánicas de tejido vivo.' },
+    { term:'Fotogrametría',        cat:'metodo',     def:'Técnica de digitalización 3D basada en la captura de múltiples fotografías desde distintos ángulos para reconstruir la geometría tridimensional del objeto.' },
+    { term:'Escáner de luz estructurada', cat:'metodo', def:'Sistema de digitalización 3D que proyecta patrones de luz sobre la superficie del objeto y mide las deformaciones para calcular su geometría con alta precisión.' },
+    { term:'Sinostosis',           cat:'anatomia',   def:'Fusión ósea completa de estructuras que normalmente permanecen separadas, como las suturas craneales. Indicador de edad avanzada.' },
+    { term:'Marcador de actividad',cat:'patologia',  def:'Alteración ósea —entesopatía, asimetría, hipertrofia cortical— que refleja patrones de esfuerzo físico repetitivo y permite inferir actividades ocupacionales.' },
+    { term:'Sutura sagital',       cat:'anatomia',   def:'Sutura craneal que une los dos huesos parietales en la línea media. Su grado de fusión se usa para estimar la edad biológica.' },
+    { term:'Absceso alveolar',     cat:'patologia',  def:'Acumulación de pus en el alveolo dentario por infección periapical. Genera un orificio de drenaje en el hueso mandibular o maxilar.' },
+    { term:'Neolítico',            cat:'cronologia', def:'Período prehistórico caracterizado por la aparición de la agricultura, la ganadería y los asentamientos permanentes. En la Península Ibérica: c. 5500–2200 a.C.' },
+    { term:'Bioarqueología',       cat:'metodo',     def:'Disciplina que integra el análisis de restos humanos con el contexto arqueológico para reconstruir las condiciones de vida, salud y comportamiento de las poblaciones del pasado.' },
+    { term:'Sexo biológico',       cat:'metodo',     def:'Determinación del sexo de un individuo a partir de caracteres morfológicos del esqueleto, principalmente pelvis y cráneo. Se expresa como masculino, femenino o indeterminado.' },
+    { term:'Edad biológica',       cat:'metodo',     def:'Estimación de la edad al fallecimiento a partir de indicadores esqueléticos: fusión epifisaria, desgaste dental, sinostosis craneal y degeneración articular.' },
+    { term:'Sacralización',        cat:'patologia',  def:'Variante anatómica en la que la última vértebra lumbar se fusiona parcial o totalmente al sacro, alterando la mecánica de la columna.' },
+    { term:'Escoliosis',           cat:'patologia',  def:'Desviación lateral del raquis con rotación axial de los cuerpos vertebrales. Puede ser congénita, idiopática o adquirida.' },
+    { term:'Índice de Kellgren-Lawrence', cat:'metodo', def:'Escala radiológica de 0 a 4 que gradúa la severidad de la osteoartritis. El grado 4 implica pérdida severa del espacio articular con esclerosis y osteofitosis importantes.' },
+    { term:'Yacimiento',           cat:'cronologia', def:'Lugar donde se conservan restos arqueológicos. En contexto paleopatológico, determina la cronología, el grupo poblacional y las condiciones tafonómicas del material óseo.' },
+    { term:'Tafonomía',            cat:'metodo',     def:'Estudio de los procesos que afectan a los restos orgánicos desde la muerte hasta su excavación, incluyendo meteorización, fragmentación, tinción y dispersión.' },
+  ];
+
+  /* ═══════════════════════════════════════════════════════
+     DATOS — Bibliografía (16 referencias)
+  ═══════════════════════════════════════════════════════ */
+  const BIBLIOGRAFIA = [
+    {
+      cat: 'paleopatologia',
+      ref: '<strong>Aufderheide, A.C.</strong> & Rodríguez-Martín, C. (1998). <em>The Cambridge Encyclopedia of Human Paleopathology</em>. Cambridge University Press.',
+      doi: null, url: null
+    },
+    {
+      cat: 'paleopatologia',
+      ref: '<strong>Ortner, D.J.</strong> (2003). <em>Identification of Pathological Conditions in Human Skeletal Remains</em> (2nd ed.). Academic Press.',
+      doi: null, url: null
+    },
+    {
+      cat: 'bioarqueologia',
+      ref: '<strong>Buikstra, J.E.</strong> & Ubelaker, D.H. (Eds.) (1994). <em>Standards for Data Collection from Human Skeletal Remains</em>. Arkansas Archaeological Survey.',
+      doi: null, url: null
+    },
+    {
+      cat: 'metodologia',
+      ref: '<strong>Brothwell, D.R.</strong> (1981). <em>Digging Up Bones: The Excavation, Treatment and Study of Human Skeletal Remains</em>. Cornell University Press.',
+      doi: null, url: null
+    },
+    {
+      cat: 'paleopatologia',
+      ref: '<strong>Roberts, C.</strong> & Manchester, K. (2005). <em>The Archaeology of Disease</em> (3rd ed.). The History Press.',
+      doi: null, url: null
+    },
+    {
+      cat: 'bioarqueologia',
+      ref: '<strong>Larsen, C.S.</strong> (1997). <em>Bioarchaeology: Interpreting Behavior from the Human Skeleton</em>. Cambridge University Press.',
+      doi: '10.1017/CBO9780511802676', url: 'https://doi.org/10.1017/CBO9780511802676'
+    },
+    {
+      cat: 'paleopatologia',
+      ref: '<strong>Campillo, D.</strong> (2001). <em>Introducción a la Paleopatología</em>. Edicions Bellaterra.',
+      doi: null, url: null
+    },
+    {
+      cat: 'metodologia',
+      ref: '<strong>Bass, W.M.</strong> (2005). <em>Human Osteology: A Laboratory and Field Manual</em> (5th ed.). Missouri Archaeological Society.',
+      doi: null, url: null
+    },
+    {
+      cat: 'digital',
+      ref: '<strong>Galeazzi, F.</strong> (2016). Towards the definition of best 3D practices in archaeology: Assessing 3D documentation techniques for intra-site data recording. <em>Journal of Cultural Heritage</em>, 17, 159–169.',
+      doi: '10.1016/j.culher.2015.04.003', url: 'https://doi.org/10.1016/j.culher.2015.04.003'
+    },
+    {
+      cat: 'digital',
+      ref: '<strong>Kuzminsky, S.C.</strong> & Gardiner, M.S. (2012). Three-dimensional laser scanning: potential uses for museum conservation and scientific research. <em>Journal of Archaeological Science</em>, 39(8), 2744–2751.',
+      doi: '10.1016/j.jas.2012.04.020', url: 'https://doi.org/10.1016/j.jas.2012.04.020'
+    },
+    {
+      cat: 'paleopatologia',
+      ref: '<strong>Waldron, T.</strong> (2009). <em>Palaeopathology</em>. Cambridge University Press.',
+      doi: '10.1017/CBO9780511811036', url: 'https://doi.org/10.1017/CBO9780511811036'
+    },
+    {
+      cat: 'bioarqueologia',
+      ref: '<strong>Sofaer, J.R.</strong> (2006). <em>The Body as Material Culture: A Theoretical Osteoarchaeology</em>. Cambridge University Press.',
+      doi: '10.1017/CBO9780511816666', url: 'https://doi.org/10.1017/CBO9780511816666'
+    },
+    {
+      cat: 'metodologia',
+      ref: '<strong>Ferembach, D.</strong>, Schwidetzky, I. & Stloukal, M. (1980). Recommendations for age and sex diagnoses of skeletons. <em>Journal of Human Evolution</em>, 9(7), 517–549.',
+      doi: '10.1016/0047-2484(80)90061-5', url: 'https://doi.org/10.1016/0047-2484(80)90061-5'
+    },
+    {
+      cat: 'paleopatologia',
+      ref: '<strong>Santos, A.L.</strong> & Roberts, C.A. (2006). Anatomy of a serial killer: differential diagnosis of tuberculosis based on rib lesions of adult individuals from the Coimbra Identified Skeletal Collection, Portugal. <em>American Journal of Physical Anthropology</em>, 130(1), 38–49.',
+      doi: '10.1002/ajpa.20160', url: 'https://doi.org/10.1002/ajpa.20160'
+    },
+    {
+      cat: 'digital',
+      ref: '<strong>Means, B.</strong> (Ed.) (2013). <em>Mobilizing the Past for a Digital Future: The Potential of Digital Archaeology</em>. The Digital Press at the University of North Dakota.',
+      doi: null, url: 'https://digitalpress.library.und.edu/mobilizing'
+    },
+    {
+      cat: 'bioarqueologia',
+      ref: '<strong>Steckel, R.H.</strong> et al. (2002). Skeletal health in the Western Hemisphere from 4000 BC to the present. <em>Evolutionary Anthropology</em>, 11(4), 142–155.',
+      doi: '10.1002/evan.10030', url: 'https://doi.org/10.1002/evan.10030'
+    },
+  ];
+
+  /* ═══════════════════════════════════════════════════════
+     DATOS — Quizzes
+  ═══════════════════════════════════════════════════════ */
+  const QUIZZES = [
+    {
+      id: 'q1',
+      title: 'Patologías básicas',
+      color: '#FF4D6D',
+      type: 'multiple',
+      preguntas: [
+        {
+          enunciado: '¿Qué es la cribra orbitalia?',
+          opciones: [
+            'Porosidad en el techo de las órbitas relacionada con anemia',
+            'Fractura del hueso orbitario',
+            'Infección del seno maxilar',
+            'Deformación congénita del cráneo'
+          ],
+          correcta: 0,
+          explicacion: 'La cribra orbitalia es una lesión hipervascular en el techo de las órbitas, indicador de anemia ferropénica o déficit vitamínico durante la infancia.'
+        },
+        {
+          enunciado: 'La eburnación es una característica diagnóstica de:',
+          opciones: [
+            'Tuberculosis ósea',
+            'Osteoartritis avanzada',
+            'Raquitismo',
+            'Traumatismo perimortem'
+          ],
+          correcta: 1,
+          explicacion: 'La eburnación es el pulido patológico de la superficie articular que ocurre cuando se destruye el cartílago por completo, característica de la osteoartritis.'
+        },
+        {
+          enunciado: '¿Cuál de las siguientes técnicas permite datar una trepanación como curada?',
+          opciones: [
+            'Presencia de bordes irregulares y afilados',
+            'Ausencia total de hueso en el área',
+            'Remodelación ósea con tejido lamelar en los bordes',
+            'Coloración oscura del diploe'
+          ],
+          correcta: 2,
+          explicacion: 'La remodelación ósea con formación de tejido compacto lamelar en los bordes de la trepanación indica que el individuo sobrevivió a la intervención el tiempo suficiente para que el hueso cicatrizara.'
+        },
+        {
+          enunciado: '¿Qué patología produce la denominada "tibia en sable"?',
+          opciones: [
+            'Osteomielitis hematógena',
+            'Fractura de Colles consolidada en vicio',
+            'Raquitismo por déficit de vitamina D',
+            'Periostitis por treponematosis'
+          ],
+          correcta: 2,
+          explicacion: 'El raquitismo provoca reblandecimiento óseo que, combinado con la carga del peso corporal, produce la incurvación anterior de la tibia conocida como "tibia en sable".'
+        },
+        {
+          enunciado: 'El Mal de Pott es una forma de:',
+          opciones: [
+            'Traumatismo vertebral con fractura en compresión',
+            'Espondilitis tuberculosa con colapso vertebral',
+            'Escoliosis congénita por hemivértebra',
+            'Hernia discal calcificada'
+          ],
+          correcta: 1,
+          explicacion: 'El Mal de Pott es la tuberculosis de la columna vertebral, que destruye los cuerpos vertebrales y discos intervertebrales produciendo el característico colapso angular (giba).'
+        }
+      ]
+    },
+    {
+      id: 'q2',
+      title: 'Verdadero o Falso',
+      color: '#00E5FF',
+      type: 'vf',
+      preguntas: [
+        { enunciado: 'La trepanación es la cirugía documentada más antigua de la humanidad.', correcta: true,  explicacion: 'Correcto. Las trepanaciones prehistóricas son la evidencia más antigua de intervención quirúrgica documentada, con ejemplos que superan los 8.000 años de antigüedad.' },
+        { enunciado: 'La osteomielitis solo puede producirse en individuos jóvenes.', correcta: false, explicacion: 'Falso. Aunque la osteomielitis hematógena es más frecuente en individuos subadultos, puede afectar a individuos de cualquier edad, especialmente mediante inoculación directa.' },
+        { enunciado: 'Los marcadores de actividad permiten inferir la ocupación de un individuo.', correcta: true,  explicacion: 'Correcto. Las entesopatías y asimetrías óseas reflejan patrones de esfuerzo repetitivo que, interpretados en contexto, permiten proponer hipótesis sobre la actividad ocupacional.' },
+        { enunciado: 'El índice cefálico se calcula dividiendo la longitud por la anchura del cráneo.', correcta: false, explicacion: 'Falso. El índice cefálico se calcula dividiendo la anchura máxima entre la longitud máxima del cráneo y multiplicando por 100 (no al revés).' },
+        { enunciado: 'Una fractura perimortem muestra los mismos patrones de rotura que el hueso seco.', correcta: false, explicacion: 'Falso. El hueso perimortem, al conservar sus propiedades biomecánicas de tejido vivo, se fractura de forma diferente al hueso seco: produce bordes lisos y esquirlas en lugar de la rotura quebradiza del hueso seco.' },
+        { enunciado: 'La fotogrametría y el escáner de luz estructurada son técnicas de digitalización 3D.', correcta: true,  explicacion: 'Correcto. Ambas son técnicas de captura tridimensional, aunque difieren en metodología: la fotogrametría utiliza fotografías y la luz estructurada proyecta patrones de luz codificados.' },
+      ]
+    },
+    {
+      id: 'q3',
+      title: 'Relaciona conceptos',
+      color: '#d4e60a',
+      type: 'match',
+      pares: [
+        { izq: 'Cribra orbitalia',        der: 'Anemia / déficit vitamínico' },
+        { izq: 'Eburnación',              der: 'Osteoartritis avanzada' },
+        { izq: 'Mal de Pott',             der: 'Tuberculosis vertebral' },
+        { izq: 'Tibia en sable',          der: 'Raquitismo' },
+        { izq: 'Entesopatía',             der: 'Marcador de actividad' },
+        { izq: 'Sinostosis de sutura',    der: 'Edad avanzada' },
+      ]
+    }
+  ];
+
+  /* ═══════════════════════════════════════════════════════
+     COLORES POR CATEGORÍA
+  ═══════════════════════════════════════════════════════ */
+  const CAT_COLORS = {
+    patologia:  { color: '#c0003c', bg: 'rgba(192,0,60,.08)' },
+    anatomia:   { color: '#00e5ff', bg: 'rgba(0,229,255,.08)' },
+    metodo:     { color: '#2979ff', bg: 'rgba(41,121,255,.08)' },
+    cronologia: { color: '#d4e60a', bg: 'rgba(212,230,10,.08)' },
+  };
+  const BIBLIO_COLORS = {
+    paleopatologia: { color: '#c0003c', bg: 'rgba(192,0,60,.08)' },
+    metodologia:    { color: '#2979ff', bg: 'rgba(41,121,255,.08)' },
+    bioarqueologia: { color: '#00e676', bg: 'rgba(0,230,118,.08)' },
+    digital:        { color: '#aa00ff', bg: 'rgba(170,0,255,.08)' },
+  };
+  const CAT_LABELS = {
+    patologia: 'Patología', anatomia: 'Anatomía',
+    metodo: 'Metodología', cronologia: 'Cronología',
+    paleopatologia: 'Paleopatología', metodologia: 'Metodología',
+    bioarqueologia: 'Bioarqueología', digital: 'Digitalización 3D'
+  };
+
+  /* ═══════════════════════════════════════════════════════
+     GLOSARIO — render + filtrado
+  ═══════════════════════════════════════════════════════ */
+  let glosQuery = '', glosCat = 'all';
+
+  function renderGlosario() {
+    const grid = document.getElementById('glos-grid');
+    const countEl = document.getElementById('glos-count');
+    const q = glosQuery.toLowerCase().trim();
+
+    const filtered = GLOSARIO.filter(e => {
+      const matchCat = glosCat === 'all' || e.cat === glosCat;
+      const matchQ   = !q || e.term.toLowerCase().includes(q) || e.def.toLowerCase().includes(q);
+      return matchCat && matchQ;
+    });
+
+    if (countEl) countEl.textContent = filtered.length;
+    grid.innerHTML = '';
+
+    if (filtered.length === 0) {
+      grid.innerHTML = '<p class="glos-empty">Sin resultados. Prueba otro término.</p>';
+      return;
+    }
+
+    filtered.forEach(e => {
+      const cc = CAT_COLORS[e.cat] || { color: '#6b5a43', bg: 'rgba(107,90,67,.08)' };
+      const card = document.createElement('div');
+      card.className = 'glos-card';
+      card.innerHTML = `
+        <div class="glos-card__accent" style="background:${cc.color}"></div>
+        <p class="glos-card__term">${e.term}</p>
+        <p class="glos-card__cat" style="color:${cc.color}">${CAT_LABELS[e.cat]}</p>
+        <p class="glos-card__def">${e.def}</p>
+      `;
+      grid.appendChild(card);
+    });
+  }
+
+  document.getElementById('glos-search')?.addEventListener('input', e => { glosQuery = e.target.value; renderGlosario(); });
+  document.querySelectorAll('[data-gf]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('[data-gf]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      glosCat = btn.dataset.gf;
+      renderGlosario();
+    });
+  });
+
+  /* ═══════════════════════════════════════════════════════
+     BIBLIOGRAFÍA — render + filtrado
+  ═══════════════════════════════════════════════════════ */
+  let biblioQuery = '', biblioCat = 'all';
+
+  function renderBibliografia() {
+    const grid    = document.getElementById('biblio-grid');
+    const countEl = document.getElementById('biblio-count');
+    const q = biblioQuery.toLowerCase().trim();
+
+    const filtered = BIBLIOGRAFIA.filter(e => {
+      const matchCat = biblioCat === 'all' || e.cat === biblioCat;
+      const matchQ   = !q || e.ref.replace(/<[^>]+>/g,'').toLowerCase().includes(q);
+      return matchCat && matchQ;
+    });
+
+    if (countEl) countEl.textContent = filtered.length;
+    grid.innerHTML = '';
+
+    filtered.forEach(e => {
+      const cc = BIBLIO_COLORS[e.cat] || { color: '#6b5a43', bg: 'rgba(107,90,67,.08)' };
+      const card = document.createElement('div');
+      card.className = 'biblio-card';
+      card.innerHTML = `
+        <span class="biblio-card__tag" style="border-color:${cc.color};color:${cc.color};background:${cc.bg}">${CAT_LABELS[e.cat]}</span>
+        <p class="biblio-card__ref">${e.ref}</p>
+        ${e.url ? `<a href="${e.url}" target="_blank" rel="noopener noreferrer" class="biblio-card__doi">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+          ${e.doi ? `DOI: ${e.doi}` : 'Ver recurso'}
+        </a>` : ''}
+      `;
+      grid.appendChild(card);
+    });
+  }
+
+  document.getElementById('biblio-search')?.addEventListener('input', e => { biblioQuery = e.target.value; renderBibliografia(); });
+  document.querySelectorAll('[data-bf]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('[data-bf]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      biblioCat = btn.dataset.bf;
+      renderBibliografia();
+    });
+  });
+
+  /* ═══════════════════════════════════════════════════════
+     QUIZZES
+  ═══════════════════════════════════════════════════════ */
+  let activeQuiz = null, qIndex = 0, score = 0, answered = false;
+  let matchSelected = null; // para relacionar
+
+  function buildQuizList() {
+    const list = document.getElementById('quiz-list');
+    list.innerHTML = '';
+    QUIZZES.forEach(q => {
+      const btn = document.createElement('button');
+      btn.className = 'quiz-list-item';
+      btn.innerHTML = `
+        <span class="quiz-list-item__dot" style="background:${q.color}"></span>
+        ${q.title}
+        <span class="quiz-list-item__type">${q.type === 'multiple' ? 'Opción múltiple' : q.type === 'vf' ? 'V / F' : 'Relacionar'}</span>
+      `;
+      btn.addEventListener('click', () => startQuiz(q.id));
+      list.appendChild(btn);
+    });
+  }
+
+  function startQuiz(id) {
+    activeQuiz = QUIZZES.find(q => q.id === id);
+    if (!activeQuiz) return;
+    qIndex = 0; score = 0; answered = false; matchSelected = null;
+
+    document.querySelectorAll('.quiz-list-item').forEach(b => b.classList.remove('active'));
+    const allBtns = document.querySelectorAll('.quiz-list-item');
+    const idx = QUIZZES.findIndex(q => q.id === id);
+    if (allBtns[idx]) allBtns[idx].classList.add('active');
+
+    renderQuestion();
+  }
+
+  function renderQuestion() {
+    const area = document.getElementById('quiz-area');
+    if (!activeQuiz) return;
+
+    // Match quiz tiene una sola "pregunta"
+    const total = activeQuiz.type === 'match' ? 1 : activeQuiz.preguntas.length;
+    const progress = activeQuiz.type === 'match' ? 100 : Math.round((qIndex / total) * 100);
+
+    let innerHTML = `
+      <div class="quiz-card">
+        <div class="quiz-card__header">
+          <span class="quiz-card__title">${activeQuiz.title}</span>
+          <span class="quiz-card__badge" style="border-color:${activeQuiz.color};color:${activeQuiz.color}">
+            ${activeQuiz.type === 'multiple' ? 'Opción múltiple' : activeQuiz.type === 'vf' ? 'Verdadero / Falso' : 'Relacionar'}
+          </span>
+        </div>
+        <div class="quiz-progress">
+          <div class="quiz-progress__bar" style="width:${progress}%"></div>
+        </div>
+        <div class="quiz-body">
+    `;
+
+    if (activeQuiz.type === 'multiple') {
+      innerHTML += renderMultiple();
+    } else if (activeQuiz.type === 'vf') {
+      innerHTML += renderVF();
+    } else if (activeQuiz.type === 'match') {
+      innerHTML += renderMatch();
+    }
+
+    innerHTML += `</div></div>`;
+    area.innerHTML = innerHTML;
+
+    // Bind events después de insertar
+    if (activeQuiz.type === 'multiple') bindMultiple();
+    if (activeQuiz.type === 'vf')       bindVF();
+    if (activeQuiz.type === 'match')    bindMatch();
+  }
+
+  /* Opción múltiple */
+  function renderMultiple() {
+    const p = activeQuiz.preguntas[qIndex];
+    const total = activeQuiz.preguntas.length;
+    const letters = ['A','B','C','D','E'];
+    return `
+      <p class="quiz-question">
+        <span class="quiz-question-num">Pregunta ${qIndex+1} de ${total}</span>
+        ${p.enunciado}
+      </p>
+      <div class="quiz-options">
+        ${p.opciones.map((op,i) => `
+          <button class="quiz-option" data-idx="${i}">
+            <span class="quiz-option__letter">${letters[i]}</span>
+            ${op}
+          </button>`).join('')}
+      </div>
+      <div class="quiz-feedback" id="quiz-fb"></div>
+      <div class="quiz-controls">
+        <span class="quiz-score">Aciertos: <strong>${score}</strong> / ${qIndex}</span>
+        <button class="btn btn--primary" id="quiz-next" style="font-size:.75rem" disabled>
+          <span>${qIndex+1 < total ? 'Siguiente →' : 'Ver resultado'}</span>
+        </button>
+      </div>
+    `;
+  }
+
+  function bindMultiple() {
+    const p = activeQuiz.preguntas[qIndex];
+    const total = activeQuiz.preguntas.length;
+    const opts = document.querySelectorAll('.quiz-option');
+    const fb   = document.getElementById('quiz-fb');
+    const next = document.getElementById('quiz-next');
+
+    opts.forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (answered) return;
+        answered = true;
+        const chosen = parseInt(btn.dataset.idx);
+        const isCorrect = chosen === p.correcta;
+        if (isCorrect) score++;
+
+        opts.forEach((b,i) => {
+          b.disabled = true;
+          if (i === p.correcta) b.classList.add('correct');
+          else if (i === chosen && !isCorrect) b.classList.add('wrong');
+        });
+
+        fb.className = `quiz-feedback show quiz-feedback--${isCorrect ? 'correct' : 'wrong'}`;
+        fb.innerHTML = `<span class="quiz-feedback__icon">${isCorrect ? '✓' : '✗'}</span>${p.explicacion}`;
+        next.disabled = false;
+      });
+    });
+
+    next?.addEventListener('click', () => {
+      qIndex++;
+      if (qIndex >= total) { showResult(); return; }
+      answered = false;
+      renderQuestion();
+    });
+  }
+
+  /* Verdadero / Falso */
+  function renderVF() {
+    const p = activeQuiz.preguntas[qIndex];
+    const total = activeQuiz.preguntas.length;
+    return `
+      <p class="quiz-question">
+        <span class="quiz-question-num">Pregunta ${qIndex+1} de ${total}</span>
+        ${p.enunciado}
+      </p>
+      <div class="quiz-vf">
+        <button class="quiz-vf-btn quiz-vf-btn--v" data-ans="true">✓ Verdadero</button>
+        <button class="quiz-vf-btn quiz-vf-btn--f" data-ans="false">✗ Falso</button>
+      </div>
+      <div class="quiz-feedback" id="quiz-fb"></div>
+      <div class="quiz-controls">
+        <span class="quiz-score">Aciertos: <strong>${score}</strong> / ${qIndex}</span>
+        <button class="btn btn--primary" id="quiz-next" style="font-size:.75rem" disabled>
+          <span>${qIndex+1 < total ? 'Siguiente →' : 'Ver resultado'}</span>
+        </button>
+      </div>
+    `;
+  }
+
+  function bindVF() {
+    const p = activeQuiz.preguntas[qIndex];
+    const total = activeQuiz.preguntas.length;
+    const btns = document.querySelectorAll('.quiz-vf-btn');
+    const fb   = document.getElementById('quiz-fb');
+    const next = document.getElementById('quiz-next');
+
+    btns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (answered) return;
+        answered = true;
+        const chosen  = btn.dataset.ans === 'true';
+        const correct = chosen === p.correcta;
+        if (correct) score++;
+
+        btns.forEach(b => {
+          b.disabled = true;
+          const bVal = b.dataset.ans === 'true';
+          if (bVal === p.correcta) b.classList.add('correct');
+          else if (bVal === chosen && !correct) b.classList.add('wrong');
+        });
+
+        fb.className = `quiz-feedback show quiz-feedback--${correct ? 'correct' : 'wrong'}`;
+        fb.innerHTML = `<span class="quiz-feedback__icon">${correct ? '✓' : '✗'}</span>${p.explicacion}`;
+        next.disabled = false;
+      });
+    });
+
+    next?.addEventListener('click', () => {
+      qIndex++;
+      if (qIndex >= total) { showResult(); return; }
+      answered = false;
+      renderQuestion();
+    });
+  }
+
+  /* Relacionar conceptos */
+  function renderMatch() {
+    const pares = activeQuiz.pares;
+    const shuffledDer = [...pares.map(p => p.der)].sort(() => Math.random() - .5);
+    window._matchPares    = pares;
+    window._matchShuffled = shuffledDer;
+    window._matchDone     = 0;
+
+    return `
+      <p class="quiz-question">Relaciona cada concepto de la columna izquierda con su definición.</p>
+      <div class="quiz-match">
+        <div>
+          <p class="quiz-match__col-title">Concepto</p>
+          ${pares.map((p,i) => `<div class="quiz-match__item left-item" data-li="${i}">${p.izq}</div>`).join('')}
+        </div>
+        <div>
+          <p class="quiz-match__col-title">Definición</p>
+          ${shuffledDer.map((d,i) => `<div class="quiz-match__item right-item" data-ri="${i}">${d}</div>`).join('')}
+        </div>
+      </div>
+      <div class="quiz-feedback" id="quiz-fb"></div>
+      <div class="quiz-controls">
+        <span class="quiz-score">Emparejados: <strong id="match-done">0</strong> / ${pares.length}</span>
+        <button class="btn btn--primary" id="quiz-next" style="font-size:.75rem" disabled>
+          <span>Ver resultado</span>
+        </button>
+      </div>
+    `;
+  }
+
+  function bindMatch() {
+    let selectedLeft  = null;
+    let selectedRight = null;
+
+    document.querySelectorAll('.left-item').forEach(el => {
+      el.addEventListener('click', () => {
+        if (el.classList.contains('matched')) return;
+        document.querySelectorAll('.left-item').forEach(e => e.classList.remove('selected'));
+        el.classList.add('selected');
+        selectedLeft = el;
+        tryMatch();
+      });
+    });
+
+    document.querySelectorAll('.right-item').forEach(el => {
+      el.addEventListener('click', () => {
+        if (el.classList.contains('matched')) return;
+        document.querySelectorAll('.right-item').forEach(e => e.classList.remove('selected'));
+        el.classList.add('selected');
+        selectedRight = el;
+        tryMatch();
+      });
+    });
+
+    function tryMatch() {
+      if (!selectedLeft || !selectedRight) return;
+      const li   = parseInt(selectedLeft.dataset.li);
+      const ri   = parseInt(selectedRight.dataset.ri);
+      const pares    = window._matchPares;
+      const shuffled = window._matchShuffled;
+
+      const correct = pares[li].der === shuffled[ri];
+      if (correct) {
+        selectedLeft.classList.add('matched');
+        selectedRight.classList.add('matched');
+        score++;
+        window._matchDone = (window._matchDone || 0) + 1;
+        const doneEl = document.getElementById('match-done');
+        if (doneEl) doneEl.textContent = window._matchDone;
+
+        if (window._matchDone === pares.length) {
+          const fb = document.getElementById('quiz-fb');
+          fb.className = 'quiz-feedback show quiz-feedback--correct';
+          fb.innerHTML = '<span class="quiz-feedback__icon">✓</span>¡Has relacionado todos los conceptos correctamente!';
+          document.getElementById('quiz-next').disabled = false;
+        }
+      } else {
+        selectedLeft.classList.add('wrong');
+        selectedRight.classList.add('wrong');
+        setTimeout(() => {
+          selectedLeft?.classList.remove('wrong','selected');
+          selectedRight?.classList.remove('wrong','selected');
+        }, 700);
+      }
+      selectedLeft = null; selectedRight = null;
+    }
+
+    document.getElementById('quiz-next')?.addEventListener('click', showResult);
+  }
+
+  /* Resultado final */
+  function showResult() {
+    const area  = document.getElementById('quiz-area');
+    const total = activeQuiz.type === 'match' ? activeQuiz.pares.length : activeQuiz.preguntas.length;
+    const pct   = Math.round((score / total) * 100);
+    const msg   = pct === 100 ? '¡Perfecto! Dominas este tema.' :
+                  pct >= 70  ? 'Muy bien. Repasa los conceptos en los que fallaste.' :
+                  pct >= 40  ? 'Sigue practicando. Revisa el glosario para reforzar.' :
+                               'Te recomendamos repasar los materiales antes de repetir el test.';
+    const col   = pct === 100 ? 'var(--green)' : pct >= 70 ? 'var(--sulfur)' : pct >= 40 ? 'var(--orange)' : 'var(--crimson)';
+
+    area.innerHTML = `
+      <div class="quiz-card">
+        <div class="quiz-card__header" style="background:${activeQuiz.color}20;border-bottom:4px solid ${activeQuiz.color}">
+          <span class="quiz-card__title" style="color:var(--au-ink)">${activeQuiz.title} — Resultado</span>
+        </div>
+        <div class="quiz-body">
+          <div class="quiz-result show">
+            <div class="quiz-result__score" style="color:${col}">${pct}%</div>
+            <p class="quiz-result__label">${score} de ${total} correctas</p>
+            <p class="quiz-result__msg">${msg}</p>
+            <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+              <button class="btn btn--primary" onclick="startQuiz('${activeQuiz.id}')">
+                <span>Repetir test</span>
+              </button>
+              <button class="btn btn--outline" onclick="document.getElementById('quiz-area').innerHTML='<div style=\\'display:flex;align-items:center;justify-content:center;height:300px;color:var(--au-mid);font-family:var(--font-head);font-size:.82rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;text-align:center;flex-direction:column;gap:1rem\\'><svg width=\\'40\\' height=\\'40\\' viewBox=\\'0 0 24 24\\' fill=\\'currentColor\\' opacity=\\'.2\\'><path d=\\'M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z\\'/></svg>Selecciona un test para comenzar</div>';document.querySelectorAll('.quiz-list-item').forEach(b=>b.classList.remove('active'))">
+                <span>Elegir otro test</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  /* ═══════════════════════════════════════════════════════
+     TABS — cambio de panel
+  ═══════════════════════════════════════════════════════ */
+  document.querySelectorAll('.au-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.au-tab').forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected','false'); });
+      document.querySelectorAll('.au-panel').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected','true');
+      document.getElementById(`panel-${tab.dataset.tab}`)?.classList.add('active');
+    });
+  });
+
+  /* ── Nav ── */
+  const hamburger = document.getElementById('nav-hamburger');
+  const drawer    = document.getElementById('nav-mobile');
+  let navOpen = false;
+  hamburger?.addEventListener('click', () => {
+    navOpen = !navOpen;
+    hamburger.classList.toggle('open', navOpen);
+    drawer.classList.toggle('open', navOpen);
+    hamburger.setAttribute('aria-expanded', String(navOpen));
+    document.body.style.overflow = navOpen ? 'hidden' : '';
+  });
+  window.addEventListener('scroll', () => {
+    document.getElementById('site-header')?.classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive: true });
+
+  /* ── Init ── */
+  renderGlosario();
+  renderBibliografia();
+  buildQuizList();
+  </script>
+
+</body>
+</html>
