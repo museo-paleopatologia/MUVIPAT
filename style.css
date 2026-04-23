@@ -307,7 +307,7 @@ h1, h2, h3, h4, h5, h6 {
   background-image: url("/prueba-museo/assets/img/fondo_hero.png");
   background-size: cover;
   background-position: center top;
-  opacity: 0.22;
+  opacity: 0.55;
   z-index: 1;
 }
 
@@ -316,7 +316,7 @@ h1, h2, h3, h4, h5, h6 {
   inset: 0;
   background: linear-gradient(
     105deg,
-    rgba(13,13,13,0.82) 0%,
+    rgba(13,13,13,0.82) 0%, 
     rgba(13,13,13,0.55) 50%,
     rgba(13,13,13,0.30) 100%
   );
