@@ -13,6 +13,15 @@
 
   <!-- Global styles -->
   <link rel="stylesheet" href="/prueba-museo/css/style.css" />
+  <style>
+    /* Exploración — página fija sin scroll exterior en desktop */
+    html { overflow: hidden; }
+    @media (max-width: 1024px) {
+      /* En móvil sí hay scroll */
+      html { overflow: auto; }
+      .expl-body-page { height: auto !important; }
+    }
+  </style>
   <!-- Exploración-specific styles --></head>
 <body class="expl-body-page">
 

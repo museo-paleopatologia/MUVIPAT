@@ -819,7 +819,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ── Evita overflow horizontal en toda la página ── */
-.expl-body-page { overflow-x: hidden; }
+.expl-body-page { overflow-x: hidden; height: 100svh; }
 
 /* ══════════════════════════════════════════════════
    TOPBAR — sticky justo debajo del nav
@@ -845,6 +845,7 @@ h1, h2, h3, h4, h5, h6 {
 .expl-layout {
   display: flex;
   height: calc(100svh - var(--nav-h) - var(--top-h));
+  max-height: calc(100svh - var(--nav-h) - var(--top-h));
   overflow: hidden;
   position: relative;
 }
