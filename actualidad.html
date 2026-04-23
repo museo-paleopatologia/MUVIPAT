@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Actualidad en paleopatología — noticias, eventos y nuevas publicaciones académicas." />
+  <title>Actualidad · PaleoMuseo</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lexend:wght@300;400;500;600;700;800&family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+
+  <link rel="stylesheet" href="/prueba-museo/css/style.css" />
+
+  <style>
+    /* ═══════════════════════════════════════
+       ACTUALIDAD — variables locales
+    ═══════════════════════════════════════ */
+    :root {
+      --ac-bg:      #f4f1ea;
+      --ac-ink:     #0d0d0d;
+      --ac-mid:     #6b5a43;
+      --ac-bone:    #e8dfc8;
+      --ac-border:  4px solid #0d0d0d;
+      --ac-shadow:  5px 5px 0px #0d0d0d;
+      --ac-shadow-sm: 3px 3px 0px #0d0d0d;
+    }
+    body { background: var(--ac-bg); }
+
+    /* ═══════════════════════════════════════
+       PAGE HEADER
+    ═══════════════════════════════════════ */
+    .ac-header {
+      background: var(--ac-ink);
+      border-bottom: var(--ac-border);
+      padding-top: clamp(56px, 7vw, 70px);
+    }
+    .ac-header__inner {
+      width: min(1400px, 96vw);
+      margin-inline: auto;
+      padding-inline: clamp(1rem, 3vw, 2rem);
+      padding-block: clamp(2.5rem, 5vw, 4rem);
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+    .ac-header__left {}
+    .ac-header__eyebrow {
+      font-family: var(--font-head);
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--pink);
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      margin-bottom: .75rem;
+    }
+    .ac-header__eyebrow::before {
+      content: '';
+      display: block;
+      width: 28px; height: 2px;
+      background: var(--pink);
+    }
+    .ac-header__title {
+      font-family: var(--font-head);
+      font-size: clamp(2.2rem, 5vw, 4.5rem);
+      font-weight: 900;
+      line-height: .95;
+      letter-spacing: -.04em;
+      color: var(--ivory);
+    }
+    .ac-header__title em {
+      font-family: var(--font-display);
+      font-style: italic;
+      color: var(--pink);
+      font-size: .8em;
+      display: block;
+    }
+
+    /* Filter tabs en header */
+    .ac-filter-tabs {
+      display: flex;
+      gap: 0;
+      border: var(--ac-border);
+      border-radius: 2px;
+      overflow: hidden;
+      flex-shrink: 0;
+      align-self: flex-end;
+    }
+    .ac-filter-tab {
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+      padding: .6rem 1.1rem;
+      font-family: var(--font-head);
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      color: var(--bone-500);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: background .2s, color .2s;
+      white-space: nowrap;
+    }
+    .ac-filter-tab + .ac-filter-tab { border-left: 2px solid rgba(255,255,255,.1); }
+    .ac-filter-tab:hover   { background: rgba(255,255,255,.05); color: var(--ivory); }
+    .ac-filter-tab.active  { background: var(--pink); color: #fff; }
+
+    /* ═══════════════════════════════════════
+       HERO DESTACADO
+    ═══════════════════════════════════════ */
+    .ac-hero {
+      border-bottom: var(--ac-border);
+      background: var(--ac-bg);
+    }
+    .ac-hero__inner {
+      width: min(1400px, 96vw);
+      margin-inline: auto;
+      padding-inline: clamp(1rem, 3vw, 2rem);
+      padding-block: clamp(2.5rem, 5vw, 4rem);
+    }
+    .ac-hero__label {
+      font-family: var(--font-head);
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--crimson);
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      margin-bottom: 1.25rem;
+    }
+    .ac-hero__label::before {
+      content: '';
+      display: block;
+      width: 25px; height: 2.5px;
+      background: var(--crimson);
+    }
+
+    /* Card hero */
+    .ac-hero-card {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      background: #fff;
+      border: var(--ac-border);
+      border-radius: 4px;
+      box-shadow: var(--ac-shadow);
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      transition: transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s;
+    }
+    .ac-hero-card:hover {
+      transform: translate(-4px,-4px);
+      box-shadow: 9px 9px 0 var(--ac-ink);
+    }
+
+    .ac-hero-card__img {
+      min-height: 320px;
+      background: var(--ac-bone);
+      position: relative;
+      overflow: hidden;
+      border-right: var(--ac-border);
+    }
+    .ac-hero-card__img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform .4s ease;
+    }
+    .ac-hero-card:hover .ac-hero-card__img img { transform: scale(1.04); }
+    .ac-hero-card__img-ph {
+      width: 100%; height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      opacity: .2;
+    }
+
+    .ac-hero-card__body {
+      padding: clamp(1.5rem, 3vw, 2.5rem);
+      display: flex;
+      flex-direction: column;
+    }
+    .ac-hero-card__tag {
+      font-family: var(--font-head);
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: .22em .65em;
+      border: 2px solid;
+      border-radius: 2px;
+      display: inline-flex;
+      align-self: flex-start;
+      margin-bottom: 1rem;
+    }
+    .ac-hero-card__date {
+      font-family: var(--font-head);
+      font-size: .62rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--ac-mid);
+      margin-bottom: .6rem;
+    }
+    .ac-hero-card__title {
+      font-family: var(--font-head);
+      font-size: clamp(1.3rem, 2.2vw, 1.9rem);
+      font-weight: 900;
+      letter-spacing: -.03em;
+      line-height: 1.1;
+      color: var(--ac-ink);
+      margin-bottom: 1rem;
+    }
+    .ac-hero-card__desc {
+      font-size: clamp(.85rem, 1.3vw, .95rem);
+      line-height: 1.75;
+      color: #3d3d3d;
+      font-weight: 300;
+      margin-bottom: 1.5rem;
+      flex: 1;
+    }
+    .ac-hero-card__source {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      font-family: var(--font-head);
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--ac-mid);
+      padding-top: 1rem;
+      border-top: 1.5px solid rgba(0,0,0,.08);
+    }
+    .ac-hero-card__source-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .ac-hero-card__read {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: .35rem;
+      color: var(--crimson);
+      transition: gap .15s;
+    }
+    .ac-hero-card:hover .ac-hero-card__read { gap: .6rem; }
+
+    /* ═══════════════════════════════════════
+       GRID PRINCIPAL — noticias + publicaciones
+    ═══════════════════════════════════════ */
+    .ac-main {
+      border-bottom: var(--ac-border);
+    }
+    .ac-main__inner {
+      width: min(1400px, 96vw);
+      margin-inline: auto;
+      padding-inline: clamp(1rem, 3vw, 2rem);
+      padding-block: clamp(3rem, 6vw, 5rem);
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: clamp(2rem, 4vw, 3.5rem);
+      align-items: start;
+    }
+
+    /* Grid de cards */
+    .ac-grid-wrap {}
+    .ac-grid-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      gap: .75rem;
+    }
+    .ac-grid-title {
+      font-family: var(--font-head);
+      font-size: clamp(1.1rem, 2vw, 1.5rem);
+      font-weight: 900;
+      letter-spacing: -.03em;
+      color: var(--ac-ink);
+    }
+    .ac-grid-count {
+      font-family: var(--font-head);
+      font-size: .62rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--ac-mid);
+    }
+    .ac-grid-count strong { color: var(--pink); }
+
+    .ac-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+
+    /* News card */
+    .ac-card {
+      background: #fff;
+      border: var(--ac-border);
+      border-radius: 4px;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--ac-shadow-sm);
+      transition: transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s;
+      position: relative;
+    }
+    .ac-card:hover {
+      transform: translate(-3px,-3px);
+      box-shadow: var(--ac-shadow);
+    }
+    .ac-card__accent { height: 4px; width: 100%; flex-shrink: 0; }
+    .ac-card__img {
+      height: 130px;
+      background: var(--ac-bone);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border-bottom: 2px solid rgba(0,0,0,.07);
+      font-size: 2.5rem;
+      opacity: .3;
+    }
+    .ac-card__img img { width:100%;height:100%;object-fit:cover;opacity:1; transition: transform .3s; }
+    .ac-card:hover .ac-card__img img { transform: scale(1.05); }
+
+    .ac-card__body { padding: 1rem 1.1rem .9rem; display: flex; flex-direction: column; flex: 1; }
+    .ac-card__meta {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      margin-bottom: .5rem;
+      flex-wrap: wrap;
+    }
+    .ac-card__tag {
+      font-family: var(--font-head);
+      font-size: .55rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: .18em .5em;
+      border: 1.5px solid;
+      border-radius: 2px;
+    }
+    .ac-card__date {
+      font-family: var(--font-head);
+      font-size: .57rem;
+      font-weight: 600;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      color: var(--ac-mid);
+      margin-left: auto;
+    }
+    .ac-card__title {
+      font-family: var(--font-head);
+      font-size: .9rem;
+      font-weight: 800;
+      color: var(--ac-ink);
+      line-height: 1.25;
+      letter-spacing: -.02em;
+      margin-bottom: .45rem;
+    }
+    .ac-card__desc {
+      font-size: .75rem;
+      color: #6b5a43;
+      line-height: 1.55;
+      font-weight: 300;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-bottom: .75rem;
+      flex: 1;
+    }
+    .ac-card__footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: .6rem;
+      border-top: 1.5px solid rgba(0,0,0,.07);
+    }
+    .ac-card__source {
+      font-family: var(--font-head);
+      font-size: .57rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--ac-mid);
+      display: flex;
+      align-items: center;
+      gap: .3rem;
+    }
+    .ac-card__source-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .ac-card__read {
+      font-family: var(--font-head);
+      font-size: .57rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: .25rem;
+      transition: gap .15s;
+    }
+    .ac-card:hover .ac-card__read { gap: .45rem; }
+
+    /* Loading / error states */
+    .ac-loading {
+      grid-column: 1/-1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      padding: 3rem 1rem;
+      color: var(--ac-mid);
+      font-family: var(--font-head);
+      font-size: .78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+    }
+    .ac-spinner {
+      width: 32px; height: 32px;
+      border: 3px solid rgba(0,0,0,.08);
+      border-top-color: var(--pink);
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ═══════════════════════════════════════
+       SIDEBAR — publicaciones recientes
+    ═══════════════════════════════════════ */
+    .ac-sidebar {
+      position: sticky;
+      top: calc(clamp(56px,7vw,70px) + 1rem);
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .ac-sidebar__section {}
+    .ac-sidebar__title {
+      font-family: var(--font-head);
+      font-size: .62rem;
+      font-weight: 800;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--ac-mid);
+      margin-bottom: .85rem;
+      padding-bottom: .5rem;
+      border-bottom: 2px solid var(--ac-ink);
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+    .ac-sidebar__title-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* Pub card en sidebar */
+    .ac-pub-card {
+      background: #fff;
+      border: var(--ac-border);
+      border-radius: 4px;
+      padding: .9rem 1rem;
+      box-shadow: var(--ac-shadow-sm);
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      margin-bottom: .75rem;
+      transition: transform .15s, box-shadow .15s;
+      border-left: 4px solid var(--blue);
+    }
+    .ac-pub-card:hover { transform: translate(-2px,-2px); box-shadow: var(--ac-shadow); }
+    .ac-pub-card__journal {
+      font-family: var(--font-head);
+      font-size: .55rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: .3rem;
+    }
+    .ac-pub-card__title {
+      font-family: var(--font-head);
+      font-size: .78rem;
+      font-weight: 700;
+      color: var(--ac-ink);
+      line-height: 1.3;
+      margin-bottom: .3rem;
+    }
+    .ac-pub-card__authors {
+      font-size: .7rem;
+      color: var(--ac-mid);
+      font-weight: 300;
+      margin-bottom: .4rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .ac-pub-card__meta {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      font-family: var(--font-head);
+      font-size: .55rem;
+      font-weight: 700;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      color: var(--ac-mid);
+    }
+    .ac-pub-loading {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      font-family: var(--font-head);
+      font-size: .65rem;
+      font-weight: 600;
+      color: var(--ac-mid);
+      padding: 1rem 0;
+    }
+
+    /* ═══════════════════════════════════════
+       EVENTOS
+    ═══════════════════════════════════════ */
+    .ac-events {
+      background: var(--ac-ink);
+      border-bottom: var(--ac-border);
+      padding-block: clamp(3rem, 6vw, 5rem);
+    }
+    .ac-events__inner {
+      width: min(1400px, 96vw);
+      margin-inline: auto;
+      padding-inline: clamp(1rem, 3vw, 2rem);
+    }
+    .ac-events__header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .ac-events__label {
+      font-family: var(--font-head);
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--sulfur);
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      margin-bottom: .6rem;
+    }
+    .ac-events__label::before { content:''; display:block; width:25px; height:2.5px; background:var(--sulfur); }
+    .ac-events__title {
+      font-family: var(--font-head);
+      font-size: clamp(1.3rem, 2.5vw, 2rem);
+      font-weight: 900;
+      letter-spacing: -.04em;
+      color: var(--ivory);
+    }
+
+    .ac-events__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .ac-event-card {
+      background: #1a1a1a;
+      border: var(--ac-border);
+      border-color: rgba(255,255,255,.15);
+      border-radius: 4px;
+      padding: 1.3rem 1.4rem;
+      box-shadow: 4px 4px 0 rgba(255,255,255,.06);
+      transition: transform .15s, box-shadow .15s;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: .6rem;
+    }
+    .ac-event-card:hover {
+      transform: translate(-3px,-3px);
+      box-shadow: 7px 7px 0 rgba(255,255,255,.1);
+    }
+    .ac-event-card__date-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      font-family: var(--font-head);
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--sulfur);
+      align-self: flex-start;
+    }
+    .ac-event-card__date-badge::before {
+      content: '';
+      display: block;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--sulfur);
+      flex-shrink: 0;
+    }
+    .ac-event-card__title {
+      font-family: var(--font-head);
+      font-size: .95rem;
+      font-weight: 800;
+      color: var(--ivory);
+      line-height: 1.25;
+      letter-spacing: -.02em;
+    }
+    .ac-event-card__where {
+      font-size: .75rem;
+      color: var(--bone-400);
+      font-weight: 300;
+      display: flex;
+      align-items: center;
+      gap: .35rem;
+    }
+    .ac-event-card__type {
+      font-family: var(--font-head);
+      font-size: .55rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: .2em .55em;
+      border: 1.5px solid;
+      border-radius: 2px;
+      align-self: flex-start;
+      margin-top: auto;
+    }
+
+    /* ═══════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════ */
+    @media (max-width: 1050px) {
+      .ac-main__inner { grid-template-columns: 1fr; }
+      .ac-sidebar { position: static; }
+    }
+    @media (max-width: 760px) {
+      .ac-hero-card { grid-template-columns: 1fr; }
+      .ac-hero-card__img { min-height: 200px; border-right: none; border-bottom: var(--ac-border); }
+      .ac-filter-tabs { width: 100%; }
+      .ac-filter-tab { flex: 1; justify-content: center; font-size: .6rem; padding: .55rem .4rem; }
+    }
+    @media (max-width: 500px) {
+      .ac-grid { grid-template-columns: 1fr; }
+      .ac-events__grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════════════════════
+       HEADER GLOBAL
+  ══════════════════════════════════ -->
+  <header class="site-header" id="site-header">
+    <div class="container">
+      <nav class="nav" role="navigation" aria-label="Navegación principal">
+        <a href="/prueba-museo/index.html" class="nav__logo" aria-label="PaleoMuseo — Inicio">
+          <div class="nav__logo-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 4C5.3 4 4 5.3 4 7c0 .9.4 1.7 1 2.2V14.8C4.4 15.3 4 16.1 4 17c0 1.7 1.3 3 3 3s3-1.3 3-3c0-.4-.1-.8-.2-1.1L12 14l2.2 1.9c-.1.3-.2.7-.2 1.1 0 1.7 1.3 3 3 3s3-1.3 3-3c0-.9-.4-1.7-1-2.2V9.2c.6-.5 1-1.3 1-2.2 0-1.7-1.3-3-3-3s-3 1.3-3 3c0 .4.1.8.2 1.1L12 10 9.8 8.1C9.9 7.8 10 7.4 10 7c0-1.7-1.3-3-3-3z"/>
+            </svg>
+          </div>
+          <div>
+            <div>Paleo<strong>Museo</strong></div>
+            <div style="font-size:0.6em;font-weight:400;opacity:0.5;letter-spacing:0.1em">PALEOPATOLOGÍA</div>
+          </div>
+        </a>
+        <ul class="nav__links" role="list">
+          <li><a href="/prueba-museo/exploracion.html" class="nav__link">Exploración</a></li>
+          <li><a href="/prueba-museo/coleccion.html"   class="nav__link">Colección</a></li>
+          <li><a href="/prueba-museo/aula.html"        class="nav__link">Aula Virtual</a></li>
+          <li><a href="/prueba-museo/actualidad.html"  class="nav__link active">Actualidad</a></li>
+          <li><a href="/prueba-museo/index.html#proyecto" class="nav__link">Proyecto</a></li>
+        </ul>
+        <div class="nav__actions">
+          <a href="/prueba-museo/coleccion.html#buscados" class="btn btn--cyan" style="font-size:.78rem;padding:.55em 1.2em;">
+            <span>Buscar pieza</span>
+          </a>
+        </div>
+        <button class="nav__hamburger" id="nav-hamburger" aria-label="Abrir menú" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </nav>
+    </div>
+    <div class="nav__mobile" id="nav-mobile">
+      <ul role="list" style="display:flex;flex-direction:column;align-items:center;gap:2rem;text-align:center;">
+        <li><a href="/prueba-museo/exploracion.html" class="nav__link" style="font-size:1.6rem">Exploración</a></li>
+        <li><a href="/prueba-museo/coleccion.html"   class="nav__link" style="font-size:1.6rem">Colección</a></li>
+        <li><a href="/prueba-museo/aula.html"        class="nav__link" style="font-size:1.6rem">Aula Virtual</a></li>
+        <li><a href="/prueba-museo/actualidad.html"  class="nav__link" style="font-size:1.6rem">Actualidad</a></li>
+      </ul>
+    </div>
+  </header>
+
+
+  <!-- ══════════════════════════════════
+       PAGE HEADER + FILTROS
+  ══════════════════════════════════ -->
+  <div class="ac-header">
+    <div class="ac-header__inner">
+      <div class="ac-header__left">
+        <p class="ac-header__eyebrow">Módulo 05</p>
+        <h1 class="ac-header__title">Noticias &<br><em>Actualidad</em></h1>
+      </div>
+      <div class="ac-filter-tabs" role="group" aria-label="Filtrar contenido">
+        <button class="ac-filter-tab active" data-filter="all">Todo</button>
+        <button class="ac-filter-tab" data-filter="noticia">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 3H4v10c0 2.21 1.79 4 4 4h6c2.21 0 4-1.79 4-4v-3h2c1.11 0 2-.89 2-2V5c0-1.11-.89-2-2-2zm0 5h-2V5h2v3zM4 19h16v2H4z"/></svg>
+          Noticias
+        </button>
+        <button class="ac-filter-tab" data-filter="publicacion">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
+          Publicaciones
+        </button>
+        <button class="ac-filter-tab" data-filter="divulgacion">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+          Divulgación
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════
+       HERO DESTACADO
+  ══════════════════════════════════ -->
+  <section class="ac-hero" id="hero-section">
+    <div class="ac-hero__inner">
+      <p class="ac-hero__label">Noticia destacada</p>
+      <!-- Generado por JS desde NOTICIAS_PROPIAS[0] -->
+      <div id="hero-card-wrap"></div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════
+       GRID NOTICIAS + SIDEBAR PUBS
+  ══════════════════════════════════ -->
+  <section class="ac-main">
+    <div class="ac-main__inner">
+
+      <!-- Grid -->
+      <div class="ac-grid-wrap">
+        <div class="ac-grid-header">
+          <h2 class="ac-grid-title">Últimas noticias</h2>
+          <span class="ac-grid-count"><strong id="news-count">—</strong> artículos</span>
+        </div>
+        <div class="ac-grid" id="news-grid">
+          <div class="ac-loading">
+            <div class="ac-spinner"></div>
+            Cargando contenido…
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar publicaciones académicas -->
+      <aside class="ac-sidebar">
+        <div class="ac-sidebar__section">
+          <p class="ac-sidebar__title">
+            <span class="ac-sidebar__title-dot" style="background:var(--blue)"></span>
+            Publicaciones recientes
+          </p>
+          <div id="pubmed-list">
+            <div class="ac-pub-loading">
+              <div class="ac-spinner" style="width:18px;height:18px;border-width:2px"></div>
+              Consultando PubMed…
+            </div>
+          </div>
+        </div>
+
+        <div class="ac-sidebar__section">
+          <p class="ac-sidebar__title">
+            <span class="ac-sidebar__title-dot" style="background:var(--orange)"></span>
+            CrossRef · Últimos DOIs
+          </p>
+          <div id="crossref-list">
+            <div class="ac-pub-loading">
+              <div class="ac-spinner" style="width:18px;height:18px;border-width:2px;border-top-color:var(--orange)"></div>
+              Consultando CrossRef…
+            </div>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════
+       EVENTOS Y CONGRESOS
+  ══════════════════════════════════ -->
+  <section class="ac-events">
+    <div class="ac-events__inner">
+      <div class="ac-events__header">
+        <div>
+          <p class="ac-events__label">Próximas citas</p>
+          <h2 class="ac-events__title">Eventos y congresos</h2>
+        </div>
+      </div>
+      <div class="ac-events__grid" id="events-grid">
+        <!-- Generado por JS -->
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════
+       SCRIPTS
+  ══════════════════════════════════ -->
+  <script>
+  /* ═══════════════════════════════════════════════════════
+     DATOS PROPIOS — edita aquí tus noticias y eventos
+     ─────────────────────────────────────────────────────
+     tipo: 'noticia' | 'publicacion' | 'divulgacion'
+     Para añadir una noticia nueva: copia un objeto del array
+     y rellena los campos. url apunta al artículo original.
+  ═══════════════════════════════════════════════════════ */
+  const NOTICIAS_PROPIAS = [
+    {
+      id: 'n001',
+      tipo: 'noticia',
+      destacada: true,
+      titulo: 'Descubren una trepanación de 3.500 años en los Andes con evidencias de supervivencia',
+      descripcion: 'Un equipo de arqueólogos ha documentado en el yacimiento de Huaca Pucllana (Perú) una trepanación craneal con bordes completamente remodelados, indicando que el individuo sobrevivió al menos cinco años tras la intervención. Es uno de los casos más antiguos de cirugía exitosa documentado en América del Sur.',
+      fecha: '2025-03-15',
+      fuente: 'PaleoMuseo · Divulgación propia',
+      color: '#c0003c',
+      url: 'https://www.nature.com',
+      imagen: null,
+      emoji: '🦴'
+    },
+    {
+      id: 'n002',
+      tipo: 'divulgacion',
+      destacada: false,
+      titulo: 'La paleopatología en el aula: nuevas herramientas digitales para la enseñanza',
+      descripcion: 'El uso de modelos 3D y museos virtuales está transformando la forma en que se enseña bioarqueología en las universidades españolas. Este artículo recoge experiencias de varios grupos de investigación que están integrando la digitalización patrimonial en sus programas docentes.',
+      fecha: '2025-02-28',
+      fuente: 'PaleoMuseo · Artículo propio',
+      color: '#aa00ff',
+      url: '#',
+      imagen: null,
+      emoji: '🎓'
+    },
+    {
+      id: 'n003',
+      tipo: 'publicacion',
+      destacada: false,
+      titulo: 'Nueva metodología para el diagnóstico diferencial de lesiones infecciosas en hueso seco',
+      descripcion: 'Investigadores de la UAM y la Universidad de Granada proponen un protocolo estandarizado para distinguir entre periostitis por tuberculosis, treponematosis y brucelosis en restos óseos arqueológicos, aplicando análisis histológico y micro-CT.',
+      fecha: '2025-01-20',
+      fuente: 'International Journal of Paleopathology',
+      color: '#2979ff',
+      url: 'https://doi.org',
+      imagen: null,
+      emoji: '🔬'
+    },
+    {
+      id: 'n004',
+      tipo: 'noticia',
+      destacada: false,
+      titulo: 'Identificada la primera evidencia de escorbuto en población medieval andalusí',
+      descripcion: 'El análisis de restos óseos procedentes de la necrópolis de Madinat al-Zahra ha permitido identificar lesiones compatibles con escorbuto en individuos adultos, sugiriendo déficit de vitamina C en ciertos grupos poblacionales de Al-Ándalus.',
+      fecha: '2024-12-10',
+      fuente: 'PaleoMuseo · Divulgación propia',
+      color: '#ff6d00',
+      url: '#',
+      imagen: null,
+      emoji: '⚗️'
+    },
+    {
+      id: 'n005',
+      tipo: 'divulgacion',
+      destacada: false,
+      titulo: '¿Qué nos dicen los huesos sobre la violencia en la Prehistoria?',
+      descripcion: 'Una revisión de los patrones de trauma perimortem en Europa durante el Neolítico y la Edad del Bronce revela un aumento significativo de la violencia interpersonal coincidiendo con los primeros conflictos por recursos agrícolas y ganaderos.',
+      fecha: '2024-11-05',
+      fuente: 'PaleoMuseo · Artículo propio',
+      color: '#ff4081',
+      url: '#',
+      imagen: null,
+      emoji: '⚡'
+    },
+  ];
+
+  const EVENTOS = [
+    {
+      titulo: 'XX Congreso Nacional de Paleopatología',
+      fecha: 'Septiembre 2025',
+      lugar: 'Granada, España',
+      tipo: 'Congreso',
+      color: '#d4e60a',
+      url: '#'
+    },
+    {
+      titulo: 'Workshop: Digitalización 3D de Colecciones Osteológicas',
+      fecha: 'Octubre 2025',
+      lugar: 'UAM, Madrid',
+      tipo: 'Taller',
+      color: '#00e5ff',
+      url: '#'
+    },
+    {
+      titulo: 'International Symposium on Bioarchaeology and Identity',
+      fecha: 'Noviembre 2025',
+      lugar: 'Lisboa, Portugal',
+      tipo: 'Simposio',
+      color: '#ff6eb4',
+      url: '#'
+    },
+    {
+      titulo: 'Jornadas de Antropología Física UAM',
+      fecha: 'Febrero 2026',
+      lugar: 'UAM, Madrid',
+      tipo: 'Jornadas',
+      color: '#00e676',
+      url: '#'
+    },
+    {
+      titulo: 'Curso de Paleopatología Aplicada',
+      fecha: 'Marzo 2026',
+      lugar: 'Online',
+      tipo: 'Curso',
+      color: '#ff6d00',
+      url: '#'
+    },
+    {
+      titulo: 'European Association of Archaeologists — Annual Meeting',
+      fecha: 'Agosto 2026',
+      lugar: 'Berlín, Alemania',
+      tipo: 'Congreso',
+      color: '#aa00ff',
+      url: '#'
+    },
+  ];
+
+  /* ═══════════════════════════════════════════════════════
+     HELPERS
+  ═══════════════════════════════════════════════════════ */
+  const TYPE_LABELS = {
+    noticia:     { label: 'Noticia',     color: '#c0003c' },
+    publicacion: { label: 'Publicación', color: '#2979ff' },
+    divulgacion: { label: 'Divulgación', color: '#aa00ff' },
+  };
+
+  function formatDate(str) {
+    if (!str) return '';
+    const d = new Date(str);
+    return d.toLocaleDateString('es-ES', { day:'numeric', month:'long', year:'numeric' });
+  }
+
+  /* ═══════════════════════════════════════════════════════
+     HERO CARD
+  ═══════════════════════════════════════════════════════ */
+  function renderHero() {
+    const wrap = document.getElementById('hero-card-wrap');
+    const noticia = NOTICIAS_PROPIAS.find(n => n.destacada) || NOTICIAS_PROPIAS[0];
+    const tm = TYPE_LABELS[noticia.tipo];
+
+    wrap.innerHTML = `
+      <a href="${noticia.url}" target="_blank" rel="noopener noreferrer" class="ac-hero-card">
+        <div class="ac-hero-card__img">
+          ${noticia.imagen
+            ? `<img src="${noticia.imagen}" alt="${noticia.titulo}" />`
+            : `<div class="ac-hero-card__img-ph">${noticia.emoji}</div>`}
+        </div>
+        <div class="ac-hero-card__body">
+          <span class="ac-hero-card__tag" style="border-color:${tm.color};color:${tm.color};background:${tm.color}15">
+            ${tm.label}
+          </span>
+          <p class="ac-hero-card__date">${formatDate(noticia.fecha)}</p>
+          <h2 class="ac-hero-card__title">${noticia.titulo}</h2>
+          <p class="ac-hero-card__desc">${noticia.descripcion}</p>
+          <div class="ac-hero-card__source">
+            <span class="ac-hero-card__source-dot" style="background:${noticia.color}"></span>
+            ${noticia.fuente}
+            <span class="ac-hero-card__read">
+              Leer artículo
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+            </span>
+          </div>
+        </div>
+      </a>
+    `;
+  }
+
+  /* ═══════════════════════════════════════════════════════
+     GRID DE NOTICIAS PROPIAS
+  ═══════════════════════════════════════════════════════ */
+  let activeFilter = 'all';
+
+  function renderNewsGrid() {
+    const grid    = document.getElementById('news-grid');
+    const countEl = document.getElementById('news-count');
+
+    // Excluir la destacada del grid
+    const heroId = (NOTICIAS_PROPIAS.find(n => n.destacada) || NOTICIAS_PROPIAS[0]).id;
+    const filtered = NOTICIAS_PROPIAS
+      .filter(n => n.id !== heroId)
+      .filter(n => activeFilter === 'all' || n.tipo === activeFilter);
+
+    if (countEl) countEl.textContent = filtered.length;
+    grid.innerHTML = '';
+
+    if (filtered.length === 0) {
+      grid.innerHTML = `<div class="ac-loading" style="opacity:.5">Sin artículos para este filtro</div>`;
+      return;
+    }
+
+    filtered.forEach((n, i) => {
+      const tm = TYPE_LABELS[n.tipo];
+      const card = document.createElement('a');
+      card.href = n.url;
+      card.target = '_blank';
+      card.rel = 'noopener noreferrer';
+      card.className = 'ac-card';
+      card.style.animationDelay = `${i * 0.05}s`;
+
+      card.innerHTML = `
+        <div class="ac-card__accent" style="background:${tm.color}"></div>
+        <div class="ac-card__img">
+          ${n.imagen ? `<img src="${n.imagen}" alt="${n.titulo}" loading="lazy" />` : n.emoji}
+        </div>
+        <div class="ac-card__body">
+          <div class="ac-card__meta">
+            <span class="ac-card__tag" style="border-color:${tm.color};color:${tm.color};background:${tm.color}12">${tm.label}</span>
+            <span class="ac-card__date">${formatDate(n.fecha)}</span>
+          </div>
+          <h3 class="ac-card__title">${n.titulo}</h3>
+          <p class="ac-card__desc">${n.descripcion}</p>
+          <div class="ac-card__footer">
+            <span class="ac-card__source">
+              <span class="ac-card__source-dot" style="background:${n.color}"></span>
+              ${n.fuente}
+            </span>
+            <span class="ac-card__read" style="color:${tm.color}">
+              Leer
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+            </span>
+          </div>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+  }
+
+  /* ═══════════════════════════════════════════════════════
+     PUBMED — Europe PMC API (CORS abierto)
+     Busca: "paleopathology" OR "bioarchaeology"
+     Límite: 6 resultados recientes
+  ═══════════════════════════════════════════════════════ */
+  async function fetchPubMed() {
+    const list = document.getElementById('pubmed-list');
+    try {
+      const query = encodeURIComponent('paleopathology OR bioarchaeology OR "skeletal trauma"');
+      const url   = `https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=${query}&resultType=lite&pageSize=6&sort=P_PDATE_D%20desc&format=json`;
+      const res   = await fetch(url);
+      const data  = await res.json();
+      const items = data?.resultList?.result || [];
+
+      if (items.length === 0) {
+        list.innerHTML = '<p style="font-size:.75rem;color:var(--ac-mid);font-family:var(--font-ui);font-weight:300">No se encontraron resultados recientes.</p>';
+        return;
+      }
+
+      list.innerHTML = '';
+      items.forEach(item => {
+        const a = document.createElement('a');
+        a.href   = item.doi ? `https://doi.org/${item.doi}` : `https://europepmc.org/article/${item.source}/${item.id}`;
+        a.target = '_blank';
+        a.rel    = 'noopener noreferrer';
+        a.className = 'ac-pub-card';
+
+        const authors = item.authorString
+          ? item.authorString.split(',').slice(0,2).join(',') + (item.authorString.split(',').length > 2 ? ' et al.' : '')
+          : 'Autor desconocido';
+
+        a.innerHTML = `
+          <p class="ac-pub-card__journal">${item.journalTitle || 'Europe PMC'}</p>
+          <p class="ac-pub-card__title">${item.title || 'Sin título'}</p>
+          <p class="ac-pub-card__authors">${authors}</p>
+          <div class="ac-pub-card__meta">
+            <span>📅 ${item.pubYear || '—'}</span>
+            ${item.doi ? `<span style="color:var(--blue)">DOI disponible</span>` : ''}
+          </div>
+        `;
+        list.appendChild(a);
+      });
+
+    } catch (err) {
+      list.innerHTML = `
+        <p style="font-size:.75rem;color:var(--ac-mid);font-family:var(--font-ui);font-weight:300;line-height:1.6">
+          No se pudo conectar con PubMed/Europe PMC.<br>
+          <a href="https://europepmc.org/search?query=paleopathology" target="_blank" rel="noopener noreferrer" style="color:var(--blue);font-weight:600">Buscar manualmente →</a>
+        </p>`;
+    }
+  }
+
+  /* ═══════════════════════════════════════════════════════
+     CROSSREF — API pública
+     Busca: "paleopathology" publicaciones recientes
+     Límite: 5 resultados
+  ═══════════════════════════════════════════════════════ */
+  async function fetchCrossRef() {
+    const list = document.getElementById('crossref-list');
+    try {
+      const query = encodeURIComponent('paleopathology skeletal');
+      const url   = `https://api.crossref.org/works?query=${query}&rows=5&sort=published&order=desc&select=DOI,title,author,published,container-title`;
+      const res   = await fetch(url, { headers: { 'User-Agent': 'PaleoMuseo/1.0 (TFG UAM; mailto:contacto@example.com)' } });
+      const data  = await res.json();
+      const items = data?.message?.items || [];
+
+      if (items.length === 0) {
+        list.innerHTML = '<p style="font-size:.75rem;color:var(--ac-mid)">Sin resultados recientes.</p>';
+        return;
+      }
+
+      list.innerHTML = '';
+      items.forEach(item => {
+        const a = document.createElement('a');
+        a.href   = `https://doi.org/${item.DOI}`;
+        a.target = '_blank';
+        a.rel    = 'noopener noreferrer';
+        a.className = 'ac-pub-card';
+        a.style.borderLeftColor = 'var(--orange)';
+
+        const title   = Array.isArray(item.title) ? item.title[0] : (item.title || 'Sin título');
+        const journal = Array.isArray(item['container-title']) ? item['container-title'][0] : '';
+        const year    = item.published?.['date-parts']?.[0]?.[0] || '—';
+        const authors = item.author
+          ? item.author.slice(0,2).map(a => `${a.family || ''}`).join(', ') + (item.author.length > 2 ? ' et al.' : '')
+          : '';
+
+        a.innerHTML = `
+          <p class="ac-pub-card__journal" style="color:var(--orange)">${journal || 'CrossRef'}</p>
+          <p class="ac-pub-card__title">${title}</p>
+          ${authors ? `<p class="ac-pub-card__authors">${authors}</p>` : ''}
+          <div class="ac-pub-card__meta">
+            <span>📅 ${year}</span>
+            <span style="color:var(--orange)">DOI: ${item.DOI.slice(0,20)}…</span>
+          </div>
+        `;
+        list.appendChild(a);
+      });
+
+    } catch (err) {
+      list.innerHTML = `
+        <p style="font-size:.75rem;color:var(--ac-mid);font-family:var(--font-ui);font-weight:300;line-height:1.6">
+          No se pudo conectar con CrossRef.<br>
+          <a href="https://search.crossref.org/?q=paleopathology" target="_blank" rel="noopener noreferrer" style="color:var(--orange);font-weight:600">Buscar manualmente →</a>
+        </p>`;
+    }
+  }
+
+  /* ═══════════════════════════════════════════════════════
+     EVENTOS
+  ═══════════════════════════════════════════════════════ */
+  function renderEventos() {
+    const grid = document.getElementById('events-grid');
+    grid.innerHTML = '';
+    EVENTOS.forEach(ev => {
+      const a = document.createElement('a');
+      a.href   = ev.url || '#';
+      a.target = ev.url !== '#' ? '_blank' : '_self';
+      a.rel    = 'noopener noreferrer';
+      a.className = 'ac-event-card';
+      a.innerHTML = `
+        <span class="ac-event-card__date-badge">${ev.fecha}</span>
+        <h3 class="ac-event-card__title">${ev.titulo}</h3>
+        <p class="ac-event-card__where">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" opacity=".5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+          ${ev.lugar}
+        </p>
+        <span class="ac-event-card__type" style="border-color:${ev.color};color:${ev.color}">${ev.tipo}</span>
+      `;
+      grid.appendChild(a);
+    });
+  }
+
+  /* ═══════════════════════════════════════════════════════
+     FILTROS DE TABS
+  ═══════════════════════════════════════════════════════ */
+  document.querySelectorAll('.ac-filter-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.ac-filter-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      activeFilter = tab.dataset.filter;
+      renderNewsGrid();
+    });
+  });
+
+  /* ── Nav ── */
+  const hamburger = document.getElementById('nav-hamburger');
+  const drawer    = document.getElementById('nav-mobile');
+  let navOpen = false;
+  hamburger?.addEventListener('click', () => {
+    navOpen = !navOpen;
+    hamburger.classList.toggle('open', navOpen);
+    drawer.classList.toggle('open', navOpen);
+    hamburger.setAttribute('aria-expanded', String(navOpen));
+    document.body.style.overflow = navOpen ? 'hidden' : '';
+  });
+  window.addEventListener('scroll', () => {
+    document.getElementById('site-header')?.classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive: true });
+
+  /* ── GSAP ── */
+  window.addEventListener('load', () => {
+    if (typeof gsap === 'undefined') return;
+    gsap.from('.ac-hero-card',   { y: 25, opacity: 0, duration: .7, ease: 'power3.out', delay: .2 });
+    gsap.from('.ac-event-card',  { y: 20, opacity: 0, stagger: .08, duration: .5, ease: 'power2.out', delay: .1 });
+  });
+
+  /* ══════════════════════════════════════════
+     INIT
+  ══════════════════════════════════════════ */
+  renderHero();
+  renderNewsGrid();
+  renderEventos();
+  fetchPubMed();
+  fetchCrossRef();
+  </script>
+
+</body>
+</html>
