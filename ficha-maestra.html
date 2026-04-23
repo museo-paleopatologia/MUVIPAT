@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Ficha maestra — Cráneo UAM-001. Exploración inmersiva con scrollytelling y modelo 3D interactivo." />
+  <title>Cráneo UAM-001 · Ficha Maestra · PaleoMuseo</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700;800;900&family=Montserrat:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet" />
+
+  <!-- Model Viewer -->
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Global styles -->
+  <link rel="stylesheet" href="/prueba-museo/css/style.css" />
+
+  <style>
+    /* ═══════════════════════════════════════════════════
+       FICHA MAESTRA — variables locales
+    ═══════════════════════════════════════════════════ */
+    :root {
+      --fm-bg:        #f4f1ea;
+      --fm-bone:      #e8dfc8;
+      --fm-ink:       #0d0d0d;
+      --fm-card-bg:   #ffffff;
+      --fm-shadow:    8px 8px 0px #0d0d0d;
+      --fm-shadow-sm: 4px 4px 0px #0d0d0d;
+      --fm-border:    4px solid #0d0d0d;
+      --fm-cyan:      #00e5ff;
+      --fm-crimson:   #c0003c;
+      --fm-sulfur:    #d4e60a;
+      --fm-viewer-h:  100svh;
+    }
+
+    /* ─── Reset local ─── */
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      background: var(--fm-bg);
+      color: var(--fm-ink);
+      overflow-x: hidden;
+    }
+
+    /* ─── Nav override: fondo hueso en lugar de ivory ─── */
+    .site-header {
+      background: var(--fm-bg) !important;
+    }
+    .site-header.scrolled {
+      background: rgba(244,241,234,.96) !important;
+    }
+
+    /* ═══════════════════════════════════════════════════
+       HERO — título completo antes del scroll
+    ═══════════════════════════════════════════════════ */
+    .fm-hero {
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      padding-top: clamp(56px, 7vw, 70px);
+      background: var(--fm-ink);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Grid animado de fondo */
+    .fm-hero__grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,229,255,.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,229,255,.05) 1px, transparent 1px);
+      background-size: 55px 55px;
+      animation: gridDrift 25s linear infinite;
+      pointer-events: none;
+    }
+    @keyframes gridDrift {
+      0%   { transform: translate(0,0); }
+      100% { transform: translate(55px,55px); }
+    }
+
+    .fm-hero__inner {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(2rem, 5vw, 5rem);
+      align-items: center;
+      width: min(1400px, 96vw);
+      margin-inline: auto;
+      padding-inline: clamp(1rem, 3vw, 2rem);
+      padding-block: 4rem;
+    }
+
+    .fm-hero__label {
+      font-family: 'Lexend', sans-serif;
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--fm-cyan);
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      margin-bottom: 1rem;
+    }
+    .fm-hero__label::before {
+      content: '';
+      display: block;
+      width: 28px; height: 2px;
+      background: var(--fm-cyan);
+    }
+
+    .fm-hero__title {
+      font-family: 'Lexend', sans-serif;
+      font-size: clamp(2.8rem, 6vw, 6rem);
+      font-weight: 900;
+      line-height: .95;
+      letter-spacing: -.04em;
+      color: #f4f1ea;
+      margin-bottom: 1rem;
+    }
+    .fm-hero__title em {
+      font-style: italic;
+      font-family: 'Playfair Display', serif;
+      color: var(--fm-cyan);
+      font-size: .75em;
+      display: block;
+    }
+
+    .fm-hero__meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .6rem;
+      margin-bottom: 2rem;
+    }
+    .fm-hero__chip {
+      font-family: 'Lexend', sans-serif;
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: .3em .8em;
+      border: 2px solid;
+      border-radius: 2px;
+    }
+    .fm-hero__chip--region   { border-color: var(--fm-cyan);    color: var(--fm-cyan); }
+    .fm-hero__chip--patol    { border-color: var(--fm-crimson);  color: var(--fm-crimson); }
+    .fm-hero__chip--epoca    { border-color: var(--fm-sulfur);   color: var(--fm-sulfur); }
+    .fm-hero__chip--sexo     { border-color: rgba(255,255,255,.3); color: rgba(255,255,255,.6); }
+
+    .fm-hero__desc {
+      font-size: clamp(.88rem, 1.4vw, 1rem);
+      line-height: 1.75;
+      color: #c8aa78;
+      font-weight: 300;
+      max-width: 46ch;
+      margin-bottom: 2.5rem;
+    }
+
+    .fm-hero__scroll-hint {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      font-family: 'Lexend', sans-serif;
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: #6b5a43;
+      animation: bounce 2s ease-in-out infinite;
+    }
+    @keyframes bounce {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(6px); }
+    }
+    .fm-hero__scroll-arrow {
+      width: 20px; height: 20px;
+      border-right: 2px solid #6b5a43;
+      border-bottom: 2px solid #6b5a43;
+      transform: rotate(45deg) translate(-4px,-4px);
+    }
+
+    /* Viewer preview en hero */
+    .fm-hero__viewer-preview {
+      position: relative;
+    }
+    .fm-hero__viewer-preview model-viewer {
+      width: 100%;
+      height: clamp(320px, 50vh, 560px);
+      background: transparent;
+      border: var(--fm-border);
+      border-color: rgba(0,229,255,.25);
+      border-radius: 4px;
+      box-shadow: 0 0 80px rgba(0,229,255,.08);
+    }
+    .fm-hero__viewer-preview::before,
+    .fm-hero__viewer-preview::after {
+      content: '';
+      position: absolute;
+      width: 18px; height: 18px;
+      border-color: var(--fm-cyan);
+      border-style: solid;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .fm-hero__viewer-preview::before { top: 10px; left: 10px; border-width: 2px 0 0 2px; }
+    .fm-hero__viewer-preview::after  { bottom: 10px; right: 10px; border-width: 0 2px 2px 0; }
+
+    /* ═══════════════════════════════════════════════════
+       SCROLLYTELLING — layout sticky
+    ═══════════════════════════════════════════════════ */
+    .fm-story {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+    }
+
+    /* ─── Lado izquierdo: viewer sticky ─── */
+    .fm-sticky-viewer {
+      position: sticky;
+      top: clamp(56px, 7vw, 70px);
+      height: calc(100svh - clamp(56px, 7vw, 70px));
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: var(--fm-ink);
+      border-right: var(--fm-border);
+      padding: 1.5rem;
+      overflow: hidden;
+    }
+
+    /* Ruido de fondo en el viewer */
+    .fm-sticky-viewer::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,229,255,.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,229,255,.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+    }
+
+    #main-model-viewer {
+      width: 100%;
+      height: 75%;
+      max-height: 580px;
+      background: transparent;
+      position: relative;
+      z-index: 1;
+      /* Desactivamos auto-rotate tras el primer paso */
+      --progress-bar-color: transparent;
+    }
+
+    /* Indicador de cámara activa */
+    .fm-camera-indicator {
+      position: absolute;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: .5rem;
+      z-index: 2;
+    }
+    .fm-cam-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(0,229,255,.4);
+      background: transparent;
+      transition: background .3s, border-color .3s;
+    }
+    .fm-cam-dot.active {
+      background: var(--fm-cyan);
+      border-color: var(--fm-cyan);
+      box-shadow: 0 0 8px rgba(0,229,255,.7);
+    }
+
+    /* Etiqueta de vista actual */
+    .fm-view-label {
+      position: absolute;
+      top: 1.2rem;
+      left: 1.2rem;
+      font-family: 'Lexend', sans-serif;
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--fm-cyan);
+      opacity: .6;
+      z-index: 2;
+      transition: opacity .3s;
+    }
+
+    /* ─── Lado derecho: steps de scroll ─── */
+    .fm-steps {
+      background: var(--fm-bg);
+      padding: 0;
+    }
+
+    .fm-step {
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 3.5rem);
+      border-bottom: var(--fm-border);
+      position: relative;
+    }
+    .fm-step:last-child { border-bottom: none; }
+
+    /* Card neobrutalista */
+    .fm-card {
+      background: var(--fm-card-bg);
+      border: var(--fm-border);
+      border-radius: 4px;
+      box-shadow: var(--fm-shadow);
+      padding: clamp(1.5rem, 3vw, 2.5rem);
+      width: 100%;
+      max-width: 520px;
+      position: relative;
+      /* Animación de entrada al hacer scroll */
+      opacity: 0;
+      transform: translateX(40px);
+      transition: opacity .6s ease, transform .6s cubic-bezier(.34,1.06,.64,1);
+    }
+    .fm-card.in-view {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* Barra de acento superior */
+    .fm-card__accent {
+      position: absolute;
+      top: 0; left: -4px; right: -4px;
+      height: 5px;
+      border-radius: 4px 4px 0 0;
+    }
+
+    .fm-step-num {
+      font-family: 'Lexend', sans-serif;
+      font-size: .62rem;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      opacity: .4;
+      margin-bottom: .75rem;
+    }
+
+    .fm-card__title {
+      font-family: 'Lexend', sans-serif;
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -.03em;
+      margin-bottom: 1rem;
+      color: var(--fm-ink);
+    }
+
+    .fm-card__body {
+      font-size: clamp(.85rem, 1.3vw, .95rem);
+      line-height: 1.8;
+      color: #3d3d3d;
+      font-weight: 400;
+      margin-bottom: 1.5rem;
+    }
+    .fm-card__body strong {
+      color: var(--fm-ink);
+      font-weight: 700;
+    }
+
+    /* Data grid dentro de la card */
+    .fm-data-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .6rem;
+      margin-bottom: 1.5rem;
+    }
+    .fm-data-item {
+      background: var(--fm-bg);
+      border: 2px solid var(--fm-ink);
+      border-radius: 2px;
+      padding: .6rem .8rem;
+      box-shadow: 2px 2px 0 var(--fm-ink);
+    }
+    .fm-data-item__label {
+      font-family: 'Lexend', sans-serif;
+      font-size: .55rem;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: #6b5a43;
+      margin-bottom: .2rem;
+    }
+    .fm-data-item__value {
+      font-family: 'Lexend', sans-serif;
+      font-size: .85rem;
+      font-weight: 700;
+      color: var(--fm-ink);
+    }
+
+    /* Tags en la card */
+    .fm-card__tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .45rem;
+      margin-bottom: 1.2rem;
+    }
+    .fm-tag {
+      font-family: 'Lexend', sans-serif;
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: .25em .65em;
+      border: 2px solid;
+      border-radius: 2px;
+    }
+
+    /* Hint de cámara */
+    .fm-camera-hint {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      font-family: 'Lexend', sans-serif;
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: #6b5a43;
+      padding-top: 1rem;
+      border-top: 1.5px solid var(--fm-bone);
+    }
+    .fm-camera-hint svg { flex-shrink: 0; opacity: .5; }
+
+    /* Zona interactiva en step 3 */
+    .fm-interact-note {
+      background: rgba(0,229,255,.06);
+      border: 2px solid rgba(0,229,255,.3);
+      border-radius: 2px;
+      padding: .7rem 1rem;
+      font-size: .75rem;
+      color: #00a8bf;
+      font-family: 'Lexend', sans-serif;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      margin-top: 1rem;
+    }
+
+    /* ═══════════════════════════════════════════════════
+       SECCIÓN FINAL — datos técnicos + link a colección
+    ═══════════════════════════════════════════════════ */
+    .fm-footer-section {
+      background: var(--fm-ink);
+      border-top: var(--fm-border);
+      padding: clamp(3rem, 6vw, 6rem) 0;
+    }
+
+    .fm-footer-inner {
+      width: min(1400px, 96vw);
+      margin-inline: auto;
+      padding-inline: clamp(1rem, 3vw, 2rem);
+    }
+
+    .fm-footer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .fm-footer-card {
+      background: #1a1a1a;
+      border: var(--fm-border);
+      border-color: rgba(255,255,255,.15);
+      border-radius: 4px;
+      padding: 1.5rem;
+      box-shadow: 4px 4px 0 rgba(255,255,255,.08);
+    }
+    .fm-footer-card__label {
+      font-family: 'Lexend', sans-serif;
+      font-size: .58rem;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: #6b5a43;
+      margin-bottom: .5rem;
+    }
+    .fm-footer-card__value {
+      font-family: 'Lexend', sans-serif;
+      font-size: .92rem;
+      font-weight: 700;
+      color: #f4f1ea;
+      line-height: 1.4;
+    }
+    .fm-footer-card__value span {
+      display: block;
+      font-weight: 300;
+      font-size: .8rem;
+      color: #8a7a65;
+      margin-top: .2rem;
+    }
+
+    .fm-footer-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+
+    .fm-footer-nav__back {
+      font-family: 'Lexend', sans-serif;
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: #6b5a43;
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+      transition: color .2s;
+      text-decoration: none;
+    }
+    .fm-footer-nav__back:hover { color: var(--fm-cyan); }
+
+    /* ═══════════════════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════════════════ */
+    @media (max-width: 860px) {
+      .fm-hero__inner { grid-template-columns: 1fr; }
+      .fm-hero__viewer-preview { order: -1; }
+
+      .fm-story { grid-template-columns: 1fr; }
+
+      .fm-sticky-viewer {
+        position: sticky;
+        top: clamp(56px, 7vw, 70px);
+        height: 50svh;
+        border-right: none;
+        border-bottom: var(--fm-border);
+        z-index: 10;
+      }
+      #main-model-viewer { height: 100%; max-height: none; }
+
+      .fm-step {
+        min-height: auto;
+        padding: 2rem 1.25rem;
+      }
+      .fm-card { max-width: 100%; box-shadow: var(--fm-shadow-sm); }
+
+      .fm-footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 500px) {
+      .fm-footer-grid { grid-template-columns: 1fr; }
+      .fm-data-grid   { grid-template-columns: 1fr; }
+      .fm-hero__title { font-size: 2.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════════════════════
+       HEADER
+  ══════════════════════════════════ -->
+  <header class="site-header" id="site-header">
+    <div class="container">
+      <nav class="nav" role="navigation" aria-label="Navegación principal">
+        <a href="/prueba-museo/index.html" class="nav__logo" aria-label="PaleoMuseo — Inicio">
+          <div class="nav__logo-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 4C5.3 4 4 5.3 4 7c0 .9.4 1.7 1 2.2V14.8C4.4 15.3 4 16.1 4 17c0 1.7 1.3 3 3 3s3-1.3 3-3c0-.4-.1-.8-.2-1.1L12 14l2.2 1.9c-.1.3-.2.7-.2 1.1 0 1.7 1.3 3 3 3s3-1.3 3-3c0-.9-.4-1.7-1-2.2V9.2c.6-.5 1-1.3 1-2.2 0-1.7-1.3-3-3-3s-3 1.3-3 3c0 .4.1.8.2 1.1L12 10 9.8 8.1C9.9 7.8 10 7.4 10 7c0-1.7-1.3-3-3-3z"/>
+            </svg>
+          </div>
+          <div>
+            <div>Paleo<strong>Museo</strong></div>
+            <div style="font-size:0.6em;font-weight:400;opacity:0.5;letter-spacing:0.1em">PALEOPATOLOGÍA</div>
+          </div>
+        </a>
+        <ul class="nav__links" role="list">
+          <li><a href="/prueba-museo/exploracion.html" class="nav__link">Exploración</a></li>
+          <li><a href="/prueba-museo/coleccion.html"   class="nav__link">Colección</a></li>
+          <li><a href="/prueba-museo/aula.html"        class="nav__link">Aula Virtual</a></li>
+          <li><a href="/prueba-museo/actualidad.html"  class="nav__link">Actualidad</a></li>
+        </ul>
+        <div class="nav__actions">
+          <a href="/prueba-museo/coleccion.html" class="btn btn--primary" style="font-size:.78rem;padding:.55em 1.2em;">
+            <span>Ver colección</span>
+          </a>
+        </div>
+        <button class="nav__hamburger" id="nav-hamburger" aria-label="Abrir menú" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </nav>
+    </div>
+    <div class="nav__mobile" id="nav-mobile">
+      <ul role="list" style="display:flex;flex-direction:column;align-items:center;gap:2rem;text-align:center;">
+        <li><a href="/prueba-museo/exploracion.html" class="nav__link" style="font-size:1.6rem">Exploración</a></li>
+        <li><a href="/prueba-museo/coleccion.html"   class="nav__link" style="font-size:1.6rem">Colección</a></li>
+        <li><a href="/prueba-museo/aula.html"        class="nav__link" style="font-size:1.6rem">Aula Virtual</a></li>
+        <li><a href="/prueba-museo/actualidad.html"  class="nav__link" style="font-size:1.6rem">Actualidad</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- ══════════════════════════════════
+       HERO
+  ══════════════════════════════════ -->
+  <section class="fm-hero" aria-label="Presentación de la pieza">
+    <div class="fm-hero__grid" aria-hidden="true"></div>
+    <div class="fm-hero__inner">
+
+      <!-- Texto hero -->
+      <div class="fm-hero__text">
+        <p class="fm-hero__label">Ficha Maestra · OV-001</p>
+        <h1 class="fm-hero__title">
+          Cráneo<br>
+          <em>con trepanación</em>
+        </h1>
+
+        <div class="fm-hero__meta">
+          <span class="fm-hero__chip fm-hero__chip--region">💀 Cráneo</span>
+          <span class="fm-hero__chip fm-hero__chip--patol">⚡ Traumatismo</span>
+          <span class="fm-hero__chip fm-hero__chip--epoca">📅 Prehistoria</span>
+          <span class="fm-hero__chip fm-hero__chip--sexo">♂ Masculino</span>
+        </div>
+
+        <p class="fm-hero__desc">
+          Ejemplar excepcional procedente de la Cueva de los Murciélagos (Granada).
+          Trepanación circular de 35 mm en el parietal derecho con evidencia clara
+          de supervivencia prolongada post-quirúrgica.
+        </p>
+
+        <div class="fm-hero__scroll-hint" aria-hidden="true">
+          <div class="fm-hero__scroll-arrow"></div>
+          Desplázate para explorar
+        </div>
+      </div>
+
+      <!-- Viewer preview en hero -->
+      <div class="fm-hero__viewer-preview" aria-label="Vista previa del modelo 3D">
+        <model-viewer
+          id="hero-model"
+          src="/prueba-museo/assets/models/avas_skull.glb"
+          alt="Cráneo paleopatológico con trepanación — vista general"
+          auto-rotate
+          camera-controls
+          shadow-intensity="2"
+          exposure="0.7"
+          camera-orbit="0deg 80deg 100%"
+          style="width:100%;height:clamp(320px,50vh,560px);background:transparent">
+        </model-viewer>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════
+       SCROLLYTELLING
+  ══════════════════════════════════ -->
+  <div class="fm-story" id="story">
+
+    <!-- ── Viewer sticky izquierdo ── -->
+    <div class="fm-sticky-viewer" aria-hidden="true">
+      <span class="fm-view-label" id="view-label">Vista general</span>
+
+      <!--
+        MODEL VIEWER PRINCIPAL
+        ─────────────────────────────────────────────────────────────────
+        AJUSTE DE CÁMARA:
+          camera-orbit = "azimuth elevation zoom"
+          - azimuth:   0deg = frente | 90deg = derecha | -90deg = izquierda | 180deg = espalda
+          - elevation: 90deg = ecuador | 0deg = cenital | 180deg = inferior
+          - zoom:      100% = distancia base | 80% = más cerca | 120% = más lejos
+
+        camera-target = "X Y Z" en metros (centro de enfoque)
+          - Desplaza el punto de pivote para hacer zoom en zonas concretas
+          - Ejemplo: "0m 0.05m 0m" sube el centro de pivote 5cm
+
+        Para afinar sobre una lesión:
+          1. Carga la página, activa camera-controls
+          2. Navega manualmente al ángulo deseado
+          3. Abre DevTools → consola → escribe: document.querySelector('#main-viewer').cameraOrbit
+          4. Copia ese valor al atributo data-orbit del step correspondiente
+        ─────────────────────────────────────────────────────────────────
+      -->
+      <model-viewer
+        id="main-viewer"
+        src="/prueba-museo/assets/models/avas_skull.glb"
+        alt="Cráneo paleopatológico — exploración interactiva"
+        shadow-intensity="2"
+        exposure="0.7"
+        camera-orbit="0deg 80deg 100%"
+        camera-target="0m 0m 0m"
+        interaction-prompt="none"
+        style="width:100%;height:75%;max-height:580px;background:transparent;--progress-bar-color:transparent">
+      </model-viewer>
+
+      <!-- Dots indicadores de step -->
+      <div class="fm-camera-indicator" role="presentation">
+        <div class="fm-cam-dot active" id="dot-0"></div>
+        <div class="fm-cam-dot" id="dot-1"></div>
+        <div class="fm-cam-dot" id="dot-2"></div>
+        <div class="fm-cam-dot" id="dot-3"></div>
+      </div>
+    </div>
+
+    <!-- ── Steps de narrativa ── -->
+    <div class="fm-steps">
+
+      <!-- STEP 0 — Introducción / vista general -->
+      <section class="fm-step" id="step-0"
+        data-orbit="0deg 80deg 100%"
+        data-target="0m 0m 0m"
+        data-label="Vista general"
+        data-autorotate="true">
+
+        <div class="fm-card" id="card-0">
+          <div class="fm-card__accent" style="background:var(--fm-cyan)"></div>
+
+          <p class="fm-step-num">01 / Introducción</p>
+          <h2 class="fm-card__title">Cráneo UAM-001<br>Vista general</h2>
+
+          <div class="fm-data-grid">
+            <div class="fm-data-item">
+              <p class="fm-data-item__label">Yacimiento</p>
+              <p class="fm-data-item__value">Cueva de los Murciélagos</p>
+            </div>
+            <div class="fm-data-item">
+              <p class="fm-data-item__label">Cronología</p>
+              <p class="fm-data-item__value">~3200 a.C.</p>
+            </div>
+            <div class="fm-data-item">
+              <p class="fm-data-item__label">Sexo biológico</p>
+              <p class="fm-data-item__value">Masculino</p>
+            </div>
+            <div class="fm-data-item">
+              <p class="fm-data-item__label">Edad estimada</p>
+              <p class="fm-data-item__value">35–45 años</p>
+            </div>
+          </div>
+
+          <p class="fm-card__body">
+            El espécimen presenta una <strong>morfología craneal robusta</strong>, típica de
+            individuos masculinos del Neolítico peninsular. La normocrania general
+            está bien preservada, con pérdida mínima de material óseo post-depositacional.
+            El índice cefálico calculado es de 76,4 (mesocéfalo).
+          </p>
+
+          <div class="fm-card__tags">
+            <span class="fm-tag" style="border-color:#00e5ff;color:#00a8bf">💀 Cráneo</span>
+            <span class="fm-tag" style="border-color:#c0003c;color:#c0003c">⚡ Traumatismo</span>
+            <span class="fm-tag" style="border-color:#b08d55;color:#b08d55">📅 Neolítico</span>
+          </div>
+
+          <p class="fm-camera-hint">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+            Vista rotativa — el modelo gira automáticamente
+          </p>
+        </div>
+      </section>
+
+      <!-- STEP 1 — Análisis frontal -->
+      <section class="fm-step" id="step-1"
+        data-orbit="0deg 75deg 90%"
+        data-target="0m 0.02m 0m"
+        data-label="Vista frontal">
+
+        <!--
+          AJUSTE MANUAL STEP 1 — Vista frontal norma faciei
+          azimuth actual: 0deg (frente exacto)
+          elevation: 75deg (ligeramente por encima del ecuador)
+          zoom: 90% (algo más cerca)
+          Para enfocar más la región orbital: cambiar target a "0m 0.04m 0m"
+        -->
+        <div class="fm-card" id="card-1">
+          <div class="fm-card__accent" style="background:var(--fm-crimson)"></div>
+
+          <p class="fm-step-num">02 / Morfología frontal</p>
+          <h2 class="fm-card__title">Análisis<br>Norma Faciei</h2>
+
+          <p class="fm-card__body">
+            La <strong>norma faciei</strong> revela una frente moderadamente inclinada
+            con arcos superciliares marcados. Los <strong>arcos cigomáticos</strong>
+            son prominentes y bien desarrollados, coherentes con una musculatura
+            masticatoria robusta.
+          </p>
+          <p class="fm-card__body">
+            Las <strong>órbitas</strong> presentan morfología cuadrangular con
+            bordes superiores agudos. Se aprecia ligera asimetría facial izquierda,
+            posiblemente de origen funcional. La <strong>abertura piriforme</strong>
+            es estrecha, de tipo leptorrino (índice nasal = 42,1).
+          </p>
+
+          <div class="fm-data-grid">
+            <div class="fm-data-item">
+              <p class="fm-data-item__label">Índice cefálico</p>
+              <p class="fm-data-item__value">76.4 — Mesocéfalo</p>
+            </div>
+            <div class="fm-data-item">
+              <p class="fm-data-item__label">Índice nasal</p>
+              <p class="fm-data-item__value">42.1 — Leptorrino</p>
+            </div>
+          </div>
+
+          <p class="fm-camera-hint">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg>
+            Vista frontal — norma faciei
+          </p>
+        </div>
+      </section>
+
+      <!-- STEP 2 — Detalle patológico (trepanación) -->
+      <section class="fm-step" id="step-2"
+        data-orbit="45deg 70deg 70%"
+        data-target="0m 0.08m 0.02m"
+        data-label="Zona patológica">
+
+        <!--
+          AJUSTE MANUAL STEP 2 — Trepanación en parietal derecho
+          azimuth: 45deg (entre frente y derecha para ver el parietal)
+          elevation: 70deg
+          zoom: 70% (acercamiento significativo a la lesión)
+          target: "0m 0.08m 0.02m" — sube y adelanta el pivote hacia el parietal
+          ⚠ Si la trepanación queda fuera de cuadro:
+            - Sube el target Y (0.10m, 0.12m...)
+            - Ajusta azimuth hacia -30deg si está en el parietal izquierdo
+            - Ajusta zoom a 60% para más acercamiento
+        -->
+        <div class="fm-card" id="card-2">
+          <div class="fm-card__accent" style="background:var(--fm-crimson)"></div>
+
+          <p class="fm-step-num">03 / Lesión patológica</p>
+          <h2 class="fm-card__title">Trepanación<br>Parietal derecho</h2>
+
+          <p class="fm-card__body">
+            La <strong>trepanación circular</strong> de 35 mm de diámetro localizada
+            en el tercio posterior del parietal derecho constituye el hallazgo principal.
+            La técnica empleada es el <strong>raspado por abrasión</strong>, identificable
+            por las estrías concéntricas en el bisel interno.
+          </p>
+          <p class="fm-card__body">
+            Los bordes presentan <strong>remodelación ósea completa</strong> con formación
+            de tejido compacto lamelar. Esto indica una supervivencia mínima de
+            <strong>6–8 años</strong> post-intervención, convirtiéndolo en uno de los
+            casos más documentados de cirugía prehistórica exitosa en la Península Ibérica.
+          </p>
+
+          <div class="fm-data-grid">
+            <div class="fm-data-item">
+              <p class="fm-data-item__label">Técnica</p>
+              <p class="fm-data-item__value">Raspado/abrasión</p>
+            </div>
+            <div class="fm-data-item">
+              <p class="fm-data-item__label">Diámetro lesión</p>
+              <p class="fm-data-item__value">35 mm</p>
+            </div>
+            <div class="fm-data-item">
+              <p class="fm-data-item__label">Supervivencia</p>
+              <p class="fm-data-item__value">6–8 años post-op.</p>
+            </div>
+            <div class="fm-data-item">
+              <p class="fm-data-item__label">Remodelación</p>
+              <p class="fm-data-item__value">Completa</p>
+            </div>
+          </div>
+
+          <div class="fm-interact-note">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 11.24V7.5C9 6.12 10.12 5 11.5 5S14 6.12 14 7.5v3.74c1.21-.81 2-2.18 2-3.74C16 5.01 13.99 3 11.5 3S7 5.01 7 7.5c0 1.56.79 2.93 2 3.74zm9.84 4.63l-4.54-2.26c-.17-.07-.35-.11-.54-.11H13v-6c0-.83-.67-1.5-1.5-1.5S10 6.67 10 7.5v10.74l-3.43-.72c-.08-.01-.15-.03-.24-.03-.31 0-.59.13-.79.33l-.79.8 4.94 4.94c.27.27.65.44 1.06.44h6.79c.75 0 1.33-.55 1.44-1.28l.75-5.27c.01-.07.02-.14.02-.2 0-.62-.38-1.16-.91-1.38z"/></svg>
+            Ahora puedes rotar el modelo libremente con el ratón
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 3 — Vista superior / conclusión -->
+      <section class="fm-step" id="step-3"
+        data-orbit="0deg 5deg 100%"
+        data-target="0m 0m 0m"
+        data-label="Vista cenital">
+
+        <!--
+          AJUSTE MANUAL STEP 3 — Vista cenital (norma verticalis)
+          azimuth: 0deg
+          elevation: 5deg (casi cenital — 0deg = exactamente desde arriba)
+          zoom: 100%
+          Para ver mejor la capacidad craneal ajustar elevation a 15deg
+        -->
+        <div class="fm-card" id="card-3">
+          <div class="fm-card__accent" style="background:var(--fm-sulfur)"></div>
+
+          <p class="fm-step-num">04 / Vista superior</p>
+          <h2 class="fm-card__title">Norma verticalis<br>y conclusiones</h2>
+
+          <p class="fm-card__body">
+            La <strong>norma verticalis</strong> permite apreciar la configuración
+            ovoide del neurocráneo con ligera plagiocefalia anterior izquierda,
+            probablemente de origen postural. La sutura sagital muestra fusión
+            completa en el tramo posterior (sinostosis senil).
+          </p>
+          <p class="fm-card__body">
+            La <strong>capacidad craneal estimada</strong> mediante el método de
+            Pearson es de <strong>1.380 cc</strong>, dentro del rango normal para
+            la especie. La trepanación no alteró de forma significativa
+            la integridad estructural del cráneo.
+          </p>
+
+          <div class="fm-data-grid">
+            <div class="fm-data-item">
+              <p class="fm-data-item__label">Capacidad craneal</p>
+              <p class="fm-data-item__value">1.380 cc</p>
+            </div>
+            <div class="fm-data-item">
+              <p class="fm-data-item__label">Forma</p>
+              <p class="fm-data-item__value">Ovoide</p>
+            </div>
+            <div class="fm-data-item">
+              <p class="fm-data-item__label">Sutura sagital</p>
+              <p class="fm-data-item__value">Sinostosis total</p>
+            </div>
+            <div class="fm-data-item">
+              <p class="fm-data-item__label">Conservación</p>
+              <p class="fm-data-item__value">Muy buena</p>
+            </div>
+          </div>
+
+          <div class="fm-card__tags">
+            <span class="fm-tag" style="border-color:#d4e60a;color:#8a9200">Pieza destacada</span>
+            <span class="fm-tag" style="border-color:#00e5ff;color:#00a8bf">Ficha maestra</span>
+          </div>
+
+          <p class="fm-camera-hint">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg>
+            Vista cenital — norma verticalis
+          </p>
+        </div>
+      </section>
+
+    </div><!-- /.fm-steps -->
+  </div><!-- /.fm-story -->
+
+
+  <!-- ══════════════════════════════════
+       SECCIÓN TÉCNICA + NAVEGACIÓN
+  ══════════════════════════════════ -->
+  <section class="fm-footer-section" aria-label="Datos técnicos y navegación">
+    <div class="fm-footer-inner">
+
+      <p style="font-family:'Lexend',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#6b5a43;margin-bottom:1.5rem;display:flex;align-items:center;gap:.5rem">
+        <span style="display:block;width:25px;height:2px;background:#6b5a43"></span>
+        Ficha técnica completa
+      </p>
+
+      <div class="fm-footer-grid">
+        <div class="fm-footer-card">
+          <p class="fm-footer-card__label">Número de catálogo</p>
+          <p class="fm-footer-card__value">OV-001<span>PaleoMuseo · 2024</span></p>
+        </div>
+        <div class="fm-footer-card">
+          <p class="fm-footer-card__label">Procedencia</p>
+          <p class="fm-footer-card__value">Cueva de los Murciélagos<span>Granada, España</span></p>
+        </div>
+        <div class="fm-footer-card">
+          <p class="fm-footer-card__label">Datación</p>
+          <p class="fm-footer-card__value">~3200 a.C.<span>Neolítico Final</span></p>
+        </div>
+        <div class="fm-footer-card">
+          <p class="fm-footer-card__label">Diagnóstico principal</p>
+          <p class="fm-footer-card__value">Trepanación curada<span>Traumatismo intencional</span></p>
+        </div>
+        <div class="fm-footer-card">
+          <p class="fm-footer-card__label">Estado de conservación</p>
+          <p class="fm-footer-card__value">Muy bueno<span>Pérdida ósea &lt;5%</span></p>
+        </div>
+        <div class="fm-footer-card">
+          <p class="fm-footer-card__label">Modelo 3D</p>
+          <p class="fm-footer-card__value">avas_skull.glb<span>Sketchfab — CC BY 4.0</span></p>
+        </div>
+      </div>
+
+      <div class="fm-footer-nav">
+        <a href="/prueba-museo/coleccion.html" class="fm-footer-nav__back">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6z"/></svg>
+          Volver a la colección
+        </a>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap">
+          <a href="/prueba-museo/exploracion.html?region=craneo" class="btn btn--ghost-light" style="font-size:.75rem">
+            <span>Explorar región craneal</span>
+          </a>
+          <a href="/prueba-museo/coleccion.html#buscados" class="btn btn--cyan" style="font-size:.75rem">
+            <span>Buscar más piezas</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════
+       SCRIPTS
+  ══════════════════════════════════ -->
+  <script>
+    /* ── Nav ── */
+    const hamburger = document.getElementById('nav-hamburger');
+    const drawer    = document.getElementById('nav-mobile');
+    let navOpen = false;
+    hamburger?.addEventListener('click', () => {
+      navOpen = !navOpen;
+      hamburger.classList.toggle('open', navOpen);
+      drawer.classList.toggle('open', navOpen);
+      hamburger.setAttribute('aria-expanded', String(navOpen));
+      document.body.style.overflow = navOpen ? 'hidden' : '';
+    });
+    window.addEventListener('scroll', () => {
+      document.getElementById('site-header')?.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    /* ══════════════════════════════════════════════════
+       SCROLLYTELLING con GSAP ScrollTrigger
+       ─────────────────────────────────────────────────
+       Cada <section class="fm-step"> tiene atributos:
+         data-orbit   → camera-orbit destino
+         data-target  → camera-target destino
+         data-label   → texto del indicador de vista
+         data-autorotate → "true" activa auto-rotate
+    ══════════════════════════════════════════════════ */
+    window.addEventListener('load', () => {
+      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      const viewer    = document.getElementById('main-viewer');
+      const viewLabel = document.getElementById('view-label');
+      const dots      = document.querySelectorAll('.fm-cam-dot');
+      const steps     = document.querySelectorAll('.fm-step');
+      const cards     = document.querySelectorAll('.fm-card');
+
+      if (!viewer) return;
+
+      /* Esperar a que model-viewer esté listo */
+      viewer.addEventListener('load', () => {
+
+        steps.forEach((step, i) => {
+          const orbit      = step.dataset.orbit;
+          const target     = step.dataset.target;
+          const label      = step.dataset.label;
+          const autorotate = step.dataset.autorotate === 'true';
+
+          ScrollTrigger.create({
+            trigger: step,
+            start: 'top 55%',
+            end:   'bottom 45%',
+            onEnter: () => moveCameraTo(orbit, target, label, i, autorotate),
+            onEnterBack: () => moveCameraTo(orbit, target, label, i, autorotate),
+          });
+        });
+
+        /* Animar cards al entrar en viewport */
+        cards.forEach(card => {
+          ScrollTrigger.create({
+            trigger: card,
+            start: 'top 75%',
+            onEnter: () => card.classList.add('in-view'),
+            onLeaveBack: () => card.classList.remove('in-view'),
+          });
+        });
+
+      }); /* end viewer load */
+
+      /* Función de movimiento de cámara
+         ─────────────────────────────────────────────────
+         Usa gsap.to con un objeto proxy para interpolar
+         los valores de camera-orbit suavemente.
+         scrub: 1 = la cámara sigue el scroll con 1s de delay.
+         Para animación instantánea al entrar en sección
+         usamos un tween corto (duration: 0.8)
+         ─────────────────────────────────────────────────
+      */
+      function moveCameraTo(orbit, target, label, stepIndex, autorotate) {
+        /* Actualizar etiqueta */
+        if (viewLabel) viewLabel.textContent = label;
+
+        /* Actualizar dots */
+        dots.forEach((d, i) => d.classList.toggle('active', i === stepIndex));
+
+        /* Auto-rotate solo en step 0 */
+        if (autorotate) {
+          viewer.setAttribute('auto-rotate', '');
+        } else {
+          viewer.removeAttribute('auto-rotate');
+        }
+
+        /* Animar cámara — model-viewer acepta asignación directa */
+        viewer.cameraOrbit  = orbit;
+        if (target) viewer.cameraTarget = target;
+
+        /* Fade suave de la etiqueta */
+        if (viewLabel) {
+          gsap.fromTo(viewLabel,
+            { opacity: 0, y: -5 },
+            { opacity: 0.6, y: 0, duration: 0.4, ease: 'power2.out' }
+          );
+        }
+      }
+
+      /* Entrada hero */
+      gsap.from('.fm-hero__label',          { y: 20, opacity: 0, duration: .6, ease: 'power3.out', delay: .2 });
+      gsap.from('.fm-hero__title',          { y: 35, opacity: 0, duration: .7, ease: 'power3.out', delay: .35 });
+      gsap.from('.fm-hero__meta',           { y: 20, opacity: 0, duration: .5, ease: 'power2.out', delay: .55 });
+      gsap.from('.fm-hero__desc',           { y: 15, opacity: 0, duration: .5, ease: 'power2.out', delay: .7 });
+      gsap.from('.fm-hero__scroll-hint',    { y: 10, opacity: 0, duration: .5, ease: 'power2.out', delay: .9 });
+      gsap.from('.fm-hero__viewer-preview', { x: 30, opacity: 0, duration: .8, ease: 'power3.out', delay: .4 });
+
+    }); /* end window load */
+  </script>
+
+</body>
+</html>
