@@ -12,6 +12,29 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 
   <link rel="stylesheet" href="/prueba-museo/css/style.css" />
+  <style>
+    /* ── Enlace a glosario desde fichas ── */
+    .glos-link {
+      color: var(--blue);
+      text-decoration: underline dotted;
+      text-underline-offset: 3px;
+      font-weight: 600;
+      transition: color .15s;
+    }
+    .glos-link:hover { color: var(--crimson); }
+
+    /* ── Highlight al llegar por ancla ── */
+    .glos-card.highlighted {
+      animation: glowCard .8s ease 3;
+      outline: 3px solid var(--blue);
+      outline-offset: 2px;
+    }
+    @keyframes glowCard {
+      0%,100% { box-shadow: 3px 3px 0 var(--au-ink); }
+      50%      { box-shadow: 0 0 20px rgba(41,121,255,.5), 3px 3px 0 var(--au-ink); }
+    }
+  </style>
+
 
   <style>
     /* ═══════════════════════════════════════
@@ -768,9 +791,9 @@
   <!-- ══════════════════════════════════
        DATA + SCRIPTS
   ══════════════════════════════════ -->
+  <script src="/prueba-museo/js/data.js"></script>
   <script>
-  /* ═══════════════════════════════════════════════════════
-     DATOS — Glosario (35 términos)
+  /* GLOSARIO, BIBLIOGRAFIA y QUIZZES — datos locales */
   ═══════════════════════════════════════════════════════ */
   const GLOSARIO = [
     { term:'Paleopatología',       cat:'patologia',  def:'Disciplina científica que estudia las enfermedades y lesiones en restos esqueléticos y momias de poblaciones del pasado.' },
@@ -1043,6 +1066,7 @@
       const cc = CAT_COLORS[e.cat] || { color: '#6b5a43', bg: 'rgba(107,90,67,.08)' };
       const card = document.createElement('div');
       card.className = 'glos-card';
+      card.id = 'glos-' + e.slug;
       card.innerHTML = `
         <div class="glos-card__accent" style="background:${cc.color}"></div>
         <p class="glos-card__term">${e.term}</p>
@@ -1458,6 +1482,35 @@
 
   /* ── Init ── */
   renderGlosario();
+
+  /* ── Gestión de ancla URL: aula.html#trepanacion ──
+     Si la URL tiene un hash, activa el tab de glosario
+     y hace scroll + highlight al término correspondiente */
+  (function handleAnchor() {
+    const hash = window.location.hash.slice(1); // quita el #
+    if (!hash) return;
+
+    // Activar tab glosario
+    document.querySelectorAll('.au-tab').forEach(t => {
+      t.classList.remove('active');
+      t.setAttribute('aria-selected', 'false');
+    });
+    document.querySelectorAll('.au-panel').forEach(p => p.classList.remove('active'));
+    const glosTab   = document.querySelector('[data-tab="glosario"]');
+    const glosPanel = document.getElementById('panel-glosario');
+    if (glosTab)   { glosTab.classList.add('active'); glosTab.setAttribute('aria-selected','true'); }
+    if (glosPanel) glosPanel.classList.add('active');
+
+    // Buscar la card con ese slug y hacer scroll + highlight
+    setTimeout(() => {
+      const target = document.getElementById('glos-' + hash);
+      if (!target) return;
+      target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      target.classList.add('highlighted');
+      setTimeout(() => target.classList.remove('highlighted'), 3500);
+    }, 300);
+  })();
+
   renderBibliografia();
   buildQuizList();
   </script>
