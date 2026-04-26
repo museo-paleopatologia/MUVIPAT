@@ -15,39 +15,17 @@
   <link rel="stylesheet" href="/prueba-museo/css/style.css" />
   <!-- Exploración-specific styles -->
   <style>
-    html, body { overflow: hidden; height: 100%; background: #1a1a1a; }
-    @media (max-width: 1024px) { html, body { overflow: auto; height: auto; } }
-
+    html, body {
+      overflow: hidden;
+      height: 100%;
+      background: #0d0d0d;
+    }
     .expl-layout {
       height: calc(100vh - var(--nav-h) - var(--top-h)) !important;
-      min-height: calc(100vh - var(--nav-h) - var(--top-h)) !important;
     }
-
-    .expl-center {
-      padding-top: 0.5rem !important;
-    }
-
-    .expl-filters,
-    .expl-results,
-    .expl-center {
-      min-height: 100% !important;
-    }
-
-    .skeleton-svg-wrap {
-      max-height: calc(100vh - var(--nav-h) - var(--top-h) - 4rem) !important;
-      max-width: none !important;
-      width: auto !important;
-    }
-    .skeleton-svg-wrap svg {
-      height: 100% !important;
-      width: auto !important;
-      max-height: calc(100vh - var(--nav-h) - var(--top-h) - 4rem) !important;
-    }
-    @media (max-width: 1024px) { 
-      html, body { overflow: auto; height: auto; } 
-      .skeleton-svg-wrap { max-height: 70vh !important; }
-    }
-
+    @media (max-width: 1024px) {
+      html, body { overflow: auto; height: auto; }
+    }  
   </style>
 </head>
 <body class="expl-body-page">
