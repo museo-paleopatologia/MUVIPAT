@@ -20,15 +20,34 @@
 
     .expl-layout {
       height: calc(100vh - var(--nav-h) - var(--top-h)) !important;
+      min-height: calc(100vh - var(--nav-h) - var(--top-h)) !important;
     }
 
     .expl-center {
       padding-top: 0.5rem !important;
     }
 
-    .skeleton-svg-wrap {
-      max-width: 200px !important;
+    .expl-filters,
+    .expl-results,
+    .expl-center {
+      min-height: 100% !important;
     }
+
+    .skeleton-svg-wrap {
+      max-height: calc(100vh - var(--nav-h) - var(--top-h) - 4rem) !important;
+      max-width: none !important;
+      width: auto !important;
+    }
+    .skeleton-svg-wrap svg {
+      height: 100% !important;
+      width: auto !important;
+      max-height: calc(100vh - var(--nav-h) - var(--top-h) - 4rem) !important;
+    }
+    @media (max-width: 1024px) { 
+      html, body { overflow: auto; height: auto; } 
+      .skeleton-svg-wrap { max-height: 70vh !important; }
+    }
+
   </style>
 </head>
 <body class="expl-body-page">
