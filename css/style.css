@@ -103,6 +103,7 @@ ul { list-style: none; }
 
 footer__logo-img--facultad {
   height: clamp(28px, 3.5vw, 40px);
+  max-width: 200px;
   width: auto;
   display: block;
   object-fit: contain;
