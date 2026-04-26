@@ -77,7 +77,8 @@ ul { list-style: none; }
 
 /* ── Logo institucional LAV/UAM en header ── */
 .nav__logo-img {
-  height: clamp(28px, 4vw, 38px);
+  height: clamp(38px, 5vw, 54px);
+  
   width: auto;
   display: block;
   object-fit: contain;
