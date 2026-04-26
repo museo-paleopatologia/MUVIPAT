@@ -77,8 +77,7 @@ ul { list-style: none; }
 
 /* ── Logo institucional LAV/UAM en header ── */
 .nav__logo-img {
-  height: clamp(38px, 5vw, 54px);
-  
+  height: clamp(28px, 4vw, 38px);
   width: auto;
   display: block;
   object-fit: contain;
@@ -93,7 +92,9 @@ ul { list-style: none; }
   width: auto;
   display: block;
   object-fit: contain;
-  filter: brightness(0) invert(1);
+  /* El footer es oscuro — si el logo tiene texto oscuro
+     descomenta la siguiente línea para invertirlo a blanco:
+  filter: brightness(0) invert(1);                             */
 }
 
 /* ============================================================
