@@ -74,6 +74,29 @@ img, video, svg { display: block; max-width: 100%; }
 a { color: inherit; text-decoration: none; }
 ul { list-style: none; }
 
+
+/* ── Logo institucional LAV/UAM en header ── */
+.nav__logo-img {
+  height: clamp(28px, 4vw, 38px);
+  width: auto;
+  display: block;
+  object-fit: contain;
+  /* Si el logo tiene fondo transparente sobre ivory del nav
+     no necesita filtro. Si necesitas invertir para fondo oscuro
+     (mobile drawer) usa filter: brightness(0) invert(1)        */
+}
+
+/* ── Logo institucional completo en footer ── */
+.footer__logo-img {
+  height: clamp(36px, 5vw, 52px);
+  width: auto;
+  display: block;
+  object-fit: contain;
+  /* El footer es oscuro — si el logo tiene texto oscuro
+     descomenta la siguiente línea para invertirlo a blanco:
+  filter: brightness(0) invert(1);                             */
+}
+
 /* ============================================================
    SCROLLBAR
    ============================================================ */

@@ -12,17 +12,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 
   <!-- Global styles -->
-  <link rel="stylesheet" href="/prueba-museo/css/style.css" />
-  <style>
-    /* Exploración — página fija sin scroll exterior en desktop */
-    html { overflow: hidden; }
-    @media (max-width: 1024px) {
-      /* En móvil sí hay scroll */
-      html { overflow: auto; }
-      .expl-body-page { height: auto !important; }
-    }
-  </style>
-  <!-- Exploración-specific styles --></head>
+  <link rel="stylesheet" href="/prueba-museo/style.css" />
+  <!-- Exploración-specific styles -->
+  <link rel="stylesheet" href="/prueba-museo/css/exploracion.css" />
+</head>
 <body class="expl-body-page">
 
   <!-- ══════════════════════════════════════
@@ -32,11 +25,10 @@
     <div class="container">
       <nav class="nav" role="navigation" aria-label="Navegación principal">
         <a href="/prueba-museo/index.html" class="nav__logo" aria-label="PaleoMuseo — Inicio">
-          <div class="nav__logo-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path d="M7 4C5.3 4 4 5.3 4 7c0 .9.4 1.7 1 2.2V14.8C4.4 15.3 4 16.1 4 17c0 1.7 1.3 3 3 3s3-1.3 3-3c0-.4-.1-.8-.2-1.1L12 14l2.2 1.9c-.1.3-.2.7-.2 1.1 0 1.7 1.3 3 3 3s3-1.3 3-3c0-.9-.4-1.7-1-2.2V9.2c.6-.5 1-1.3 1-2.2 0-1.7-1.3-3-3-3s-3 1.3-3 3c0 .4.1.8.2 1.1L12 10 9.8 8.1C9.9 7.8 10 7.4 10 7c0-1.7-1.3-3-3-3z"/>
-            </svg>
-          </div>
+          <img
+            src="/prueba-museo/assets/img/lav_uam.png"
+            alt="Laboratorio de Antropología Virtual · UAM"
+            class="nav__logo-img" />
           <div>
             <div>Paleo<strong>Museo</strong></div>
             <div style="font-size:0.6em;font-weight:400;opacity:0.5;letter-spacing:0.1em">PALEOPATOLOGÍA</div>
@@ -323,10 +315,8 @@
     function openDrawer(p) {
       p.classList.add('is-open');
       overlay.classList.add('is-visible');
-      // Solo bloquea scroll en móvil (drawer ocupa pantalla completa)
-      if (window.innerWidth <= 1024) document.body.style.overflow = 'hidden';
-      const msr = document.getElementById('mob-search-wrap');
-      if (msr) msr.style.display = p === fPanel ? 'block' : 'none';
+      document.body.style.overflow = 'hidden';
+      document.getElementById('mob-search-wrap').style.display = p === fPanel ? 'block' : 'none';
     }
     function closeDrawers() {
       fPanel.classList.remove('is-open');

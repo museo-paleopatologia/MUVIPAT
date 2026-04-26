@@ -19,7 +19,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 
   <!-- Global Styles -->
-  <link rel="stylesheet" href="/prueba-museo/css/style.css" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 
 <body>
@@ -83,9 +83,7 @@
        HERO
   ===================================================== -->
   <section class="hero" id="hero" aria-label="Presentación del museo">
-    <div class="hero__bg-image" aria-hidden="true"></div>
-    <div class="hero__overlay"  aria-hidden="true"></div>
-    <div class="hero__grid-bg"  aria-hidden="true"></div>
+    <div class="hero__grid-bg" aria-hidden="true"></div>
     <div class="hero__noise"    aria-hidden="true"></div>
 
     <div class="container">
@@ -435,7 +433,12 @@
   <footer class="site-footer" role="contentinfo">
     <div class="container">
       <div class="footer__inner">
-        <div class="footer__brand">Paleo<strong>Museo</strong></div>
+        <a href="/prueba-museo/index.html" class="footer__brand-logo" aria-label="LAV · UAM">
+          <img
+            src="/prueba-museo/assets/img/lav_uam2.png"
+            alt="Laboratorio de Antropología Virtual · Universidad Autónoma de Madrid"
+            class="footer__logo-img" />
+        </a>
         <p class="footer__meta">
           Trabajo de Fin de Grado · Grado en Biología<br>
           <span style="opacity:0.5">Museo Virtual de Paleopatología · 2024–2025</span>
@@ -452,6 +455,6 @@
   </footer>
 
   <!-- Main JS -->
-  <script src="/prueba-museo/js/main.js" defer></script>
+  <script src="js/main.js" defer></script>
 </body>
 </html>
