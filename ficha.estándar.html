@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Ficha estándar de pieza paleopatológica — PaleoMuseo LAV·UAM" />
+  <title>Ficha Estándar · PaleoMuseo</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lexend:wght@300;400;500;600;700;800&family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- Model Viewer -->
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+
+  <!-- Global styles -->
+  <link rel="stylesheet" href="/prueba-museo/css/style.css" />
+
+  <style>
+    /* ═══════════════════════════════════════
+       FICHA ESTÁNDAR — variables y estilos
+    ═══════════════════════════════════════ */
+    :root {
+      --fe-bg:      #f4f1ea;
+      --fe-ink:     #0d0d0d;
+      --fe-mid:     #6b5a43;
+      --fe-bone:    #e8dfc8;
+      --fe-border:  3px solid #0d0d0d;
+      --fe-shadow:  4px 4px 0px #0d0d0d;
+    }
+
+    body { background: var(--fe-bg); }
+
+    /* ── Breadcrumb ── */
+    .fe-breadcrumb {
+      background: var(--fe-bone);
+      border-bottom: var(--fe-border);
+      padding: .6rem 0;
+    }
+    .fe-breadcrumb__inner {
+      width: min(1400px, 96vw);
+      margin-inline: auto;
+      padding-inline: clamp(1rem, 3vw, 2rem);
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      font-family: var(--font-head);
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--fe-mid);
+    }
+    .fe-breadcrumb a { color: var(--fe-mid); text-decoration: none; transition: color .15s; }
+    .fe-breadcrumb a:hover { color: var(--crimson); }
+    .fe-breadcrumb__sep { opacity: .4; }
+    .fe-breadcrumb__current { color: var(--fe-ink); }
+
+    /* ── Layout principal ── */
+    .fe-main {
+      width: min(1400px, 96vw);
+      margin-inline: auto;
+      padding-inline: clamp(1rem, 3vw, 2rem);
+      padding-block: clamp(2rem, 4vw, 3.5rem);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(2rem, 4vw, 4rem);
+      align-items: start;
+    }
+
+    /* ════════════════════════════════
+       COLUMNA IZQUIERDA — visual
+    ════════════════════════════════ */
+    .fe-visual {}
+
+    /* Imagen principal */
+    .fe-img-wrap {
+      border: var(--fe-border);
+      border-radius: 4px;
+      overflow: hidden;
+      background: var(--fe-bone);
+      aspect-ratio: 4/3;
+      position: relative;
+      box-shadow: var(--fe-shadow);
+      margin-bottom: 1.25rem;
+    }
+    .fe-img-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .fe-img-placeholder {
+      width: 100%; height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: .75rem;
+      opacity: .35;
+    }
+    .fe-img-placeholder svg { width: 64px; height: 64px; }
+    .fe-img-placeholder span {
+      font-family: var(--font-head);
+      font-size: .62rem;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--fe-mid);
+    }
+    /* Badge tipo ficha */
+    .fe-img-badge {
+      position: absolute;
+      top: .75rem; left: .75rem;
+      background: var(--fe-ink);
+      color: var(--ivory);
+      font-family: var(--font-head);
+      font-size: .58rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: .22em .65em;
+      border-radius: 2px;
+    }
+
+    /* Model Viewer */
+    .fe-viewer-wrap {
+      border: var(--fe-border);
+      border-radius: 4px;
+      overflow: hidden;
+      background: var(--fe-ink);
+      box-shadow: var(--fe-shadow);
+      position: relative;
+    }
+    .fe-viewer-label {
+      position: absolute;
+      top: .75rem; right: .75rem;
+      background: rgba(0,229,255,.15);
+      border: 1.5px solid var(--cyan);
+      color: var(--cyan);
+      font-family: var(--font-head);
+      font-size: .55rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: .2em .6em;
+      border-radius: 2px;
+      z-index: 2;
+      pointer-events: none;
+    }
+    model-viewer {
+      width: 100%;
+      height: 320px;
+      background: transparent;
+      --progress-bar-color: transparent;
+    }
+
+    /* Tags de metadatos bajo el viewer */
+    .fe-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .45rem;
+      margin-top: 1.25rem;
+    }
+    .fe-tag {
+      font-family: var(--font-head);
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: .28em .7em;
+      border: 2px solid;
+      border-radius: 2px;
+    }
+    .fe-tag--region   { border-color: var(--cyan);    color: var(--cyan);    background: rgba(0,229,255,.06); }
+    .fe-tag--patol    { border-color: var(--crimson);  color: var(--crimson); background: rgba(192,0,60,.06); }
+    .fe-tag--sexo     { border-color: var(--pink);     color: var(--pink);    background: rgba(255,64,129,.06); }
+    .fe-tag--epoca    { border-color: var(--bone-400); color: var(--bone-500);background: rgba(200,170,120,.08); }
+    .fe-tag--master   { border-color: var(--sulfur);   color: #6a7300;        background: rgba(212,230,10,.1); }
+
+    /* ════════════════════════════════
+       COLUMNA DERECHA — datos
+    ════════════════════════════════ */
+    .fe-data {}
+
+    /* Cabecera de la ficha */
+    .fe-header {
+      margin-bottom: 1.75rem;
+      padding-bottom: 1.5rem;
+      border-bottom: var(--fe-border);
+    }
+    .fe-header__id {
+      font-family: var(--font-head);
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--crimson);
+      margin-bottom: .4rem;
+    }
+    .fe-header__title {
+      font-family: var(--font-head);
+      font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+      font-weight: 900;
+      letter-spacing: -.04em;
+      line-height: 1.05;
+      color: var(--fe-ink);
+      margin-bottom: .75rem;
+    }
+    .fe-header__subtitle {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: clamp(.9rem, 1.4vw, 1.05rem);
+      color: var(--fe-mid);
+      font-weight: 400;
+    }
+
+    /* Secciones de datos */
+    .fe-section {
+      margin-bottom: 1.5rem;
+    }
+    .fe-section__title {
+      font-family: var(--font-head);
+      font-size: .6rem;
+      font-weight: 800;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--fe-mid);
+      margin-bottom: .75rem;
+      padding-bottom: .4rem;
+      border-bottom: 1.5px solid var(--fe-bone);
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+    .fe-section__title::before {
+      content: '';
+      display: block;
+      width: 16px; height: 2px;
+      background: var(--crimson);
+      flex-shrink: 0;
+    }
+
+    /* Grid de datos técnicos */
+    .fe-data-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .6rem;
+    }
+    .fe-data-item {
+      background: #fff;
+      border: 2px solid var(--fe-ink);
+      border-radius: 2px;
+      padding: .65rem .85rem;
+      box-shadow: 2px 2px 0 var(--fe-ink);
+    }
+    .fe-data-item--full { grid-column: span 2; }
+    .fe-data-item__label {
+      font-family: var(--font-head);
+      font-size: .55rem;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--fe-mid);
+      margin-bottom: .25rem;
+    }
+    .fe-data-item__value {
+      font-family: var(--font-head);
+      font-size: .85rem;
+      font-weight: 700;
+      color: var(--fe-ink);
+      line-height: 1.3;
+    }
+    .fe-data-item__value--light {
+      font-family: var(--font-ui);
+      font-weight: 300;
+      font-size: .82rem;
+      color: #3d3d3d;
+      line-height: 1.6;
+    }
+
+    /* Descripción */
+    .fe-desc {
+      font-size: clamp(.85rem, 1.3vw, .95rem);
+      line-height: 1.8;
+      color: #3d3d3d;
+      font-weight: 300;
+    }
+    .fe-desc strong { color: var(--fe-ink); font-weight: 700; }
+
+    /* Diagnóstico diferencial */
+    .fe-diag-list {
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+    }
+    .fe-diag-item {
+      display: flex;
+      align-items: flex-start;
+      gap: .75rem;
+      padding: .75rem 1rem;
+      background: #fff;
+      border: 2px solid var(--fe-bone);
+      border-radius: 2px;
+      box-shadow: 2px 2px 0 var(--fe-bone);
+      transition: border-color .15s, box-shadow .15s;
+    }
+    .fe-diag-item:hover { border-color: var(--fe-ink); box-shadow: 2px 2px 0 var(--fe-ink); }
+    .fe-diag-item__dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: .35rem;
+    }
+    .fe-diag-item__text {
+      font-size: .82rem;
+      color: #3d3d3d;
+      line-height: 1.55;
+      font-weight: 300;
+    }
+    .fe-diag-item__text strong { color: var(--fe-ink); font-weight: 700; }
+
+    /* Bibliografía de la pieza */
+    .fe-bib-list {
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+    }
+    .fe-bib-item {
+      font-size: .78rem;
+      color: #3d3d3d;
+      line-height: 1.65;
+      padding: .7rem .85rem;
+      background: #fff;
+      border-left: 3px solid var(--blue);
+      font-weight: 300;
+    }
+    .fe-bib-item em { font-style: italic; }
+    .fe-bib-item strong { color: var(--fe-ink); font-weight: 700; }
+    .fe-bib-item a {
+      color: var(--blue);
+      font-weight: 600;
+      font-family: var(--font-head);
+      font-size: .68rem;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: .25rem;
+      margin-top: .3rem;
+    }
+    .fe-bib-item a:hover { color: var(--crimson); }
+
+    /* Enlace a ficha maestra */
+    .fe-master-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 1.3rem;
+      background: var(--fe-ink);
+      border: var(--fe-border);
+      border-radius: 4px;
+      box-shadow: var(--fe-shadow);
+      text-decoration: none;
+      color: var(--ivory);
+      margin-top: 1.5rem;
+      transition: transform .15s, box-shadow .15s;
+    }
+    .fe-master-link:hover {
+      transform: translate(-3px,-3px);
+      box-shadow: 7px 7px 0 var(--fe-ink);
+    }
+    .fe-master-link__text {}
+    .fe-master-link__eyebrow {
+      font-family: var(--font-head);
+      font-size: .58rem;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--sulfur);
+      margin-bottom: .25rem;
+    }
+    .fe-master-link__title {
+      font-family: var(--font-head);
+      font-size: .92rem;
+      font-weight: 800;
+      letter-spacing: -.01em;
+    }
+    .fe-master-link__arrow {
+      font-size: 1.3rem;
+      color: var(--sulfur);
+      flex-shrink: 0;
+      transition: transform .2s;
+    }
+    .fe-master-link:hover .fe-master-link__arrow { transform: translateX(5px); }
+
+    /* ── Glos-link heredado de data.js ── */
+    .glos-link {
+      color: var(--blue);
+      text-decoration: underline dotted;
+      text-underline-offset: 3px;
+      font-weight: 600;
+      transition: color .15s;
+    }
+    .glos-link:hover { color: var(--crimson); }
+
+    /* ════════════════════════════════
+       RESPONSIVE
+    ════════════════════════════════ */
+    @media (max-width: 900px) {
+      .fe-main { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 500px) {
+      .fe-data-grid { grid-template-columns: 1fr; }
+      .fe-data-item--full { grid-column: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════════════════════
+       HEADER
+  ══════════════════════════════════ -->
+  <header class="site-header" id="site-header">
+    <div class="container">
+      <nav class="nav" role="navigation" aria-label="Navegación principal">
+        <a href="/prueba-museo/index.html" class="nav__logo" aria-label="PaleoMuseo — Inicio">
+          <img src="/prueba-museo/assets/img/lav_uam.png" alt="LAV · UAM" class="nav__logo-img" />
+          <div>
+            <div>Paleo<strong>Museo</strong></div>
+            <div style="font-size:0.6em;font-weight:400;opacity:0.5;letter-spacing:0.1em">PALEOPATOLOGÍA</div>
+          </div>
+        </a>
+        <ul class="nav__links" role="list">
+          <li><a href="/prueba-museo/exploracion.html" class="nav__link">Exploración</a></li>
+          <li><a href="/prueba-museo/coleccion.html"   class="nav__link active">Colección</a></li>
+          <li><a href="/prueba-museo/aula.html"        class="nav__link">Aula Virtual</a></li>
+          <li><a href="/prueba-museo/actualidad.html"  class="nav__link">Actualidad</a></li>
+          <li><a href="/prueba-museo/index.html#proyecto" class="nav__link">Proyecto</a></li>
+        </ul>
+        <div class="nav__actions">
+          <a href="/prueba-museo/coleccion.html#buscados" class="btn btn--primary" style="font-size:.78rem;padding:.55em 1.2em;">
+            <span>Ver colección</span>
+          </a>
+        </div>
+        <button class="nav__hamburger" id="nav-hamburger" aria-label="Abrir menú" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </nav>
+    </div>
+    <div class="nav__mobile" id="nav-mobile">
+      <ul role="list" style="display:flex;flex-direction:column;align-items:center;gap:2rem;text-align:center;">
+        <li><a href="/prueba-museo/exploracion.html" class="nav__link" style="font-size:1.6rem">Exploración</a></li>
+        <li><a href="/prueba-museo/coleccion.html"   class="nav__link" style="font-size:1.6rem">Colección</a></li>
+        <li><a href="/prueba-museo/aula.html"        class="nav__link" style="font-size:1.6rem">Aula Virtual</a></li>
+        <li><a href="/prueba-museo/actualidad.html"  class="nav__link" style="font-size:1.6rem">Actualidad</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- ══════════════════════════════════
+       BREADCRUMB
+  ══════════════════════════════════ -->
+  <div class="fe-breadcrumb" style="padding-top: clamp(56px,7vw,70px)">
+    <div class="fe-breadcrumb__inner">
+      <a href="/prueba-museo/index.html">Inicio</a>
+      <span class="fe-breadcrumb__sep">›</span>
+      <a href="/prueba-museo/coleccion.html">Colección</a>
+      <span class="fe-breadcrumb__sep">›</span>
+      <span class="fe-breadcrumb__current" id="breadcrumb-id">OV-001</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       CONTENIDO PRINCIPAL
+  ══════════════════════════════════ -->
+  <main class="fe-main" id="fe-main">
+
+    <!-- ── Columna izquierda: visual ── -->
+    <div class="fe-visual">
+
+      <!-- Imagen principal -->
+      <div class="fe-img-wrap" id="fe-img-wrap">
+        <span class="fe-img-badge">Ficha estándar</span>
+        <!-- Si hay imagen: <img src="..." alt="..." /> -->
+        <!-- Placeholder si no hay imagen -->
+        <div class="fe-img-placeholder" id="fe-img-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" fill="currentColor"/>
+          </svg>
+          <span>Imagen no disponible</span>
+        </div>
+      </div>
+
+      <!-- Model Viewer 3D -->
+      <div class="fe-viewer-wrap">
+        <span class="fe-viewer-label">Modelo 3D · Arrastra para rotar</span>
+        <!--
+          Cambia el src por la ruta real de tu modelo:
+          src="/prueba-museo/assets/models/avas_skull.glb"
+        -->
+        <model-viewer
+          id="fe-model-viewer"
+          src="/prueba-museo/assets/models/avas_skull.glb"
+          alt="Modelo 3D de la pieza paleopatológica"
+          camera-controls
+          auto-rotate
+          shadow-intensity="1.2"
+          exposure="0.8"
+          environment-image="neutral"
+          style="width:100%;height:320px;background:transparent">
+        </model-viewer>
+      </div>
+
+      <!-- Tags de metadatos -->
+      <div class="fe-tags" id="fe-tags"></div>
+
+    </div>
+
+    <!-- ── Columna derecha: datos ── -->
+    <div class="fe-data">
+
+      <!-- Cabecera -->
+      <div class="fe-header">
+        <p class="fe-header__id" id="fe-id">OV-001</p>
+        <h1 class="fe-header__title" id="fe-title">Cráneo con trepanación curada</h1>
+        <p class="fe-header__subtitle" id="fe-subtitle">Traumatismo intencional · Prehistoria</p>
+      </div>
+
+      <!-- Datos de identificación -->
+      <div class="fe-section">
+        <p class="fe-section__title">Identificación</p>
+        <div class="fe-data-grid">
+          <div class="fe-data-item">
+            <p class="fe-data-item__label">Número de catálogo</p>
+            <p class="fe-data-item__value" id="fe-catalog">OV-001</p>
+          </div>
+          <div class="fe-data-item">
+            <p class="fe-data-item__label">Cronología</p>
+            <p class="fe-data-item__value" id="fe-epoca">Prehistoria · ~3200 a.C.</p>
+          </div>
+          <div class="fe-data-item">
+            <p class="fe-data-item__label">Yacimiento</p>
+            <p class="fe-data-item__value" id="fe-yacimiento">Cueva de los Murciélagos, Granada</p>
+          </div>
+          <div class="fe-data-item">
+            <p class="fe-data-item__label">Sexo biológico</p>
+            <p class="fe-data-item__value" id="fe-sexo">Masculino</p>
+          </div>
+          <div class="fe-data-item">
+            <p class="fe-data-item__label">Región anatómica</p>
+            <p class="fe-data-item__value" id="fe-region">Cráneo</p>
+          </div>
+          <div class="fe-data-item">
+            <p class="fe-data-item__label">Tipo de patología</p>
+            <p class="fe-data-item__value" id="fe-patologia">Traumatismo intencional</p>
+          </div>
+          <div class="fe-data-item">
+            <p class="fe-data-item__label">Estado de conservación</p>
+            <p class="fe-data-item__value" id="fe-conservacion">Muy bueno · Pérdida ósea &lt;5%</p>
+          </div>
+          <div class="fe-data-item">
+            <p class="fe-data-item__label">Método de digitalización</p>
+            <p class="fe-data-item__value" id="fe-digitalizacion">Fotogrametría estructurada</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Descripción -->
+      <div class="fe-section">
+        <p class="fe-section__title">Descripción paleopatológica</p>
+        <p class="fe-desc" id="fe-desc">
+          Trepanación circular de <strong>35 mm de diámetro</strong> localizada en el tercio
+          posterior del parietal derecho. La técnica empleada es el raspado por abrasión,
+          identificable por las estrías concéntricas en el bisel interno. Los bordes presentan
+          remodelación ósea completa con formación de tejido compacto lamelar, indicando una
+          supervivencia mínima de <strong>6–8 años</strong> post-intervención. Uno de los casos
+          más documentados de cirugía prehistórica exitosa en la Península Ibérica.
+        </p>
+      </div>
+
+      <!-- Diagnóstico diferencial -->
+      <div class="fe-section">
+        <p class="fe-section__title">Diagnóstico diferencial</p>
+        <div class="fe-diag-list">
+          <div class="fe-diag-item">
+            <span class="fe-diag-item__dot" style="background:var(--crimson)"></span>
+            <p class="fe-diag-item__text">
+              <strong>Trepanación intencional (diagnóstico principal)</strong> — Técnica de raspado
+              por abrasión con supervivencia confirmada por remodelación ósea completa.
+            </p>
+          </div>
+          <div class="fe-diag-item">
+            <span class="fe-diag-item__dot" style="background:var(--bone-400)"></span>
+            <p class="fe-diag-item__text">
+              <strong>Traumatismo accidental descartado</strong> — La morfología circular y los
+              bordes biselados son incompatibles con un impacto fortuito.
+            </p>
+          </div>
+          <div class="fe-diag-item">
+            <span class="fe-diag-item__dot" style="background:var(--bone-400)"></span>
+            <p class="fe-diag-item__text">
+              <strong>Lesión postmortem descartada</strong> — La presencia de tejido neoformado en
+              los márgenes confirma actividad vital durante y después de la intervención.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bibliografía de la pieza -->
+      <div class="fe-section">
+        <p class="fe-section__title">Referencias bibliográficas</p>
+        <div class="fe-bib-list">
+          <div class="fe-bib-item">
+            <strong>Campillo, D.</strong> (2001). <em>Introducción a la Paleopatología</em>.
+            Edicions Bellaterra. pp. 234–251.
+          </div>
+          <div class="fe-bib-item">
+            <strong>Ortner, D.J.</strong> (2003). <em>Identification of Pathological Conditions
+            in Human Skeletal Remains</em> (2nd ed.). Academic Press. pp. 89–102.
+            <a href="https://doi.org/10.1016/B978-012528628-2/50007-3" target="_blank" rel="noopener noreferrer">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+              DOI
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Enlace a ficha maestra (si existe) -->
+      <a href="/prueba-museo/ficha-maestra.html?id=OV-001" class="fe-master-link" id="fe-master-link">
+        <div class="fe-master-link__text">
+          <p class="fe-master-link__eyebrow">Disponible para esta pieza</p>
+          <p class="fe-master-link__title">Ver ficha maestra inmersiva →</p>
+        </div>
+        <span class="fe-master-link__arrow">⟶</span>
+      </a>
+
+    </div>
+  </main>
+
+  <!-- ══════════════════════════════════
+       FOOTER
+  ══════════════════════════════════ -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__inner">
+        <div class="footer__logos">
+          <img src="/prueba-museo/assets/img/lav_uam2.png" alt="Laboratorio de Antropología Virtual · UAM" class="footer__logo-img footer__logo-img--lav2" />
+          <img src="/prueba-museo/assets/img/uamciencias_blanco.png" alt="Facultad de Ciencias · UAM" class="footer__logo-img footer__logo-img--facultad" />
+        </div>
+        <p class="footer__meta">
+          Trabajo de Fin de Grado · Grado en Biología<br>
+          <span style="opacity:0.5">Museo Virtual de Paleopatología · 2024–2025</span>
+        </p>
+        <nav class="footer__links" aria-label="Navegación del pie de página">
+          <a href="/prueba-museo/exploracion.html" class="footer__link">Exploración</a>
+          <a href="/prueba-museo/coleccion.html"   class="footer__link">Colección</a>
+          <a href="/prueba-museo/aula.html"        class="footer__link">Aula</a>
+          <a href="/prueba-museo/actualidad.html"  class="footer__link">Actualidad</a>
+          <a href="/prueba-museo/index.html#proyecto" class="footer__link">Proyecto</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ══════════════════════════════════
+       SCRIPTS
+  ══════════════════════════════════ -->
+  <script src="/prueba-museo/js/data.js"></script>
+  <script>
+    /* ── Nav ── */
+    const hamburger = document.getElementById('nav-hamburger');
+    const drawer    = document.getElementById('nav-mobile');
+    let navOpen = false;
+    hamburger?.addEventListener('click', () => {
+      navOpen = !navOpen;
+      hamburger.classList.toggle('open', navOpen);
+      drawer.classList.toggle('open', navOpen);
+      hamburger.setAttribute('aria-expanded', String(navOpen));
+      document.body.style.overflow = navOpen ? 'hidden' : '';
+    });
+    window.addEventListener('scroll', () => {
+      document.getElementById('site-header')?.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    /* ══════════════════════════════════════════════════
+       CARGA DE DATOS DESDE data.js
+       Lee el parámetro ?id=OV-001 de la URL y rellena
+       todos los campos de la ficha automáticamente.
+       Si no hay id, muestra los datos de ejemplo.
+    ══════════════════════════════════════════════════ */
+    document.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const id     = params.get('id');
+      if (!id || typeof PIEZAS === 'undefined') return;
+
+      const pieza = PIEZAS.find(p => p.id === id);
+      if (!pieza) return;
+
+      const patMeta  = VOCABULARIO.patologia[pieza.patologia];
+      const regMeta  = VOCABULARIO.region[pieza.region];
+      const sexMeta  = VOCABULARIO.sexo[pieza.sexo];
+      const epocMeta = VOCABULARIO.epoca[pieza.epoca];
+
+      /* Cabecera */
+      document.getElementById('breadcrumb-id').textContent = pieza.id;
+      document.getElementById('fe-id').textContent         = pieza.id;
+      document.getElementById('fe-title').textContent      = pieza.nombre;
+      document.getElementById('fe-subtitle').textContent   =
+        `${patMeta.label} · ${epocMeta.label}`;
+      document.title = `${pieza.nombre} · PaleoMuseo`;
+
+      /* Datos de identificación */
+      document.getElementById('fe-catalog').textContent    = pieza.id;
+      document.getElementById('fe-epoca').textContent      = `${epocMeta.label} · ${epocMeta.range}`;
+      document.getElementById('fe-yacimiento').textContent = pieza.yacimiento;
+      document.getElementById('fe-sexo').textContent       = sexMeta.label;
+      document.getElementById('fe-region').textContent     = regMeta.label;
+      document.getElementById('fe-patologia').textContent  = patMeta.label;
+
+      /* Descripción con enlaces al glosario */
+      if (typeof glosarioLink === 'function') {
+        document.getElementById('fe-desc').innerHTML =
+          glosarioLink(pieza.descripcion);
+      } else {
+        document.getElementById('fe-desc').textContent = pieza.descripcion;
+      }
+
+      /* Imagen */
+      if (pieza.imagen) {
+        const wrap = document.getElementById('fe-img-wrap');
+        document.getElementById('fe-img-placeholder').remove();
+        const img = document.createElement('img');
+        img.src = pieza.imagen;
+        img.alt = pieza.nombre;
+        wrap.appendChild(img);
+      }
+
+      /* Modelo 3D */
+      if (pieza.modelo) {
+        document.getElementById('fe-model-viewer').setAttribute('src', pieza.modelo);
+      }
+
+      /* Enlace ficha maestra — ocultar si no tiene */
+      const masterLink = document.getElementById('fe-master-link');
+      if (pieza.ficha && pieza.ficha.includes('ficha-maestra')) {
+        masterLink.href = pieza.ficha;
+      } else {
+        masterLink.remove();
+      }
+
+      /* Tags */
+      const tagsEl = document.getElementById('fe-tags');
+      tagsEl.innerHTML = `
+        <span class="fe-tag fe-tag--region">${regMeta.icon} ${regMeta.label}</span>
+        <span class="fe-tag fe-tag--patol">${patMeta.icon} ${patMeta.label}</span>
+        <span class="fe-tag fe-tag--sexo">${sexMeta.icon} ${sexMeta.label}</span>
+        <span class="fe-tag fe-tag--epoca">📅 ${epocMeta.label}</span>
+        ${pieza.ficha?.includes('ficha-maestra')
+          ? '<span class="fe-tag fe-tag--master">⭐ Ficha maestra disponible</span>'
+          : ''}
+      `;
+    });
+  </script>
+
+</body>
+</html>
