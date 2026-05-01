@@ -31,76 +31,91 @@
 
     body { background: var(--fe-bg); }
 
-/* ── Barra de navegación de ficha ── */
-.fe-nav-bar {
-  background: var(--fe-bg);           /* hueso, igual que fm-hero fondo del header */
-  border-bottom: 1.5px solid var(--fe-bone);
-  padding: .65rem 0;
-}
-.fe-nav-bar__inner {
-  width: min(1400px, 96vw);
-  margin-inline: auto;
-  padding-inline: clamp(1rem, 3vw, 2rem);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-.fe-nav-bar__back {
-  display: inline-flex;
-  align-items: center;
-  gap: .5rem;
-  font-family: var(--font-head);
-  font-size: .65rem;
-  font-weight: 700;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  color: var(--fe-mid);              /* marrón tierra, no blanco */
-  text-decoration: none;
-  transition: color .15s, gap .15s;
-}
-.fe-nav-bar__back:hover { color: var(--fe-ink); gap: .7rem; }
-.fe-nav-bar__back svg { flex-shrink: 0; }
-.fe-nav-bar__actions {
-  display: flex;
-  align-items: center;
-  gap: .5rem;
-  flex-wrap: wrap;
-}
-.fe-nav-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: .4rem;
-  font-family: var(--font-head);
-  font-size: .6rem;
-  font-weight: 700;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  padding: .4em .9em;
-  border: 2px solid;
-  border-radius: 2px;
-  cursor: pointer;
-  text-decoration: none;
-  transition: transform .12s, box-shadow .12s, background .15s, color .15s;
-  box-shadow: 2px 2px 0;
-  white-space: nowrap;
-}
-.fe-nav-btn:hover { transform: translate(-2px,-2px); }
-.fe-nav-btn--region {
-  background: rgba(0,180,200,.06);
-  border-color: #0097a7;
-  color: #0097a7;
-  box-shadow: 2px 2px 0 #0097a7;
-}
-.fe-nav-btn--region:hover { background: rgba(0,180,200,.14); box-shadow: 4px 4px 0 #0097a7; }
-.fe-nav-btn--buscar {
-  background: rgba(192,0,60,.06);
-  border-color: var(--crimson);
-  color: var(--crimson);
-  box-shadow: 2px 2px 0 var(--crimson);
-}
-.fe-nav-btn--buscar:hover { background: rgba(192,0,60,.14); box-shadow: 4px 4px 0 var(--crimson); }
+    /* ── Barra de navegación de ficha ── */
+    .fe-nav-bar {
+      background: var(--fe-bg);
+      border-top: 1.5px solid var(--fe-bone);
+      border-bottom: 1.5px solid var(--fe-bone);
+      padding: .65rem 0;
+    }
+    .fe-nav-bar__inner {
+      width: min(1400px, 96vw);
+      margin-inline: auto;
+      padding-inline: clamp(1rem, 3vw, 2rem);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .fe-nav-bar__back {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      font-family: var(--font-head);
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--fe-mid);
+      text-decoration: none;
+      transition: color .15s, gap .15s;
+    }
+    .fe-nav-bar__back:hover { color: var(--fe-ink); gap: .7rem; }
+    .fe-nav-bar__back svg { flex-shrink: 0; }
+    .fe-nav-bar__actions {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      flex-wrap: wrap;
+    }
+    .fe-nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      font-family: var(--font-head);
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: .4em .9em;
+      border: 2px solid;
+      border-radius: 2px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform .12s, box-shadow .12s, background .15s, color .15s;
+      box-shadow: 2px 2px 0;
+      white-space: nowrap;
+    }
+    .fe-nav-btn:hover { transform: translate(-2px,-2px); }
+    .fe-nav-btn--region {
+      background: rgba(0,180,200,.06);
+      border-color: #0097a7;
+      color: #0097a7;
+      box-shadow: 2px 2px 0 #0097a7;
+    }
+    .fe-nav-btn--region:hover { background: rgba(0,180,200,.14); box-shadow: 4px 4px 0 #0097a7; }
+    .fe-nav-btn--buscar {
+      background: rgba(192,0,60,.06);
+      border-color: var(--crimson);
+      color: var(--crimson);
+      box-shadow: 2px 2px 0 var(--crimson);
+    }
+    .fe-nav-btn--buscar:hover { background: rgba(192,0,60,.14); box-shadow: 4px 4px 0 var(--crimson); }
+
+    /* ── Layout principal ── */
+    .fe-main {
+      width: min(1400px, 96vw);
+      margin-inline: auto;
+      padding-inline: clamp(1rem, 3vw, 2rem);
+      padding-block: clamp(2rem, 4vw, 3.5rem);
+      /* ↓ padding-top extra para compensar el header fijo */
+      padding-top: calc(clamp(2rem, 4vw, 3.5rem) + clamp(56px, 7vw, 70px));
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(2rem, 4vw, 4rem);
+      align-items: start;
+    }
 
     /* ════════════════════════════════
        COLUMNA IZQUIERDA — visual
@@ -141,6 +156,7 @@
       text-transform: uppercase;
       color: var(--fe-mid);
     }
+
     /* Badge tipo ficha */
     .fe-img-badge {
       position: absolute;
@@ -404,7 +420,6 @@
       transform: translate(-3px,-3px);
       box-shadow: 7px 7px 0 var(--fe-ink);
     }
-    .fe-master-link__text {}
     .fe-master-link__eyebrow {
       font-family: var(--font-head);
       font-size: .58rem;
@@ -453,7 +468,7 @@
 <body>
 
   <!-- ══════════════════════════════════
-       HEADER
+       HEADER — barra de navegación global
   ══════════════════════════════════ -->
   <header class="site-header" id="site-header">
     <div class="container">
@@ -494,6 +509,7 @@
 
   <!-- ══════════════════════════════════
        CONTENIDO PRINCIPAL
+       (padding-top compensa el header fijo)
   ══════════════════════════════════ -->
   <main class="fe-main" id="fe-main">
 
@@ -503,8 +519,6 @@
       <!-- Imagen principal -->
       <div class="fe-img-wrap" id="fe-img-wrap">
         <span class="fe-img-badge">Ficha estándar</span>
-        <!-- Si hay imagen: <img src="..." alt="..." /> -->
-        <!-- Placeholder si no hay imagen -->
         <div class="fe-img-placeholder" id="fe-img-placeholder">
           <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" fill="currentColor"/>
@@ -516,10 +530,6 @@
       <!-- Model Viewer 3D -->
       <div class="fe-viewer-wrap">
         <span class="fe-viewer-label">Modelo 3D · Arrastra para rotar</span>
-        <!--
-          Cambia el src por la ruta real de tu modelo:
-          src="/prueba-museo/assets/models/avas_skull.glb"
-        -->
         <model-viewer
           id="fe-model-viewer"
           src="/prueba-museo/assets/models/avas_skull.glb"
@@ -647,7 +657,7 @@
         </div>
       </div>
 
-      <!-- Enlace a ficha maestra (si existe) -->
+      <!-- Enlace a ficha maestra (se oculta automáticamente si la pieza no la tiene) -->
       <a href="/prueba-museo/ficha-maestra.html?id=OV-001" class="fe-master-link" id="fe-master-link">
         <div class="fe-master-link__text">
           <p class="fe-master-link__eyebrow">Disponible para esta pieza</p>
@@ -660,8 +670,10 @@
   </main>
 
   <!-- ══════════════════════════════════
-       BARRA DE NAVEGACIÓN
+       BARRA DE NAVEGACIÓN INFERIOR
+       (antes del footer, igual que ficha maestra)
   ══════════════════════════════════ -->
+  <div class="fe-nav-bar">
     <div class="fe-nav-bar__inner">
       <a href="/prueba-museo/exploracion.html" class="fe-nav-bar__back">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
@@ -710,7 +722,7 @@
   ══════════════════════════════════ -->
   <script src="/prueba-museo/js/data.js"></script>
   <script>
-    /* ── Nav ── */
+    /* ── Nav hamburger ── */
     const hamburger = document.getElementById('nav-hamburger');
     const drawer    = document.getElementById('nav-mobile');
     let navOpen = false;
@@ -721,6 +733,8 @@
       hamburger.setAttribute('aria-expanded', String(navOpen));
       document.body.style.overflow = navOpen ? 'hidden' : '';
     });
+
+    /* ── Header scrolled ── */
     window.addEventListener('scroll', () => {
       document.getElementById('site-header')?.classList.toggle('scrolled', window.scrollY > 40);
     }, { passive: true });
@@ -744,38 +758,33 @@
       const sexMeta  = VOCABULARIO.sexo[pieza.sexo];
       const epocMeta = VOCABULARIO.epoca[pieza.epoca];
 
+      /* Botones de la barra de navegación inferior */
       const btnRegion = document.getElementById('fe-btn-region');
       if (btnRegion) {
-        btnRegion.href =
-          `/prueba-museo/exploracion.html?vista=anatomica&region=${pieza.region}`;
+        btnRegion.href = `/prueba-museo/exploracion.html?vista=anatomica&region=${pieza.region}`;
       }
-
       const btnBuscar = document.getElementById('fe-btn-buscar');
       if (btnBuscar) {
-        btnBuscar.href =
-          `/prueba-museo/coleccion.html?patologia=${pieza.patologia}`;
+        btnBuscar.href = `/prueba-museo/coleccion.html?patologia=${pieza.patologia}`;
       }
 
       /* Cabecera */
-      document.getElementById('breadcrumb-id').textContent = pieza.id;
-      document.getElementById('fe-id').textContent         = pieza.id;
-      document.getElementById('fe-title').textContent      = pieza.nombre;
-      document.getElementById('fe-subtitle').textContent   =
-        `${patMeta.label} · ${epocMeta.label}`;
+      document.getElementById('fe-id').textContent        = pieza.id;
+      document.getElementById('fe-title').textContent     = pieza.nombre;
+      document.getElementById('fe-subtitle').textContent  = `${patMeta.label} · ${epocMeta.label}`;
       document.title = `${pieza.nombre} · PaleoMuseo`;
 
       /* Datos de identificación */
-      document.getElementById('fe-catalog').textContent    = pieza.id;
-      document.getElementById('fe-epoca').textContent      = `${epocMeta.label} · ${epocMeta.range}`;
-      document.getElementById('fe-yacimiento').textContent = pieza.yacimiento;
-      document.getElementById('fe-sexo').textContent       = sexMeta.label;
-      document.getElementById('fe-region').textContent     = regMeta.label;
-      document.getElementById('fe-patologia').textContent  = patMeta.label;
+      document.getElementById('fe-catalog').textContent       = pieza.id;
+      document.getElementById('fe-epoca').textContent         = `${epocMeta.label} · ${epocMeta.range}`;
+      document.getElementById('fe-yacimiento').textContent    = pieza.yacimiento;
+      document.getElementById('fe-sexo').textContent          = sexMeta.label;
+      document.getElementById('fe-region').textContent        = regMeta.label;
+      document.getElementById('fe-patologia').textContent     = patMeta.label;
 
       /* Descripción con enlaces al glosario */
       if (typeof glosarioLink === 'function') {
-        document.getElementById('fe-desc').innerHTML =
-          glosarioLink(pieza.descripcion);
+        document.getElementById('fe-desc').innerHTML = glosarioLink(pieza.descripcion);
       } else {
         document.getElementById('fe-desc').textContent = pieza.descripcion;
       }
@@ -795,7 +804,7 @@
         document.getElementById('fe-model-viewer').setAttribute('src', pieza.modelo);
       }
 
-      /* Enlace ficha maestra — ocultar si no tiene */
+      /* Enlace ficha maestra — ocultar si la pieza no la tiene */
       const masterLink = document.getElementById('fe-master-link');
       if (pieza.ficha && pieza.ficha.includes('ficha-maestra')) {
         masterLink.href = pieza.ficha;
