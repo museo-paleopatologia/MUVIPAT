@@ -1752,67 +1752,66 @@ function getPlanosWidget() {
       MODAL DEL GLOSARIO
   ═══════════════════════════════════════════════════════ -->
     <div class="glos-modal-overlay" id="glos-modal" role="dialog" aria-modal="true" aria-labelledby="glos-modal-term">
-    <div class="glos-modal-box">
-  
-      <!-- Cabecera -->
-      <div class="glos-modal-header" id="glos-modal-header">
-        <div>
-          <span class="glos-modal-cat" id="glos-modal-cat"></span>
-          <h2 class="glos-modal-term" id="glos-modal-term"></h2>
-          <p class="glos-modal-sin" id="glos-modal-sin"></p>
-        </div>
-        <button class="glos-modal-close" id="glos-modal-close" aria-label="Cerrar">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-        </button>
-      </div>
-  
-      <!-- Cuerpo -->
-      <div class="glos-modal-body" id="glos-modal-body">
+      <div class="glos-modal-box">
 
-        <!-- Columna izquierda (siempre visible) -->
-        <div class="glos-modal-col-left" id="glos-modal-col-left">
-
-          <div class="glos-modal-def-block">
-            <p class="glos-modal-def" id="glos-modal-def"></p>
-            <p class="glos-modal-obs" id="glos-modal-obs"></p>
-            <div class="glos-modal-source" id="glos-modal-source"></div>
+        <!-- Cabecera -->
+        <div class="glos-modal-header" id="glos-modal-header">
+          <div>
+            <span class="glos-modal-cat" id="glos-modal-cat"></span>
+            <h2 class="glos-modal-term" id="glos-modal-term"></h2>
+            <p class="glos-modal-sin" id="glos-modal-sin"></p>
           </div>
-
-          <hr class="glos-modal-sep" />
-
-          <div class="glos-modal-section" id="glos-modal-contexto-wrap">
-            <p class="glos-modal-section-label">Contexto paleopatológico</p>
-            <p class="glos-modal-contexto" id="glos-modal-contexto"></p>
-          </div>
-
-          <div class="glos-modal-section" id="glos-modal-piezas-wrap">
-            <p class="glos-modal-section-label">Piezas de la colección</p>
-            <div class="glos-modal-piezas" id="glos-modal-piezas"></div>
-          </div>
-
+          <button class="glos-modal-close" id="glos-modal-close" aria-label="Cerrar">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+          </button>
         </div>
 
-        <!-- Columna derecha (solo cuando hay widget o imagen) -->
-        <div class="glos-modal-col-right" id="glos-modal-col-right" style="display:none">
+        <!-- Cuerpo con dos columnas -->
+        <div class="glos-modal-body" id="glos-modal-body">
 
-          <!-- Widget interactivo del esqueleto -->
-          <div class="glos-modal-widget" id="glos-modal-widget-wrap" style="display:none">
-            <p class="glos-modal-widget-label">
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
-              Diagrama interactivo
-            </p>
-            <div id="glos-modal-widget-content"></div>
-          </div>
+          <!-- Columna izquierda — siempre visible -->
+          <div class="glos-modal-col-left" id="glos-modal-col-left">
 
-          <!-- Imagen con hotspots -->
-          <div class="glos-modal-img-wrap" id="glos-modal-img-wrap" style="display:none">
-            <p class="glos-modal-img-label">Imagen con anotaciones</p>
-            <div style="position:relative" id="glos-modal-img-inner">
-              <img id="glos-modal-img" alt="" />
+            <div class="glos-modal-def-block">
+              <p class="glos-modal-def" id="glos-modal-def"></p>
+              <p class="glos-modal-obs" id="glos-modal-obs"></p>
+              <div class="glos-modal-source" id="glos-modal-source"></div>
             </div>
-            <div class="hs-desc-box" id="glos-hs-desc"></div>
+
+            <hr class="glos-modal-sep" />
+
+            <div class="glos-modal-section" id="glos-modal-contexto-wrap">
+              <p class="glos-modal-section-label">Contexto paleopatológico</p>
+              <p class="glos-modal-contexto" id="glos-modal-contexto"></p>
+            </div>
+
+            <div class="glos-modal-section" id="glos-modal-piezas-wrap">
+              <p class="glos-modal-section-label">Piezas de la colección</p>
+              <div class="glos-modal-piezas" id="glos-modal-piezas"></div>
+            </div>
+
           </div>
 
+          <!-- Columna derecha — solo cuando hay widget o imagen -->
+          <div class="glos-modal-col-right" id="glos-modal-col-right" style="display:none">
+
+            <div class="glos-modal-widget" id="glos-modal-widget-wrap" style="display:none">
+              <p class="glos-modal-widget-label">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+                Diagrama interactivo
+              </p>
+              <div id="glos-modal-widget-content"></div>
+            </div>
+
+            <div class="glos-modal-img-wrap" id="glos-modal-img-wrap" style="display:none">
+              <p class="glos-modal-img-label">Imagen con anotaciones</p>
+              <div style="position:relative" id="glos-modal-img-inner">
+                <img id="glos-modal-img" alt="" style="width:100%;height:auto;display:block" />
+              </div>
+              <div class="hs-desc-box" id="glos-hs-desc"></div>
+            </div>
+
+          </div>
         </div>
       </div>
     </div>
