@@ -542,118 +542,72 @@
     /* ═══════════════════════════════════════
        EVENTOS
     ═══════════════════════════════════════ */
-    .ac-events {
-      background: var(--ac-ink);
-      border-bottom: var(--ac-border);
-      padding-block: clamp(3rem, 6vw, 5rem);
+    /* ── Layout principal actualizado ── */
+    .ac-main__inner {
+      grid-template-columns: 1fr 320px; /* se mantiene igual */
     }
-    .ac-events__inner {
-      width: min(1400px, 96vw);
-      margin-inline: auto;
-      padding-inline: clamp(1rem, 3vw, 2rem);
-    }
-    .ac-events__header {
+    .ac-main__left {
       display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-bottom: 2rem;
+      flex-direction: column;
+      gap: clamp(2.5rem, 5vw, 4rem);
     }
-    .ac-events__label {
+
+    /* ── Eventos inline (fondo claro, bajo noticias) ── */
+    .ac-events-inline {
+      border-top: var(--ac-border);
+      padding-top: clamp(2rem, 4vw, 3rem);
+    }
+    .ac-events-inline__label {
       font-family: var(--font-head);
-      font-size: .7rem;
+      font-size: .65rem;
       font-weight: 700;
       letter-spacing: .2em;
       text-transform: uppercase;
-      color: var(--sulfur);
+      color: var(--crimson);
       display: flex;
       align-items: center;
       gap: .5rem;
       margin-bottom: .6rem;
     }
-    .ac-events__label::before { content:''; display:block; width:25px; height:2.5px; background:var(--sulfur); }
-    .ac-events__title {
-      font-family: var(--font-head);
-      font-size: clamp(1.3rem, 2.5vw, 2rem);
-      font-weight: 900;
-      letter-spacing: -.04em;
-      color: var(--ivory);
-    }
-
-    .ac-events__grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1.25rem;
-    }
-
-    .ac-event-card {
-      background: #1a1a1a;
-      border: var(--ac-border);
-      border-color: rgba(255,255,255,.15);
-      border-radius: 4px;
-      padding: 1.3rem 1.4rem;
-      box-shadow: 4px 4px 0 rgba(255,255,255,.06);
-      transition: transform .15s, box-shadow .15s;
-      text-decoration: none;
-      color: inherit;
-      display: flex;
-      flex-direction: column;
-      gap: .6rem;
-    }
-    .ac-event-card:hover {
-      transform: translate(-3px,-3px);
-      box-shadow: 7px 7px 0 rgba(255,255,255,.1);
-    }
-    .ac-event-card__date-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: .5rem;
-      font-family: var(--font-head);
-      font-size: .6rem;
-      font-weight: 700;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--sulfur);
-      align-self: flex-start;
-    }
-    .ac-event-card__date-badge::before {
+    .ac-events-inline__label::before {
       content: '';
       display: block;
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--sulfur);
-      flex-shrink: 0;
+      width: 25px; height: 2.5px;
+      background: var(--crimson);
     }
-    .ac-event-card__title {
+    .ac-events-inline__title {
       font-family: var(--font-head);
-      font-size: .95rem;
-      font-weight: 800;
-      color: var(--ivory);
-      line-height: 1.25;
-      letter-spacing: -.02em;
-    }
-    .ac-event-card__where {
-      font-size: .75rem;
-      color: var(--bone-400);
-      font-weight: 300;
-      display: flex;
-      align-items: center;
-      gap: .35rem;
-    }
-    .ac-event-card__type {
-      font-family: var(--font-head);
-      font-size: .55rem;
-      font-weight: 700;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      padding: .2em .55em;
-      border: 1.5px solid;
-      border-radius: 2px;
-      align-self: flex-start;
-      margin-top: auto;
+      font-size: clamp(1.1rem, 2vw, 1.5rem);
+      font-weight: 900;
+      letter-spacing: -.03em;
+      color: var(--ac-ink);
+      margin-bottom: 1.5rem;
     }
 
+    /* ── Cards de evento en fondo claro ── */
+    .ac-event-card {
+      background: #fff;           /* antes era #1a1a1a */
+      border-color: var(--ac-ink); /* antes era rgba blanco */
+      box-shadow: var(--ac-shadow-sm);
+    }
+    .ac-event-card:hover {
+      box-shadow: var(--ac-shadow);
+    }
+    .ac-event-card__title {
+      color: var(--ac-ink);       /* antes era var(--ivory) */
+    }
+    .ac-event-card__where {
+      color: var(--ac-mid);       /* antes era var(--bone-400) */
+    }
+
+    /* ── Eliminar la sección negra de eventos que ya no existe ── */
+    .ac-events { display: none; }
+
+    /* Responsive */
+    @media (max-width: 1050px) {
+      .ac-main__inner { grid-template-columns: 1fr; }
+      .ac-sidebar { position: static; }
+    }
     /* ═══════════════════════════════════════
        RESPONSIVE
     ═══════════════════════════════════════ */
@@ -763,9 +717,12 @@
        GRID NOTICIAS + SIDEBAR PUBS
   ══════════════════════════════════ -->
   <section class="ac-main">
-    <div class="ac-main__inner">
+  <div class="ac-main__inner">
 
-      <!-- Grid -->
+    <!-- Columna principal -->
+    <div class="ac-main__left">
+
+      <!-- Grid de noticias -->
       <div class="ac-grid-wrap">
         <div class="ac-grid-header">
           <h2 class="ac-grid-title">Últimas noticias</h2>
@@ -779,54 +736,47 @@
         </div>
       </div>
 
-      <!-- Sidebar publicaciones académicas -->
-      <aside class="ac-sidebar">
-        <div class="ac-sidebar__section">
-          <p class="ac-sidebar__title">
-            <span class="ac-sidebar__title-dot" style="background:var(--blue)"></span>
-            Publicaciones recientes
-          </p>
-          <div id="pubmed-list">
-            <div class="ac-pub-loading">
-              <div class="ac-spinner" style="width:18px;height:18px;border-width:2px"></div>
-              Consultando PubMed…
-            </div>
-          </div>
+      <!-- Eventos — justo debajo del grid -->
+      <div class="ac-events-inline">
+        <div class="ac-events-inline__header">
+          <p class="ac-events-inline__label">Próximas citas</p>
+          <h2 class="ac-events-inline__title">Eventos y congresos</h2>
         </div>
-
-        <div class="ac-sidebar__section">
-          <p class="ac-sidebar__title">
-            <span class="ac-sidebar__title-dot" style="background:var(--orange)"></span>
-            CrossRef · Últimos DOIs
-          </p>
-          <div id="crossref-list">
-            <div class="ac-pub-loading">
-              <div class="ac-spinner" style="width:18px;height:18px;border-width:2px;border-top-color:var(--orange)"></div>
-              Consultando CrossRef…
-            </div>
-          </div>
-        </div>
-      </aside>
+        <div class="ac-events__grid" id="events-grid"></div>
+      </div>
 
     </div>
-  </section>
 
-
-  <!-- ══════════════════════════════════
-       EVENTOS Y CONGRESOS
-  ══════════════════════════════════ -->
-  <section class="ac-events">
-    <div class="ac-events__inner">
-      <div class="ac-events__header">
-        <div>
-          <p class="ac-events__label">Próximas citas</p>
-          <h2 class="ac-events__title">Eventos y congresos</h2>
+    <!-- Sidebar publicaciones académicas -->
+    <aside class="ac-sidebar">
+      <div class="ac-sidebar__section">
+        <p class="ac-sidebar__title">
+          <span class="ac-sidebar__title-dot" style="background:var(--blue)"></span>
+          Publicaciones recientes
+        </p>
+        <div id="pubmed-list">
+          <div class="ac-pub-loading">
+            <div class="ac-spinner" style="width:18px;height:18px;border-width:2px"></div>
+            Consultando PubMed…
+          </div>
         </div>
       </div>
-      <div class="ac-events__grid" id="events-grid">
-        <!-- Generado por JS -->
+
+      <div class="ac-sidebar__section">
+        <p class="ac-sidebar__title">
+          <span class="ac-sidebar__title-dot" style="background:var(--orange)"></span>
+          CrossRef · Últimos DOIs
+        </p>
+        <div id="crossref-list">
+          <div class="ac-pub-loading">
+            <div class="ac-spinner" style="width:18px;height:18px;border-width:2px;border-top-color:var(--orange)"></div>
+            Consultando CrossRef…
+          </div>
+        </div>
       </div>
-    </div>
+    </aside>
+
+  </div>
   </section>
 
 
