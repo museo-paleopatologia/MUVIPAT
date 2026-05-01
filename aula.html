@@ -1018,12 +1018,12 @@ function openGlosModal(entry) {
   const overlay = document.getElementById('glos-modal');
   const cc = CAT_COLORS[entry.cat] || { color:'#6b5a43', bg:'rgba(107,90,67,.08)' };
 
+  /* ── Cabecera ── */
   const catEl = document.getElementById('glos-modal-cat');
-  catEl.textContent   = CAT_LABELS[entry.cat] || entry.cat;
-  catEl.style.color   = cc.color;
+  catEl.textContent      = CAT_LABELS[entry.cat] || entry.cat;
+  catEl.style.color      = cc.color;
   catEl.style.borderColor = cc.color;
   catEl.style.background  = cc.bg;
-
   document.getElementById('glos-modal-term').textContent = entry.term;
   document.getElementById('glos-modal-header').style.borderBottomColor = cc.color;
 
@@ -1031,36 +1031,34 @@ function openGlosModal(entry) {
   sinEl.textContent = entry.sinonimos && entry.sinonimos.length
     ? 'Sin.: ' + entry.sinonimos.join(', ') : '';
 
+  /* ── Definición ── */
   document.getElementById('glos-modal-def').textContent = entry.def;
-
   const obsEl = document.getElementById('glos-modal-obs');
   obsEl.textContent = entry.obs || '';
 
+  /* ── Fuente ── */
   const srcEl = document.getElementById('glos-modal-source');
   if (entry.fuente) {
     srcEl.innerHTML = `<a href="${entry.fuente.url}" target="_blank" rel="noopener noreferrer">${entry.fuente.label} ↗</a>`;
     srcEl.style.display = '';
   } else {
-    srcEl.innerHTML = '';
-    srcEl.style.display = 'none';
+    srcEl.innerHTML = ''; srcEl.style.display = 'none';
   }
 
+  /* ── Contexto ── */
   const ctxWrap = document.getElementById('glos-modal-contexto-wrap');
   const ctxEl   = document.getElementById('glos-modal-contexto');
   if (entry.contexto) {
     ctxEl.textContent = entry.contexto;
     ctxWrap.style.display = '';
-  } else {
-    ctxWrap.style.display = 'none';
-  }
+  } else { ctxWrap.style.display = 'none'; }
 
+  /* ── Piezas ── */
   const piezasWrap = document.getElementById('glos-modal-piezas-wrap');
   const piezasEl   = document.getElementById('glos-modal-piezas');
   piezasEl.innerHTML = '';
   const relacionadas = (entry.piezas || [])
-    .map(id => PIEZAS.find(p => p.id === id))
-    .filter(Boolean);
-
+    .map(id => PIEZAS.find(p => p.id === id)).filter(Boolean);
   if (relacionadas.length) {
     relacionadas.forEach(pieza => {
       const chip = document.createElement('a');
@@ -1070,15 +1068,79 @@ function openGlosModal(entry) {
       piezasEl.appendChild(chip);
     });
     piezasWrap.style.display = '';
+  } else { piezasWrap.style.display = 'none'; }
+
+  /* ── Columna derecha: widget + imagen ── */
+  const hasWidget = !!entry.widget;
+  const hasImage  = !!entry.imagen;
+  const hasVisual = hasWidget || hasImage;
+
+  const body      = document.getElementById('glos-modal-body');
+  const colRight  = document.getElementById('glos-modal-col-right');
+  const box       = document.getElementById('glos-modal')?.querySelector('.glos-modal-box');
+  const widgetWrap = document.getElementById('glos-modal-widget-wrap');
+  const imgWrap    = document.getElementById('glos-modal-img-wrap');
+
+  if (hasVisual) {
+    body.classList.add('has-visual');
+    box?.classList.add('has-visual');
+    colRight.style.display = '';
   } else {
-    piezasWrap.style.display = 'none';
+    body.classList.remove('has-visual');
+    box?.classList.remove('has-visual');
+    colRight.style.display = 'none';
   }
 
+  /* Widget del esqueleto */
+  if (hasWidget && entry.widget === 'planos-anatomicos') {
+    widgetWrap.style.display = '';
+    document.getElementById('glos-modal-widget-content').innerHTML = getPlanosWidget();
+  } else {
+    widgetWrap.style.display = 'none';
+  }
+
+  /* Imagen con hotspots */
+  if (hasImage) {
+    imgWrap.style.display = '';
+    const img = document.getElementById('glos-modal-img');
+    img.src = entry.imagen;
+    img.alt = entry.term;
+
+    // Limpiar hotspots anteriores
+    const inner = document.getElementById('glos-modal-img-inner');
+    inner.querySelectorAll('.img-hotspot').forEach(el => el.remove());
+    document.getElementById('glos-hs-desc').classList.remove('visible');
+    document.getElementById('glos-hs-desc').textContent = '';
+
+    // Añadir hotspots
+    if (entry.hotspots && entry.hotspots.length) {
+      entry.hotspots.forEach((hs, i) => {
+        const dot = document.createElement('div');
+        dot.className = 'img-hotspot';
+        dot.style.left = hs.x + '%';
+        dot.style.top  = hs.y + '%';
+        dot.innerHTML = `
+          <div class="img-hotspot__dot" style="border-color:${hs.color};color:${hs.color};background:${hs.color}22">${i+1}</div>
+          <div class="img-hotspot__tooltip" style="border-color:${hs.color}">${hs.label}</div>
+        `;
+        dot.addEventListener('click', () => {
+          const descBox = document.getElementById('glos-hs-desc');
+          descBox.textContent = hs.desc || hs.label;
+          descBox.style.borderColor = hs.color;
+          descBox.classList.add('visible');
+        });
+        inner.appendChild(dot);
+      });
+    }
+  } else {
+    imgWrap.style.display = 'none';
+  }
+
+  /* ── Abrir ── */
   overlay.classList.add('open');
   document.body.style.overflow = 'hidden';
   document.getElementById('glos-modal-close').focus();
 }
-
 function closeGlosModal() {
   document.getElementById('glos-modal').classList.remove('open');
   document.body.style.overflow = '';
@@ -1163,6 +1225,70 @@ function renderGlosario() {
     });
   });
 
+function getPlanosWidget() {
+  return `
+  <div style="padding:8px;font-family:var(--font-ui)">
+    <div style="display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap">
+      <svg viewBox="0 0 200 340" style="width:140px;flex-shrink:0" xmlns="http://www.w3.org/2000/svg">
+        <!-- Esqueleto simplificado -->
+        <g fill="none" stroke="#6b5a43" stroke-width="1" stroke-linecap="round" opacity="0.5">
+          <ellipse cx="100" cy="24" rx="16" ry="18"/>
+          <path d="M88 36 Q88 46 100 48 Q112 46 112 36"/>
+          <line x1="100" y1="48" x2="100" y2="163"/>
+          ${[58,67,76,85,94,103,112,121,130,139,148,157].map(y=>`<line x1="96" y1="${y}" x2="104" y2="${y}"/>`).join('')}
+          <path d="M100 63 Q82 66 76 76 Q74 82 86 84"/>
+          <path d="M100 63 Q118 66 124 76 Q126 82 114 84"/>
+          <path d="M100 72 Q80 74 74 84 Q73 92 86 93"/>
+          <path d="M100 72 Q120 74 126 84 Q127 92 114 93"/>
+          <path d="M100 82 Q81 82 76 92 Q75 100 87 101"/>
+          <path d="M100 82 Q119 82 124 92 Q125 100 113 101"/>
+          <line x1="100" y1="52" x2="100" y2="113" stroke-width="1.5"/>
+          <path d="M100 52 Q88 50 77 55"/> <path d="M100 52 Q112 50 123 55"/>
+          <path d="M71 57 Q67 64 68 76 Q70 80 77 78 Q78 71 74 59 Z"/>
+          <path d="M129 57 Q133 64 132 76 Q130 80 123 78 Q122 71 126 59 Z"/>
+          <line x1="70" y1="58" x2="62" y2="108"/>
+          <line x1="130" y1="58" x2="138" y2="108"/>
+          <line x1="62" y1="108" x2="55" y2="150"/> <line x1="62" y1="108" x2="59" y2="150"/>
+          <line x1="138" y1="108" x2="145" y2="150"/> <line x1="138" y1="108" x2="141" y2="150"/>
+          <path d="M89 163 Q76 166 70 178 Q67 190 79 198 Q100 203 121 198 Q133 190 130 178 Q124 166 111 163 Z"/>
+          <line x1="88" y1="200" x2="81" y2="263"/> <line x1="112" y1="200" x2="119" y2="263"/>
+          <ellipse cx="80" cy="265" rx="3" ry="4"/> <ellipse cx="120" cy="265" rx="3" ry="4"/>
+          <line x1="79" y1="269" x2="74" y2="318"/> <line x1="83" y1="269" x2="80" y2="318"/>
+          <line x1="117" y1="269" x2="120" y2="318"/> <line x1="121" y1="269" x2="124" y2="318"/>
+        </g>
+        <!-- Plano sagital -->
+        <line x1="100" y1="5" x2="100" y2="335" stroke="#378ADD" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.85"/>
+        <polygon points="100,2 97,9 103,9" fill="#378ADD" opacity="0.85"/>
+        <polygon points="100,338 97,331 103,331" fill="#378ADD" opacity="0.85"/>
+        <!-- Plano coronal -->
+        <ellipse cx="100" cy="170" rx="72" ry="168" fill="#1D9E75" fill-opacity="0.05" stroke="#1D9E75" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.85"/>
+        <!-- Plano transversal -->
+        <ellipse cx="100" cy="118" rx="66" ry="11" fill="#BA7517" fill-opacity="0.08" stroke="#BA7517" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.85"/>
+        <!-- Labels -->
+        <text x="106" y="13" font-size="7" fill="#378ADD" font-family="sans-serif" font-weight="600">Sagital</text>
+        <text x="175" y="174" font-size="7" fill="#1D9E75" font-family="sans-serif" font-weight="600">Coronal</text>
+        <text x="168" y="116" font-size="7" fill="#BA7517" font-family="sans-serif" font-weight="600">Transversal</text>
+      </svg>
+      <div style="flex:1;min-width:120px;display:flex;flex-direction:column;gap:8px;padding-top:4px">
+        <div style="display:flex;align-items:center;gap:6px;font-size:.72rem;color:#0d0d0d;cursor:pointer;padding:4px 6px;border-radius:3px;background:rgba(55,138,221,.08);border-left:3px solid #378ADD">
+          <span style="width:16px;height:2px;background:#378ADD;border-radius:1px;display:inline-block;flex-shrink:0"></span>
+          <span><strong>Sagital</strong> — divide izq. / der.</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:.72rem;color:#0d0d0d;cursor:pointer;padding:4px 6px;border-radius:3px;background:rgba(29,158,117,.08);border-left:3px solid #1D9E75">
+          <span style="width:16px;height:2px;background:#1D9E75;border-radius:1px;display:inline-block;flex-shrink:0"></span>
+          <span><strong>Coronal</strong> — divide ant. / post.</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:.72rem;color:#0d0d0d;cursor:pointer;padding:4px 6px;border-radius:3px;background:rgba(186,117,23,.08);border-left:3px solid #BA7517">
+          <span style="width:16px;height:2px;background:#BA7517;border-radius:1px;display:inline-block;flex-shrink:0"></span>
+          <span><strong>Transversal</strong> — divide sup. / inf.</span>
+        </div>
+        <div style="margin-top:4px;font-size:.65rem;color:#8a7a65;line-height:1.5;padding:6px 8px;border:1px dashed rgba(13,13,13,.15);border-radius:3px">
+          Los tres planos son perpendiculares entre sí y se intersectan en el centro de masa del cuerpo.
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
   /* ═══════════════════════════════════════════════════════
      BIBLIOGRAFÍA — render + filtrado
   ═══════════════════════════════════════════════════════ */
@@ -1559,7 +1685,7 @@ function renderGlosario() {
   /* ── Init ── */
   renderGlosario();
 
-  /* ── Gestión de ancla URL ── */
+  /* ── Gestión de ancla URL ──*/
 (function handleAnchor() {
   const params = new URLSearchParams(window.location.search);
   const slug   = params.get('glos');
@@ -1641,30 +1767,53 @@ function renderGlosario() {
       </div>
   
       <!-- Cuerpo -->
-      <div class="glos-modal-body">
-  
-        <!-- Definición principal estilo diccionario -->
-        <div class="glos-modal-def-block">
-          <p class="glos-modal-def" id="glos-modal-def"></p>
-          <p class="glos-modal-obs" id="glos-modal-obs"></p>
-          <div class="glos-modal-source" id="glos-modal-source"></div>
+      <div class="glos-modal-body" id="glos-modal-body">
+
+        <!-- Columna izquierda (siempre visible) -->
+        <div class="glos-modal-col-left" id="glos-modal-col-left">
+
+          <div class="glos-modal-def-block">
+            <p class="glos-modal-def" id="glos-modal-def"></p>
+            <p class="glos-modal-obs" id="glos-modal-obs"></p>
+            <div class="glos-modal-source" id="glos-modal-source"></div>
+          </div>
+
+          <hr class="glos-modal-sep" />
+
+          <div class="glos-modal-section" id="glos-modal-contexto-wrap">
+            <p class="glos-modal-section-label">Contexto paleopatológico</p>
+            <p class="glos-modal-contexto" id="glos-modal-contexto"></p>
+          </div>
+
+          <div class="glos-modal-section" id="glos-modal-piezas-wrap">
+            <p class="glos-modal-section-label">Piezas de la colección</p>
+            <div class="glos-modal-piezas" id="glos-modal-piezas"></div>
+          </div>
+
         </div>
-  
-        <!-- Separador -->
-        <hr class="glos-modal-sep" />
-  
-        <!-- Contexto paleopatológico ampliado -->
-        <div class="glos-modal-section" id="glos-modal-contexto-wrap">
-          <p class="glos-modal-section-label">Contexto paleopatológico</p>
-          <p class="glos-modal-contexto" id="glos-modal-contexto"></p>
+
+        <!-- Columna derecha (solo cuando hay widget o imagen) -->
+        <div class="glos-modal-col-right" id="glos-modal-col-right" style="display:none">
+
+          <!-- Widget interactivo del esqueleto -->
+          <div class="glos-modal-widget" id="glos-modal-widget-wrap" style="display:none">
+            <p class="glos-modal-widget-label">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+              Diagrama interactivo
+            </p>
+            <div id="glos-modal-widget-content"></div>
+          </div>
+
+          <!-- Imagen con hotspots -->
+          <div class="glos-modal-img-wrap" id="glos-modal-img-wrap" style="display:none">
+            <p class="glos-modal-img-label">Imagen con anotaciones</p>
+            <div style="position:relative" id="glos-modal-img-inner">
+              <img id="glos-modal-img" alt="" />
+            </div>
+            <div class="hs-desc-box" id="glos-hs-desc"></div>
+          </div>
+
         </div>
-  
-        <!-- Piezas relacionadas -->
-        <div class="glos-modal-section" id="glos-modal-piezas-wrap">
-          <p class="glos-modal-section-label">Piezas de la colección</p>
-          <div class="glos-modal-piezas" id="glos-modal-piezas"></div>
-        </div>
-  
       </div>
     </div>
   </div>

@@ -126,29 +126,54 @@ const GLOSARIO = [
     piezas:['OV-004'], imagen:null,
     fuente:{ label:'RANME', url:'https://dtme.ranm.es' }
   },
+
   {
-    term:'Plano Sagital', slug:'plano-sagital', cat:'orientacion',
-    def:'Plano de simetría longitudinal que pasa por la sutura sagital y divide el cuerpo en una mitad derecha y otra izquierda.',
-    sinonimos:['plano mediano','plano medio','plano mediosagital','plano sagital medio','plano paramediano','plano parasagital'], obs:null,
-    contexto:'El plano sagital es la referencia fundamental para describir desviaciones axiales del raquis. La escoliosis implica una curvatura fuera del plano sagital, mientras que la cifosis y la lordosis son alteraciones dentro de él. En craneometría, el plano sagital medio es la referencia para medir el índice cefálico y describir la asimetría craneal (plagiocefalia).',
-    piezas:['OV-011'], imagen:null,
-    fuente:{ label:'RANME', url:'https://dtme.ranm.es' }
+    term: 'Plano Sagital', slug: 'plano-sagital', cat: 'orientacion',
+    fuente: { label: 'RANME', url: 'https://dtme.ranm.es' },
+    def: 'Plano de simetría longitudinal que pasa por la sutura sagital y divide el cuerpo en una mitad derecha y otra izquierda.',
+    sinonimos: ['plano mediano','plano medio','plano mediosagital','plano sagital medio','plano paramediano','plano parasagital'],
+    obs: null,
+    contexto: 'El plano sagital es la referencia fundamental para describir desviaciones axiales del raquis. La escoliosis implica una curvatura fuera del plano sagital, mientras que la cifosis y la lordosis son alteraciones dentro de él. En craneometría, el plano sagital medio es la referencia para medir el índice cefálico y describir la asimetría craneal (plagiocefalia).',
+    piezas: ['OV-011'],
+    widget: 'planos-anatomicos',
+    imagen: '/prueba-museo/assets/img/ov-001/gemini_generated_image_htsgxkhtsgxkhtsg-removebg-preview.jpg',
+    hotspots: [
+      { x: 60.99, y: 90.99, label: 'Plano Sagital',           desc: 'Siendo perpendicular al suelo, pasa por la mitad del cuerpo, dividiéndolo en dos partes iguales derecha e izquierda.', color: '#ff6d00' },
+      { x: 12.72, y: 52.09, label: 'Plano Transversal',       desc: 'Siendo perpendicular al eje longitudinal del cuerpo, divide el cuerpo humano en parte superior e inferior.', color: '#ff6d00' },
+      { x: 26.51, y: 90.08, label: 'Plano Coronal (Frontal)', desc: 'Siendo perpendicular al suelo, pasa por la mitad del cuerpo, dividiéndolo en dos partes iguales ventral y dorsal (anterior y posterior).', color: '#ff6d00' }
+    ]
   },
   {
-    term:'Plano Coronal', slug:'plano-coronal', cat:'orientacion',
-    def:'Plano vertical perpendicular al plano sagital que divide el cuerpo en una parte anterior o facial y otra posterior o dorsal.',
-    sinonimos:['plano frontal'], obs:null,
-    contexto:'El plano coronal es esencial para describir la distribución anteroposterior de las lesiones. En fracturas del cráneo, se usa para localizar con precisión la posición del impacto. En el análisis de la morfología craneal, las vistas en norma frontalis y norma occipitalis corresponden a proyecciones sobre el plano coronal.',
-    piezas:['OV-001','OV-016'], imagen:null,
-    fuente:{ label:'RANME', url:'https://dtme.ranm.es' }
+    term: 'Plano Coronal', slug: 'plano-coronal', cat: 'orientacion',
+    fuente: { label: 'RANME', url: 'https://dtme.ranm.es' },
+    def: 'Plano vertical perpendicular al plano sagital que divide el cuerpo, en posición anatómica, en una parte anterior o facial y otra posterior o dorsal.',
+    sinonimos: ['plano frontal'],
+    obs: null,
+    contexto: 'El plano coronal es esencial para describir la distribución anteroposterior de las lesiones. En fracturas del cráneo, se usa para localizar con precisión la posición del impacto. En el análisis de la morfología craneal, las vistas en norma frontalis y norma occipitalis corresponden a proyecciones sobre el plano coronal.',
+    piezas: ['OV-001','OV-016'],
+    widget: 'planos-anatomicos',
+    imagen: '/prueba-museo/assets/img/ov-001/gemini_generated_image_htsgxkhtsgxkhtsg-removebg-preview.jpg',
+    hotspots: [
+      { x: 60.99, y: 90.99, label: 'Plano Sagital',           desc: 'Siendo perpendicular al suelo, pasa por la mitad del cuerpo, dividiéndolo en dos partes iguales derecha e izquierda.', color: '#ff6d00' },
+      { x: 12.72, y: 52.09, label: 'Plano Transversal',       desc: 'Siendo perpendicular al eje longitudinal del cuerpo, divide el cuerpo humano en parte superior e inferior.', color: '#ff6d00' },
+      { x: 26.51, y: 90.08, label: 'Plano Coronal (Frontal)', desc: 'Siendo perpendicular al suelo, pasa por la mitad del cuerpo, dividiéndolo en dos partes iguales ventral y dorsal (anterior y posterior).', color: '#ff6d00' }
+    ]
   },
   {
-    term:'Plano Transversal', slug:'plano-transversal', cat:'orientacion',
-    def:'Plano perpendicular al eje longitudinal del cuerpo que lo divide en una parte superior y otra inferior.',
-    sinonimos:['plano axial','plano horizontal'], obs:'Generalmente por contraposición a longitudinal.',
-    contexto:'El plano transversal es la referencia para las secciones tomográficas (TC) utilizadas en paleopatología moderna para el análisis no destructivo de momias y restos óseos. Permite visualizar la estructura interna del hueso cortical y trabecular, detectar lesiones endocraniales, y analizar el canal medular sin dañar la pieza.',
-    piezas:[], imagen:null,
-    fuente:{ label:'RANME', url:'https://dtme.ranm.es' }
+    term: 'Plano Transversal', slug: 'plano-transversal', cat: 'orientacion',
+    fuente: { label: 'RANME', url: 'https://dtme.ranm.es' },
+    def: 'Plano perpendicular al eje longitudinal del cuerpo o de un segmento anatómico que lo divide en una parte superior y otra inferior.',
+    sinonimos: ['plano axial','plano horizontal'],
+    obs: 'Generalmente por contraposición a longitudinal.',
+    contexto: 'El plano transversal es la referencia para las secciones tomográficas (TC) utilizadas en paleopatología moderna para el análisis no destructivo de momias y restos óseos. Permite visualizar la estructura interna del hueso cortical y trabecular, detectar lesiones endocraniales, y analizar el canal medular sin dañar la pieza.',
+    piezas: [],
+    widget: 'planos-anatomicos',
+    imagen: '/prueba-museo/assets/img/ov-001/gemini_generated_image_htsgxkhtsgxkhtsg-removebg-preview.jpg',
+    hotspots: [
+      { x: 60.99, y: 90.99, label: 'Plano Sagital',           desc: 'Siendo perpendicular al suelo, pasa por la mitad del cuerpo, dividiéndolo en dos partes iguales derecha e izquierda.', color: '#ff6d00' },
+      { x: 12.72, y: 52.09, label: 'Plano Transversal',       desc: 'Siendo perpendicular al eje longitudinal del cuerpo, divide el cuerpo humano en parte superior e inferior.', color: '#ff6d00' },
+      { x: 26.51, y: 90.08, label: 'Plano Coronal (Frontal)', desc: 'Siendo perpendicular al suelo, pasa por la mitad del cuerpo, dividiéndolo en dos partes iguales ventral y dorsal (anterior y posterior).', color: '#ff6d00' }
+    ]
   },
 
   // ════════════════════════════════════════════════════
