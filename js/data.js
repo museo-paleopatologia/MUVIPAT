@@ -678,7 +678,7 @@ function glosarioLink(texto) {
   sorted.forEach(entry => {
     const regex = new RegExp(`(?<!<[^>]*)\\b(${entry.term})\\b`, 'gi');
     result = result.replace(regex, (match) =>
-      `<a href="/prueba-museo/aula.html#${entry.slug}" class="glos-link" title="${entry.def.slice(0,80)}…">${match}</a>`
+      `<a href="/prueba-museo/aula.html?glos=${entry.slug}" class="glos-link" title="${entry.def.slice(0,80)}…">${match}</a>`
     );
   });
   return result;

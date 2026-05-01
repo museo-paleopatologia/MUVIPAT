@@ -1559,33 +1559,41 @@ function renderGlosario() {
   /* ── Init ── */
   renderGlosario();
 
-  /* ── Gestión de ancla URL: aula.html#trepanacion ──
-     Si la URL tiene un hash, activa el tab de glosario
-     y hace scroll + highlight al término correspondiente */
-  (function handleAnchor() {
-    const hash = window.location.hash.slice(1); // quita el #
-    if (!hash) return;
+  /* ── Gestión de ancla URL ── */
+(function handleAnchor() {
+  const params = new URLSearchParams(window.location.search);
+  const slug   = params.get('glos');
+  const hash   = window.location.hash.slice(1);
+  const target = slug || hash;
+  if (!target) return;
 
-    // Activar tab glosario
-    document.querySelectorAll('.au-tab').forEach(t => {
-      t.classList.remove('active');
-      t.setAttribute('aria-selected', 'false');
-    });
-    document.querySelectorAll('.au-panel').forEach(p => p.classList.remove('active'));
-    const glosTab   = document.querySelector('[data-tab="glosario"]');
-    const glosPanel = document.getElementById('panel-glosario');
-    if (glosTab)   { glosTab.classList.add('active'); glosTab.setAttribute('aria-selected','true'); }
-    if (glosPanel) glosPanel.classList.add('active');
+  // Activar tab glosario
+  document.querySelectorAll('.au-tab').forEach(t => {
+    t.classList.remove('active');
+    t.setAttribute('aria-selected', 'false');
+  });
+  document.querySelectorAll('.au-panel').forEach(p => p.classList.remove('active'));
+  const glosTab   = document.querySelector('[data-tab="glosario"]');
+  const glosPanel = document.getElementById('panel-glosario');
+  if (glosTab)   { glosTab.classList.add('active'); glosTab.setAttribute('aria-selected','true'); }
+  if (glosPanel) glosPanel.classList.add('active');
 
-    // Buscar la card con ese slug y hacer scroll + highlight
-    setTimeout(() => {
-      const target = document.getElementById('glos-' + hash);
-      if (!target) return;
-      target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      target.classList.add('highlighted');
-      setTimeout(() => target.classList.remove('highlighted'), 3500);
-    }, 300);
-  })();
+  // Buscar la entrada en el GLOSARIO y abrir el modal directamente
+  setTimeout(() => {
+    const entry = GLOSARIO.find(e => e.slug === target);
+    if (entry) {
+      openGlosModal(entry);  // abre el modal con toda la info
+    } else {
+      // fallback: scroll a la tarjeta si existe
+      const card = document.getElementById('glos-' + target);
+      if (card) {
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        card.classList.add('highlighted');
+        setTimeout(() => card.classList.remove('highlighted'), 3500);
+      }
+    }
+  }, 300);
+})();
 
   renderBibliografia();
   buildQuizList();
