@@ -794,9 +794,6 @@
   ══════════════════════════════════ -->
   <script src="/prueba-museo/js/data.js"></script>
   <script>
-  /* BIBLIOGRAFIA y QUIZZES — datos locales
-  ═══════════════════════════════════════════════════════ */
-
   /* ═══════════════════════════════════════════════════════
      DATOS — Bibliografía (16 referencias)
   ═══════════════════════════════════════════════════════ */
@@ -1016,39 +1013,145 @@
   ═══════════════════════════════════════════════════════ */
   let glosQuery = '', glosCat = 'all';
 
-  function renderGlosario() {
-    const grid = document.getElementById('glos-grid');
-    const countEl = document.getElementById('glos-count');
-    const q = glosQuery.toLowerCase().trim();
+/* ── Modal del glosario ── */
+function openGlosModal(entry) {
+  const overlay = document.getElementById('glos-modal');
+  const cc = CAT_COLORS[entry.cat] || { color:'#6b5a43', bg:'rgba(107,90,67,.08)' };
 
-    const filtered = GLOSARIO.filter(e => {
-      const matchCat = glosCat === 'all' || e.cat === glosCat;
-      const matchQ   = !q || e.term.toLowerCase().includes(q) || e.def.toLowerCase().includes(q);
-      return matchCat && matchQ;
-    });
+  const catEl = document.getElementById('glos-modal-cat');
+  catEl.textContent   = CAT_LABELS[entry.cat] || entry.cat;
+  catEl.style.color   = cc.color;
+  catEl.style.borderColor = cc.color;
+  catEl.style.background  = cc.bg;
 
-    if (countEl) countEl.textContent = filtered.length;
-    grid.innerHTML = '';
+  document.getElementById('glos-modal-term').textContent = entry.term;
+  document.getElementById('glos-modal-header').style.borderBottomColor = cc.color;
 
-    if (filtered.length === 0) {
-      grid.innerHTML = '<p class="glos-empty">Sin resultados. Prueba otro término.</p>';
-      return;
-    }
+  const sinEl = document.getElementById('glos-modal-sin');
+  sinEl.textContent = entry.sinonimos && entry.sinonimos.length
+    ? 'Sin.: ' + entry.sinonimos.join(', ') : '';
 
-    filtered.forEach(e => {
-      const cc = CAT_COLORS[e.cat] || { color: '#6b5a43', bg: 'rgba(107,90,67,.08)' };
-      const card = document.createElement('div');
-      card.className = 'glos-card';
-      card.id = 'glos-' + e.slug;
-      card.innerHTML = `
-        <div class="glos-card__accent" style="background:${cc.color}"></div>
-        <p class="glos-card__term">${e.term}</p>
-        <p class="glos-card__cat" style="color:${cc.color}">${CAT_LABELS[e.cat]}</p>
-        <p class="glos-card__def">${e.def}</p>
-      `;
-      grid.appendChild(card);
-    });
+  document.getElementById('glos-modal-def').textContent = entry.def;
+
+  const obsEl = document.getElementById('glos-modal-obs');
+  obsEl.textContent = entry.obs || '';
+
+  const srcEl = document.getElementById('glos-modal-source');
+  if (entry.fuente) {
+    srcEl.innerHTML = `<a href="${entry.fuente.url}" target="_blank" rel="noopener noreferrer">${entry.fuente.label} ↗</a>`;
+    srcEl.style.display = '';
+  } else {
+    srcEl.innerHTML = '';
+    srcEl.style.display = 'none';
   }
+
+  const ctxWrap = document.getElementById('glos-modal-contexto-wrap');
+  const ctxEl   = document.getElementById('glos-modal-contexto');
+  if (entry.contexto) {
+    ctxEl.textContent = entry.contexto;
+    ctxWrap.style.display = '';
+  } else {
+    ctxWrap.style.display = 'none';
+  }
+
+  const piezasWrap = document.getElementById('glos-modal-piezas-wrap');
+  const piezasEl   = document.getElementById('glos-modal-piezas');
+  piezasEl.innerHTML = '';
+  const relacionadas = (entry.piezas || [])
+    .map(id => PIEZAS.find(p => p.id === id))
+    .filter(Boolean);
+
+  if (relacionadas.length) {
+    relacionadas.forEach(pieza => {
+      const chip = document.createElement('a');
+      chip.className = 'glos-modal-pieza-chip';
+      chip.href = pieza.ficha;
+      chip.innerHTML = `<span class="glos-modal-pieza-chip__id">${pieza.id}</span>${pieza.nombre}`;
+      piezasEl.appendChild(chip);
+    });
+    piezasWrap.style.display = '';
+  } else {
+    piezasWrap.style.display = 'none';
+  }
+
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('glos-modal-close').focus();
+}
+
+function closeGlosModal() {
+  document.getElementById('glos-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('glos-modal-close')?.addEventListener('click', closeGlosModal);
+document.getElementById('glos-modal')?.addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeGlosModal();
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeGlosModal();
+});
+
+/* ── renderGlosario — versión con modal ── */
+function renderGlosario() {
+  const grid    = document.getElementById('glos-grid');
+  const countEl = document.getElementById('glos-count');
+  const q = glosQuery.toLowerCase().trim();
+
+  const filtered = GLOSARIO.filter(e => {
+    const matchCat = glosCat === 'all' || e.cat === glosCat;
+    const matchQ   = !q || e.term.toLowerCase().includes(q) || e.def.toLowerCase().includes(q);
+    return matchCat && matchQ;
+  });
+
+  if (countEl) countEl.textContent = filtered.length;
+  grid.innerHTML = '';
+
+  if (filtered.length === 0) {
+    grid.innerHTML = '<p class="glos-empty">Sin resultados. Prueba otro término.</p>';
+    return;
+  }
+
+  filtered.forEach(e => {
+    const cc = CAT_COLORS[e.cat] || { color:'#6b5a43', bg:'rgba(107,90,67,.08)' };
+    const hasPiezas  = e.piezas && e.piezas.length > 0;
+    const hasContext = !!e.contexto;
+
+    const card = document.createElement('div');
+    card.className = 'glos-card';
+    card.id = 'glos-' + e.slug;
+    card.setAttribute('role', 'button');
+    card.setAttribute('tabindex', '0');
+    card.setAttribute('aria-label', 'Ver definición completa de ' + e.term);
+
+    card.innerHTML = `
+      <div class="glos-card__accent" style="background:${cc.color}"></div>
+      <div class="glos-card__inner">
+        <p class="glos-card__term">${e.term}</p>
+        <p class="glos-card__cat" style="color:${cc.color}">${CAT_LABELS[e.cat] || e.cat}</p>
+        <p class="glos-card__def">${e.def}</p>
+        <div class="glos-card__footer">
+          ${e.sinonimos && e.sinonimos.length
+            ? `<span class="glos-card__sin">Sin.: ${e.sinonimos.slice(0,2).join(', ')}${e.sinonimos.length > 2 ? '…' : ''}</span>`
+            : '<span></span>'}
+          <span class="glos-card__cta">
+            ${hasPiezas  ? `<span class="glos-card__badge glos-card__badge--pieza">${e.piezas.length} pieza${e.piezas.length > 1 ? 's' : ''}</span>` : ''}
+            ${hasContext ? `<span class="glos-card__badge glos-card__badge--ctx">+ contexto</span>` : ''}
+            <span class="glos-card__expand-icon">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+            </span>
+          </span>
+        </div>
+      </div>
+    `;
+
+    card.addEventListener('click', () => openGlosModal(e));
+    card.addEventListener('keydown', ev => {
+      if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); openGlosModal(e); }
+    });
+    grid.appendChild(card);
+  });
+}
 
   document.getElementById('glos-search')?.addEventListener('input', e => { glosQuery = e.target.value; renderGlosario(); });
   document.querySelectorAll('[data-gf]').forEach(btn => {
@@ -1499,7 +1602,7 @@
         </div>
         <p class="footer__meta">
           Trabajo de Fin de Grado · Grado en Biología<br>
-          <span style="opacity:0.5">Museo Virtual de Paleopatología · 2024–2025</span>
+          <span style="opacity:0.5">Museo Virtual de Paleopatología · 2025–2026</span>
         </p>
         <nav class="footer__links" aria-label="Navegación del pie de página">
           <a href="/prueba-museo/exploracion.html" class="footer__link">Exploración</a>
@@ -1511,5 +1614,51 @@
       </div>
     </div>
   </footer>
+  <!-- ═══════════════════════════════════════════════════════
+      MODAL DEL GLOSARIO
+  ═══════════════════════════════════════════════════════ -->
+    <div class="glos-modal-overlay" id="glos-modal" role="dialog" aria-modal="true" aria-labelledby="glos-modal-term">
+    <div class="glos-modal-box">
+  
+      <!-- Cabecera -->
+      <div class="glos-modal-header" id="glos-modal-header">
+        <div>
+          <span class="glos-modal-cat" id="glos-modal-cat"></span>
+          <h2 class="glos-modal-term" id="glos-modal-term"></h2>
+          <p class="glos-modal-sin" id="glos-modal-sin"></p>
+        </div>
+        <button class="glos-modal-close" id="glos-modal-close" aria-label="Cerrar">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </div>
+  
+      <!-- Cuerpo -->
+      <div class="glos-modal-body">
+  
+        <!-- Definición principal estilo diccionario -->
+        <div class="glos-modal-def-block">
+          <p class="glos-modal-def" id="glos-modal-def"></p>
+          <p class="glos-modal-obs" id="glos-modal-obs"></p>
+          <div class="glos-modal-source" id="glos-modal-source"></div>
+        </div>
+  
+        <!-- Separador -->
+        <hr class="glos-modal-sep" />
+  
+        <!-- Contexto paleopatológico ampliado -->
+        <div class="glos-modal-section" id="glos-modal-contexto-wrap">
+          <p class="glos-modal-section-label">Contexto paleopatológico</p>
+          <p class="glos-modal-contexto" id="glos-modal-contexto"></p>
+        </div>
+  
+        <!-- Piezas relacionadas -->
+        <div class="glos-modal-section" id="glos-modal-piezas-wrap">
+          <p class="glos-modal-section-label">Piezas de la colección</p>
+          <div class="glos-modal-piezas" id="glos-modal-piezas"></div>
+        </div>
+  
+      </div>
+    </div>
+  </div>
 </body>
 </html>
