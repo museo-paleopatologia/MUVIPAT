@@ -794,45 +794,8 @@
   ══════════════════════════════════ -->
   <script src="/prueba-museo/js/data.js"></script>
   <script>
-  /* GLOSARIO, BIBLIOGRAFIA y QUIZZES — datos locales
+  /* BIBLIOGRAFIA y QUIZZES — datos locales
   ═══════════════════════════════════════════════════════ */
-  const GLOSARIO = [
-    { term:'Paleopatología',       cat:'patologia',  def:'Disciplina científica que estudia las enfermedades y lesiones en restos esqueléticos y momias de poblaciones del pasado.' },
-    { term:'Trepanación',          cat:'patologia',  def:'Intervención quirúrgica que consiste en la perforación del cráneo mediante raspado, corte o taladro. Es la cirugía más antigua documentada arqueológicamente.' },
-    { term:'Cribra orbitalia',     cat:'patologia',  def:'Lesión hipervascular en forma de porosidad en el techo de las órbitas oculares, indicador de anemia ferropénica o déficit vitamínico durante la infancia.' },
-    { term:'Hiperostosis porótica',cat:'patologia',  def:'Engrosamiento y porosidad de los huesos de la bóveda craneal, asociado a anemias hemolíticas, déficit nutricional o infecciones crónicas.' },
-    { term:'Periostitis',          cat:'patologia',  def:'Inflamación del periostio que genera formación de hueso nuevo en la superficie cortical. Puede ser reactiva a infecciones, traumatismos o escorbuto.' },
-    { term:'Osteomielitis',        cat:'patologia',  def:'Infección bacteriana del tejido óseo que provoca necrosis, formación de secuestro y cloaca de drenaje. Frecuentemente causada por Staphylococcus.' },
-    { term:'Espondilitis',         cat:'patologia',  def:'Inflamación de los cuerpos vertebrales. La espondilitis tuberculosa o Mal de Pott produce colapso vertebral con formación de giba angular.' },
-    { term:'Osteoartritis',        cat:'patologia',  def:'Enfermedad degenerativa articular caracterizada por erosión del cartílago, eburnación, osteofitosis y quistes subcondrales. Indicador de edad avanzada y actividad física.' },
-    { term:'Entesopatía',          cat:'patologia',  def:'Alteración ósea en el punto de inserción de tendones o ligamentos. Usada como marcador de actividad ocupacional o deportiva intensa y repetitiva.' },
-    { term:'Raquitismo',           cat:'patologia',  def:'Alteración metabólica por déficit de vitamina D que produce reblandecimiento óseo, deformidades en huesos largos y porosidad generalizada. Afecta principalmente a individuos subadultos.' },
-    { term:'Norma faciei',         cat:'anatomia',   def:'Vista frontal del cráneo utilizada para el análisis morfológico de la cara, órbitas, abertura nasal y arcos cigomáticos.' },
-    { term:'Norma verticalis',     cat:'anatomia',   def:'Vista superior del cráneo que permite apreciar la forma de la bóveda craneal, el índice cefálico y las suturas craneales.' },
-    { term:'Norma occipitalis',    cat:'anatomia',   def:'Vista posterior del cráneo. Permite analizar el occipital, la protuberancia occipital externa y la anchura máxima del neurocráneo.' },
-    { term:'Índice cefálico',      cat:'metodo',     def:'Razón entre la anchura máxima y la longitud máxima del cráneo, multiplicada por 100. Clasifica los cráneos en dolicocéfalos (<75), mesocéfalos (75–80) y braquicéfalos (>80).' },
-    { term:'Dolicocéfalo',         cat:'anatomia',   def:'Morfología craneal con índice cefálico inferior a 75, caracterizada por una forma alargada anteroposterior.' },
-    { term:'Braquicéfalo',         cat:'anatomia',   def:'Morfología craneal con índice cefálico superior a 80, caracterizada por una forma redondeada o ancha transversalmente.' },
-    { term:'Eburnación',           cat:'patologia',  def:'Pulido patológico de la superficie articular tras la destrucción total del cartílago. Produce un aspecto brillante y duro característico de la osteoartritis avanzada.' },
-    { term:'Osteofito',            cat:'patologia',  def:'Proliferación ósea de neoformación en los márgenes articulares o en la superficie de los cuerpos vertebrales. Signo de degeneración articular.' },
-    { term:'Callo óseo',           cat:'patologia',  def:'Tejido óseo de reparación que se forma durante la consolidación de una fractura. Su morfología permite estimar el tiempo transcurrido desde la lesión.' },
-    { term:'Fractura perimortem',  cat:'patologia',  def:'Fractura producida en el momento de la muerte o inmediatamente antes, cuando el hueso conserva aún sus propiedades biomecánicas de tejido vivo.' },
-    { term:'Fotogrametría',        cat:'metodo',     def:'Técnica de digitalización 3D basada en la captura de múltiples fotografías desde distintos ángulos para reconstruir la geometría tridimensional del objeto.' },
-    { term:'Escáner de luz estructurada', cat:'metodo', def:'Sistema de digitalización 3D que proyecta patrones de luz sobre la superficie del objeto y mide las deformaciones para calcular su geometría con alta precisión.' },
-    { term:'Sinostosis',           cat:'anatomia',   def:'Fusión ósea completa de estructuras que normalmente permanecen separadas, como las suturas craneales. Indicador de edad avanzada.' },
-    { term:'Marcador de actividad',cat:'patologia',  def:'Alteración ósea —entesopatía, asimetría, hipertrofia cortical— que refleja patrones de esfuerzo físico repetitivo y permite inferir actividades ocupacionales.' },
-    { term:'Sutura sagital',       cat:'anatomia',   def:'Sutura craneal que une los dos huesos parietales en la línea media. Su grado de fusión se usa para estimar la edad biológica.' },
-    { term:'Absceso alveolar',     cat:'patologia',  def:'Acumulación de pus en el alveolo dentario por infección periapical. Genera un orificio de drenaje en el hueso mandibular o maxilar.' },
-    { term:'Neolítico',            cat:'cronologia', def:'Período prehistórico caracterizado por la aparición de la agricultura, la ganadería y los asentamientos permanentes. En la Península Ibérica: c. 5500–2200 a.C.' },
-    { term:'Bioarqueología',       cat:'metodo',     def:'Disciplina que integra el análisis de restos humanos con el contexto arqueológico para reconstruir las condiciones de vida, salud y comportamiento de las poblaciones del pasado.' },
-    { term:'Sexo biológico',       cat:'metodo',     def:'Determinación del sexo de un individuo a partir de caracteres morfológicos del esqueleto, principalmente pelvis y cráneo. Se expresa como masculino, femenino o indeterminado.' },
-    { term:'Edad biológica',       cat:'metodo',     def:'Estimación de la edad al fallecimiento a partir de indicadores esqueléticos: fusión epifisaria, desgaste dental, sinostosis craneal y degeneración articular.' },
-    { term:'Sacralización',        cat:'patologia',  def:'Variante anatómica en la que la última vértebra lumbar se fusiona parcial o totalmente al sacro, alterando la mecánica de la columna.' },
-    { term:'Escoliosis',           cat:'patologia',  def:'Desviación lateral del raquis con rotación axial de los cuerpos vertebrales. Puede ser congénita, idiopática o adquirida.' },
-    { term:'Índice de Kellgren-Lawrence', cat:'metodo', def:'Escala radiológica de 0 a 4 que gradúa la severidad de la osteoartritis. El grado 4 implica pérdida severa del espacio articular con esclerosis y osteofitosis importantes.' },
-    { term:'Yacimiento',           cat:'cronologia', def:'Lugar donde se conservan restos arqueológicos. En contexto paleopatológico, determina la cronología, el grupo poblacional y las condiciones tafonómicas del material óseo.' },
-    { term:'Tafonomía',            cat:'metodo',     def:'Estudio de los procesos que afectan a los restos orgánicos desde la muerte hasta su excavación, incluyendo meteorización, fragmentación, tinción y dispersión.' },
-  ];
 
   /* ═══════════════════════════════════════════════════════
      DATOS — Bibliografía (16 referencias)
