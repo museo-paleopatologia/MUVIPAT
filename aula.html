@@ -727,7 +727,9 @@
         </div>
         <div class="au-filter-pills" id="glos-pills">
           <button class="au-pill active" data-gf="all">Todos</button>
+          <button class="au-pill" data-gf="orientacion">Orientación</button>
           <button class="au-pill" data-gf="anatomia">Anatomía</button>
+          <button class="au-pill" data-gf="proceso">Dinámica ósea</button>
           <button class="au-pill" data-gf="patologia">Patología</button>
           <button class="au-pill" data-gf="metodo">Metodología</button>
           <button class="au-pill" data-gf="cronologia">Cronología</button>
@@ -1019,10 +1021,12 @@
      COLORES POR CATEGORÍA
   ═══════════════════════════════════════════════════════ */
   const CAT_COLORS = {
-    patologia:  { color: '#c0003c', bg: 'rgba(192,0,60,.08)' },
-    anatomia:   { color: '#00e5ff', bg: 'rgba(0,229,255,.08)' },
-    metodo:     { color: '#2979ff', bg: 'rgba(41,121,255,.08)' },
-    cronologia: { color: '#d4e60a', bg: 'rgba(212,230,10,.08)' },
+    orientacion: { color: '#ff9800', bg: 'rgba(255,152,0,.08)' },
+    anatomia:    { color: '#00e5ff', bg: 'rgba(0,229,255,.08)' },
+    proceso:     { color: '#00e676', bg: 'rgba(0,230,118,.08)' },
+    patologia:   { color: '#c0003c', bg: 'rgba(192,0,60,.08)'  },
+    metodo:      { color: '#2979ff', bg: 'rgba(41,121,255,.08)' },
+    cronologia:  { color: '#d4e60a', bg: 'rgba(212,230,10,.08)' },
   };
   const BIBLIO_COLORS = {
     paleopatologia: { color: '#c0003c', bg: 'rgba(192,0,60,.08)' },
@@ -1031,10 +1035,17 @@
     digital:        { color: '#aa00ff', bg: 'rgba(170,0,255,.08)' },
   };
   const CAT_LABELS = {
-    patologia: 'Patología', anatomia: 'Anatomía',
-    metodo: 'Metodología', cronologia: 'Cronología',
-    paleopatologia: 'Paleopatología', metodologia: 'Metodología',
-    bioarqueologia: 'Bioarqueología', digital: 'Digitalización 3D'
+    orientacion:    'Orientación anatómica',
+    anatomia:       'Anatomía',
+    proceso:        'Dinámica ósea',
+    patologia:      'Patología',
+    metodo:         'Metodología',
+    cronologia:     'Cronología',
+    // bibliografía (se quedan igual):
+    paleopatologia: 'Paleopatología',
+    metodologia:    'Metodología',
+    bioarqueologia: 'Bioarqueología',
+    digital:        'Digitalización 3D'
   };
 
   /* ═══════════════════════════════════════════════════════
