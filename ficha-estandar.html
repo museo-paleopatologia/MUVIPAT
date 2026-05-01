@@ -31,31 +31,77 @@
 
     body { background: var(--fe-bg); }
 
-    /* ── Breadcrumb ── */
-    .fe-breadcrumb {
-      background: var(--fe-bone);
-      border-bottom: var(--fe-border);
-      padding: .6rem 0;
-    }
-    .fe-breadcrumb__inner {
-      width: min(1400px, 96vw);
-      margin-inline: auto;
-      padding-inline: clamp(1rem, 3vw, 2rem);
-      display: flex;
-      align-items: center;
-      gap: .5rem;
-      font-family: var(--font-head);
-      font-size: .65rem;
-      font-weight: 700;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: var(--fe-mid);
-    }
-    .fe-breadcrumb a { color: var(--fe-mid); text-decoration: none; transition: color .15s; }
-    .fe-breadcrumb a:hover { color: var(--crimson); }
-    .fe-breadcrumb__sep { opacity: .4; }
-    .fe-breadcrumb__current { color: var(--fe-ink); }
-
+/* ── Barra de navegación de ficha ── */
+.fe-nav-bar {
+  background: var(--fe-ink);
+  border-bottom: var(--fe-border);
+  padding: .65rem 0;
+}
+.fe-nav-bar__inner {
+  width: min(1400px, 96vw);
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 3vw, 2rem);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.fe-nav-bar__back {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  font-family: var(--font-head);
+  font-size: .65rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--bone-300);
+  text-decoration: none;
+  transition: color .15s, gap .15s;
+}
+.fe-nav-bar__back:hover { color: var(--cyan); gap: .7rem; }
+.fe-nav-bar__back svg { flex-shrink: 0; }
+.fe-nav-bar__actions {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  flex-wrap: wrap;
+}
+.fe-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  font-family: var(--font-head);
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  padding: .4em .9em;
+  border: 2px solid;
+  border-radius: 2px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform .12s, box-shadow .12s, background .15s, color .15s;
+  box-shadow: 2px 2px 0;
+  white-space: nowrap;
+}
+.fe-nav-btn:hover { transform: translate(-2px,-2px); box-shadow: 4px 4px 0; }
+.fe-nav-btn--region {
+  background: rgba(0,229,255,.08);
+  border-color: var(--cyan);
+  color: var(--cyan);
+  box-shadow-color: var(--cyan);
+  box-shadow: 2px 2px 0 var(--cyan);
+}
+.fe-nav-btn--region:hover { background: rgba(0,229,255,.18); box-shadow: 4px 4px 0 var(--cyan); }
+.fe-nav-btn--buscar {
+  background: rgba(192,0,60,.08);
+  border-color: var(--crimson);
+  color: var(--crimson);
+  box-shadow: 2px 2px 0 var(--crimson);
+}
+.fe-nav-btn--buscar:hover { background: rgba(192,0,60,.18); box-shadow: 4px 4px 0 var(--crimson); }
     /* ── Layout principal ── */
     .fe-main {
       width: min(1400px, 96vw);
@@ -459,17 +505,26 @@
   </header>
 
   <!-- ══════════════════════════════════
-       BREADCRUMB
+       BARRA DE NAVEGACIÓN
   ══════════════════════════════════ -->
-  <div class="fe-breadcrumb" style="padding-top: clamp(56px,7vw,70px)">
-    <div class="fe-breadcrumb__inner">
-      <a href="/prueba-museo/index.html">Inicio</a>
-      <span class="fe-breadcrumb__sep">›</span>
-      <a href="/prueba-museo/coleccion.html">Colección</a>
-      <span class="fe-breadcrumb__sep">›</span>
-      <span class="fe-breadcrumb__current" id="breadcrumb-id">OV-001</span>
+  <div class="fe-nav-bar" style="padding-top: clamp(56px,7vw,70px)">
+  <div class="fe-nav-bar__inner">
+    <a href="/prueba-museo/exploracion.html" class="fe-nav-bar__back">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+      Volver al explorador
+    </a>
+    <div class="fe-nav-bar__actions">
+      <a href="#" class="fe-nav-btn fe-nav-btn--region" id="fe-btn-region">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+        Explorar región anatómica
+      </a>
+      <a href="/prueba-museo/coleccion.html" class="fe-nav-btn fe-nav-btn--buscar" id="fe-btn-buscar">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="11" cy="11" r="8" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="m21 21-4.35-4.35" stroke="currentColor" stroke-width="2.5"/></svg>
+        Buscar más piezas
+      </a>
     </div>
   </div>
+</div>
 
   <!-- ══════════════════════════════════
        CONTENIDO PRINCIPAL
@@ -701,6 +756,18 @@
       const regMeta  = VOCABULARIO.region[pieza.region];
       const sexMeta  = VOCABULARIO.sexo[pieza.sexo];
       const epocMeta = VOCABULARIO.epoca[pieza.epoca];
+
+      const btnRegion = document.getElementById('fe-btn-region');
+      if (btnRegion) {
+        btnRegion.href =
+          `/prueba-museo/exploracion.html?vista=anatomica&region=${pieza.region}`;
+      }
+
+      const btnBuscar = document.getElementById('fe-btn-buscar');
+      if (btnBuscar) {
+        btnBuscar.href =
+          `/prueba-museo/coleccion.html?patologia=${pieza.patologia}`;
+      }
 
       /* Cabecera */
       document.getElementById('breadcrumb-id').textContent = pieza.id;
