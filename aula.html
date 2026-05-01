@@ -1084,9 +1084,9 @@ function closeGlosModal() {
   document.body.style.overflow = '';
 }
 
-document.getElementById('glos-modal-close')?.addEventListener('click', closeGlosModal);
-document.getElementById('glos-modal')?.addEventListener('click', e => {
-  if (e.target === e.currentTarget) closeGlosModal();
+document.addEventListener('click', e => {
+  if (e.target.closest('#glos-modal-close')) closeGlosModal();
+  if (e.target.id === 'glos-modal') closeGlosModal();
 });
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeGlosModal();
