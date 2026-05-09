@@ -17,14 +17,16 @@
 
   <style>
     /* ═══════════════════════════════════════════
-       EXPLORACIÓN — estilos propios
+       EXPLORACIÓN — layout fijo a 100dvh
        Paleta: marfil/crema del sistema + acentos
     ═══════════════════════════════════════════ */
 
-    /* Reset de overflow para que la página haga scroll completo */
+    *, *::before, *::after { box-sizing: border-box; }
+
+    /* ── La página NO hace scroll. Solo los paneles internos. ── */
     html, body {
-      overflow: auto;
-      min-height: 100%;
+      height: 100%;
+      overflow: hidden;
       background: var(--bone-50);
     }
 
@@ -129,12 +131,48 @@
     }
     .topbar-search input::placeholder { color: var(--bone-400); }
 
-    /* ── Layout 3 columnas ── */
+    /* ══════════════════════════════════════════
+       CONSTANTES DE ALTURA
+       --nav-h  : altura del header (~64px)
+       --top-h  : altura del topbar (~50px)
+       --panel-h: espacio disponible para los paneles
+    ══════════════════════════════════════════ */
+    :root {
+      --nav-h:   64px;
+      --top-h:   50px;
+      --panel-h: calc(100dvh - var(--nav-h) - var(--top-h));
+    }
+
+    /* ── El header ocupa posición fija conocida ── */
+    .site-header {
+      height: var(--nav-h);
+    }
+
+    /* ── Topbar: anclado justo debajo del header ── */
+    .expl-topbar {
+      position: fixed;
+      top: var(--nav-h);
+      left: 0; right: 0;
+      z-index: 90;
+      height: var(--top-h);
+      background: var(--ivory);
+      border-bottom: var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0 1.25rem;
+      flex-wrap: nowrap;
+      overflow: hidden;
+    }
+
+    /* ── Layout 3 columnas: ocupa exactamente lo que queda ── */
     .expl-layout {
       display: grid;
       grid-template-columns: 230px 1fr 300px;
-      min-height: calc(100vh - var(--nav-h, 64px) - 50px);
-      align-items: start;
+      height: var(--panel-h);
+      /* Desplazado para quedar bajo header + topbar */
+      margin-top: calc(var(--nav-h) + var(--top-h));
+      overflow: hidden;
     }
 
     /* ── Filtros (columna izquierda) ── */
@@ -142,9 +180,7 @@
       background: var(--ivory);
       border-right: var(--border);
       padding: 1.25rem 1rem;
-      position: sticky;
-      top: calc(var(--nav-h, 64px) + 50px);
-      max-height: calc(100vh - var(--nav-h, 64px) - 50px);
+      height: 100%;
       overflow-y: auto;
       overscroll-behavior: contain;
     }
@@ -152,13 +188,15 @@
     .expl-filters::-webkit-scrollbar-track { background: var(--bone-100); }
     .expl-filters::-webkit-scrollbar-thumb { background: var(--bone-300); border-radius: 2px; }
 
+    /* El botón de cierre: oculto en desktop, visible en mobile */
     .panel-close {
       display: none;
       position: absolute;
       top: 0.75rem; right: 0.75rem;
       background: none; border: none;
-      font-size: 1.4rem; cursor: pointer;
+      font-size: 1.6rem; cursor: pointer;
       color: var(--dark); line-height: 1;
+      z-index: 2;
     }
 
     .filter-section { margin-bottom: 1.5rem; }
@@ -232,16 +270,22 @@
     }
     .filter-clear-btn:hover { border-color: var(--dark); color: var(--dark); }
 
-    /* ── Centro ── */
+    /* ── Centro: columna elástica con scroll propio ── */
     .expl-center {
       background: var(--bone-50);
       border-right: var(--border);
-      padding: 1.5rem 1rem;
+      padding: 1.5rem 1rem 2rem;
+      height: 100%;
+      overflow-y: auto;
+      overscroll-behavior: contain;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 1rem;
     }
+    .expl-center::-webkit-scrollbar { width: 4px; }
+    .expl-center::-webkit-scrollbar-track { background: var(--bone-100); }
+    .expl-center::-webkit-scrollbar-thumb { background: var(--bone-300); border-radius: 2px; }
 
     .view-pane { display: none; width: 100%; }
     .view-pane.is-visible { display: flex; flex-direction: column; align-items: center; }
@@ -406,9 +450,7 @@
     .expl-results {
       background: var(--ivory);
       padding: 1.25rem 1rem;
-      position: sticky;
-      top: calc(var(--nav-h, 64px) + 50px);
-      max-height: calc(100vh - var(--nav-h, 64px) - 50px);
+      height: 100%;
       overflow-y: auto;
       overscroll-behavior: contain;
     }
@@ -547,14 +589,14 @@
     }
     .svg-tooltip.visible { opacity: 1; }
 
-    /* ── FABs móviles ── */
+    /* ── FABs móviles — ocultos en desktop ── */
     .mob-fab-bar {
       display: none;
       position: fixed;
       bottom: 1.25rem;
       left: 50%;
       transform: translateX(-50%);
-      z-index: 200;
+      z-index: 300;
       gap: 0.75rem;
     }
     .mob-fab {
@@ -576,77 +618,111 @@
     .mob-fab--filters { background: var(--dark); }
     .mob-fab--results { background: var(--cyan); color: var(--dark); }
 
+    /* ── Overlay: SIEMPRE en el DOM, invisible por defecto ── */
     .panel-overlay {
-      display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.5);
-      z-index: 150;
+      background: rgba(13, 13, 13, 0.65);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+      z-index: 200;
       opacity: 0;
-      transition: opacity 0.2s;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
     }
     .panel-overlay.is-visible {
       opacity: 1;
+      pointer-events: auto;
     }
 
-    /* ── MOBILE / TABLET ── */
+    /* ══════════════════════════════════════════
+       RESPONSIVE: TABLET & MÓVIL (≤ 1024px)
+    ══════════════════════════════════════════ */
     @media (max-width: 1024px) {
+
+      /* Layout: una sola columna, el centro ocupa todo */
       .expl-layout {
         grid-template-columns: 1fr;
-        min-height: unset;
       }
+
+      /* Columna central toma el 100% y elimina borde derecho */
       .expl-center {
         border-right: none;
-        border-bottom: var(--border);
-        padding: 1.25rem;
+        width: 100%;
       }
+
+      /* FABs visibles en mobile */
+      .mob-fab-bar { display: flex; }
+
+      /* Buscador de topbar se oculta (está en el drawer de filtros) */
+      .topbar-search { display: none; }
+
+      /* Topbar: permitir que el toggle de vistas se vea */
+      .expl-topbar { gap: 0.5rem; padding: 0 0.75rem; }
+
+      /* ── DRAWERS: Filtros y Resultados ──
+         Se sacan del flujo del documento y se convierten en paneles
+         deslizantes sobre la pantalla. Por defecto fuera de vista. */
       .expl-filters,
       .expl-results {
         position: fixed;
-        top: 0; bottom: 0;
-        width: min(320px, 90vw);
-        max-height: 100%;
-        z-index: 160;
+        top: 0;
+        bottom: 0;
+        width: min(320px, 88vw);
+        height: 100dvh;
+        max-height: 100dvh;
+        z-index: 1000;          /* Por encima del overlay (z:200) */
+        padding-top: 3.5rem;    /* Espacio para el botón cerrar */
+        overflow-y: auto;
+        overscroll-behavior: contain;
         border: none;
+        /* Posición inicial: fuera de pantalla */
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        will-change: transform;
+      }
+
+      /* Filtros: entra desde la izquierda */
+      .expl-filters {
+        left: 0;
+        right: auto;
         border-right: var(--border);
         transform: translateX(-110%);
-        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        overflow-y: auto;
-        padding-top: 2.5rem;
       }
+
+      /* Resultados: entra desde la derecha */
       .expl-results {
-        left: auto; right: 0;
-        border-right: none;
+        right: 0;
+        left: auto;
         border-left: var(--border);
         transform: translateX(110%);
       }
-      .expl-filters.is-open,
-      .expl-results.is-open {
-        transform: translateX(0);
-      }
-      .panel-close { display: flex; }
-      .panel-overlay { display: block; }
-      .mob-fab-bar { display: flex; }
-      .topbar-search { display: none; }
 
+      /* Estado ABIERTO */
+      .expl-filters.is-open { transform: translateX(0); }
+      .expl-results.is-open { transform: translateX(0); }
+
+      /* Botón cerrar visible en drawers */
+      .panel-close { display: flex; }
+
+      /* Grid de patologías: 2 columnas en tablet */
       #patology-grid {
         grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
       }
+
+      /* Panel de información: sin max-height rígido */
+      .patology-info-gallery.is-open { max-height: 800px; }
     }
 
+    /* ── Móvil pequeño (≤ 600px) ── */
     @media (max-width: 600px) {
-      .expl-topbar {
-        padding: 0.45rem 0.75rem;
-        gap: 0.5rem;
-      }
-      .view-toggle__btn { padding: 0.4em 0.75em; font-size: 0.72rem; }
-      .results-badge { display: none; }
-      .skeleton-svg-wrap { max-width: 220px; }
-      #patology-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
+      .view-toggle__btn { padding: 0.4em 0.65em; font-size: 0.7rem; }
+      .results-badge    { display: none; }
+      .skeleton-svg-wrap { max-width: 200px; }
+      #patology-grid    { grid-template-columns: repeat(2, 1fr); }
+      .mob-fab          { padding: 0.55em 1em; font-size: 0.75rem; }
     }
 
+    /* ── Desktop ancho medio (1025–1280px) ── */
     @media (min-width: 1025px) and (max-width: 1280px) {
       .expl-layout { grid-template-columns: 200px 1fr 260px; }
     }
@@ -1122,23 +1198,32 @@
     }, { passive: true });
 
     /* ══════════════════════════════════════
-       DRAWERS MÓVILES
+       DRAWERS MÓVILES — lógica corregida
+       z-index drawers: 1000 > overlay: 200
     ══════════════════════════════════════ */
     const fPanel  = document.getElementById('filters-panel');
     const rPanel  = document.getElementById('results-panel');
     const overlay = document.getElementById('panel-overlay');
 
-    function openDrawer(p) {
-      p.classList.add('is-open');
+    function openDrawer(panel) {
+      // Primero activar overlay (para que sea visible antes del slide)
       overlay.classList.add('is-visible');
+      // Luego mostrar el panel correspondiente
+      panel.classList.add('is-open');
+
+      // Mostrar buscador en móvil solo cuando se abren filtros
       const mobSearch = document.getElementById('mob-search-wrap');
-      if (mobSearch) mobSearch.style.display = p === fPanel ? 'block' : 'none';
+      if (mobSearch) {
+        mobSearch.style.display = panel === fPanel ? 'block' : 'none';
+      }
     }
+
     function closeDrawers() {
       fPanel.classList.remove('is-open');
       rPanel.classList.remove('is-open');
       overlay.classList.remove('is-visible');
     }
+
     document.getElementById('mob-btn-filters')?.addEventListener('click', () => openDrawer(fPanel));
     document.getElementById('mob-btn-results')?.addEventListener('click', () => openDrawer(rPanel));
     overlay.addEventListener('click', closeDrawers);
