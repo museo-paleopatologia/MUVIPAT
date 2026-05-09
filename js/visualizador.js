@@ -192,78 +192,65 @@ function hideSVGTooltip() {
 }
 
 /* ══════════════════════════════════════════════════
-   GRID PATOLOGÍAS + ROW-INJECTION DOM
-   Estructura generada en #view-pathology:
-     #patology-grid  (el grid 4×2)
-     #row-wrap-1     (.row-panel-wrap — GSAP anima height)
-     #row-wrap-2     (.row-panel-wrap — GSAP anima height)
+   GRID PATOLOGÍAS — estructura fija en el HTML:
+     #patology-grid-row-1  (cards 0-3)
+     #row-wrap-1           (panel info fila 1 — GSAP height)
+     #patology-grid-row-2  (cards 4-7)
+     #row-wrap-2           (panel info fila 2 — GSAP height)
+
+   renderPatologyGrid SOLO puebla los contenedores de fila.
+   Los wrappers de panel ya existen en el DOM (HTML estático).
 ══════════════════════════════════════════════════ */
 function renderPatologyGrid() {
-  const vp = document.getElementById('view-pathology');
-  if (!vp) return;
+  const row1El = document.getElementById('patology-grid-row-1');
+  const row2El = document.getElementById('patology-grid-row-2');
+  if (!row1El || !row2El) return;
 
-  /* Crear o reutilizar el grid */
-  let grid = document.getElementById('patology-grid');
-  if (!grid) {
-    grid = document.createElement('div');
-    grid.id = 'patology-grid';
-    grid.setAttribute('role', 'list');
-    grid.setAttribute('aria-label', 'Categorías patológicas');
-    vp.appendChild(grid);
-  }
-  grid.innerHTML = '';
+  /* Mostrar las filas (empiezan con display:none en el HTML) */
+  row1El.style.display = '';
+  row2El.style.display = '';
 
-  /* Crear o reutilizar los wrappers de los paneles */
-  let wrap1 = document.getElementById('row-wrap-1');
-  let wrap2 = document.getElementById('row-wrap-2');
-
-  if (!wrap1) {
-    wrap1 = document.createElement('div');
-    wrap1.id = 'row-wrap-1';
-    wrap1.className = 'row-panel-wrap';
-    vp.appendChild(wrap1);
-  }
-  if (!wrap2) {
-    wrap2 = document.createElement('div');
-    wrap2.id = 'row-wrap-2';
-    wrap2.className = 'row-panel-wrap';
-    vp.appendChild(wrap2);
-  }
-
-  /* Orden DOM: grid → wrap1 → wrap2 */
-  vp.insertBefore(grid,  vp.firstChild);
-  vp.insertBefore(wrap1, wrap2);
-
-  /* Renderizar las 8 cards */
-  PATOLOGIA_INFO.forEach((info, idx) => {
-    const card = document.createElement('div');
-    card.className = 'patology-card' + (state.filters.patologia.has(info.key) ? ' is-active' : '');
-    card.setAttribute('role', 'listitem');
-    card.setAttribute('tabindex', '0');
-    card.setAttribute('aria-label', info.name);
-    card.setAttribute('data-pat-key', info.key);
-    card.style.setProperty('--pat-color', info.color);
-
-    card.innerHTML = `
-      <div class="pat-card__icon">${info.icon}</div>
-      <div class="pat-card__name">${info.name}</div>
-      <div class="pat-card__count">${info.count}</div>
-    `;
-
-    card.addEventListener('click',   () => onPatologyCardClick(info, idx, card));
-    card.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.click(); }
-    });
-
-    grid.appendChild(card);
+  /* Poblar fila 1 (índices 0-3) */
+  row1El.innerHTML = '';
+  PATOLOGIA_INFO.slice(0, 4).forEach(info => {
+    row1El.appendChild(buildPatologyCard(info, 1));
   });
+
+  /* Poblar fila 2 (índices 4-7) */
+  row2El.innerHTML = '';
+  PATOLOGIA_INFO.slice(4, 8).forEach(info => {
+    row2El.appendChild(buildPatologyCard(info, 2));
+  });
+}
+
+/* Construye una card de patología para la fila indicada */
+function buildPatologyCard(info, row) {
+  const card = document.createElement('div');
+  card.className = 'patology-card' + (state.filters.patologia.has(info.key) ? ' is-active' : '');
+  card.setAttribute('role', 'listitem');
+  card.setAttribute('tabindex', '0');
+  card.setAttribute('aria-label', info.name);
+  card.setAttribute('data-pat-key', info.key);
+  card.style.setProperty('--pat-color', info.color);
+
+  card.innerHTML = `
+    <div class="pat-card__icon">${info.icon}</div>
+    <div class="pat-card__name">${info.name}</div>
+    <div class="pat-card__count">${info.count}</div>
+  `;
+
+  card.addEventListener('click',   () => onPatologyCardClick(info, row, card));
+  card.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.click(); }
+  });
+  return card;
 }
 
 /* ══════════════════════════════════════════════════
    CLICK EN CARD DE PATOLOGÍA
+   row ya viene calculado desde buildPatologyCard.
 ══════════════════════════════════════════════════ */
-function onPatologyCardClick(info, idx, card) {
-  const row    = idx < 4 ? 1 : 2;
+function onPatologyCardClick(info, row, card) {
   const rs     = rowState[row];
   const active = card.classList.contains('is-active');
 
@@ -480,22 +467,21 @@ function closeRowPanel(row) {
 
 /* ══════════════════════════════════════════════════
    SINCRONIZACIÓN AUTO-CLOSE desde chips / sidebar
-   Cuando se elimina un filtro de patología desde el
-   topbar o sidebar, verificar si la fila ya no tiene
-   selecciones y cerrar el panel.
+   Cuando se elimina un filtro de patología, verifica
+   si la fila ya no tiene selecciones y cierra el panel.
 ══════════════════════════════════════════════════ */
 function syncRowPanelsAfterFilterChange() {
   [1, 2].forEach(row => {
-    const start = (row - 1) * 4;
+    const start    = (row - 1) * 4;
     const keysInRow = PATOLOGIA_INFO.slice(start, start + 4).map(p => p.key);
 
-    /* Filtrar rowState.keys para quitar las que ya no están en state.filters.patologia */
+    /* Filtrar keys que siguen activas en state.filters.patologia */
     const newKeys = rowState[row].keys.filter(k => state.filters.patologia.has(k));
 
-    /* Actualizar cards visuales */
+    /* Actualizar estado visual de las cards */
     keysInRow.forEach(key => {
-      const card = document.querySelector(`[data-pat-key="${key}"]`);
-      if (card) card.classList.toggle('is-active', state.filters.patologia.has(key));
+      document.querySelector(`[data-pat-key="${key}"]`)
+        ?.classList.toggle('is-active', state.filters.patologia.has(key));
     });
 
     if (newKeys.length !== rowState[row].keys.length) {
@@ -795,7 +781,7 @@ function clearAllFilters() {
     });
   });
 
-  /* Deseleccionar cards visuales */
+  /* Deseleccionar cards visuales en ambas filas */
   document.querySelectorAll('.patology-card.is-active').forEach(c => c.classList.remove('is-active'));
 
   renderResults();

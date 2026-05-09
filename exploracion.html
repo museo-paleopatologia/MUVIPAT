@@ -334,39 +334,46 @@
     .skel-label { font-family: var(--font-ui); font-size: 9px; fill: var(--mid); pointer-events: none; }
 
     /* ══════════════════════════════════════
-       GRID PATOLOGÍAS — 88% ancho, 4 cols
+       GRID PATOLOGÍAS — 95% ancho, 4 cols
+       Cards grandes como foco visual principal
     ══════════════════════════════════════ */
-    #patology-grid {
+    #patology-grid-row-1,
+    #patology-grid-row-2 {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 0.6rem;
-      width: 88%;
+      gap: 0.75rem;
+      width: 95%;
     }
 
     .patology-card {
       background: var(--ivory);
       border: 1.5px solid var(--bone-200);
       border-radius: var(--r-md);
-      padding: 0.8rem 0.55rem;
+      padding: 1.25rem 0.75rem 1rem;
       cursor: pointer;
       text-align: center;
       transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
       position: relative;
       overflow: hidden;
+      min-height: 110px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
     /* Franja de color superior */
     .patology-card::before {
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0;
-      height: 3px;
+      height: 4px;
       border-radius: var(--r-md) var(--r-md) 0 0;
       background: var(--pat-color, var(--cyan));
     }
     .patology-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      transform: translateY(-4px);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.11);
       border-color: var(--bone-300);
     }
     /* ACTIVO: borde 4px del color de categoría + glow */
@@ -374,42 +381,44 @@
       border: 3px solid var(--pat-color, var(--cyan));
       box-shadow:
         0 0 0 4px color-mix(in srgb, var(--pat-color, var(--cyan)) 22%, transparent),
-        0 6px 20px rgba(0,0,0,0.1);
+        0 8px 24px rgba(0,0,0,0.1);
       transform: translateY(-2px);
       background: var(--bone-50);
     }
-    .pat-card__icon { font-size: 1.45rem; line-height: 1; margin-bottom: 0.3rem; display: block; }
+    /* Iconos y tipografía grandes */
+    .pat-card__icon {
+      font-size: 2rem;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
     .pat-card__name {
       font-family: var(--font-head);
-      font-size: 0.58rem;
+      font-size: 0.66rem;
       font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.03em;
+      letter-spacing: 0.04em;
       color: var(--dark);
       line-height: 1.2;
     }
     .pat-card__count {
       font-family: var(--font-ui);
-      font-size: 0.55rem;
+      font-size: 0.58rem;
       color: var(--mid);
-      margin-top: 0.2rem;
+      margin-top: 0.3rem;
     }
 
     /* ══════════════════════════════════════════════
        ROW-INJECTED PANELS
-       Estructura:
-         .row-panel-wrap   ← GSAP anima height aquí
-           .row-panel       ← contenido
-             .row-panel__accent-bar
-             .row-panel__close
-             .row-panel__slider-wrap
-               .row-panel__track
-                 .row-panel__slide × N
-             .row-panel__nav (flechas FUERA del texto)
-       Alineado al 88% del grid.
+       Estructura fija en el DOM:
+         #patology-grid-row-1   (4 cards)
+         #row-wrap-1            (panel ← GSAP height)
+         #patology-grid-row-2   (4 cards)
+         #row-wrap-2            (panel ← GSAP height)
+       95% de ancho — alineado con las filas del grid.
     ══════════════════════════════════════════════ */
     .row-panel-wrap {
-      width: 88%;
+      width: 95%;
       overflow: hidden;
       height: 0;          /* GSAP anima esto */
       flex-shrink: 0;
@@ -670,9 +679,10 @@
       .topbar-search { display: none; }
       #topbar-clear-mob { display: flex; }
 
-      /* Grid y paneles: 96% en mobile */
-      #patology-grid { grid-template-columns: repeat(2, 1fr); width: 96%; }
-      .row-panel-wrap { width: 96%; }
+      /* Grid y paneles en mobile */
+      #patology-grid-row-1,
+      #patology-grid-row-2 { grid-template-columns: repeat(2, 1fr); width: 98%; }
+      .row-panel-wrap { width: 98%; }
       .view-hint { display: none; }
 
       /* Header: solo icono en el botón buscar */
@@ -722,8 +732,10 @@
       .view-toggle__btn { padding: 0.36em 0.55em; font-size: 0.66rem; }
       .results-badge { display: none; }
       .skeleton-svg-wrap { max-width: 185px; }
-      #patology-grid { gap: 0.45rem; }
+      #patology-grid-row-1,
+      #patology-grid-row-2 { gap: 0.45rem; }
       .mob-fab { padding: 0.5em 0.9em; font-size: 0.72rem; }
+      .pat-card__icon { font-size: 1.6rem; }
     }
 
     @media (min-width: 1151px) and (max-width: 1320px) {
@@ -953,16 +965,31 @@
         <p class="view-hint" style="opacity:.3;font-size:.57rem">También puedes usar el panel lateral</p>
       </div>
 
-      <!-- Vista B: Grid patologías + row-injection -->
+      <!-- Vista B: Grid patologías — estructura fija 4+panel+4+panel -->
       <div class="view-pane" id="view-pathology" aria-label="Vista patológica">
         <p class="view-hint">Selecciona una patología para ver su descripción</p>
-        <!--
-          El grid y los row-panel-wrap son inyectados por visualizador.js.
-          visualizador.js renderPatologyGrid() crea:
-            #patology-grid (4 cols)
-            #row-wrap-1    (placeholder wrap, injected after item 4)
-            #row-wrap-2    (placeholder wrap, injected after item 8)
-        -->
+
+        <!-- FILA 1: cards 1-4 -->
+        <div id="patology-grid-row-1"
+             role="list"
+             aria-label="Patologías fila 1"
+             style="display:none">
+          <!-- Generado por renderPatologyGrid() -->
+        </div>
+
+        <!-- CONTENEDOR 1: panel info fila 1 — oculto por defecto -->
+        <div class="row-panel-wrap" id="row-wrap-1" aria-live="polite"></div>
+
+        <!-- FILA 2: cards 5-8 -->
+        <div id="patology-grid-row-2"
+             role="list"
+             aria-label="Patologías fila 2"
+             style="display:none">
+          <!-- Generado por renderPatologyGrid() -->
+        </div>
+
+        <!-- CONTENEDOR 2: panel info fila 2 — oculto por defecto -->
+        <div class="row-panel-wrap" id="row-wrap-2" aria-live="polite"></div>
       </div>
 
     </main>
