@@ -30,19 +30,7 @@
       background: var(--bone-50);
     }
 
-    /* ── Topbar ── */
-    .expl-topbar {
-      position: sticky;
-      top: var(--nav-h, 64px);
-      z-index: 90;
-      background: var(--ivory);
-      border-bottom: var(--border);
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      padding: 0.55rem 1.25rem;
-      flex-wrap: wrap;
-    }
+    /* ── Topbar ── (bloque duplicado eliminado — usar solo el fixed de abajo) */
 
     .view-toggle {
       display: flex;
@@ -333,12 +321,12 @@
     }
     .patology-card {
       background: var(--ivory);
-      border: var(--border);
-      border-radius: var(--card-radius);
+      border: 2.5px solid var(--dark);
+      border-radius: 0;                         /* neobrutalist: sin radio */
       padding: 0.85rem 0.75rem;
       cursor: pointer;
       text-align: center;
-      transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+      transition: transform 0.12s, box-shadow 0.12s;
       box-shadow: var(--shadow-sm);
       position: relative;
       overflow: hidden;
@@ -347,20 +335,23 @@
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0;
-      height: 3px;
+      height: 4px;
       background: var(--pat-color, var(--cyan));
     }
     .patology-card:hover {
-      transform: translate(-2px, -2px);
-      box-shadow: var(--shadow-md);
+      transform: translate(-3px, -3px);
+      box-shadow: 6px 6px 0 var(--dark);
     }
+    /* Estado ACTIVO: borde 4px negro sólido + highlight con color de categoría */
     .patology-card.is-active {
       background: var(--dark);
-      color: var(--ivory);
-      box-shadow: 6px 6px 0 var(--pat-color, var(--cyan));
+      border: 4px solid var(--dark);
+      box-shadow: 5px 5px 0 var(--pat-color, var(--cyan));
+      transform: translate(-2px, -2px);
     }
     .patology-card.is-active .pat-card__name,
     .patology-card.is-active .pat-card__count { color: var(--ivory); }
+    .patology-card.is-active .pat-card__icon { filter: grayscale(0); }
     .pat-card__icon { font-size: 1.6rem; line-height: 1; margin-bottom: 0.4rem; }
     .pat-card__name {
       font-family: var(--font-head);
@@ -378,73 +369,145 @@
       margin-top: 0.3rem;
     }
 
-    /* ── Galería de textos emergente ── */
+    /* ══════════════════════════════════════
+       GALERÍA / SLIDER NEOBRUTALIST
+    ══════════════════════════════════════ */
+
+    /* Contenedor que aparece/desaparece */
     .patology-info-gallery {
       width: 100%;
-      max-height: 0;
+      margin-top: 1rem;
+    }
+
+    /* Estado vacío: placeholder */
+    .pat-gallery-empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 2rem 1rem;
+      border: 2.5px dashed var(--bone-300);
+      background: var(--bone-100);
+    }
+    .pat-gallery-empty__icon {
+      font-size: 2.4rem;
+      opacity: 0.4;
+    }
+    .pat-gallery-empty__text {
+      font-family: var(--font-ui);
+      font-size: 0.78rem;
+      color: var(--bone-400);
+      text-align: center;
+      margin: 0;
+    }
+
+    /* Slider wrapper: oculto cuando no hay selección */
+    .pat-slider-wrap {
+      display: none;
+      flex-direction: column;
+      width: 100%;
+    }
+    .pat-slider-wrap.is-visible { display: flex; }
+
+    /* Área deslizable */
+    .pat-slider-track-wrap {
       overflow: hidden;
-      transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s;
-      opacity: 0;
-    }
-    .patology-info-gallery.is-open {
-      max-height: 600px;
-      opacity: 1;
-    }
-    .patology-info-panel {
+      width: 100%;
+      border: 2.5px solid var(--dark);
       background: var(--dark);
-      color: var(--ivory);
-      border: var(--border);
-      border-radius: var(--card-radius);
-      margin-top: 0.75rem;
-      padding: 1.5rem;
-      box-shadow: var(--shadow-md);
       position: relative;
     }
-    .patology-info-panel::before {
+    .pat-slider-track {
+      display: flex;
+      /* width y transform se manejan por JS */
+      will-change: transform;
+    }
+    .pat-slide {
+      flex: 0 0 100%;
+      padding: 1.5rem;
+      position: relative;
+      box-sizing: border-box;
+    }
+    /* Línea de color en la parte superior */
+    .pat-slide::before {
       content: '';
       position: absolute;
       top: 0; left: 1.5rem;
-      width: 60px; height: 3px;
+      width: 56px; height: 4px;
       background: var(--pat-accent, var(--cyan));
     }
-    .info-panel__eyebrow {
+
+    .pat-slide__eyebrow {
       font-family: var(--font-head);
-      font-size: 0.6rem;
+      font-size: 0.58rem;
       font-weight: 800;
       letter-spacing: 0.15em;
       text-transform: uppercase;
       color: var(--pat-accent, var(--cyan));
-      margin: 0.75rem 0 0.4rem;
+      margin: 1rem 0 0.4rem;
     }
-    .info-panel__title {
+    .pat-slide__title {
       font-family: var(--font-display);
-      font-size: clamp(1rem, 2.5vw, 1.35rem);
+      font-size: clamp(0.95rem, 2.2vw, 1.25rem);
       font-weight: 700;
-      line-height: 1.15;
+      line-height: 1.18;
       color: var(--ivory);
-      margin: 0 0 0.85rem;
+      margin: 0 0 0.8rem;
     }
-    .info-panel__body {
+    .pat-slide__body {
       font-family: var(--font-ui);
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       line-height: 1.7;
       color: var(--bone-300);
       margin: 0;
     }
-    .info-panel__close {
-      position: absolute;
-      top: 0.85rem; right: 0.85rem;
-      background: none;
-      border: 1.5px solid rgba(255,255,255,0.2);
-      border-radius: 2px;
-      color: var(--bone-300);
-      font-size: 0.85rem;
-      width: 28px; height: 28px;
-      cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      transition: border-color 0.15s, color 0.15s;
+
+    /* Barra de navegación del slider */
+    .pat-slider-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 2.5px solid var(--dark);
+      border-top: none;
+      background: var(--ivory);
+      padding: 0.5rem 0.75rem;
     }
-    .info-panel__close:hover { border-color: var(--ivory); color: var(--ivory); }
+    /* Flechas: neobrutalismo puro — sin radio, borde grueso */
+    .pat-slider-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px; height: 36px;
+      background: var(--dark);
+      color: var(--ivory);
+      border: 2.5px solid var(--dark);
+      border-radius: 0;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 900;
+      transition: background 0.12s, color 0.12s, box-shadow 0.12s;
+      flex-shrink: 0;
+    }
+    .pat-slider-arrow:hover:not(:disabled) {
+      background: var(--ivory);
+      color: var(--dark);
+      box-shadow: 3px 3px 0 var(--dark);
+    }
+    .pat-slider-arrow:disabled {
+      opacity: 0;
+      pointer-events: none;
+    }
+    /* Contador central */
+    .pat-slider-counter {
+      font-family: var(--font-head);
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      color: var(--mid);
+      text-align: center;
+      flex: 1;
+    }
+    .pat-slider-counter strong { color: var(--dark); }
 
     /* ── Resultados (columna derecha) ── */
     .expl-results {
@@ -704,22 +767,45 @@
       /* Botón cerrar visible en drawers */
       .panel-close { display: flex; }
 
-      /* Grid de patologías: 2 columnas en tablet */
+      /* Grid de patologías: 2 columnas fijas en mobile */
       #patology-grid {
-        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        grid-template-columns: repeat(2, 1fr);
       }
 
-      /* Panel de información: sin max-height rígido */
+      /* Ocultar hint textual largo en mobile */
+      .view-hint { display: none; }
+
+      /* Panel de info gallery: sin max-height rígido */
       .patology-info-gallery.is-open { max-height: 800px; }
-    }
+
+      /* Close button: neobrutalist en mobile */
+      .panel-close {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px; height: 36px;
+        background: var(--dark);
+        color: var(--ivory);
+        border: 2.5px solid var(--dark);
+        border-radius: 0;
+        font-size: 1.2rem;
+        font-weight: 900;
+        top: 0.85rem; right: 0.85rem;
+      }
+      .panel-close:hover {
+        background: var(--ivory);
+        color: var(--dark);
+        box-shadow: 3px 3px 0 var(--dark);
+      }
 
     /* ── Móvil pequeño (≤ 600px) ── */
     @media (max-width: 600px) {
       .view-toggle__btn { padding: 0.4em 0.65em; font-size: 0.7rem; }
       .results-badge    { display: none; }
       .skeleton-svg-wrap { max-width: 200px; }
-      #patology-grid    { grid-template-columns: repeat(2, 1fr); }
+      #patology-grid    { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
       .mob-fab          { padding: 0.55em 1em; font-size: 0.75rem; }
+      .pat-slide        { padding: 1.25rem; }
     }
 
     /* ── Desktop ancho medio (1025–1280px) ── */
@@ -949,19 +1035,36 @@
         <p class="view-hint" style="opacity:.4;font-size:.6rem">También puedes usar el panel lateral</p>
       </div>
 
-      <!-- Vista B: Grid patologías + galería de textos -->
+      <!-- Vista B: Grid patologías + slider de info -->
       <div class="view-pane" id="view-pathology" aria-label="Vista patológica">
         <p class="view-hint">Selecciona una categoría para filtrar y conocer más</p>
         <div id="patology-grid" role="list" aria-label="Categorías patológicas"></div>
 
-        <!-- Galería de textos emergente -->
+        <!-- Galería de textos: placeholder o slider -->
         <div class="patology-info-gallery" id="patology-info-gallery" aria-live="polite">
-          <div class="patology-info-panel" id="patology-info-panel">
-            <button class="info-panel__close" id="info-panel-close" aria-label="Cerrar descripción">✕</button>
-            <p class="info-panel__eyebrow" id="info-eyebrow"></p>
-            <h2 class="info-panel__title" id="info-title"></h2>
-            <p class="info-panel__body" id="info-body"></p>
+
+          <!-- Estado vacío (visible por defecto) -->
+          <div class="pat-gallery-empty" id="pat-gallery-empty">
+            <div class="pat-gallery-empty__icon">🦴🔍</div>
+            <p class="pat-gallery-empty__text">Selecciona una patología para ver su descripción</p>
           </div>
+
+          <!-- Slider (oculto hasta que haya selección) -->
+          <div class="pat-slider-wrap" id="pat-slider-wrap" aria-label="Información de patología seleccionada">
+            <!-- Track deslizante (se construye por JS) -->
+            <div class="pat-slider-track-wrap">
+              <div class="pat-slider-track" id="pat-slider-track"></div>
+            </div>
+            <!-- Barra de navegación -->
+            <div class="pat-slider-nav">
+              <button class="pat-slider-arrow" id="pat-arrow-prev" aria-label="Anterior" disabled>&#8592;</button>
+              <span class="pat-slider-counter" id="pat-slider-counter">
+                <strong>1</strong> / <span id="pat-slider-total">1</span>
+              </span>
+              <button class="pat-slider-arrow" id="pat-arrow-next" aria-label="Siguiente">&#8594;</button>
+            </div>
+          </div>
+
         </div>
       </div>
 
@@ -1086,40 +1189,86 @@
   <script src="/prueba-museo/js/visualizador.js"></script>
 
   <script>
-    /* ══════════════════════════════════════
-       GALERÍA DE TEXTOS EMERGENTE
-    ══════════════════════════════════════ */
-    let activePatKey = null;
+    /* ════════════════════════════════════════════════
+       SLIDER NEOBRUTALIST CON GSAP
+       Gestiona: estado vacío, slides, flechas, counter
+    ════════════════════════════════════════════════ */
 
-    function openInfoPanel(key) {
-      const info = PATOLOGIA_INFO[key];
-      if (!info) return;
+    // Las claves activas en orden de selección
+    let activeSlides = [];   // array de keys seleccionadas (orden cronológico)
+    let currentSlide = 0;    // índice del slide visible
 
-      const gallery = document.getElementById('patology-info-gallery');
-      const panel   = document.getElementById('patology-info-panel');
+    const sliderWrap   = document.getElementById('pat-slider-wrap');
+    const sliderTrack  = document.getElementById('pat-slider-track');
+    const emptyState   = document.getElementById('pat-gallery-empty');
+    const arrowPrev    = document.getElementById('pat-arrow-prev');
+    const arrowNext    = document.getElementById('pat-arrow-next');
+    const counterEl    = document.getElementById('pat-slider-counter');
+    const totalEl      = document.getElementById('pat-slider-total');
 
-      document.getElementById('info-eyebrow').textContent = info.eyebrow;
-      document.getElementById('info-title').textContent   = info.title;
-      document.getElementById('info-body').textContent    = info.body;
-      panel.style.setProperty('--pat-accent', info.color);
+    function buildSlides() {
+      // Reconstruir el track con los slides activos
+      sliderTrack.innerHTML = '';
+      sliderTrack.style.width = (activeSlides.length * 100) + '%';
 
-      gallery.classList.add('is-open');
-      // Scroll suave al panel
-      setTimeout(() => gallery.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 60);
+      activeSlides.forEach(key => {
+        const info = PATOLOGIA_INFO[key];
+        const slide = document.createElement('div');
+        slide.className = 'pat-slide';
+        slide.style.setProperty('--pat-accent', info.color);
+        slide.innerHTML = `
+          <p class="pat-slide__eyebrow">${info.eyebrow}</p>
+          <h3 class="pat-slide__title">${info.title}</h3>
+          <p class="pat-slide__body">${info.body}</p>
+        `;
+        sliderTrack.appendChild(slide);
+      });
     }
 
-    function closeInfoPanel() {
-      document.getElementById('patology-info-gallery').classList.remove('is-open');
-      activePatKey = null;
-      // Desactivar cards
-      document.querySelectorAll('.patology-card').forEach(c => c.classList.remove('is-active'));
+    function goToSlide(index, animate = true) {
+      if (index < 0 || index >= activeSlides.length) return;
+      currentSlide = index;
+
+      const pct = -(index * (100 / activeSlides.length));
+
+      if (animate && typeof gsap !== 'undefined') {
+        gsap.to(sliderTrack, {
+          xPercent: pct,
+          duration: 0.38,
+          ease: 'power3.inOut'
+        });
+      } else {
+        sliderTrack.style.transform = `translateX(${pct}%)`;
+      }
+
+      // Actualizar counter
+      counterEl.innerHTML = `<strong>${index + 1}</strong> / <span id="pat-slider-total">${activeSlides.length}</span>`;
+
+      // Actualizar flechas (hide en extremos, no loop)
+      arrowPrev.disabled = index === 0;
+      arrowNext.disabled = index === activeSlides.length - 1;
     }
 
-    document.getElementById('info-panel-close')?.addEventListener('click', closeInfoPanel);
+    function updateGallery() {
+      if (activeSlides.length === 0) {
+        // Mostrar estado vacío
+        emptyState.style.display = 'flex';
+        sliderWrap.classList.remove('is-visible');
+      } else {
+        // Mostrar slider
+        emptyState.style.display = 'none';
+        sliderWrap.classList.add('is-visible');
+        buildSlides();
+        goToSlide(currentSlide, false);
+      }
+    }
 
-    /* ══════════════════════════════════════
+    arrowPrev?.addEventListener('click', () => goToSlide(currentSlide - 1));
+    arrowNext?.addEventListener('click', () => goToSlide(currentSlide + 1));
+
+    /* ════════════════════════════════════════════════
        RENDER GRID PATOLOGÍAS
-    ══════════════════════════════════════ */
+    ════════════════════════════════════════════════ */
     function renderPatologyGrid() {
       const grid = document.getElementById('patology-grid');
       if (!grid) return;
@@ -1141,34 +1290,41 @@
         `;
 
         card.addEventListener('click', () => {
-          const isAlreadyActive = card.classList.contains('is-active');
+          const isActive = card.classList.contains('is-active');
 
-          // Toggle estado de la card
-          document.querySelectorAll('.patology-card').forEach(c => c.classList.remove('is-active'));
-
-          if (isAlreadyActive) {
-            closeInfoPanel();
-            activePatKey = null;
+          if (isActive) {
+            // Deseleccionar: quitar del array
+            card.classList.remove('is-active');
+            activeSlides = activeSlides.filter(k => k !== info.key);
+            // Si el slide activo era este, ajustar índice
+            currentSlide = Math.min(currentSlide, Math.max(0, activeSlides.length - 1));
           } else {
+            // Seleccionar: añadir al array y saltar a él
             card.classList.add('is-active');
-            activePatKey = info.key;
-            openInfoPanel(info.key);
+            activeSlides.push(info.key);
+            currentSlide = activeSlides.length - 1;
+          }
 
-            // Aplicar filtro si existe función global
-            if (typeof togglePatologyFilter === 'function') {
-              togglePatologyFilter(info.key);
-            } else if (typeof state !== 'undefined') {
-              // Fallback: toggle en state.filters.patologia
-              const patSet = state.filters.patologia;
-              if (patSet.has(info.key)) { patSet.delete(info.key); }
-              else { patSet.clear(); patSet.add(info.key); }
-              if (typeof renderResults === 'function') renderResults();
-              if (typeof updateActiveFiltersBar === 'function') updateActiveFiltersBar();
-              // Sincronizar checkbox lateral
-              document.querySelectorAll('[data-filter="patologia"]').forEach(cb => {
-                cb.checked = patSet.has(cb.value);
-              });
-            }
+          updateGallery();
+
+          // Scroll suave al panel en mobile
+          if (window.innerWidth <= 1024 && activeSlides.length > 0) {
+            setTimeout(() => {
+              document.getElementById('patology-info-gallery')
+                ?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 80);
+          }
+
+          // Aplicar filtro en visualizador.js si existe
+          if (typeof state !== 'undefined') {
+            const patSet = state.filters.patologia;
+            patSet.clear();
+            activeSlides.forEach(k => patSet.add(k));
+            if (typeof renderResults === 'function') renderResults();
+            if (typeof updateActiveFiltersBar === 'function') updateActiveFiltersBar();
+            document.querySelectorAll('[data-filter="patologia"]').forEach(cb => {
+              cb.checked = patSet.has(cb.value);
+            });
           }
         });
 
@@ -1178,18 +1334,21 @@
 
         grid.appendChild(card);
       });
+
+      // Mostrar estado vacío al inicio
+      updateGallery();
     }
 
-    /* ══════════════════════════════════════
+    /* ════════════════════════════════════════════════
        HAMBURGER / NAV MÓVIL
-    ══════════════════════════════════════ */
+    ════════════════════════════════════════════════ */
     const hamburger = document.getElementById('nav-hamburger');
-    const drawer    = document.getElementById('nav-mobile');
+    const navDrawer  = document.getElementById('nav-mobile');
     let navOpen = false;
     hamburger?.addEventListener('click', () => {
       navOpen = !navOpen;
       hamburger.classList.toggle('open', navOpen);
-      drawer.classList.toggle('open', navOpen);
+      navDrawer.classList.toggle('open', navOpen);
       hamburger.setAttribute('aria-expanded', String(navOpen));
     });
 
@@ -1197,25 +1356,25 @@
       document.getElementById('site-header')?.classList.toggle('scrolled', window.scrollY > 40);
     }, { passive: true });
 
-    /* ══════════════════════════════════════
-       DRAWERS MÓVILES — lógica corregida
-       z-index drawers: 1000 > overlay: 200
-    ══════════════════════════════════════ */
+    /* ════════════════════════════════════════════════
+       DRAWERS MÓVILES
+       z-index: drawers=1000 > overlay=200
+       El overlay SIEMPRE está en el DOM (pointer-events:none cuando cerrado)
+    ════════════════════════════════════════════════ */
     const fPanel  = document.getElementById('filters-panel');
     const rPanel  = document.getElementById('results-panel');
     const overlay = document.getElementById('panel-overlay');
 
     function openDrawer(panel) {
-      // Primero activar overlay (para que sea visible antes del slide)
+      // Asegurar que los demás estén cerrados
+      [fPanel, rPanel].forEach(p => { if (p !== panel) p.classList.remove('is-open'); });
+      // Mostrar overlay primero (transición CSS lo anima)
       overlay.classList.add('is-visible');
-      // Luego mostrar el panel correspondiente
+      // Slide del panel
       panel.classList.add('is-open');
-
-      // Mostrar buscador en móvil solo cuando se abren filtros
+      // Buscador en drawer de filtros
       const mobSearch = document.getElementById('mob-search-wrap');
-      if (mobSearch) {
-        mobSearch.style.display = panel === fPanel ? 'block' : 'none';
-      }
+      if (mobSearch) mobSearch.style.display = panel === fPanel ? 'block' : 'none';
     }
 
     function closeDrawers() {
@@ -1258,20 +1417,22 @@
       });
     });
 
-    /* ══════════════════════════════════════
+    /* ════════════════════════════════════════════════
        INIT
-    ══════════════════════════════════════ */
+    ════════════════════════════════════════════════ */
     document.addEventListener('DOMContentLoaded', () => {
       renderPatologyGrid();
     });
 
-    /* ── GSAP entrance ── */
+    /* ── GSAP entrance (solo desktop) ── */
     window.addEventListener('load', () => {
       if (typeof gsap === 'undefined') return;
-      gsap.from('.expl-topbar',  { y: -16, opacity: 0, duration: .45, ease: 'power3.out' });
-      gsap.from('.expl-filters', { x: -20, opacity: 0, duration: .5,  ease: 'power3.out', delay: .1 });
-      gsap.from('.expl-center',  { opacity: 0,          duration: .5,  ease: 'power2.out', delay: .15 });
-      gsap.from('.expl-results', { x: 20,  opacity: 0, duration: .5,  ease: 'power3.out', delay: .1 });
+      gsap.from('.expl-topbar', { y: -16, opacity: 0, duration: .4, ease: 'power3.out' });
+      gsap.from('.expl-center', { opacity: 0, duration: .45, ease: 'power2.out', delay: .1 });
+      if (window.innerWidth > 1024) {
+        gsap.from('.expl-filters', { x: -20, opacity: 0, duration: .45, ease: 'power3.out', delay: .1 });
+        gsap.from('.expl-results', { x: 20,  opacity: 0, duration: .45, ease: 'power3.out', delay: .1 });
+      }
     });
   </script>
 </body>
