@@ -346,23 +346,27 @@
     }
 
     /* ══════════════════════════════════════
-       ROW-INJECTED PANELS — paleta tierra/hueso
+       ROW-INJECTED PANELS — animación persiana
+       Fondo tierra/hueso, títulos con acento vivo
     ══════════════════════════════════════ */
     .row-panel {
       width: 100%;
       background: var(--parchment);
       border: 2.5px solid var(--dark);
+      border-top: none;        /* se une visualmente al grid superior */
       border-radius: 0;
       position: relative;
       overflow: hidden;
-      animation: rowPanelIn 0.3s cubic-bezier(0.4,0,0.2,1) both;
+      /* GSAP anima height y opacity — no CSS animation */
+      height: 0;
+      opacity: 0;
     }
-    @keyframes rowPanelIn {
-      from { opacity: 0; transform: translateY(-6px); }
-      to   { opacity: 1; transform: translateY(0); }
+    /* Cuando GSAP termina de abrir, clase que permite scroll interno */
+    .row-panel.is-open {
+      overflow: visible;       /* GSAP lo gestiona, no overflow:hidden aquí */
     }
 
-    .row-panel__accent-bar { height: 4px; width: 100%; }
+    .row-panel__accent-bar { height: 4px; width: 100%; flex-shrink: 0; }
 
     .row-panel__close {
       position: absolute;
@@ -378,17 +382,35 @@
       display: flex; align-items: center; justify-content: center;
       transition: background 0.1s, color 0.1s;
       z-index: 2;
+      flex-shrink: 0;
     }
     .row-panel__close:hover { background: var(--ivory); color: var(--dark); box-shadow: 2px 2px 0 var(--dark); }
 
-    .row-panel__slider-wrap { overflow: hidden; width: 100%; }
+    /* Slider: overflow hidden para que el deslizamiento funcione */
+    .row-panel__slider-wrap {
+      overflow: hidden;
+      width: 100%;
+    }
     .row-panel__track { display: flex; will-change: transform; }
 
+    /* Cada slide: ancho 100%, altura FIJA con scroll interno */
     .row-panel__slide {
       flex: 0 0 100%;
+      width: 100%;
+      /* Altura fija: evita overflow de texto */
+      height: 220px;
+      overflow-y: auto;
+      overscroll-behavior: contain;
       padding: 1rem 2.8rem 1rem 1rem;
       position: relative;
+      /* Scrollbar sutil */
+      scrollbar-width: thin;
+      scrollbar-color: var(--bone-300) transparent;
     }
+    .row-panel__slide::-webkit-scrollbar { width: 4px; }
+    .row-panel__slide::-webkit-scrollbar-thumb { background: var(--bone-300); }
+
+    /* Línea de acento arriba del texto */
     .row-panel__slide::before {
       content: '';
       position: absolute;
@@ -408,26 +430,28 @@
     }
     .row-slide__title {
       font-family: var(--font-display);
-      font-size: clamp(0.88rem, 1.9vw, 1.1rem);
+      font-size: clamp(0.88rem, 1.9vw, 1.08rem);
       font-weight: 700;
       color: var(--dark);
-      margin: 0 0 0.6rem;
+      margin: 0 0 0.55rem;
       line-height: 1.2;
     }
     .row-slide__body {
       font-family: var(--font-ui);
-      font-size: 0.76rem;
-      line-height: 1.68;
+      font-size: 0.75rem;
+      line-height: 1.65;
       color: var(--dark-2);
       margin: 0;
     }
 
+    /* Barra de navegación */
     .row-panel__nav {
       display: flex;
       align-items: center;
       border-top: 2px solid var(--bone-300);
       background: var(--cream);
-      padding: 0.38rem 0.7rem;
+      padding: 0.36rem 0.7rem;
+      flex-shrink: 0;
     }
     .row-panel__arrow {
       display: flex; align-items: center; justify-content: center;
@@ -561,6 +585,7 @@
     /* ══════════════════════════════════════
        RESPONSIVE — 1150px
     ══════════════════════════════════════ */
+    /* ── Header: botón buscar → solo icono en ≤1150px ── */
     @media (max-width: 1150px) {
       .expl-layout { grid-template-columns: 1fr; }
       .expl-center { border-right: none; width: 100%; }
@@ -568,8 +593,22 @@
       #active-filters-bar { display: none; }
       .topbar-search { display: none; }
       #topbar-clear-mob { display: flex; }
+      /* Grid 4 cols → 2 cols en mobile/tablet */
       #patology-grid { grid-template-columns: repeat(2, 1fr); }
       .view-hint { display: none; }
+
+      /* Botón "Buscar pieza": solo icono SVG, sin texto */
+      .nav__actions .btn span { display: none; }
+      .nav__actions .btn::after {
+        content: '';
+        display: inline-block;
+        width: 16px; height: 16px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230d0d0d' stroke-width='2.5'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-size: contain;
+        vertical-align: middle;
+      }
+      .nav__actions .btn { padding: 0.5em 0.65em; min-width: unset; }
 
       .expl-filters,
       .expl-results {
@@ -588,7 +627,6 @@
       .panel-close { display: flex; }
       #sidebar-active-chips { display: flex; }
 
-      /* Panel inyectado: un poco más de padding en mobile */
       .row-panel__slide { padding: 0.9rem 2.6rem 0.9rem 0.85rem; }
     }
 
@@ -900,7 +938,7 @@
        ROW-INJECTION PANEL SYSTEM
        Fila 1 → índices 0-3  → panel #row-panel-1
        Fila 2 → índices 4-7  → panel #row-panel-2
-       Ambos paneles pueden estar abiertos simultáneamente.
+       Animación persiana: GSAP height 0→auto + opacity
     ══════════════════════════════════════════════════ */
 
     const rowState = {
@@ -908,41 +946,54 @@
       2: { keys: [], current: 0 }
     };
 
+    /* Altura fija del panel = slide + nav */
+    const SLIDE_H = 220; /* px — debe coincidir con CSS */
+    const NAV_H   = 46;  /* px — barra de flechas */
+
     function getRowForIndex(idx) { return idx < 4 ? 1 : 2; }
 
     function updateRowPanel(row) {
       const rs      = rowState[row];
       const panelId = `row-panel-${row}`;
-      const vp      = document.getElementById('view-pathology');
       let   panel   = document.getElementById(panelId);
 
+      /* ── Sin selección → cerrar panel con animación ── */
       if (rs.keys.length === 0) {
-        if (panel) panel.remove();
+        if (panel) {
+          gsap.to(panel, {
+            height: 0, opacity: 0, duration: 0.28, ease: 'power2.in',
+            onComplete: () => panel.remove()
+          });
+        }
         return;
       }
 
-      const firstInfo  = PATOLOGIA_INFO.find(p => p.key === rs.keys[0]);
+      const firstInfo   = PATOLOGIA_INFO.find(p => p.key === rs.keys[0]);
       const accentColor = firstInfo?.color || 'var(--cyan)';
       const showNav     = rs.keys.length > 1;
+      const totalH      = SLIDE_H + (showNav ? NAV_H : 0) + 4; /* +4 accent bar */
 
-      // Construir o regenerar panel
-      if (!panel) {
+      /* ── Crear panel si no existe ── */
+      const isNew = !panel;
+      if (isNew) {
         panel = document.createElement('div');
         panel.className = 'row-panel';
         panel.id        = panelId;
-
+        /* Posición en DOM: after grid (fila 1) o after panel-1 / grid (fila 2) */
         const grid   = document.getElementById('patology-grid');
         const panel1 = document.getElementById('row-panel-1');
-
         if (row === 1) {
           grid.insertAdjacentElement('afterend', panel);
         } else {
           (panel1 || grid).insertAdjacentElement('afterend', panel);
         }
+        /* Comenzar colapsado */
+        gsap.set(panel, { height: 0, opacity: 0, overflow: 'hidden' });
       }
 
       rs.current = Math.min(rs.current, rs.keys.length - 1);
 
+      /* ── Renderizar HTML del panel ── */
       panel.innerHTML = `
         <div class="row-panel__accent-bar" style="background:${accentColor}"></div>
         <button class="row-panel__close" aria-label="Cerrar panel">✕</button>
@@ -965,21 +1016,33 @@
         </div>` : ''}
       `;
 
-      // Posición inicial sin animación
+      /* ── Posición inicial del track ── */
       applyRowSlide(row, rs.current, false);
 
-      // Botón cerrar
+      /* ── Eventos ── */
       panel.querySelector('.row-panel__close').addEventListener('click', () => closeRowPanel(row));
-
-      // Flechas
       if (showNav) {
         updateRowArrows(row);
         document.getElementById(`rp-prev-${row}`)?.addEventListener('click', () => goRowSlide(row, rs.current - 1));
         document.getElementById(`rp-next-${row}`)?.addEventListener('click', () => goRowSlide(row, rs.current + 1));
       }
 
-      // Auto-scroll al panel
-      setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'center' }), 55);
+      /* ── Animación persiana: 0 → totalH ── */
+      if (isNew) {
+        gsap.to(panel, {
+          height: totalH,
+          opacity: 1,
+          duration: 0.38,
+          ease: 'power3.out',
+          onComplete: () => {
+            /* Scroll suave al centro del panel */
+            panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        });
+      } else {
+        /* Panel ya existe (cambio de slides): animar a nueva altura si cambió */
+        gsap.to(panel, { height: totalH, duration: 0.22, ease: 'power2.out' });
+      }
     }
 
     function applyRowSlide(row, idx, animate = true) {
@@ -991,13 +1054,11 @@
       if (animate && typeof gsap !== 'undefined') {
         gsap.to(track, { xPercent: pct, duration: 0.3, ease: 'power3.inOut' });
       } else {
-        if (typeof gsap !== 'undefined' && gsap.set) gsap.set(track, { xPercent: pct });
-        else track.style.transform = `translateX(${pct}%)`;
+        gsap.set ? gsap.set(track, { xPercent: pct }) : (track.style.transform = `translateX(${pct}%)`);
       }
 
       const counter = document.getElementById(`rp-counter-${row}`);
       if (counter) counter.innerHTML = `<strong>${idx+1}</strong> / ${total}`;
-
       updateRowArrows(row);
     }
 
@@ -1017,21 +1078,36 @@
     }
 
     function closeRowPanel(row) {
+      const panel = document.getElementById(`row-panel-${row}`);
       const start = (row - 1) * 4;
+
+      /* Desactivar cards */
       PATOLOGIA_INFO.slice(start, start + 4).forEach(info => {
         document.querySelector(`[data-pat-key="${info.key}"]`)?.classList.remove('is-active');
         document.querySelectorAll(`[data-filter="patologia"][value="${info.key}"]`).forEach(cb => cb.checked = false);
       });
       rowState[row] = { keys: [], current: 0 };
 
+      /* Cerrar con animación persiana inversa */
+      if (panel) {
+        gsap.to(panel, {
+          height: 0, opacity: 0, duration: 0.28, ease: 'power2.in',
+          onComplete: () => panel.remove()
+        });
+      }
+
       if (typeof state !== 'undefined') {
         PATOLOGIA_INFO.slice(start, start + 4).forEach(info => state.filters.patologia.delete(info.key));
         if (typeof renderResults === 'function') renderResults();
         if (typeof updateActiveFiltersBar === 'function') updateActiveFiltersBar();
       }
-
-      updateRowPanel(row);
       updateSidebarChips();
+    }
+
+    /* ── GSAP Safety wrapper: si aún no cargó, diferir ── */
+    function gsapReady(fn) {
+      if (typeof gsap !== 'undefined') { fn(); }
+      else { window.addEventListener('load', fn, { once: true }); }
     }
 
     /* ── Grid ── */
@@ -1078,7 +1154,7 @@
         }
       }
 
-      updateRowPanel(row);
+      gsapReady(() => updateRowPanel(row));
       updateSidebarChips();
 
       if (typeof state !== 'undefined') {
