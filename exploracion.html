@@ -12,131 +12,26 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lexend:wght@300;400;500;600;700;800&family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
-
   <link rel="stylesheet" href="/prueba-museo/css/style.css" />
 
   <style>
-    /* ═══════════════════════════════════════════
-       EXPLORACIÓN — layout fijo a 100dvh
-       Paleta: marfil/crema del sistema + acentos
-    ═══════════════════════════════════════════ */
-
     *, *::before, *::after { box-sizing: border-box; }
 
-    /* ── La página NO hace scroll. Solo los paneles internos. ── */
     html, body {
       height: 100%;
       overflow: hidden;
       background: var(--bone-50);
     }
 
-    /* ── Topbar ── (bloque duplicado eliminado — usar solo el fixed de abajo) */
-
-    .view-toggle {
-      display: flex;
-      border: var(--border);
-      border-radius: var(--card-radius);
-      overflow: hidden;
-      flex-shrink: 0;
-    }
-    .view-toggle__btn {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      padding: 0.45em 1em;
-      font-family: var(--font-ui);
-      font-size: 0.78rem;
-      font-weight: 600;
-      background: var(--bone-100);
-      color: var(--dark-2);
-      border: none;
-      cursor: pointer;
-      transition: background 0.18s, color 0.18s;
-      white-space: nowrap;
-    }
-    .view-toggle__btn + .view-toggle__btn {
-      border-left: var(--border);
-    }
-    .view-toggle__btn.is-active {
-      background: var(--dark);
-      color: var(--ivory);
-    }
-
-    #active-filters-bar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.35rem;
-      flex: 1;
-      min-width: 0;
-    }
-    .filter-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      padding: 0.25em 0.7em;
-      background: var(--cyan);
-      color: var(--dark);
-      font-family: var(--font-ui);
-      font-size: 0.7rem;
-      font-weight: 700;
-      border: 2px solid var(--dark);
-      border-radius: 2px;
-      cursor: pointer;
-      transition: background 0.15s;
-    }
-    .filter-chip:hover { background: var(--cyan-dark); }
-    .filter-chip svg { flex-shrink: 0; }
-
-    .results-badge {
-      font-family: var(--font-ui);
-      font-size: 0.75rem;
-      color: var(--mid);
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-    .results-badge strong { color: var(--dark); }
-
-    .topbar-search {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      background: var(--bone-100);
-      border: var(--border);
-      border-radius: var(--card-radius);
-      padding: 0.3em 0.8em;
-      flex-shrink: 0;
-      margin-left: auto;
-    }
-    .topbar-search svg { color: var(--mid); flex-shrink: 0; }
-    .topbar-search input {
-      border: none;
-      background: transparent;
-      font-family: var(--font-ui);
-      font-size: 0.78rem;
-      color: var(--dark);
-      outline: none;
-      width: clamp(120px, 16vw, 220px);
-    }
-    .topbar-search input::placeholder { color: var(--bone-400); }
-
-    /* ══════════════════════════════════════════
-       CONSTANTES DE ALTURA
-       --nav-h  : altura del header (~64px)
-       --top-h  : altura del topbar (~50px)
-       --panel-h: espacio disponible para los paneles
-    ══════════════════════════════════════════ */
     :root {
       --nav-h:   64px;
       --top-h:   50px;
       --panel-h: calc(100dvh - var(--nav-h) - var(--top-h));
     }
 
-    /* ── El header ocupa posición fija conocida ── */
-    .site-header {
-      height: var(--nav-h);
-    }
+    .site-header { height: var(--nav-h); }
 
-    /* ── Topbar: anclado justo debajo del header ── */
+    /* ── TOPBAR ── */
     .expl-topbar {
       position: fixed;
       top: var(--nav-h);
@@ -147,187 +42,272 @@
       border-bottom: var(--border);
       display: flex;
       align-items: center;
-      gap: 0.75rem;
-      padding: 0 1.25rem;
-      flex-wrap: nowrap;
+      gap: 0.6rem;
+      padding: 0 1.1rem;
       overflow: hidden;
     }
 
-    /* ── Layout 3 columnas: ocupa exactamente lo que queda ── */
+    .view-toggle {
+      display: flex;
+      border: var(--border);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .view-toggle__btn {
+      display: flex;
+      align-items: center;
+      gap: 0.32rem;
+      padding: 0.4em 0.9em;
+      font-family: var(--font-ui);
+      font-size: 0.74rem;
+      font-weight: 700;
+      background: var(--bone-100);
+      color: var(--dark-2);
+      border: none;
+      cursor: pointer;
+      transition: background 0.14s, color 0.14s;
+      white-space: nowrap;
+    }
+    .view-toggle__btn + .view-toggle__btn { border-left: var(--border); }
+    .view-toggle__btn.is-active { background: var(--dark); color: var(--ivory); }
+
+    /* Chips activos — desktop solamente */
+    #active-filters-bar {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 0.28rem;
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+    }
+    .active-filter-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.22rem;
+      padding: 0.2em 0.55em;
+      background: var(--bone-200);
+      color: var(--dark);
+      font-family: var(--font-ui);
+      font-size: 0.65rem;
+      font-weight: 700;
+      border: 2px solid var(--dark);
+      border-radius: 0;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.1s;
+    }
+    .active-filter-chip:hover { background: var(--cyan); }
+    .active-filter-chip--clear { background: var(--dark); color: var(--ivory); }
+    .active-filter-chip--clear:hover { background: var(--crimson); border-color: var(--crimson); }
+    .active-filter-hint {
+      font-family: var(--font-ui);
+      font-size: 0.65rem;
+      color: var(--bone-400);
+      align-self: center;
+    }
+
+    /* Limpiar — solo mobile */
+    #topbar-clear-mob {
+      display: none;
+      align-items: center;
+      gap: 0.28rem;
+      padding: 0.35em 0.7em;
+      font-family: var(--font-ui);
+      font-size: 0.68rem;
+      font-weight: 700;
+      background: var(--dark);
+      color: var(--ivory);
+      border: 2px solid var(--dark);
+      border-radius: 0;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .results-badge {
+      font-family: var(--font-ui);
+      font-size: 0.72rem;
+      color: var(--mid);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .results-badge strong { color: var(--dark); }
+
+    .topbar-search {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: var(--bone-100);
+      border: var(--border);
+      padding: 0.26em 0.7em;
+      flex-shrink: 0;
+      margin-left: auto;
+    }
+    .topbar-search svg { color: var(--mid); flex-shrink: 0; }
+    .topbar-search input {
+      border: none;
+      background: transparent;
+      font-family: var(--font-ui);
+      font-size: 0.74rem;
+      color: var(--dark);
+      outline: none;
+      width: clamp(100px, 13vw, 190px);
+    }
+    .topbar-search input::placeholder { color: var(--bone-400); }
+
+    /* ── LAYOUT ── */
     .expl-layout {
       display: grid;
-      grid-template-columns: 230px 1fr 300px;
+      grid-template-columns: 215px 1fr 280px;
       height: var(--panel-h);
-      /* Desplazado para quedar bajo header + topbar */
       margin-top: calc(var(--nav-h) + var(--top-h));
       overflow: hidden;
     }
 
-    /* ── Filtros (columna izquierda) ── */
+    /* ── FILTROS ── */
     .expl-filters {
       background: var(--ivory);
       border-right: var(--border);
-      padding: 1.25rem 1rem;
+      padding: 1rem 0.85rem;
       height: 100%;
       overflow-y: auto;
       overscroll-behavior: contain;
+      position: relative;
     }
-    .expl-filters::-webkit-scrollbar { width: 4px; }
-    .expl-filters::-webkit-scrollbar-track { background: var(--bone-100); }
-    .expl-filters::-webkit-scrollbar-thumb { background: var(--bone-300); border-radius: 2px; }
+    .expl-filters::-webkit-scrollbar { width: 3px; }
+    .expl-filters::-webkit-scrollbar-thumb { background: var(--bone-300); }
 
-    /* El botón de cierre: oculto en desktop, visible en mobile */
+    #sidebar-active-chips {
+      margin-bottom: 0.9rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.28rem;
+    }
+    #sidebar-active-chips:empty { display: none; }
+
     .panel-close {
       display: none;
       position: absolute;
-      top: 0.75rem; right: 0.75rem;
-      background: none; border: none;
-      font-size: 1.6rem; cursor: pointer;
-      color: var(--dark); line-height: 1;
+      top: 0.65rem; right: 0.65rem;
+      width: 32px; height: 32px;
+      background: var(--dark);
+      color: var(--ivory);
+      border: 2.5px solid var(--dark);
+      border-radius: 0;
+      font-size: 1rem;
+      font-weight: 900;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
       z-index: 2;
+      transition: background 0.1s, color 0.1s;
     }
+    .panel-close:hover { background: var(--ivory); color: var(--dark); }
 
-    .filter-section { margin-bottom: 1.5rem; }
+    .filter-section { margin-bottom: 1.25rem; }
     .filter-section__title {
       font-family: var(--font-head);
-      font-size: 0.65rem;
+      font-size: 0.6rem;
       font-weight: 800;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--mid);
-      margin: 0 0 0.6rem;
-      padding-bottom: 0.4rem;
+      margin: 0 0 0.5rem;
+      padding-bottom: 0.32rem;
       border-bottom: 1.5px solid var(--bone-200);
     }
-    .filter-option {
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-      margin-bottom: 0.35rem;
-    }
+    .filter-option { display: flex; align-items: center; cursor: pointer; margin-bottom: 0.28rem; }
     .filter-option input[type="checkbox"] { display: none; }
     .filter-option__label {
       display: flex;
       align-items: center;
-      gap: 0.45rem;
+      gap: 0.38rem;
       font-family: var(--font-ui);
-      font-size: 0.78rem;
+      font-size: 0.74rem;
       color: var(--dark-2);
       width: 100%;
-      padding: 0.3em 0.5em;
-      border-radius: 2px;
+      padding: 0.26em 0.42em;
       border: 1.5px solid transparent;
-      transition: background 0.15s, border-color 0.15s;
+      transition: background 0.1s, border-color 0.1s;
       user-select: none;
     }
-    .filter-option input:checked + .filter-option__label {
-      background: var(--dark);
-      color: var(--ivory);
-      border-color: var(--dark);
-    }
+    .filter-option input:checked + .filter-option__label { background: var(--dark); color: var(--ivory); border-color: var(--dark); }
     .filter-option__label:hover { background: var(--bone-100); }
     .filter-option input:checked + .filter-option__label:hover { background: var(--dark-2); }
 
     .filter-dot {
-      width: 8px; height: 8px;
+      width: 7px; height: 7px;
       border-radius: 50%;
       background: var(--dot, var(--cyan));
       flex-shrink: 0;
-      border: 1.5px solid rgba(0,0,0,0.2);
+      border: 1.5px solid rgba(0,0,0,0.14);
     }
-    .filter-option__count {
-      margin-left: auto;
-      font-size: 0.68rem;
-      opacity: 0.5;
-      font-weight: 600;
-    }
+    .filter-option__count { margin-left: auto; font-size: 0.63rem; opacity: 0.42; font-weight: 700; }
     .filter-clear-btn {
-      display: block;
-      width: 100%;
-      margin-top: 0.4rem;
-      padding: 0.3em;
-      font-family: var(--font-ui);
-      font-size: 0.68rem;
-      color: var(--mid);
-      background: none;
-      border: 1px dashed var(--bone-300);
-      border-radius: 2px;
-      cursor: pointer;
-      text-align: center;
-      transition: border-color 0.15s, color 0.15s;
+      display: block; width: 100%; margin-top: 0.3rem; padding: 0.26em;
+      font-family: var(--font-ui); font-size: 0.62rem; color: var(--mid);
+      background: none; border: 1px dashed var(--bone-300); cursor: pointer;
+      text-align: center; transition: border-color 0.1s, color 0.1s;
     }
     .filter-clear-btn:hover { border-color: var(--dark); color: var(--dark); }
 
-    /* ── Centro: columna elástica con scroll propio ── */
+    /* ── CENTRO ── */
     .expl-center {
       background: var(--bone-50);
       border-right: var(--border);
-      padding: 1.5rem 1rem 2rem;
+      padding: 1.1rem 0.85rem 2rem;
       height: 100%;
       overflow-y: auto;
       overscroll-behavior: contain;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 1rem;
+      gap: 0.7rem;
     }
-    .expl-center::-webkit-scrollbar { width: 4px; }
-    .expl-center::-webkit-scrollbar-track { background: var(--bone-100); }
-    .expl-center::-webkit-scrollbar-thumb { background: var(--bone-300); border-radius: 2px; }
+    .expl-center::-webkit-scrollbar { width: 3px; }
+    .expl-center::-webkit-scrollbar-thumb { background: var(--bone-300); }
 
     .view-pane { display: none; width: 100%; }
-    .view-pane.is-visible { display: flex; flex-direction: column; align-items: center; }
+    .view-pane.is-visible { display: flex; flex-direction: column; align-items: center; gap: 0.7rem; }
 
     .view-hint {
       font-family: var(--font-ui);
-      font-size: 0.72rem;
+      font-size: 0.68rem;
       color: var(--bone-400);
       text-align: center;
-      margin: 0 0 0.5rem;
+      margin: 0;
     }
 
-    /* Skeleton */
-    .skeleton-svg-wrap {
-      width: 100%;
-      max-width: 280px;
-    }
+    .skeleton-svg-wrap { width: 100%; max-width: 265px; }
     .skeleton-svg-wrap svg { width: 100%; height: auto; }
 
-    .skel-region {
-      cursor: pointer;
-      transition: opacity 0.2s;
-    }
+    .skel-region { cursor: pointer; transition: opacity 0.18s; }
     .skel-region:hover ellipse,
     .skel-region:hover path,
-    .skel-region:hover rect { opacity: 0.75; }
+    .skel-region:hover rect { opacity: 0.72; }
     .skel-region.is-active ellipse,
     .skel-region.is-active path,
     .skel-region.is-active rect,
-    .skel-region.is-active line { filter: drop-shadow(0 0 6px var(--cyan)); }
-    .skel-label {
-      font-family: var(--font-ui);
-      font-size: 9px;
-      fill: var(--mid);
-      pointer-events: none;
-    }
+    .skel-region.is-active line { filter: drop-shadow(0 0 7px var(--cyan)); }
+    .skel-label { font-family: var(--font-ui); font-size: 9px; fill: var(--mid); pointer-events: none; }
 
-    /* Patology grid */
+    /* ── GRID 4 cols fijo ── */
     #patology-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-      gap: 0.75rem;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.55rem;
       width: 100%;
-      padding: 0.25rem;
     }
+
     .patology-card {
       background: var(--ivory);
       border: 2.5px solid var(--dark);
-      border-radius: 0;                         /* neobrutalist: sin radio */
-      padding: 0.85rem 0.75rem;
+      border-radius: 0;
+      padding: 0.7rem 0.55rem;
       cursor: pointer;
       text-align: center;
-      transition: transform 0.12s, box-shadow 0.12s;
-      box-shadow: var(--shadow-sm);
+      transition: transform 0.11s, box-shadow 0.11s, border-color 0.11s, border-width 0.11s;
+      box-shadow: 3px 3px 0 var(--dark);
       position: relative;
       overflow: hidden;
     }
@@ -335,497 +315,304 @@
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0;
-      height: 4px;
+      height: 3px;
       background: var(--pat-color, var(--cyan));
     }
     .patology-card:hover {
-      transform: translate(-3px, -3px);
-      box-shadow: 6px 6px 0 var(--dark);
-    }
-    /* Estado ACTIVO: borde 4px negro sólido + highlight con color de categoría */
-    .patology-card.is-active {
-      background: var(--dark);
-      border: 4px solid var(--dark);
-      box-shadow: 5px 5px 0 var(--pat-color, var(--cyan));
       transform: translate(-2px, -2px);
+      box-shadow: 5px 5px 0 var(--dark);
     }
-    .patology-card.is-active .pat-card__name,
-    .patology-card.is-active .pat-card__count { color: var(--ivory); }
-    .patology-card.is-active .pat-card__icon { filter: grayscale(0); }
-    .pat-card__icon { font-size: 1.6rem; line-height: 1; margin-bottom: 0.4rem; }
+    /* ACTIVO: borde 4px del color de la categoría */
+    .patology-card.is-active {
+      border: 4px solid var(--pat-color, var(--cyan));
+      box-shadow: 4px 4px 0 var(--pat-color, var(--cyan));
+      transform: translate(-1px, -1px);
+    }
+    .pat-card__icon { font-size: 1.35rem; line-height: 1; margin-bottom: 0.28rem; }
     .pat-card__name {
       font-family: var(--font-head);
-      font-size: 0.7rem;
-      font-weight: 700;
+      font-size: 0.58rem;
+      font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.03em;
       color: var(--dark);
       line-height: 1.2;
     }
     .pat-card__count {
       font-family: var(--font-ui);
-      font-size: 0.65rem;
+      font-size: 0.56rem;
       color: var(--mid);
-      margin-top: 0.3rem;
+      margin-top: 0.22rem;
     }
 
     /* ══════════════════════════════════════
-       GALERÍA / SLIDER NEOBRUTALIST
+       ROW-INJECTED PANELS — paleta tierra/hueso
     ══════════════════════════════════════ */
-
-    /* Contenedor que aparece/desaparece */
-    .patology-info-gallery {
+    .row-panel {
       width: 100%;
-      margin-top: 1rem;
-    }
-
-    /* Estado vacío: placeholder */
-    .pat-gallery-empty {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.75rem;
-      padding: 2rem 1rem;
-      border: 2.5px dashed var(--bone-300);
-      background: var(--bone-100);
-    }
-    .pat-gallery-empty__icon {
-      font-size: 2.4rem;
-      opacity: 0.4;
-    }
-    .pat-gallery-empty__text {
-      font-family: var(--font-ui);
-      font-size: 0.78rem;
-      color: var(--bone-400);
-      text-align: center;
-      margin: 0;
-    }
-
-    /* Slider wrapper: oculto cuando no hay selección */
-    .pat-slider-wrap {
-      display: none;
-      flex-direction: column;
-      width: 100%;
-    }
-    .pat-slider-wrap.is-visible { display: flex; }
-
-    /* Área deslizable */
-    .pat-slider-track-wrap {
-      overflow: hidden;
-      width: 100%;
+      background: var(--parchment);
       border: 2.5px solid var(--dark);
+      border-radius: 0;
+      position: relative;
+      overflow: hidden;
+      animation: rowPanelIn 0.3s cubic-bezier(0.4,0,0.2,1) both;
+    }
+    @keyframes rowPanelIn {
+      from { opacity: 0; transform: translateY(-6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .row-panel__accent-bar { height: 4px; width: 100%; }
+
+    .row-panel__close {
+      position: absolute;
+      top: 0.55rem; right: 0.55rem;
+      width: 30px; height: 30px;
       background: var(--dark);
-      position: relative;
+      color: var(--ivory);
+      border: 2.5px solid var(--dark);
+      border-radius: 0;
+      font-size: 0.9rem;
+      font-weight: 900;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.1s, color 0.1s;
+      z-index: 2;
     }
-    .pat-slider-track {
-      display: flex;
-      /* width y transform se manejan por JS */
-      will-change: transform;
-    }
-    .pat-slide {
+    .row-panel__close:hover { background: var(--ivory); color: var(--dark); box-shadow: 2px 2px 0 var(--dark); }
+
+    .row-panel__slider-wrap { overflow: hidden; width: 100%; }
+    .row-panel__track { display: flex; will-change: transform; }
+
+    .row-panel__slide {
       flex: 0 0 100%;
-      padding: 1.5rem;
+      padding: 1rem 2.8rem 1rem 1rem;
       position: relative;
-      box-sizing: border-box;
     }
-    /* Línea de color en la parte superior */
-    .pat-slide::before {
+    .row-panel__slide::before {
       content: '';
       position: absolute;
-      top: 0; left: 1.5rem;
-      width: 56px; height: 4px;
-      background: var(--pat-accent, var(--cyan));
+      top: 0; left: 1rem;
+      width: 44px; height: 3px;
+      background: var(--rp-accent, var(--cyan));
     }
 
-    .pat-slide__eyebrow {
+    .row-slide__eyebrow {
       font-family: var(--font-head);
-      font-size: 0.58rem;
+      font-size: 0.55rem;
       font-weight: 800;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--pat-accent, var(--cyan));
-      margin: 1rem 0 0.4rem;
+      color: var(--rp-accent, var(--cyan));
+      margin: 0.85rem 0 0.28rem;
     }
-    .pat-slide__title {
+    .row-slide__title {
       font-family: var(--font-display);
-      font-size: clamp(0.95rem, 2.2vw, 1.25rem);
+      font-size: clamp(0.88rem, 1.9vw, 1.1rem);
       font-weight: 700;
-      line-height: 1.18;
-      color: var(--ivory);
-      margin: 0 0 0.8rem;
+      color: var(--dark);
+      margin: 0 0 0.6rem;
+      line-height: 1.2;
     }
-    .pat-slide__body {
+    .row-slide__body {
       font-family: var(--font-ui);
-      font-size: 0.8rem;
-      line-height: 1.7;
-      color: var(--bone-300);
+      font-size: 0.76rem;
+      line-height: 1.68;
+      color: var(--dark-2);
       margin: 0;
     }
 
-    /* Barra de navegación del slider */
-    .pat-slider-nav {
+    .row-panel__nav {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      border: 2.5px solid var(--dark);
-      border-top: none;
-      background: var(--ivory);
-      padding: 0.5rem 0.75rem;
+      border-top: 2px solid var(--bone-300);
+      background: var(--cream);
+      padding: 0.38rem 0.7rem;
     }
-    /* Flechas: neobrutalismo puro — sin radio, borde grueso */
-    .pat-slider-arrow {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 36px; height: 36px;
+    .row-panel__arrow {
+      display: flex; align-items: center; justify-content: center;
+      width: 30px; height: 30px;
       background: var(--dark);
       color: var(--ivory);
       border: 2.5px solid var(--dark);
       border-radius: 0;
       cursor: pointer;
-      font-size: 1rem;
+      font-size: 0.9rem;
       font-weight: 900;
-      transition: background 0.12s, color 0.12s, box-shadow 0.12s;
       flex-shrink: 0;
+      transition: background 0.1s, color 0.1s, box-shadow 0.1s;
     }
-    .pat-slider-arrow:hover:not(:disabled) {
+    .row-panel__arrow:hover:not(:disabled) {
       background: var(--ivory);
       color: var(--dark);
-      box-shadow: 3px 3px 0 var(--dark);
+      box-shadow: 2px 2px 0 var(--dark);
     }
-    .pat-slider-arrow:disabled {
-      opacity: 0;
-      pointer-events: none;
-    }
-    /* Contador central */
-    .pat-slider-counter {
-      font-family: var(--font-head);
-      font-size: 0.68rem;
-      font-weight: 800;
-      letter-spacing: 0.1em;
-      color: var(--mid);
-      text-align: center;
+    .row-panel__arrow:disabled { opacity: 0; pointer-events: none; }
+    .row-panel__counter {
       flex: 1;
+      text-align: center;
+      font-family: var(--font-head);
+      font-size: 0.62rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: var(--mid);
     }
-    .pat-slider-counter strong { color: var(--dark); }
+    .row-panel__counter strong { color: var(--dark); }
 
-    /* ── Resultados (columna derecha) ── */
+    /* ── RESULTADOS ── */
     .expl-results {
       background: var(--ivory);
-      padding: 1.25rem 1rem;
+      padding: 1rem 0.85rem;
       height: 100%;
       overflow-y: auto;
       overscroll-behavior: contain;
+      position: relative;
     }
-    .expl-results::-webkit-scrollbar { width: 4px; }
-    .expl-results::-webkit-scrollbar-track { background: var(--bone-100); }
-    .expl-results::-webkit-scrollbar-thumb { background: var(--bone-300); border-radius: 2px; }
+    .expl-results::-webkit-scrollbar { width: 3px; }
+    .expl-results::-webkit-scrollbar-thumb { background: var(--bone-300); }
 
     .results-header {
       display: flex;
       align-items: baseline;
       justify-content: space-between;
-      margin-bottom: 1rem;
-      padding-bottom: 0.6rem;
+      margin-bottom: 0.85rem;
+      padding-bottom: 0.48rem;
       border-bottom: var(--border);
     }
     .results-header__title {
       font-family: var(--font-head);
-      font-size: 0.75rem;
+      font-size: 0.68rem;
       font-weight: 800;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--dark);
       margin: 0;
     }
-    .results-header__count {
-      font-family: var(--font-ui);
-      font-size: 0.68rem;
-      color: var(--mid);
-    }
+    .results-header__count { font-family: var(--font-ui); font-size: 0.63rem; color: var(--mid); }
 
-    /* Result cards */
     .result-card {
       background: var(--bone-50);
       border: var(--border);
-      border-radius: var(--card-radius);
-      padding: 0.85rem 0.9rem;
-      margin-bottom: 0.65rem;
-      transition: transform 0.15s, box-shadow 0.15s;
+      padding: 0.75rem 0.82rem;
+      margin-bottom: 0.5rem;
+      transition: transform 0.11s, box-shadow 0.11s;
       box-shadow: var(--shadow-sm);
     }
-    .result-card:hover {
-      transform: translate(-2px, -2px);
-      box-shadow: var(--shadow-md);
-    }
-    .result-card__num {
-      font-family: var(--font-head);
-      font-size: 0.6rem;
-      font-weight: 800;
-      letter-spacing: 0.1em;
-      color: var(--mid);
-      margin-bottom: 0.25rem;
-    }
-    .result-card__title {
-      font-family: var(--font-display);
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: var(--dark);
-      margin: 0 0 0.3rem;
-      line-height: 1.2;
-    }
+    .result-card:hover { transform: translate(-2px,-2px); box-shadow: var(--shadow-md); }
+    .result-card__num { font-family: var(--font-head); font-size: 0.57rem; font-weight: 800; letter-spacing: 0.1em; color: var(--mid); margin-bottom: 0.18rem; }
+    .result-card__title { font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; color: var(--dark); margin: 0 0 0.22rem; line-height: 1.2; }
     .result-card__desc {
-      font-family: var(--font-ui);
-      font-size: 0.72rem;
-      color: var(--mid);
-      line-height: 1.5;
-      margin: 0 0 0.5rem;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
+      font-family: var(--font-ui); font-size: 0.68rem; color: var(--mid); line-height: 1.5;
+      margin: 0 0 0.42rem;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
     }
-    .result-card__meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.3rem;
-      margin-bottom: 0.55rem;
-    }
+    .result-card__meta { display: flex; flex-wrap: wrap; gap: 0.22rem; margin-bottom: 0.42rem; }
     .result-tag {
-      display: inline-block;
-      padding: 0.18em 0.55em;
-      font-family: var(--font-ui);
-      font-size: 0.6rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      border: 1.5px solid var(--dark);
-      border-radius: 2px;
-      background: var(--tag-bg, var(--bone-100));
-      color: var(--dark);
+      display: inline-block; padding: 0.13em 0.46em;
+      font-family: var(--font-ui); font-size: 0.56rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.05em;
+      border: 1.5px solid var(--dark); background: var(--bone-100); color: var(--dark);
     }
     .result-card__link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      font-family: var(--font-ui);
-      font-size: 0.7rem;
-      font-weight: 700;
-      color: var(--dark);
-      text-decoration: none;
-      border-bottom: 2px solid var(--cyan);
-      padding-bottom: 0.1em;
-      transition: border-color 0.15s;
+      display: inline-flex; align-items: center; gap: 0.22rem;
+      font-family: var(--font-ui); font-size: 0.65rem; font-weight: 700;
+      color: var(--dark); text-decoration: none;
+      border-bottom: 2px solid var(--cyan); padding-bottom: 0.07em;
+      transition: border-color 0.1s;
     }
     .result-card__link:hover { border-color: var(--dark); }
-
     .results-empty {
-      text-align: center;
-      padding: 3rem 1rem;
-      font-family: var(--font-ui);
-      color: var(--bone-400);
-      font-size: 0.82rem;
+      text-align: center; padding: 2.5rem 1rem;
+      font-family: var(--font-ui); color: var(--bone-400); font-size: 0.78rem;
     }
-    .results-empty strong {
-      display: block;
-      font-family: var(--font-display);
-      font-size: 1.5rem;
-      color: var(--bone-300);
-      margin-bottom: 0.5rem;
-    }
+    .results-empty strong { display: block; font-family: var(--font-display); font-size: 1.35rem; color: var(--bone-300); margin-bottom: 0.45rem; }
 
-    /* ── SVG Tooltip ── */
+    /* SVG Tooltip */
     .svg-tooltip {
-      position: fixed;
-      background: var(--dark);
-      color: var(--ivory);
-      font-family: var(--font-ui);
-      font-size: 0.7rem;
-      padding: 0.4em 0.8em;
-      border-radius: 2px;
-      border: var(--border);
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.15s;
-      z-index: 999;
-      white-space: nowrap;
+      position: fixed; background: var(--dark); color: var(--ivory);
+      font-family: var(--font-ui); font-size: 0.66rem; padding: 0.32em 0.7em;
+      border: var(--border); pointer-events: none; opacity: 0;
+      transition: opacity 0.12s; z-index: 999; white-space: nowrap;
     }
     .svg-tooltip.visible { opacity: 1; }
 
-    /* ── FABs móviles — ocultos en desktop ── */
+    /* FABs mobile */
     .mob-fab-bar {
-      display: none;
-      position: fixed;
-      bottom: 1.25rem;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 300;
-      gap: 0.75rem;
+      display: none; position: fixed; bottom: 1rem; left: 50%;
+      transform: translateX(-50%); z-index: 300; gap: 0.6rem;
     }
     .mob-fab {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      padding: 0.65em 1.3em;
-      background: var(--dark);
-      color: var(--ivory);
-      font-family: var(--font-ui);
-      font-size: 0.8rem;
-      font-weight: 700;
-      border: var(--border);
-      border-radius: 100px;
-      cursor: pointer;
-      box-shadow: var(--shadow-md);
-      white-space: nowrap;
+      display: flex; align-items: center; gap: 0.3rem;
+      padding: 0.55em 1.1em; font-family: var(--font-ui); font-size: 0.75rem; font-weight: 700;
+      border: var(--border); border-radius: 100px; cursor: pointer; box-shadow: var(--shadow-md); white-space: nowrap;
     }
-    .mob-fab--filters { background: var(--dark); }
+    .mob-fab--filters { background: var(--dark); color: var(--ivory); }
     .mob-fab--results { background: var(--cyan); color: var(--dark); }
 
-    /* ── Overlay: SIEMPRE en el DOM, invisible por defecto ── */
+    /* Overlay */
     .panel-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(13, 13, 13, 0.65);
-      backdrop-filter: blur(2px);
-      -webkit-backdrop-filter: blur(2px);
-      z-index: 200;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.25s ease;
+      position: fixed; inset: 0;
+      background: rgba(13,13,13,0.58);
+      backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
+      z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.2s ease;
     }
-    .panel-overlay.is-visible {
-      opacity: 1;
-      pointer-events: auto;
-    }
+    .panel-overlay.is-visible { opacity: 1; pointer-events: auto; }
 
-    /* ══════════════════════════════════════════
-       RESPONSIVE: TABLET & MÓVIL (≤ 1024px)
-    ══════════════════════════════════════════ */
-    @media (max-width: 1024px) {
-
-      /* Layout: una sola columna, el centro ocupa todo */
-      .expl-layout {
-        grid-template-columns: 1fr;
-      }
-
-      /* Columna central toma el 100% y elimina borde derecho */
-      .expl-center {
-        border-right: none;
-        width: 100%;
-      }
-
-      /* FABs visibles en mobile */
+    /* ══════════════════════════════════════
+       RESPONSIVE — 1150px
+    ══════════════════════════════════════ */
+    @media (max-width: 1150px) {
+      .expl-layout { grid-template-columns: 1fr; }
+      .expl-center { border-right: none; width: 100%; }
       .mob-fab-bar { display: flex; }
-
-      /* Buscador de topbar se oculta (está en el drawer de filtros) */
+      #active-filters-bar { display: none; }
       .topbar-search { display: none; }
-
-      /* Topbar: permitir que el toggle de vistas se vea */
-      .expl-topbar { gap: 0.5rem; padding: 0 0.75rem; }
-
-      /* ── DRAWERS: Filtros y Resultados ──
-         Se sacan del flujo del documento y se convierten en paneles
-         deslizantes sobre la pantalla. Por defecto fuera de vista. */
-      .expl-filters,
-      .expl-results {
-        position: fixed;
-        top: 0;
-        bottom: 0;
-        width: min(320px, 88vw);
-        height: 100dvh;
-        max-height: 100dvh;
-        z-index: 1000;          /* Por encima del overlay (z:200) */
-        padding-top: 3.5rem;    /* Espacio para el botón cerrar */
-        overflow-y: auto;
-        overscroll-behavior: contain;
-        border: none;
-        /* Posición inicial: fuera de pantalla */
-        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        will-change: transform;
-      }
-
-      /* Filtros: entra desde la izquierda */
-      .expl-filters {
-        left: 0;
-        right: auto;
-        border-right: var(--border);
-        transform: translateX(-110%);
-      }
-
-      /* Resultados: entra desde la derecha */
-      .expl-results {
-        right: 0;
-        left: auto;
-        border-left: var(--border);
-        transform: translateX(110%);
-      }
-
-      /* Estado ABIERTO */
-      .expl-filters.is-open { transform: translateX(0); }
-      .expl-results.is-open { transform: translateX(0); }
-
-      /* Botón cerrar visible en drawers */
-      .panel-close { display: flex; }
-
-      /* Grid de patologías: 2 columnas fijas en mobile */
-      #patology-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      /* Ocultar hint textual largo en mobile */
+      #topbar-clear-mob { display: flex; }
+      #patology-grid { grid-template-columns: repeat(2, 1fr); }
       .view-hint { display: none; }
 
-      /* Panel de info gallery: sin max-height rígido */
-      .patology-info-gallery.is-open { max-height: 800px; }
-
-      /* Close button: neobrutalist en mobile */
-      .panel-close {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 36px; height: 36px;
-        background: var(--dark);
-        color: var(--ivory);
-        border: 2.5px solid var(--dark);
-        border-radius: 0;
-        font-size: 1.2rem;
-        font-weight: 900;
-        top: 0.85rem; right: 0.85rem;
+      .expl-filters,
+      .expl-results {
+        position: fixed; top: 0; bottom: 0;
+        width: min(305px, 88vw); height: 100dvh; max-height: 100dvh;
+        z-index: 1000; padding-top: 3rem;
+        overflow-y: auto; overscroll-behavior: contain;
+        border: none;
+        transition: transform 0.27s cubic-bezier(0.4,0,0.2,1);
+        will-change: transform;
       }
-      .panel-close:hover {
-        background: var(--ivory);
-        color: var(--dark);
-        box-shadow: 3px 3px 0 var(--dark);
-      }
+      .expl-filters { left: 0; right: auto; border-right: var(--border); transform: translateX(-110%); }
+      .expl-results { right: 0; left: auto; border-left: var(--border); transform: translateX(110%); }
+      .expl-filters.is-open { transform: translateX(0); }
+      .expl-results.is-open { transform: translateX(0); }
+      .panel-close { display: flex; }
+      #sidebar-active-chips { display: flex; }
 
-    /* ── Móvil pequeño (≤ 600px) ── */
-    @media (max-width: 600px) {
-      .view-toggle__btn { padding: 0.4em 0.65em; font-size: 0.7rem; }
-      .results-badge    { display: none; }
-      .skeleton-svg-wrap { max-width: 200px; }
-      #patology-grid    { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
-      .mob-fab          { padding: 0.55em 1em; font-size: 0.75rem; }
-      .pat-slide        { padding: 1.25rem; }
+      /* Panel inyectado: un poco más de padding en mobile */
+      .row-panel__slide { padding: 0.9rem 2.6rem 0.9rem 0.85rem; }
     }
 
-    /* ── Desktop ancho medio (1025–1280px) ── */
-    @media (min-width: 1025px) and (max-width: 1280px) {
-      .expl-layout { grid-template-columns: 200px 1fr 260px; }
+    @media (max-width: 560px) {
+      .view-toggle__btn { padding: 0.36em 0.55em; font-size: 0.66rem; }
+      .results-badge { display: none; }
+      .skeleton-svg-wrap { max-width: 188px; }
+      #patology-grid { gap: 0.4rem; }
+      .mob-fab { padding: 0.5em 0.85em; font-size: 0.7rem; }
+    }
+
+    @media (min-width: 1151px) and (max-width: 1300px) {
+      .expl-layout { grid-template-columns: 190px 1fr 250px; }
     }
   </style>
 </head>
 <body class="expl-body-page">
 
-  <!-- ══════════════════════════════════════
-       HEADER
-  ══════════════════════════════════════ -->
+  <!-- HEADER -->
   <header class="site-header" id="site-header">
     <div class="container">
       <nav class="nav" role="navigation" aria-label="Navegación principal">
         <a href="/prueba-museo/index.html" class="nav__logo" aria-label="PaleoMuseo — Inicio">
-          <img src="/prueba-museo/assets/img/lav_uam.png"
-               alt="Laboratorio de Antropología Virtual · UAM"
-               class="nav__logo-img" />
+          <img src="/prueba-museo/assets/img/lav_uam.png" alt="Laboratorio de Antropología Virtual · UAM" class="nav__logo-img" />
           <div>
             <div>Paleo<strong>Museo</strong></div>
             <div style="font-size:0.6em;font-weight:400;opacity:0.5;letter-spacing:0.1em">PALEOPATOLOGÍA</div>
@@ -839,9 +626,7 @@
           <li><a href="/prueba-museo/index.html#proyecto" class="nav__link">Proyecto</a></li>
         </ul>
         <div class="nav__actions">
-          <a href="/prueba-museo/coleccion.html#buscados" class="btn btn--cyan" style="font-size:0.78rem;padding:0.55em 1.2em;">
-            <span>Buscar pieza</span>
-          </a>
+          <a href="/prueba-museo/coleccion.html#buscados" class="btn btn--cyan" style="font-size:0.74rem;padding:0.48em 1em;"><span>Buscar pieza</span></a>
         </div>
         <button class="nav__hamburger" id="nav-hamburger" aria-label="Abrir menú" aria-expanded="false">
           <span></span><span></span><span></span>
@@ -850,57 +635,56 @@
     </div>
     <div class="nav__mobile" id="nav-mobile">
       <ul role="list" style="display:flex;flex-direction:column;align-items:center;gap:2rem;text-align:center;">
-        <li><a href="/prueba-museo/exploracion.html" class="nav__link" style="font-size:1.6rem">Exploración</a></li>
-        <li><a href="/prueba-museo/coleccion.html"   class="nav__link" style="font-size:1.6rem">Colección</a></li>
-        <li><a href="/prueba-museo/aula.html"        class="nav__link" style="font-size:1.6rem">Aula Virtual</a></li>
-        <li><a href="/prueba-museo/actualidad.html"  class="nav__link" style="font-size:1.6rem">Actualidad</a></li>
+        <li><a href="/prueba-museo/exploracion.html" class="nav__link" style="font-size:1.5rem">Exploración</a></li>
+        <li><a href="/prueba-museo/coleccion.html"   class="nav__link" style="font-size:1.5rem">Colección</a></li>
+        <li><a href="/prueba-museo/aula.html"        class="nav__link" style="font-size:1.5rem">Aula Virtual</a></li>
+        <li><a href="/prueba-museo/actualidad.html"  class="nav__link" style="font-size:1.5rem">Actualidad</a></li>
       </ul>
     </div>
   </header>
 
-  <!-- ══════════════════════════════════════
-       TOPBAR
-  ══════════════════════════════════════ -->
+  <!-- TOPBAR -->
   <div class="expl-topbar" role="toolbar" aria-label="Controles del visualizador">
     <div class="view-toggle" role="group" aria-label="Cambiar vista">
       <button class="view-toggle__btn is-active" data-view-btn="anatomia">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
         Anatómica
       </button>
       <button class="view-toggle__btn" data-view-btn="patologia">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg>
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg>
         Patológica
       </button>
     </div>
 
     <div id="active-filters-bar" aria-live="polite"></div>
 
-    <span class="results-badge">
-      <strong id="results-count">—</strong>&nbsp;piezas
-    </span>
+    <button id="topbar-clear-mob" onclick="clearAllFilters()" aria-label="Limpiar filtros">
+      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      Limpiar
+    </button>
+
+    <span class="results-badge"><strong id="results-count">—</strong>&nbsp;piezas</span>
 
     <div class="topbar-search">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-      </svg>
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
       <input type="search" id="search-input" placeholder="Buscar pieza, yacimiento…" aria-label="Buscar" autocomplete="off" />
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════
-       3 COLUMNAS
-  ══════════════════════════════════════ -->
+  <!-- 3 COLUMNAS -->
   <div class="expl-layout">
 
-    <!-- ── FILTROS ── -->
+    <!-- FILTROS -->
     <aside class="expl-filters" id="filters-panel" aria-label="Filtros">
-      <button class="panel-close" data-close-panel aria-label="Cerrar filtros">×</button>
+      <button class="panel-close" data-close-panel aria-label="Cerrar filtros">✕</button>
+
+      <div id="sidebar-active-chips" aria-live="polite"></div>
 
       <div class="filter-section" id="mob-search-wrap" style="display:none">
         <p class="filter-section__title">Buscar</p>
-        <div class="topbar-search" style="width:100%;box-sizing:border-box;">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-          <input type="search" id="search-input-mob" placeholder="Pieza, yacimiento…" autocomplete="off" style="width:100%;" />
+        <div class="topbar-search" style="width:100%;">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input type="search" id="search-input-mob" placeholder="Pieza, yacimiento…" autocomplete="off" style="width:100%;"/>
         </div>
       </div>
 
@@ -944,7 +728,7 @@
       </div>
     </aside>
 
-    <!-- ── CENTRO ── -->
+    <!-- CENTRO -->
     <main class="expl-center" aria-label="Visualizador central">
 
       <!-- Vista A: Esqueleto -->
@@ -953,7 +737,6 @@
         <div class="skeleton-svg-wrap">
           <svg viewBox="0 0 280 620" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Esqueleto humano interactivo">
             <title>Esqueleto humano interactivo</title>
-
             <g class="skel-region" data-region="craneo" role="button" tabindex="0" aria-label="Cráneo">
               <ellipse cx="140" cy="58" rx="52" ry="50" fill="#D4C9A8" stroke="#2A1F0E" stroke-width="1.5"/>
               <ellipse cx="119" cy="63" rx="14" ry="11" fill="#1A1210"/>
@@ -965,7 +748,6 @@
               <line x1="152" y1="100" x2="152" y2="108" stroke="#2A1F0E" stroke-width=".8"/>
               <path d="M112 108 Q140 128 168 108" fill="#D4C9A8" stroke="#2A1F0E" stroke-width="1.5"/>
             </g>
-
             <g class="skel-region" data-region="columna" role="button" tabindex="0" aria-label="Columna vertebral">
               <rect x="130" y="136" width="20" height="11" rx="2" fill="#D4C9A8" stroke="#2A1F0E" stroke-width="1.5"/>
               <rect x="130" y="151" width="20" height="11" rx="2" fill="#D4C9A8" stroke="#2A1F0E" stroke-width="1.5"/>
@@ -974,7 +756,6 @@
               <rect x="128" y="197" width="24" height="12" rx="2" fill="#D4C9A8" stroke="#2A1F0E" stroke-width="1.5"/>
               <rect x="128" y="213" width="24" height="12" rx="2" fill="#D4C9A8" stroke="#2A1F0E" stroke-width="1.5"/>
             </g>
-
             <g class="skel-region" data-region="torax" role="button" tabindex="0" aria-label="Tórax">
               <rect x="132" y="138" width="16" height="88" rx="3" fill="#C8BC95" stroke="#2A1F0E" stroke-width="1.2" opacity=".5"/>
               <path d="M130 148 Q95 155 88 172" stroke="#D4C9A8" stroke-width="3" fill="none" stroke-linecap="round"/>
@@ -990,7 +771,6 @@
               <path d="M140 133 Q118 128 100 132" stroke="#D4C9A8" stroke-width="3.5" fill="none" stroke-linecap="round"/>
               <path d="M140 133 Q162 128 180 132" stroke="#D4C9A8" stroke-width="3.5" fill="none" stroke-linecap="round"/>
             </g>
-
             <g class="skel-region" data-region="miembro-superior" role="button" tabindex="0" aria-label="Miembros superiores">
               <path d="M100 134 Q80 142 76 166 Q80 175 100 170 Z" fill="#D4C9A8" stroke="#2A1F0E" stroke-width="1.2" opacity=".8"/>
               <path d="M180 134 Q200 142 204 166 Q200 175 180 170 Z" fill="#D4C9A8" stroke="#2A1F0E" stroke-width="1.2" opacity=".8"/>
@@ -1003,14 +783,12 @@
               <path d="M212 198 Q208 222 206 250" stroke="#D4C9A8" stroke-width="4" stroke-linecap="round" fill="none"/>
               <ellipse cx="217" cy="258" rx="12" ry="8" fill="#D4C9A8" stroke="#2A1F0E" stroke-width="1.2"/>
             </g>
-
             <g class="skel-region" data-region="pelvis" role="button" tabindex="0" aria-label="Pelvis">
               <path d="M108 235 Q72 244 70 268 Q72 286 140 290 Q208 286 210 268 Q208 244 172 235 Z" fill="#D4C9A8" stroke="#2A1F0E" stroke-width="1.5"/>
               <ellipse cx="140" cy="265" rx="18" ry="15" fill="#2A1F0E" opacity=".12"/>
               <circle cx="103" cy="289" r="8" fill="#D4C9A8" stroke="#2A1F0E" stroke-width="1.5"/>
               <circle cx="177" cy="289" r="8" fill="#D4C9A8" stroke="#2A1F0E" stroke-width="1.5"/>
             </g>
-
             <g class="skel-region" data-region="miembro-inferior" role="button" tabindex="0" aria-label="Miembros inferiores">
               <path d="M103 297 Q90 330 88 370" stroke="#D4C9A8" stroke-width="9" stroke-linecap="round" fill="none"/>
               <path d="M177 297 Q190 330 192 370" stroke="#D4C9A8" stroke-width="9" stroke-linecap="round" fill="none"/>
@@ -1023,7 +801,6 @@
               <ellipse cx="88"  cy="472" rx="16" ry="8" fill="#D4C9A8" stroke="#2A1F0E" stroke-width="1.2"/>
               <ellipse cx="192" cy="472" rx="16" ry="8" fill="#D4C9A8" stroke="#2A1F0E" stroke-width="1.2"/>
             </g>
-
             <text x="200" y="55"  class="skel-label">Cráneo</text>
             <text x="200" y="165" class="skel-label">Tórax</text>
             <text x="200" y="200" class="skel-label">Columna</text>
@@ -1032,249 +809,238 @@
             <text x="4"   y="425" class="skel-label">M. inf.</text>
           </svg>
         </div>
-        <p class="view-hint" style="opacity:.4;font-size:.6rem">También puedes usar el panel lateral</p>
+        <p class="view-hint" style="opacity:.3;font-size:.58rem">También puedes usar el panel lateral</p>
       </div>
 
-      <!-- Vista B: Grid patologías + slider de info -->
+      <!-- Vista B: Grid 4×2 + paneles inyectados entre filas -->
       <div class="view-pane" id="view-pathology" aria-label="Vista patológica">
-        <p class="view-hint">Selecciona una categoría para filtrar y conocer más</p>
+        <p class="view-hint">Selecciona una patología para ver su descripción</p>
         <div id="patology-grid" role="list" aria-label="Categorías patológicas"></div>
-
-        <!-- Galería de textos: placeholder o slider -->
-        <div class="patology-info-gallery" id="patology-info-gallery" aria-live="polite">
-
-          <!-- Estado vacío (visible por defecto) -->
-          <div class="pat-gallery-empty" id="pat-gallery-empty">
-            <div class="pat-gallery-empty__icon">🦴🔍</div>
-            <p class="pat-gallery-empty__text">Selecciona una patología para ver su descripción</p>
-          </div>
-
-          <!-- Slider (oculto hasta que haya selección) -->
-          <div class="pat-slider-wrap" id="pat-slider-wrap" aria-label="Información de patología seleccionada">
-            <!-- Track deslizante (se construye por JS) -->
-            <div class="pat-slider-track-wrap">
-              <div class="pat-slider-track" id="pat-slider-track"></div>
-            </div>
-            <!-- Barra de navegación -->
-            <div class="pat-slider-nav">
-              <button class="pat-slider-arrow" id="pat-arrow-prev" aria-label="Anterior" disabled>&#8592;</button>
-              <span class="pat-slider-counter" id="pat-slider-counter">
-                <strong>1</strong> / <span id="pat-slider-total">1</span>
-              </span>
-              <button class="pat-slider-arrow" id="pat-arrow-next" aria-label="Siguiente">&#8594;</button>
-            </div>
-          </div>
-
-        </div>
+        <!--
+          Los paneles #row-panel-1 y #row-panel-2
+          se insertan y eliminan aquí por JS.
+        -->
       </div>
 
     </main>
 
-    <!-- ── RESULTADOS ── -->
+    <!-- RESULTADOS -->
     <aside class="expl-results" id="results-panel" aria-label="Resultados">
-      <button class="panel-close" data-close-panel aria-label="Cerrar resultados">×</button>
+      <button class="panel-close" data-close-panel aria-label="Cerrar resultados">✕</button>
       <div class="results-header">
         <h2 class="results-header__title">Resultados</h2>
         <span class="results-header__count" id="results-count-side"></span>
       </div>
       <div id="results-list" aria-live="polite"></div>
     </aside>
-
   </div>
 
-  <!-- FABs mobile -->
+  <!-- FABs -->
   <div class="mob-fab-bar">
     <button class="mob-fab mob-fab--filters" id="mob-btn-filters" aria-label="Abrir filtros">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/></svg>
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/></svg>
       Filtros
     </button>
     <button class="mob-fab mob-fab--results" id="mob-btn-results" aria-label="Ver resultados">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
       Resultados
     </button>
   </div>
   <div class="panel-overlay" id="panel-overlay" aria-hidden="true"></div>
   <div class="svg-tooltip" id="svg-tooltip" aria-hidden="true"></div>
 
-  <!-- ══════════════════════════════════════
-       DATA — patologías con sus textos
-  ══════════════════════════════════════ -->
+  <!-- DATA -->
   <script>
-    const PATOLOGIA_INFO = {
-      trauma: {
-        key: 'trauma',
-        icon: '🦴',
-        name: 'Traumatismos',
-        count: '4 piezas',
-        color: '#FF4D6D',
-        eyebrow: 'Categoría · Traumatismos',
-        title: 'Huellas de violencia, accidente y cirugía en el registro óseo',
-        body: 'Después del desgaste degenerativo, los traumatismos representan la condición patológica más prevalente en el registro paleopatológico. Esta categoría comprende cualquier evento extrínseco que altere la continuidad o morfología ósea. El análisis de traumatismos permite identificar comportamientos culturales y riesgos ambientales, pudiendo diferenciar entre accidentes, actos de violencia o intervenciones quirúrgicas.'
-      },
-      infecciosa: {
-        key: 'infecciosa',
-        icon: '🦠',
-        name: 'Infecciones',
-        count: '4 piezas',
-        color: '#00E5FF',
-        eyebrow: 'Categoría · Enfermedades infecciosas',
-        title: 'Cuando el esqueleto documenta la batalla contra el patógeno',
-        body: 'Las infecciones representaban históricamente la principal amenaza para la supervivencia humana, afectando a casi la mitad de la población antes de alcanzar la madurez. Se manifiestan como procesos inflamatorios crónicos derivados de la introducción de bacterias, virus o parásitos en el tejido esquelético. Las lesiones visibles testimonian una respuesta inmune: cada hueso infectado documenta la evolución de la patogenicidad y la resiliencia biológica.'
-      },
-      especifica: {
-        key: 'especifica',
-        icon: '🔬',
-        name: 'Enfermedades específicas',
-        count: '—',
-        color: '#AA00FF',
-        eyebrow: 'Categoría · Tuberculosis · Lepra · Treponematosis',
-        title: 'Granulomas, focos destructivos y patrones diagnósticos distintivos',
-        body: 'Procesos granulomatosos con patrones de diagnóstico característicos, centrados en la tuberculosis, la lepra y las treponematosis (sífilis y yaws). Estas afecciones alteran el tejido óseo mediante focos destructivos o blásticos reconocibles, como la caries sicca craneal o el colapso vertebral. Su identificación paleopatológica permite reconstruir la distribución geográfica e histórica de estas enfermedades y su relación con las condiciones socioeconómicas de cada población.'
-      },
-      metabolica: {
-        key: 'metabolica',
-        icon: '🧬',
-        name: 'Deficiencias y nutrición',
-        count: '2 piezas',
-        color: '#C6E800',
-        eyebrow: 'Categoría · Escorbuto · Raquitismo · Osteomalacia',
-        title: 'Dieta, mineralización y estrés biológico inscritos en el hueso',
-        body: 'Trastornos sistémicos derivados de dietas inadecuadas o procesos metabólicos defectuosos que alteran la mineralización ósea. Incluye el escorbuto por déficit de vitamina C, caracterizado por hemorragias subperiósticas, y el raquitismo u osteomalacia por falta de vitamina D, que produce deformaciones plásticas. Estos restos son indicadores cruciales de estrés biológico y de ecología dietética en poblaciones pasadas.'
-      },
-      endocrino: {
-        key: 'endocrino',
-        icon: '⚗️',
-        name: 'Trastornos endocrinos',
-        count: '—',
-        color: '#FFB300',
-        eyebrow: 'Categoría · Sistema endocrino',
-        title: 'Alteraciones hormonales reflejadas en la morfología esquelética',
-        body: 'Los trastornos endocrinos producen alteraciones reconocibles en el crecimiento y la remodelación ósea. Condiciones como el hipotiroidismo, el gigantismo hipofisario o la acromegalia dejan evidencias morfológicas características: modificaciones en la densidad trabecular, cambios en las proporciones esqueléticas o alteraciones en los patrones de crecimiento. Su análisis aporta información sobre la función hormonal en poblaciones históricas.'
-      },
-      tumor: {
-        key: 'tumor',
-        icon: '🔴',
-        name: 'Tumores y quistes',
-        count: '—',
-        color: '#FF6D00',
-        eyebrow: 'Categoría · Neoplasias óseas',
-        title: 'Neoplasias benignas y malignas en el registro paleopatológico',
-        body: 'Las neoplasias óseas —tanto primarias como metastásicas— dejan huellas diagnósticas reconocibles: lesiones líticas o blásticas con bordes bien o mal definidos, reacción periostal y remodelación cortical. Su identificación en restos arqueológicos es infrecuente pero de gran valor, ya que permite explorar la prevalencia del cáncer en poblaciones sin exposición a los factores de riesgo modernos.'
-      },
-      degenerativa: {
-        key: 'degenerativa',
-        icon: '🦷',
-        name: 'Enfermedades articulares',
-        count: '2 piezas',
-        color: '#C8AA78',
-        eyebrow: 'Categoría · Artrosis · Artritis',
-        title: 'Desgaste, uso y envejecimiento articular en el esqueleto',
-        body: 'Las enfermedades articulares, encabezadas por la osteoartrosis, constituyen el conjunto paleopatológico más frecuente en el registro arqueológico. Se manifiestan como remodelación de superficies articulares, formación de osteofitos, eburnación y porosidad subcondral. Su distribución y patrón aportan información directa sobre los patrones de actividad física, la división del trabajo y el envejecimiento de las poblaciones estudiadas.'
-      },
-      congenita: {
-        key: 'congenita',
-        icon: '🧩',
-        name: 'Anomalías del desarrollo',
-        count: '2 piezas',
-        color: '#FF6EB4',
-        eyebrow: 'Categoría · Anomalías congénitas y del desarrollo',
-        title: 'Variaciones morfológicas y malformaciones de origen genético o prenatal',
-        body: 'Las anomalías del desarrollo engloban un amplio espectro de variaciones esqueléticas con origen genético, epigenético o en alteraciones del desarrollo fetal. Incluyen desde variantes menores sin impacto funcional hasta malformaciones graves que condicionaron la supervivencia del individuo. Su estudio es relevante para comprender la diversidad morfológica poblacional, la consanguinidad y los determinantes genéticos de la salud en el pasado.'
-      }
-    };
+    /*
+     * 8 patologías en array ordenado para el grid 4×2:
+     * Fila 1 (índices 0-3): trauma, infecciosa, especifica, metabolica
+     * Fila 2 (índices 4-7): endocrino, tumor, degenerativa, congenita
+     */
+    const PATOLOGIA_INFO = [
+      { key:'trauma',      icon:'🦴', name:'Traumatismos',     count:'4 piezas', color:'#FF4D6D',
+        eyebrow:'Categoría · Traumatismos',
+        title:'Huellas de violencia, accidente y cirugía en el registro óseo',
+        body:'Después del desgaste degenerativo, los traumatismos representan la condición patológica más prevalente en el registro paleopatológico. Esta categoría comprende cualquier evento extrínseco que altere la continuidad o morfología ósea. El análisis de traumatismos permite identificar comportamientos culturales y riesgos ambientales, pudiendo diferenciar entre accidentes, actos de violencia o intervenciones quirúrgicas.' },
+      { key:'infecciosa',  icon:'🦠', name:'Infecciones',       count:'4 piezas', color:'#00B8CC',
+        eyebrow:'Categoría · Enfermedades infecciosas',
+        title:'Cuando el esqueleto documenta la batalla contra el patógeno',
+        body:'Las infecciones representaban históricamente la principal amenaza para la supervivencia humana, afectando a casi la mitad de la población antes de alcanzar la madurez. Se manifiestan como procesos inflamatorios crónicos derivados de la introducción de bacterias, virus o parásitos en el tejido esquelético. Las lesiones visibles testimonian una respuesta inmune: cada hueso infectado documenta la evolución de la patogenicidad y la resiliencia biológica.' },
+      { key:'especifica',  icon:'🔬', name:'Enf. específicas',  count:'—',        color:'#7B00CC',
+        eyebrow:'Categoría · Tuberculosis · Lepra · Treponematosis',
+        title:'Granulomas, focos destructivos y patrones diagnósticos distintivos',
+        body:'Procesos granulomatosos con patrones de diagnóstico característicos, centrados en la tuberculosis, la lepra y las treponematosis (sífilis y yaws). Estas afecciones alteran el tejido óseo mediante focos destructivos o blásticos reconocibles, como la caries sicca craneal o el colapso vertebral. Su identificación paleopatológica permite reconstruir la distribución geográfica e histórica de estas enfermedades.' },
+      { key:'metabolica',  icon:'🧬', name:'Deficiencias',      count:'2 piezas', color:'#8FA800',
+        eyebrow:'Categoría · Escorbuto · Raquitismo · Osteomalacia',
+        title:'Dieta, mineralización y estrés biológico inscritos en el hueso',
+        body:'Trastornos sistémicos derivados de dietas inadecuadas o procesos metabólicos defectuosos que alteran la mineralización ósea. Incluye el escorbuto por déficit de vitamina C, caracterizado por hemorragias subperiósticas, y el raquitismo u osteomalacia por falta de vitamina D, que produce deformaciones plásticas. Estos restos son indicadores cruciales de estrés biológico y de ecología dietética en poblaciones pasadas.' },
+      { key:'endocrino',   icon:'⚗️', name:'T. endocrinos',    count:'—',        color:'#C87800',
+        eyebrow:'Categoría · Sistema endocrino',
+        title:'Alteraciones hormonales reflejadas en la morfología esquelética',
+        body:'Los trastornos endocrinos producen alteraciones reconocibles en el crecimiento y la remodelación ósea. Condiciones como el hipotiroidismo, el gigantismo hipofisario o la acromegalia dejan evidencias morfológicas características: modificaciones en la densidad trabecular, cambios en las proporciones esqueléticas o alteraciones en los patrones de crecimiento. Su análisis aporta información sobre la función hormonal en poblaciones históricas.' },
+      { key:'tumor',       icon:'🔴', name:'Tumores y quistes', count:'—',        color:'#CC4400',
+        eyebrow:'Categoría · Neoplasias óseas',
+        title:'Neoplasias benignas y malignas en el registro paleopatológico',
+        body:'Las neoplasias óseas —tanto primarias como metastásicas— dejan huellas diagnósticas reconocibles: lesiones líticas o blásticas con bordes bien o mal definidos, reacción periostal y remodelación cortical. Su identificación en restos arqueológicos es infrecuente pero de gran valor, ya que permite explorar la prevalencia del cáncer en poblaciones sin exposición a los factores de riesgo modernos.' },
+      { key:'degenerativa',icon:'🦷', name:'Enf. articulares',  count:'2 piezas', color:'#8A6800',
+        eyebrow:'Categoría · Artrosis · Artritis',
+        title:'Desgaste, uso y envejecimiento articular en el esqueleto',
+        body:'Las enfermedades articulares, encabezadas por la osteoartrosis, constituyen el conjunto paleopatológico más frecuente en el registro arqueológico. Se manifiestan como remodelación de superficies articulares, formación de osteofitos, eburnación y porosidad subcondral. Su distribución y patrón aportan información directa sobre los patrones de actividad física, la división del trabajo y el envejecimiento de las poblaciones estudiadas.' },
+      { key:'congenita',   icon:'🧩', name:'An. desarrollo',    count:'2 piezas', color:'#AA0060',
+        eyebrow:'Categoría · Anomalías congénitas y del desarrollo',
+        title:'Variaciones morfológicas y malformaciones de origen genético o prenatal',
+        body:'Las anomalías del desarrollo engloban un amplio espectro de variaciones esqueléticas con origen genético, epigenético o en alteraciones del desarrollo fetal. Incluyen desde variantes menores sin impacto funcional hasta malformaciones graves que condicionaron la supervivencia del individuo. Su estudio es relevante para comprender la diversidad morfológica poblacional y los determinantes genéticos de la salud en el pasado.' }
+    ];
   </script>
 
-  <!-- Data y visualizador externos -->
   <script src="/prueba-museo/js/data.js"></script>
   <script src="/prueba-museo/js/visualizador.js"></script>
 
   <script>
-    /* ════════════════════════════════════════════════
-       SLIDER NEOBRUTALIST CON GSAP
-       Gestiona: estado vacío, slides, flechas, counter
-    ════════════════════════════════════════════════ */
+    /* ══════════════════════════════════════════════════
+       ROW-INJECTION PANEL SYSTEM
+       Fila 1 → índices 0-3  → panel #row-panel-1
+       Fila 2 → índices 4-7  → panel #row-panel-2
+       Ambos paneles pueden estar abiertos simultáneamente.
+    ══════════════════════════════════════════════════ */
 
-    // Las claves activas en orden de selección
-    let activeSlides = [];   // array de keys seleccionadas (orden cronológico)
-    let currentSlide = 0;    // índice del slide visible
+    const rowState = {
+      1: { keys: [], current: 0 },
+      2: { keys: [], current: 0 }
+    };
 
-    const sliderWrap   = document.getElementById('pat-slider-wrap');
-    const sliderTrack  = document.getElementById('pat-slider-track');
-    const emptyState   = document.getElementById('pat-gallery-empty');
-    const arrowPrev    = document.getElementById('pat-arrow-prev');
-    const arrowNext    = document.getElementById('pat-arrow-next');
-    const counterEl    = document.getElementById('pat-slider-counter');
-    const totalEl      = document.getElementById('pat-slider-total');
+    function getRowForIndex(idx) { return idx < 4 ? 1 : 2; }
 
-    function buildSlides() {
-      // Reconstruir el track con los slides activos
-      sliderTrack.innerHTML = '';
-      sliderTrack.style.width = (activeSlides.length * 100) + '%';
+    function updateRowPanel(row) {
+      const rs      = rowState[row];
+      const panelId = `row-panel-${row}`;
+      const vp      = document.getElementById('view-pathology');
+      let   panel   = document.getElementById(panelId);
 
-      activeSlides.forEach(key => {
-        const info = PATOLOGIA_INFO[key];
-        const slide = document.createElement('div');
-        slide.className = 'pat-slide';
-        slide.style.setProperty('--pat-accent', info.color);
-        slide.innerHTML = `
-          <p class="pat-slide__eyebrow">${info.eyebrow}</p>
-          <h3 class="pat-slide__title">${info.title}</h3>
-          <p class="pat-slide__body">${info.body}</p>
-        `;
-        sliderTrack.appendChild(slide);
-      });
+      if (rs.keys.length === 0) {
+        if (panel) panel.remove();
+        return;
+      }
+
+      const firstInfo  = PATOLOGIA_INFO.find(p => p.key === rs.keys[0]);
+      const accentColor = firstInfo?.color || 'var(--cyan)';
+      const showNav     = rs.keys.length > 1;
+
+      // Construir o regenerar panel
+      if (!panel) {
+        panel = document.createElement('div');
+        panel.className = 'row-panel';
+        panel.id        = panelId;
+
+        const grid   = document.getElementById('patology-grid');
+        const panel1 = document.getElementById('row-panel-1');
+
+        if (row === 1) {
+          grid.insertAdjacentElement('afterend', panel);
+        } else {
+          (panel1 || grid).insertAdjacentElement('afterend', panel);
+        }
+      }
+
+      rs.current = Math.min(rs.current, rs.keys.length - 1);
+
+      panel.innerHTML = `
+        <div class="row-panel__accent-bar" style="background:${accentColor}"></div>
+        <button class="row-panel__close" aria-label="Cerrar panel">✕</button>
+        <div class="row-panel__slider-wrap">
+          <div class="row-panel__track" id="rp-track-${row}" style="width:${rs.keys.length * 100}%">
+            ${rs.keys.map(key => {
+              const info = PATOLOGIA_INFO.find(p => p.key === key);
+              return `<div class="row-panel__slide" style="--rp-accent:${info.color}">
+                        <p class="row-slide__eyebrow">${info.eyebrow}</p>
+                        <h3 class="row-slide__title">${info.title}</h3>
+                        <p class="row-slide__body">${info.body}</p>
+                      </div>`;
+            }).join('')}
+          </div>
+        </div>
+        ${showNav ? `<div class="row-panel__nav">
+          <button class="row-panel__arrow" id="rp-prev-${row}" aria-label="Anterior">&#8592;</button>
+          <span class="row-panel__counter" id="rp-counter-${row}"><strong>${rs.current+1}</strong> / ${rs.keys.length}</span>
+          <button class="row-panel__arrow" id="rp-next-${row}" aria-label="Siguiente">&#8594;</button>
+        </div>` : ''}
+      `;
+
+      // Posición inicial sin animación
+      applyRowSlide(row, rs.current, false);
+
+      // Botón cerrar
+      panel.querySelector('.row-panel__close').addEventListener('click', () => closeRowPanel(row));
+
+      // Flechas
+      if (showNav) {
+        updateRowArrows(row);
+        document.getElementById(`rp-prev-${row}`)?.addEventListener('click', () => goRowSlide(row, rs.current - 1));
+        document.getElementById(`rp-next-${row}`)?.addEventListener('click', () => goRowSlide(row, rs.current + 1));
+      }
+
+      // Auto-scroll al panel
+      setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'center' }), 55);
     }
 
-    function goToSlide(index, animate = true) {
-      if (index < 0 || index >= activeSlides.length) return;
-      currentSlide = index;
-
-      const pct = -(index * (100 / activeSlides.length));
+    function applyRowSlide(row, idx, animate = true) {
+      const track = document.getElementById(`rp-track-${row}`);
+      if (!track) return;
+      const total = rowState[row].keys.length;
+      const pct   = -(idx * (100 / total));
 
       if (animate && typeof gsap !== 'undefined') {
-        gsap.to(sliderTrack, {
-          xPercent: pct,
-          duration: 0.38,
-          ease: 'power3.inOut'
-        });
+        gsap.to(track, { xPercent: pct, duration: 0.3, ease: 'power3.inOut' });
       } else {
-        sliderTrack.style.transform = `translateX(${pct}%)`;
+        if (typeof gsap !== 'undefined' && gsap.set) gsap.set(track, { xPercent: pct });
+        else track.style.transform = `translateX(${pct}%)`;
       }
 
-      // Actualizar counter
-      counterEl.innerHTML = `<strong>${index + 1}</strong> / <span id="pat-slider-total">${activeSlides.length}</span>`;
+      const counter = document.getElementById(`rp-counter-${row}`);
+      if (counter) counter.innerHTML = `<strong>${idx+1}</strong> / ${total}`;
 
-      // Actualizar flechas (hide en extremos, no loop)
-      arrowPrev.disabled = index === 0;
-      arrowNext.disabled = index === activeSlides.length - 1;
+      updateRowArrows(row);
     }
 
-    function updateGallery() {
-      if (activeSlides.length === 0) {
-        // Mostrar estado vacío
-        emptyState.style.display = 'flex';
-        sliderWrap.classList.remove('is-visible');
-      } else {
-        // Mostrar slider
-        emptyState.style.display = 'none';
-        sliderWrap.classList.add('is-visible');
-        buildSlides();
-        goToSlide(currentSlide, false);
+    function goRowSlide(row, idx) {
+      const rs = rowState[row];
+      if (idx < 0 || idx >= rs.keys.length) return;
+      rs.current = idx;
+      applyRowSlide(row, idx, true);
+    }
+
+    function updateRowArrows(row) {
+      const rs   = rowState[row];
+      const prev = document.getElementById(`rp-prev-${row}`);
+      const next = document.getElementById(`rp-next-${row}`);
+      if (prev) prev.disabled = rs.current === 0;
+      if (next) next.disabled = rs.current === rs.keys.length - 1;
+    }
+
+    function closeRowPanel(row) {
+      const start = (row - 1) * 4;
+      PATOLOGIA_INFO.slice(start, start + 4).forEach(info => {
+        document.querySelector(`[data-pat-key="${info.key}"]`)?.classList.remove('is-active');
+        document.querySelectorAll(`[data-filter="patologia"][value="${info.key}"]`).forEach(cb => cb.checked = false);
+      });
+      rowState[row] = { keys: [], current: 0 };
+
+      if (typeof state !== 'undefined') {
+        PATOLOGIA_INFO.slice(start, start + 4).forEach(info => state.filters.patologia.delete(info.key));
+        if (typeof renderResults === 'function') renderResults();
+        if (typeof updateActiveFiltersBar === 'function') updateActiveFiltersBar();
       }
+
+      updateRowPanel(row);
+      updateSidebarChips();
     }
 
-    arrowPrev?.addEventListener('click', () => goToSlide(currentSlide - 1));
-    arrowNext?.addEventListener('click', () => goToSlide(currentSlide + 1));
-
-    /* ════════════════════════════════════════════════
-       RENDER GRID PATOLOGÍAS
-    ════════════════════════════════════════════════ */
+    /* ── Grid ── */
     function renderPatologyGrid() {
       const grid = document.getElementById('patology-grid');
       if (!grid) return;
       grid.innerHTML = '';
 
-      Object.values(PATOLOGIA_INFO).forEach(info => {
+      PATOLOGIA_INFO.forEach((info, idx) => {
         const card = document.createElement('div');
         card.className = 'patology-card';
         card.setAttribute('role', 'listitem');
@@ -1289,59 +1055,72 @@
           <div class="pat-card__count">${info.count}</div>
         `;
 
-        card.addEventListener('click', () => {
-          const isActive = card.classList.contains('is-active');
-
-          if (isActive) {
-            // Deseleccionar: quitar del array
-            card.classList.remove('is-active');
-            activeSlides = activeSlides.filter(k => k !== info.key);
-            // Si el slide activo era este, ajustar índice
-            currentSlide = Math.min(currentSlide, Math.max(0, activeSlides.length - 1));
-          } else {
-            // Seleccionar: añadir al array y saltar a él
-            card.classList.add('is-active');
-            activeSlides.push(info.key);
-            currentSlide = activeSlides.length - 1;
-          }
-
-          updateGallery();
-
-          // Scroll suave al panel en mobile
-          if (window.innerWidth <= 1024 && activeSlides.length > 0) {
-            setTimeout(() => {
-              document.getElementById('patology-info-gallery')
-                ?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            }, 80);
-          }
-
-          // Aplicar filtro en visualizador.js si existe
-          if (typeof state !== 'undefined') {
-            const patSet = state.filters.patologia;
-            patSet.clear();
-            activeSlides.forEach(k => patSet.add(k));
-            if (typeof renderResults === 'function') renderResults();
-            if (typeof updateActiveFiltersBar === 'function') updateActiveFiltersBar();
-            document.querySelectorAll('[data-filter="patologia"]').forEach(cb => {
-              cb.checked = patSet.has(cb.value);
-            });
-          }
-        });
-
-        card.addEventListener('keydown', e => {
-          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.click(); }
-        });
-
+        card.addEventListener('click', () => onCardClick(info, idx, card));
+        card.addEventListener('keydown', e => { if (e.key==='Enter'||e.key===' '){e.preventDefault();card.click();} });
         grid.appendChild(card);
       });
-
-      // Mostrar estado vacío al inicio
-      updateGallery();
     }
 
-    /* ════════════════════════════════════════════════
-       HAMBURGER / NAV MÓVIL
-    ════════════════════════════════════════════════ */
+    function onCardClick(info, idx, card) {
+      const row    = getRowForIndex(idx);
+      const rs     = rowState[row];
+      const active = card.classList.contains('is-active');
+
+      if (active) {
+        card.classList.remove('is-active');
+        rs.keys    = rs.keys.filter(k => k !== info.key);
+        rs.current = Math.min(rs.current, Math.max(0, rs.keys.length - 1));
+      } else {
+        card.classList.add('is-active');
+        if (!rs.keys.includes(info.key)) {
+          rs.keys.push(info.key);
+          rs.current = rs.keys.length - 1;
+        }
+      }
+
+      updateRowPanel(row);
+      updateSidebarChips();
+
+      if (typeof state !== 'undefined') {
+        state.filters.patologia.clear();
+        [...rowState[1].keys, ...rowState[2].keys].forEach(k => state.filters.patologia.add(k));
+        if (typeof renderResults === 'function') renderResults();
+        if (typeof updateActiveFiltersBar === 'function') updateActiveFiltersBar();
+        document.querySelectorAll('[data-filter="patologia"]').forEach(cb => {
+          cb.checked = state.filters.patologia.has(cb.value);
+        });
+      }
+    }
+
+    /* ── Sidebar chips (mobile) ── */
+    function updateSidebarChips() {
+      const container = document.getElementById('sidebar-active-chips');
+      if (!container) return;
+      container.innerHTML = '';
+
+      const allActive = [...rowState[1].keys, ...rowState[2].keys];
+      if (!allActive.length) return;
+
+      const title = document.createElement('p');
+      title.className   = 'filter-section__title';
+      title.textContent = 'Filtros activos';
+      container.appendChild(title);
+
+      allActive.forEach(key => {
+        const info = PATOLOGIA_INFO.find(p => p.key === key);
+        if (!info) return;
+        const chip = document.createElement('button');
+        chip.className = 'active-filter-chip';
+        chip.style.cssText = 'width:100%;justify-content:space-between;';
+        chip.innerHTML = `<span>${info.icon} ${info.name}</span><span style="opacity:.45">✕</span>`;
+        chip.addEventListener('click', () => {
+          document.querySelector(`[data-pat-key="${key}"]`)?.click();
+        });
+        container.appendChild(chip);
+      });
+    }
+
+    /* ── NAV HAMBURGER ── */
     const hamburger = document.getElementById('nav-hamburger');
     const navDrawer  = document.getElementById('nav-mobile');
     let navOpen = false;
@@ -1356,37 +1135,40 @@
       document.getElementById('site-header')?.classList.toggle('scrolled', window.scrollY > 40);
     }, { passive: true });
 
-    /* ════════════════════════════════════════════════
-       DRAWERS MÓVILES
-       z-index: drawers=1000 > overlay=200
-       El overlay SIEMPRE está en el DOM (pointer-events:none cuando cerrado)
-    ════════════════════════════════════════════════ */
+    /* ── DRAWERS ── */
     const fPanel  = document.getElementById('filters-panel');
     const rPanel  = document.getElementById('results-panel');
     const overlay = document.getElementById('panel-overlay');
 
     function openDrawer(panel) {
-      // Asegurar que los demás estén cerrados
       [fPanel, rPanel].forEach(p => { if (p !== panel) p.classList.remove('is-open'); });
-      // Mostrar overlay primero (transición CSS lo anima)
       overlay.classList.add('is-visible');
-      // Slide del panel
       panel.classList.add('is-open');
-      // Buscador en drawer de filtros
-      const mobSearch = document.getElementById('mob-search-wrap');
-      if (mobSearch) mobSearch.style.display = panel === fPanel ? 'block' : 'none';
+      document.body.style.overflow = 'hidden';
+      const ms = document.getElementById('mob-search-wrap');
+      if (ms) ms.style.display = panel === fPanel ? 'block' : 'none';
     }
 
     function closeDrawers() {
       fPanel.classList.remove('is-open');
       rPanel.classList.remove('is-open');
       overlay.classList.remove('is-visible');
+      document.body.style.overflow = '';
     }
 
     document.getElementById('mob-btn-filters')?.addEventListener('click', () => openDrawer(fPanel));
     document.getElementById('mob-btn-results')?.addEventListener('click', () => openDrawer(rPanel));
     overlay.addEventListener('click', closeDrawers);
     document.querySelectorAll('[data-close-panel]').forEach(b => b.addEventListener('click', closeDrawers));
+
+    /* ── Badge: sin "piezas piezas" ── */
+    const countEl = document.getElementById('results-count');
+    if (countEl) {
+      new MutationObserver(() => {
+        const s = document.getElementById('results-count-side');
+        if (s) s.textContent = countEl.textContent;
+      }).observe(countEl, { childList: true, subtree: true, characterData: true });
+    }
 
     /* ── Sync search ── */
     const sTop = document.getElementById('search-input');
@@ -1401,37 +1183,21 @@
       }
     });
 
-    /* ── Sync side count ── */
-    const countEl = document.getElementById('results-count');
-    if (countEl) {
-      new MutationObserver(() => {
-        const s = document.getElementById('results-count-side');
-        if (s) s.textContent = countEl.textContent + ' piezas';
-      }).observe(countEl, { childList: true, subtree: true, characterData: true });
-    }
-
     /* ── Keyboard skeleton ── */
     document.querySelectorAll('[data-region]').forEach(el => {
-      el.addEventListener('keydown', e => {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); el.click(); }
-      });
+      el.addEventListener('keydown', e => { if (e.key==='Enter'||e.key===' '){e.preventDefault();el.click();} });
     });
 
-    /* ════════════════════════════════════════════════
-       INIT
-    ════════════════════════════════════════════════ */
-    document.addEventListener('DOMContentLoaded', () => {
-      renderPatologyGrid();
-    });
+    /* ── INIT ── */
+    document.addEventListener('DOMContentLoaded', () => { renderPatologyGrid(); });
 
-    /* ── GSAP entrance (solo desktop) ── */
     window.addEventListener('load', () => {
       if (typeof gsap === 'undefined') return;
-      gsap.from('.expl-topbar', { y: -16, opacity: 0, duration: .4, ease: 'power3.out' });
-      gsap.from('.expl-center', { opacity: 0, duration: .45, ease: 'power2.out', delay: .1 });
-      if (window.innerWidth > 1024) {
-        gsap.from('.expl-filters', { x: -20, opacity: 0, duration: .45, ease: 'power3.out', delay: .1 });
-        gsap.from('.expl-results', { x: 20,  opacity: 0, duration: .45, ease: 'power3.out', delay: .1 });
+      gsap.from('.expl-topbar', { y:-12, opacity:0, duration:.36, ease:'power3.out' });
+      gsap.from('.expl-center', { opacity:0, duration:.4, ease:'power2.out', delay:.08 });
+      if (window.innerWidth > 1150) {
+        gsap.from('.expl-filters', { x:-16, opacity:0, duration:.4, ease:'power3.out', delay:.08 });
+        gsap.from('.expl-results', { x:16,  opacity:0, duration:.4, ease:'power3.out', delay:.08 });
       }
     });
   </script>
