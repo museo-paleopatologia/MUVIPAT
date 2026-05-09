@@ -13,44 +13,657 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lexend:wght@300;400;500;600;700;800&family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 
-  <!-- Global styles -->
   <link rel="stylesheet" href="/prueba-museo/css/style.css" />
-  <!-- Exploración-specific styles -->
+
   <style>
+    /* ═══════════════════════════════════════════
+       EXPLORACIÓN — estilos propios
+       Paleta: marfil/crema del sistema + acentos
+    ═══════════════════════════════════════════ */
+
+    /* Reset de overflow para que la página haga scroll completo */
     html, body {
+      overflow: auto;
+      min-height: 100%;
+      background: var(--bone-50);
+    }
+
+    /* ── Topbar ── */
+    .expl-topbar {
+      position: sticky;
+      top: var(--nav-h, 64px);
+      z-index: 90;
+      background: var(--ivory);
+      border-bottom: var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.55rem 1.25rem;
+      flex-wrap: wrap;
+    }
+
+    .view-toggle {
+      display: flex;
+      border: var(--border);
+      border-radius: var(--card-radius);
       overflow: hidden;
-      height: 100%;
-      background: #0d0d0d;
+      flex-shrink: 0;
     }
+    .view-toggle__btn {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.45em 1em;
+      font-family: var(--font-ui);
+      font-size: 0.78rem;
+      font-weight: 600;
+      background: var(--bone-100);
+      color: var(--dark-2);
+      border: none;
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s;
+      white-space: nowrap;
+    }
+    .view-toggle__btn + .view-toggle__btn {
+      border-left: var(--border);
+    }
+    .view-toggle__btn.is-active {
+      background: var(--dark);
+      color: var(--ivory);
+    }
+
+    #active-filters-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      flex: 1;
+      min-width: 0;
+    }
+    .filter-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.25em 0.7em;
+      background: var(--cyan);
+      color: var(--dark);
+      font-family: var(--font-ui);
+      font-size: 0.7rem;
+      font-weight: 700;
+      border: 2px solid var(--dark);
+      border-radius: 2px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .filter-chip:hover { background: var(--cyan-dark); }
+    .filter-chip svg { flex-shrink: 0; }
+
+    .results-badge {
+      font-family: var(--font-ui);
+      font-size: 0.75rem;
+      color: var(--mid);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .results-badge strong { color: var(--dark); }
+
+    .topbar-search {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--bone-100);
+      border: var(--border);
+      border-radius: var(--card-radius);
+      padding: 0.3em 0.8em;
+      flex-shrink: 0;
+      margin-left: auto;
+    }
+    .topbar-search svg { color: var(--mid); flex-shrink: 0; }
+    .topbar-search input {
+      border: none;
+      background: transparent;
+      font-family: var(--font-ui);
+      font-size: 0.78rem;
+      color: var(--dark);
+      outline: none;
+      width: clamp(120px, 16vw, 220px);
+    }
+    .topbar-search input::placeholder { color: var(--bone-400); }
+
+    /* ── Layout 3 columnas ── */
     .expl-layout {
-      height: calc(100vh - var(--nav-h) - var(--top-h)) !important;
-      align-items: stretch !important;
-    
-    .expl-filters,
-    .expl-center,
+      display: grid;
+      grid-template-columns: 230px 1fr 300px;
+      min-height: calc(100vh - var(--nav-h, 64px) - 50px);
+      align-items: start;
+    }
+
+    /* ── Filtros (columna izquierda) ── */
+    .expl-filters {
+      background: var(--ivory);
+      border-right: var(--border);
+      padding: 1.25rem 1rem;
+      position: sticky;
+      top: calc(var(--nav-h, 64px) + 50px);
+      max-height: calc(100vh - var(--nav-h, 64px) - 50px);
+      overflow-y: auto;
+      overscroll-behavior: contain;
+    }
+    .expl-filters::-webkit-scrollbar { width: 4px; }
+    .expl-filters::-webkit-scrollbar-track { background: var(--bone-100); }
+    .expl-filters::-webkit-scrollbar-thumb { background: var(--bone-300); border-radius: 2px; }
+
+    .panel-close {
+      display: none;
+      position: absolute;
+      top: 0.75rem; right: 0.75rem;
+      background: none; border: none;
+      font-size: 1.4rem; cursor: pointer;
+      color: var(--dark); line-height: 1;
+    }
+
+    .filter-section { margin-bottom: 1.5rem; }
+    .filter-section__title {
+      font-family: var(--font-head);
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin: 0 0 0.6rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1.5px solid var(--bone-200);
+    }
+    .filter-option {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      margin-bottom: 0.35rem;
+    }
+    .filter-option input[type="checkbox"] { display: none; }
+    .filter-option__label {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-family: var(--font-ui);
+      font-size: 0.78rem;
+      color: var(--dark-2);
+      width: 100%;
+      padding: 0.3em 0.5em;
+      border-radius: 2px;
+      border: 1.5px solid transparent;
+      transition: background 0.15s, border-color 0.15s;
+      user-select: none;
+    }
+    .filter-option input:checked + .filter-option__label {
+      background: var(--dark);
+      color: var(--ivory);
+      border-color: var(--dark);
+    }
+    .filter-option__label:hover { background: var(--bone-100); }
+    .filter-option input:checked + .filter-option__label:hover { background: var(--dark-2); }
+
+    .filter-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--dot, var(--cyan));
+      flex-shrink: 0;
+      border: 1.5px solid rgba(0,0,0,0.2);
+    }
+    .filter-option__count {
+      margin-left: auto;
+      font-size: 0.68rem;
+      opacity: 0.5;
+      font-weight: 600;
+    }
+    .filter-clear-btn {
+      display: block;
+      width: 100%;
+      margin-top: 0.4rem;
+      padding: 0.3em;
+      font-family: var(--font-ui);
+      font-size: 0.68rem;
+      color: var(--mid);
+      background: none;
+      border: 1px dashed var(--bone-300);
+      border-radius: 2px;
+      cursor: pointer;
+      text-align: center;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .filter-clear-btn:hover { border-color: var(--dark); color: var(--dark); }
+
+    /* ── Centro ── */
+    .expl-center {
+      background: var(--bone-50);
+      border-right: var(--border);
+      padding: 1.5rem 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .view-pane { display: none; width: 100%; }
+    .view-pane.is-visible { display: flex; flex-direction: column; align-items: center; }
+
+    .view-hint {
+      font-family: var(--font-ui);
+      font-size: 0.72rem;
+      color: var(--bone-400);
+      text-align: center;
+      margin: 0 0 0.5rem;
+    }
+
+    /* Skeleton */
+    .skeleton-svg-wrap {
+      width: 100%;
+      max-width: 280px;
+    }
+    .skeleton-svg-wrap svg { width: 100%; height: auto; }
+
+    .skel-region {
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .skel-region:hover ellipse,
+    .skel-region:hover path,
+    .skel-region:hover rect { opacity: 0.75; }
+    .skel-region.is-active ellipse,
+    .skel-region.is-active path,
+    .skel-region.is-active rect,
+    .skel-region.is-active line { filter: drop-shadow(0 0 6px var(--cyan)); }
+    .skel-label {
+      font-family: var(--font-ui);
+      font-size: 9px;
+      fill: var(--mid);
+      pointer-events: none;
+    }
+
+    /* Patology grid */
+    #patology-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 0.75rem;
+      width: 100%;
+      padding: 0.25rem;
+    }
+    .patology-card {
+      background: var(--ivory);
+      border: var(--border);
+      border-radius: var(--card-radius);
+      padding: 0.85rem 0.75rem;
+      cursor: pointer;
+      text-align: center;
+      transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+    }
+    .patology-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--pat-color, var(--cyan));
+    }
+    .patology-card:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-md);
+    }
+    .patology-card.is-active {
+      background: var(--dark);
+      color: var(--ivory);
+      box-shadow: 6px 6px 0 var(--pat-color, var(--cyan));
+    }
+    .patology-card.is-active .pat-card__name,
+    .patology-card.is-active .pat-card__count { color: var(--ivory); }
+    .pat-card__icon { font-size: 1.6rem; line-height: 1; margin-bottom: 0.4rem; }
+    .pat-card__name {
+      font-family: var(--font-head);
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--dark);
+      line-height: 1.2;
+    }
+    .pat-card__count {
+      font-family: var(--font-ui);
+      font-size: 0.65rem;
+      color: var(--mid);
+      margin-top: 0.3rem;
+    }
+
+    /* ── Galería de textos emergente ── */
+    .patology-info-gallery {
+      width: 100%;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s;
+      opacity: 0;
+    }
+    .patology-info-gallery.is-open {
+      max-height: 600px;
+      opacity: 1;
+    }
+    .patology-info-panel {
+      background: var(--dark);
+      color: var(--ivory);
+      border: var(--border);
+      border-radius: var(--card-radius);
+      margin-top: 0.75rem;
+      padding: 1.5rem;
+      box-shadow: var(--shadow-md);
+      position: relative;
+    }
+    .patology-info-panel::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 1.5rem;
+      width: 60px; height: 3px;
+      background: var(--pat-accent, var(--cyan));
+    }
+    .info-panel__eyebrow {
+      font-family: var(--font-head);
+      font-size: 0.6rem;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--pat-accent, var(--cyan));
+      margin: 0.75rem 0 0.4rem;
+    }
+    .info-panel__title {
+      font-family: var(--font-display);
+      font-size: clamp(1rem, 2.5vw, 1.35rem);
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--ivory);
+      margin: 0 0 0.85rem;
+    }
+    .info-panel__body {
+      font-family: var(--font-ui);
+      font-size: 0.82rem;
+      line-height: 1.7;
+      color: var(--bone-300);
+      margin: 0;
+    }
+    .info-panel__close {
+      position: absolute;
+      top: 0.85rem; right: 0.85rem;
+      background: none;
+      border: 1.5px solid rgba(255,255,255,0.2);
+      border-radius: 2px;
+      color: var(--bone-300);
+      font-size: 0.85rem;
+      width: 28px; height: 28px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .info-panel__close:hover { border-color: var(--ivory); color: var(--ivory); }
+
+    /* ── Resultados (columna derecha) ── */
     .expl-results {
-      height: 100% !important;
-      min-height: 0 !important;
+      background: var(--ivory);
+      padding: 1.25rem 1rem;
+      position: sticky;
+      top: calc(var(--nav-h, 64px) + 50px);
+      max-height: calc(100vh - var(--nav-h, 64px) - 50px);
+      overflow-y: auto;
+      overscroll-behavior: contain;
     }
+    .expl-results::-webkit-scrollbar { width: 4px; }
+    .expl-results::-webkit-scrollbar-track { background: var(--bone-100); }
+    .expl-results::-webkit-scrollbar-thumb { background: var(--bone-300); border-radius: 2px; }
+
+    .results-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      padding-bottom: 0.6rem;
+      border-bottom: var(--border);
     }
+    .results-header__title {
+      font-family: var(--font-head);
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--dark);
+      margin: 0;
+    }
+    .results-header__count {
+      font-family: var(--font-ui);
+      font-size: 0.68rem;
+      color: var(--mid);
+    }
+
+    /* Result cards */
+    .result-card {
+      background: var(--bone-50);
+      border: var(--border);
+      border-radius: var(--card-radius);
+      padding: 0.85rem 0.9rem;
+      margin-bottom: 0.65rem;
+      transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: var(--shadow-sm);
+    }
+    .result-card:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-md);
+    }
+    .result-card__num {
+      font-family: var(--font-head);
+      font-size: 0.6rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      color: var(--mid);
+      margin-bottom: 0.25rem;
+    }
+    .result-card__title {
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin: 0 0 0.3rem;
+      line-height: 1.2;
+    }
+    .result-card__desc {
+      font-family: var(--font-ui);
+      font-size: 0.72rem;
+      color: var(--mid);
+      line-height: 1.5;
+      margin: 0 0 0.5rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .result-card__meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+      margin-bottom: 0.55rem;
+    }
+    .result-tag {
+      display: inline-block;
+      padding: 0.18em 0.55em;
+      font-family: var(--font-ui);
+      font-size: 0.6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border: 1.5px solid var(--dark);
+      border-radius: 2px;
+      background: var(--tag-bg, var(--bone-100));
+      color: var(--dark);
+    }
+    .result-card__link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-family: var(--font-ui);
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--dark);
+      text-decoration: none;
+      border-bottom: 2px solid var(--cyan);
+      padding-bottom: 0.1em;
+      transition: border-color 0.15s;
+    }
+    .result-card__link:hover { border-color: var(--dark); }
+
+    .results-empty {
+      text-align: center;
+      padding: 3rem 1rem;
+      font-family: var(--font-ui);
+      color: var(--bone-400);
+      font-size: 0.82rem;
+    }
+    .results-empty strong {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--bone-300);
+      margin-bottom: 0.5rem;
+    }
+
+    /* ── SVG Tooltip ── */
+    .svg-tooltip {
+      position: fixed;
+      background: var(--dark);
+      color: var(--ivory);
+      font-family: var(--font-ui);
+      font-size: 0.7rem;
+      padding: 0.4em 0.8em;
+      border-radius: 2px;
+      border: var(--border);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.15s;
+      z-index: 999;
+      white-space: nowrap;
+    }
+    .svg-tooltip.visible { opacity: 1; }
+
+    /* ── FABs móviles ── */
+    .mob-fab-bar {
+      display: none;
+      position: fixed;
+      bottom: 1.25rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 200;
+      gap: 0.75rem;
+    }
+    .mob-fab {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.65em 1.3em;
+      background: var(--dark);
+      color: var(--ivory);
+      font-family: var(--font-ui);
+      font-size: 0.8rem;
+      font-weight: 700;
+      border: var(--border);
+      border-radius: 100px;
+      cursor: pointer;
+      box-shadow: var(--shadow-md);
+      white-space: nowrap;
+    }
+    .mob-fab--filters { background: var(--dark); }
+    .mob-fab--results { background: var(--cyan); color: var(--dark); }
+
+    .panel-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 150;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .panel-overlay.is-visible {
+      opacity: 1;
+    }
+
+    /* ── MOBILE / TABLET ── */
     @media (max-width: 1024px) {
-      html, body { overflow: auto; height: auto; }
-    }  
+      .expl-layout {
+        grid-template-columns: 1fr;
+        min-height: unset;
+      }
+      .expl-center {
+        border-right: none;
+        border-bottom: var(--border);
+        padding: 1.25rem;
+      }
+      .expl-filters,
+      .expl-results {
+        position: fixed;
+        top: 0; bottom: 0;
+        width: min(320px, 90vw);
+        max-height: 100%;
+        z-index: 160;
+        border: none;
+        border-right: var(--border);
+        transform: translateX(-110%);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow-y: auto;
+        padding-top: 2.5rem;
+      }
+      .expl-results {
+        left: auto; right: 0;
+        border-right: none;
+        border-left: var(--border);
+        transform: translateX(110%);
+      }
+      .expl-filters.is-open,
+      .expl-results.is-open {
+        transform: translateX(0);
+      }
+      .panel-close { display: flex; }
+      .panel-overlay { display: block; }
+      .mob-fab-bar { display: flex; }
+      .topbar-search { display: none; }
+
+      #patology-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      }
+    }
+
+    @media (max-width: 600px) {
+      .expl-topbar {
+        padding: 0.45rem 0.75rem;
+        gap: 0.5rem;
+      }
+      .view-toggle__btn { padding: 0.4em 0.75em; font-size: 0.72rem; }
+      .results-badge { display: none; }
+      .skeleton-svg-wrap { max-width: 220px; }
+      #patology-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1025px) and (max-width: 1280px) {
+      .expl-layout { grid-template-columns: 200px 1fr 260px; }
+    }
   </style>
 </head>
 <body class="expl-body-page">
 
   <!-- ══════════════════════════════════════
-       HEADER — reutiliza el del index
+       HEADER
   ══════════════════════════════════════ -->
   <header class="site-header" id="site-header">
     <div class="container">
       <nav class="nav" role="navigation" aria-label="Navegación principal">
         <a href="/prueba-museo/index.html" class="nav__logo" aria-label="PaleoMuseo — Inicio">
-          <img
-            src="/prueba-museo/assets/img/lav_uam.png"
-            alt="Laboratorio de Antropología Virtual · UAM"
-            class="nav__logo-img" />
+          <img src="/prueba-museo/assets/img/lav_uam.png"
+               alt="Laboratorio de Antropología Virtual · UAM"
+               class="nav__logo-img" />
           <div>
             <div>Paleo<strong>Museo</strong></div>
             <div style="font-size:0.6em;font-weight:400;opacity:0.5;letter-spacing:0.1em">PALEOPATOLOGÍA</div>
@@ -87,8 +700,6 @@
        TOPBAR
   ══════════════════════════════════════ -->
   <div class="expl-topbar" role="toolbar" aria-label="Controles del visualizador">
-
-    <!-- Vista toggle -->
     <div class="view-toggle" role="group" aria-label="Cambiar vista">
       <button class="view-toggle__btn is-active" data-view-btn="anatomia">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
@@ -100,15 +711,12 @@
       </button>
     </div>
 
-    <!-- Active filters bar -->
     <div id="active-filters-bar" aria-live="polite"></div>
 
-    <!-- Results count -->
     <span class="results-badge">
       <strong id="results-count">—</strong>&nbsp;piezas
     </span>
 
-    <!-- Search -->
     <div class="topbar-search">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
         <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
@@ -126,12 +734,11 @@
     <aside class="expl-filters" id="filters-panel" aria-label="Filtros">
       <button class="panel-close" data-close-panel aria-label="Cerrar filtros">×</button>
 
-      <!-- Mobile search -->
       <div class="filter-section" id="mob-search-wrap" style="display:none">
         <p class="filter-section__title">Buscar</p>
-        <div class="filter-search-box">
+        <div class="topbar-search" style="width:100%;box-sizing:border-box;">
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-          <input type="search" id="search-input-mob" placeholder="Pieza, yacimiento…" autocomplete="off" />
+          <input type="search" id="search-input-mob" placeholder="Pieza, yacimiento…" autocomplete="off" style="width:100%;" />
         </div>
       </div>
 
@@ -255,7 +862,6 @@
               <ellipse cx="192" cy="472" rx="16" ry="8" fill="#D4C9A8" stroke="#2A1F0E" stroke-width="1.2"/>
             </g>
 
-            <!-- Labels -->
             <text x="200" y="55"  class="skel-label">Cráneo</text>
             <text x="200" y="165" class="skel-label">Tórax</text>
             <text x="200" y="200" class="skel-label">Columna</text>
@@ -267,10 +873,20 @@
         <p class="view-hint" style="opacity:.4;font-size:.6rem">También puedes usar el panel lateral</p>
       </div>
 
-      <!-- Vista B: Grid patologías -->
+      <!-- Vista B: Grid patologías + galería de textos -->
       <div class="view-pane" id="view-pathology" aria-label="Vista patológica">
-        <p class="view-hint">Selecciona una categoría para filtrar</p>
+        <p class="view-hint">Selecciona una categoría para filtrar y conocer más</p>
         <div id="patology-grid" role="list" aria-label="Categorías patológicas"></div>
+
+        <!-- Galería de textos emergente -->
+        <div class="patology-info-gallery" id="patology-info-gallery" aria-live="polite">
+          <div class="patology-info-panel" id="patology-info-panel">
+            <button class="info-panel__close" id="info-panel-close" aria-label="Cerrar descripción">✕</button>
+            <p class="info-panel__eyebrow" id="info-eyebrow"></p>
+            <h2 class="info-panel__title" id="info-title"></h2>
+            <p class="info-panel__body" id="info-body"></p>
+          </div>
+        </div>
       </div>
 
     </main>
@@ -285,34 +901,212 @@
       <div id="results-list" aria-live="polite"></div>
     </aside>
 
-  </div><!-- /.expl-layout -->
+  </div>
 
   <!-- FABs mobile -->
   <div class="mob-fab-bar">
     <button class="mob-fab mob-fab--filters" id="mob-btn-filters" aria-label="Abrir filtros">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
-        <line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/>
-      </svg>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/></svg>
       Filtros
     </button>
     <button class="mob-fab mob-fab--results" id="mob-btn-results" aria-label="Ver resultados">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
-        <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
-        <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
-      </svg>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
       Resultados
     </button>
   </div>
   <div class="panel-overlay" id="panel-overlay" aria-hidden="true"></div>
-
-  <!-- SVG Tooltip -->
   <div class="svg-tooltip" id="svg-tooltip" aria-hidden="true"></div>
 
-  <!-- Scripts -->
+  <!-- ══════════════════════════════════════
+       DATA — patologías con sus textos
+  ══════════════════════════════════════ -->
+  <script>
+    const PATOLOGIA_INFO = {
+      trauma: {
+        key: 'trauma',
+        icon: '🦴',
+        name: 'Traumatismos',
+        count: '4 piezas',
+        color: '#FF4D6D',
+        eyebrow: 'Categoría · Traumatismos',
+        title: 'Huellas de violencia, accidente y cirugía en el registro óseo',
+        body: 'Después del desgaste degenerativo, los traumatismos representan la condición patológica más prevalente en el registro paleopatológico. Esta categoría comprende cualquier evento extrínseco que altere la continuidad o morfología ósea. El análisis de traumatismos permite identificar comportamientos culturales y riesgos ambientales, pudiendo diferenciar entre accidentes, actos de violencia o intervenciones quirúrgicas.'
+      },
+      infecciosa: {
+        key: 'infecciosa',
+        icon: '🦠',
+        name: 'Infecciones',
+        count: '4 piezas',
+        color: '#00E5FF',
+        eyebrow: 'Categoría · Enfermedades infecciosas',
+        title: 'Cuando el esqueleto documenta la batalla contra el patógeno',
+        body: 'Las infecciones representaban históricamente la principal amenaza para la supervivencia humana, afectando a casi la mitad de la población antes de alcanzar la madurez. Se manifiestan como procesos inflamatorios crónicos derivados de la introducción de bacterias, virus o parásitos en el tejido esquelético. Las lesiones visibles testimonian una respuesta inmune: cada hueso infectado documenta la evolución de la patogenicidad y la resiliencia biológica.'
+      },
+      especifica: {
+        key: 'especifica',
+        icon: '🔬',
+        name: 'Enfermedades específicas',
+        count: '—',
+        color: '#AA00FF',
+        eyebrow: 'Categoría · Tuberculosis · Lepra · Treponematosis',
+        title: 'Granulomas, focos destructivos y patrones diagnósticos distintivos',
+        body: 'Procesos granulomatosos con patrones de diagnóstico característicos, centrados en la tuberculosis, la lepra y las treponematosis (sífilis y yaws). Estas afecciones alteran el tejido óseo mediante focos destructivos o blásticos reconocibles, como la caries sicca craneal o el colapso vertebral. Su identificación paleopatológica permite reconstruir la distribución geográfica e histórica de estas enfermedades y su relación con las condiciones socioeconómicas de cada población.'
+      },
+      metabolica: {
+        key: 'metabolica',
+        icon: '🧬',
+        name: 'Deficiencias y nutrición',
+        count: '2 piezas',
+        color: '#C6E800',
+        eyebrow: 'Categoría · Escorbuto · Raquitismo · Osteomalacia',
+        title: 'Dieta, mineralización y estrés biológico inscritos en el hueso',
+        body: 'Trastornos sistémicos derivados de dietas inadecuadas o procesos metabólicos defectuosos que alteran la mineralización ósea. Incluye el escorbuto por déficit de vitamina C, caracterizado por hemorragias subperiósticas, y el raquitismo u osteomalacia por falta de vitamina D, que produce deformaciones plásticas. Estos restos son indicadores cruciales de estrés biológico y de ecología dietética en poblaciones pasadas.'
+      },
+      endocrino: {
+        key: 'endocrino',
+        icon: '⚗️',
+        name: 'Trastornos endocrinos',
+        count: '—',
+        color: '#FFB300',
+        eyebrow: 'Categoría · Sistema endocrino',
+        title: 'Alteraciones hormonales reflejadas en la morfología esquelética',
+        body: 'Los trastornos endocrinos producen alteraciones reconocibles en el crecimiento y la remodelación ósea. Condiciones como el hipotiroidismo, el gigantismo hipofisario o la acromegalia dejan evidencias morfológicas características: modificaciones en la densidad trabecular, cambios en las proporciones esqueléticas o alteraciones en los patrones de crecimiento. Su análisis aporta información sobre la función hormonal en poblaciones históricas.'
+      },
+      tumor: {
+        key: 'tumor',
+        icon: '🔴',
+        name: 'Tumores y quistes',
+        count: '—',
+        color: '#FF6D00',
+        eyebrow: 'Categoría · Neoplasias óseas',
+        title: 'Neoplasias benignas y malignas en el registro paleopatológico',
+        body: 'Las neoplasias óseas —tanto primarias como metastásicas— dejan huellas diagnósticas reconocibles: lesiones líticas o blásticas con bordes bien o mal definidos, reacción periostal y remodelación cortical. Su identificación en restos arqueológicos es infrecuente pero de gran valor, ya que permite explorar la prevalencia del cáncer en poblaciones sin exposición a los factores de riesgo modernos.'
+      },
+      degenerativa: {
+        key: 'degenerativa',
+        icon: '🦷',
+        name: 'Enfermedades articulares',
+        count: '2 piezas',
+        color: '#C8AA78',
+        eyebrow: 'Categoría · Artrosis · Artritis',
+        title: 'Desgaste, uso y envejecimiento articular en el esqueleto',
+        body: 'Las enfermedades articulares, encabezadas por la osteoartrosis, constituyen el conjunto paleopatológico más frecuente en el registro arqueológico. Se manifiestan como remodelación de superficies articulares, formación de osteofitos, eburnación y porosidad subcondral. Su distribución y patrón aportan información directa sobre los patrones de actividad física, la división del trabajo y el envejecimiento de las poblaciones estudiadas.'
+      },
+      congenita: {
+        key: 'congenita',
+        icon: '🧩',
+        name: 'Anomalías del desarrollo',
+        count: '2 piezas',
+        color: '#FF6EB4',
+        eyebrow: 'Categoría · Anomalías congénitas y del desarrollo',
+        title: 'Variaciones morfológicas y malformaciones de origen genético o prenatal',
+        body: 'Las anomalías del desarrollo engloban un amplio espectro de variaciones esqueléticas con origen genético, epigenético o en alteraciones del desarrollo fetal. Incluyen desde variantes menores sin impacto funcional hasta malformaciones graves que condicionaron la supervivencia del individuo. Su estudio es relevante para comprender la diversidad morfológica poblacional, la consanguinidad y los determinantes genéticos de la salud en el pasado.'
+      }
+    };
+  </script>
+
+  <!-- Data y visualizador externos -->
   <script src="/prueba-museo/js/data.js"></script>
   <script src="/prueba-museo/js/visualizador.js"></script>
+
   <script>
-    /* ── Nav hamburger ── */
+    /* ══════════════════════════════════════
+       GALERÍA DE TEXTOS EMERGENTE
+    ══════════════════════════════════════ */
+    let activePatKey = null;
+
+    function openInfoPanel(key) {
+      const info = PATOLOGIA_INFO[key];
+      if (!info) return;
+
+      const gallery = document.getElementById('patology-info-gallery');
+      const panel   = document.getElementById('patology-info-panel');
+
+      document.getElementById('info-eyebrow').textContent = info.eyebrow;
+      document.getElementById('info-title').textContent   = info.title;
+      document.getElementById('info-body').textContent    = info.body;
+      panel.style.setProperty('--pat-accent', info.color);
+
+      gallery.classList.add('is-open');
+      // Scroll suave al panel
+      setTimeout(() => gallery.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 60);
+    }
+
+    function closeInfoPanel() {
+      document.getElementById('patology-info-gallery').classList.remove('is-open');
+      activePatKey = null;
+      // Desactivar cards
+      document.querySelectorAll('.patology-card').forEach(c => c.classList.remove('is-active'));
+    }
+
+    document.getElementById('info-panel-close')?.addEventListener('click', closeInfoPanel);
+
+    /* ══════════════════════════════════════
+       RENDER GRID PATOLOGÍAS
+    ══════════════════════════════════════ */
+    function renderPatologyGrid() {
+      const grid = document.getElementById('patology-grid');
+      if (!grid) return;
+      grid.innerHTML = '';
+
+      Object.values(PATOLOGIA_INFO).forEach(info => {
+        const card = document.createElement('div');
+        card.className = 'patology-card';
+        card.setAttribute('role', 'listitem');
+        card.setAttribute('tabindex', '0');
+        card.setAttribute('aria-label', info.name);
+        card.setAttribute('data-pat-key', info.key);
+        card.style.setProperty('--pat-color', info.color);
+
+        card.innerHTML = `
+          <div class="pat-card__icon">${info.icon}</div>
+          <div class="pat-card__name">${info.name}</div>
+          <div class="pat-card__count">${info.count}</div>
+        `;
+
+        card.addEventListener('click', () => {
+          const isAlreadyActive = card.classList.contains('is-active');
+
+          // Toggle estado de la card
+          document.querySelectorAll('.patology-card').forEach(c => c.classList.remove('is-active'));
+
+          if (isAlreadyActive) {
+            closeInfoPanel();
+            activePatKey = null;
+          } else {
+            card.classList.add('is-active');
+            activePatKey = info.key;
+            openInfoPanel(info.key);
+
+            // Aplicar filtro si existe función global
+            if (typeof togglePatologyFilter === 'function') {
+              togglePatologyFilter(info.key);
+            } else if (typeof state !== 'undefined') {
+              // Fallback: toggle en state.filters.patologia
+              const patSet = state.filters.patologia;
+              if (patSet.has(info.key)) { patSet.delete(info.key); }
+              else { patSet.clear(); patSet.add(info.key); }
+              if (typeof renderResults === 'function') renderResults();
+              if (typeof updateActiveFiltersBar === 'function') updateActiveFiltersBar();
+              // Sincronizar checkbox lateral
+              document.querySelectorAll('[data-filter="patologia"]').forEach(cb => {
+                cb.checked = patSet.has(cb.value);
+              });
+            }
+          }
+        });
+
+        card.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.click(); }
+        });
+
+        grid.appendChild(card);
+      });
+    }
+
+    /* ══════════════════════════════════════
+       HAMBURGER / NAV MÓVIL
+    ══════════════════════════════════════ */
     const hamburger = document.getElementById('nav-hamburger');
     const drawer    = document.getElementById('nav-mobile');
     let navOpen = false;
@@ -321,15 +1115,15 @@
       hamburger.classList.toggle('open', navOpen);
       drawer.classList.toggle('open', navOpen);
       hamburger.setAttribute('aria-expanded', String(navOpen));
-      document.body.style.overflow = navOpen ? 'hidden' : '';
     });
 
-    /* ── Header scroll ── */
     window.addEventListener('scroll', () => {
       document.getElementById('site-header')?.classList.toggle('scrolled', window.scrollY > 40);
     }, { passive: true });
 
-    /* ── Mobile drawers ── */
+    /* ══════════════════════════════════════
+       DRAWERS MÓVILES
+    ══════════════════════════════════════ */
     const fPanel  = document.getElementById('filters-panel');
     const rPanel  = document.getElementById('results-panel');
     const overlay = document.getElementById('panel-overlay');
@@ -337,42 +1131,53 @@
     function openDrawer(p) {
       p.classList.add('is-open');
       overlay.classList.add('is-visible');
-      document.body.style.overflow = 'hidden';
-      document.getElementById('mob-search-wrap').style.display = p === fPanel ? 'block' : 'none';
+      const mobSearch = document.getElementById('mob-search-wrap');
+      if (mobSearch) mobSearch.style.display = p === fPanel ? 'block' : 'none';
     }
     function closeDrawers() {
       fPanel.classList.remove('is-open');
       rPanel.classList.remove('is-open');
       overlay.classList.remove('is-visible');
-      document.body.style.overflow = '';
     }
     document.getElementById('mob-btn-filters')?.addEventListener('click', () => openDrawer(fPanel));
     document.getElementById('mob-btn-results')?.addEventListener('click', () => openDrawer(rPanel));
     overlay.addEventListener('click', closeDrawers);
     document.querySelectorAll('[data-close-panel]').forEach(b => b.addEventListener('click', closeDrawers));
 
-    /* ── Sync mobile search ── */
+    /* ── Sync search ── */
     const sTop = document.getElementById('search-input');
     const sMob = document.getElementById('search-input-mob');
     sTop?.addEventListener('input', () => { if (sMob) sMob.value = sTop.value; });
     sMob?.addEventListener('input', () => {
       if (sTop) sTop.value = sMob.value;
-      state.filters.query = sMob.value.toLowerCase().trim();
-      renderResults(); updateActiveFiltersBar();
+      if (typeof state !== 'undefined') {
+        state.filters.query = sMob.value.toLowerCase().trim();
+        if (typeof renderResults === 'function') renderResults();
+        if (typeof updateActiveFiltersBar === 'function') updateActiveFiltersBar();
+      }
     });
 
     /* ── Sync side count ── */
-    new MutationObserver(() => {
-      const s = document.getElementById('results-count-side');
-      const t = document.getElementById('results-count');
-      if (s && t) s.textContent = t.textContent;
-    }).observe(document.getElementById('results-count'), { childList:true, subtree:true, characterData:true });
+    const countEl = document.getElementById('results-count');
+    if (countEl) {
+      new MutationObserver(() => {
+        const s = document.getElementById('results-count-side');
+        if (s) s.textContent = countEl.textContent + ' piezas';
+      }).observe(countEl, { childList: true, subtree: true, characterData: true });
+    }
 
-    /* ── Keyboard for SVG ── */
+    /* ── Keyboard skeleton ── */
     document.querySelectorAll('[data-region]').forEach(el => {
       el.addEventListener('keydown', e => {
         if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); el.click(); }
       });
+    });
+
+    /* ══════════════════════════════════════
+       INIT
+    ══════════════════════════════════════ */
+    document.addEventListener('DOMContentLoaded', () => {
+      renderPatologyGrid();
     });
 
     /* ── GSAP entrance ── */
