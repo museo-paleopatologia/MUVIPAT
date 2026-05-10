@@ -64,10 +64,28 @@ const rowState = {
   2: { keys: [], current: 0 }
 };
 
-/* Dimensiones del panel (deben coincidir con las CSS vars) */
-const SLIDE_H   = 200;  /* px — var(--slide-h) */
-const NAV_BAR_H = 44;   /* px — var(--nav-bar-h) */
-const ACCENT_H  = 4;    /* px — accent bar */
+/* ResizeObserver: recalcula slides si el contenedor cambia de ancho */
+if (typeof ResizeObserver !== 'undefined') {
+  const ro = new ResizeObserver(() => {
+    [1, 2].forEach(row => {
+      if (rowState[row].keys.length > 0) {
+        const wrap  = document.getElementById(`row-wrap-${row}`);
+        const track = document.getElementById(`rp-track-${row}`);
+        if (!wrap || !track) return;
+        const wrapW  = wrap.offsetWidth;
+        const slides = wrap.querySelectorAll('.rp-slide');
+        slides.forEach(s => { s.style.width = wrapW + 'px'; });
+        track.style.width = (wrapW * rowState[row].keys.length) + 'px';
+        /* Reposicionar sin animación */
+        gsapReady(() => applyRowSlide(row, rowState[row].current, false));
+      }
+    });
+  });
+  document.addEventListener('DOMContentLoaded', () => {
+    const center = document.querySelector('.expl-center');
+    if (center) ro.observe(center);
+  });
+}
 
 /* ══════════════════════════════════════════════════
    INIT
@@ -289,130 +307,159 @@ function gsapReady(fn) {
 
 /* ══════════════════════════════════════════════════
    ROW-PANEL: GSAP BLIND ANIMATION
-   .row-panel-wrap  ← GSAP anima height (persiana)
-     .row-panel     ← contenido (border, bg)
+   Estructura:
+     .row-panel-wrap  ← GSAP anima height (persiana)
+       .row-panel     ← contenido
+         .rp-slider-viewport  ← overflow:hidden, ancho 100%
+           .rp-slider-track   ← display:flex, ancho = N * 100vw_wrap px
+             .rp-slide × N    ← flex: 0 0 [wrapPx]px, overflow:hidden
+         .row-panel__nav      ← flechas FUERA del texto
 ══════════════════════════════════════════════════ */
 function updateRowPanel(row) {
   const rs   = rowState[row];
   const wrap = document.getElementById(`row-wrap-${row}`);
   if (!wrap) return;
 
-  /* Sin selección → colapsar persiana */
+  /* ── Sin selección: colapsar ── */
   if (rs.keys.length === 0) {
     gsap.to(wrap, {
-      height: 0,
-      opacity: 0,
-      duration: 0.3,
-      ease: 'power2.in',
+      height: 0, opacity: 0, duration: 0.3, ease: 'power2.in',
       onComplete: () => {
-        wrap.innerHTML = '';
-        gsap.set(wrap, { clearProps: 'height,opacity' });
-        wrap.style.height = '0';
+        wrap.innerHTML  = '';
+        wrap.style.cssText = 'height:0;overflow:hidden;';
       }
     });
     return;
   }
 
+  const isNew       = !wrap.querySelector('.row-panel');
   const firstInfo   = PATOLOGIA_INFO.find(p => p.key === rs.keys[0]);
   const accentColor = firstInfo?.color || '#00E5FF';
   const showNav     = rs.keys.length > 1;
-  const totalH      = ACCENT_H + SLIDE_H + (showNav ? NAV_BAR_H : 0) + 12; /* +12 = margin-top panel */
-
-  /* Es un panel nuevo o ya existente */
-  const isNew = !wrap.querySelector('.row-panel');
 
   rs.current = Math.min(rs.current, rs.keys.length - 1);
 
-  /* Construir el HTML del panel */
+  /* ── Construir HTML del panel ── */
   wrap.innerHTML = `
     <div class="row-panel" id="row-panel-${row}">
       <div class="row-panel__accent-bar" style="background:${accentColor}"></div>
       <button class="row-panel__close" aria-label="Cerrar panel">✕</button>
-      <div class="row-panel__slider-wrap">
-        <div class="row-panel__track"
-             id="rp-track-${row}"
-             style="width:${rs.keys.length * 100}%">
+
+      <!-- VIEWPORT: clip para el slider -->
+      <div class="rp-slider-viewport" id="rp-viewport-${row}">
+        <!-- TRACK: flex, ancho calculado por JS post-render -->
+        <div class="rp-slider-track" id="rp-track-${row}">
           ${rs.keys.map(key => {
             const info = PATOLOGIA_INFO.find(p => p.key === key);
-            return `<div class="row-panel__slide" style="--rp-accent:${info.color}">
-                      <p class="row-slide__eyebrow">${info.eyebrow}</p>
-                      <h3 class="row-slide__title">${info.title}</h3>
-                      <p class="row-slide__body">${info.body}</p>
-                    </div>`;
+            return `
+            <div class="rp-slide" style="--rp-accent:${info.color}">
+              <div class="rp-slide__inner">
+                <p class="row-slide__eyebrow">${info.eyebrow}</p>
+                <h3 class="row-slide__title">${info.title}</h3>
+                <p class="row-slide__body">${info.body}</p>
+              </div>
+            </div>`;
           }).join('')}
         </div>
       </div>
-      ${showNav ? `
-      <div class="row-panel__nav">
-        <button class="row-panel__arrow" id="rp-prev-${row}" aria-label="Anterior" ${rs.current === 0 ? 'disabled' : ''}>&#8592;</button>
+
+      <!-- NAV: siempre presente, arrows se ocultan si es 1 slide -->
+      <div class="row-panel__nav" ${!showNav ? 'style="display:none"' : ''}>
+        <button class="row-panel__arrow" id="rp-prev-${row}"
+                aria-label="Anterior" ${rs.current === 0 ? 'disabled' : ''}>&#8592;</button>
         <span class="row-panel__counter" id="rp-counter-${row}">
-          <strong>${rs.current + 1}</strong> / ${rs.keys.length}
+          <strong>${rs.current + 1}</strong>&thinsp;/&thinsp;${rs.keys.length}
         </span>
-        <button class="row-panel__arrow" id="rp-next-${row}" aria-label="Siguiente" ${rs.current === rs.keys.length - 1 ? 'disabled' : ''}>&#8594;</button>
-      </div>` : ''}
+        <button class="row-panel__arrow" id="rp-next-${row}"
+                aria-label="Siguiente" ${rs.current === rs.keys.length - 1 ? 'disabled' : ''}>&#8594;</button>
+      </div>
     </div>
   `;
 
-  /* Posicionar el track en el slide correcto (sin animación) */
-  applyRowSlide(row, rs.current, false);
-
-  /* Eventos del panel */
-  wrap.querySelector('.row-panel__close').addEventListener('click', () => closeRowPanel(row));
-
-  if (showNav) {
-    document.getElementById(`rp-prev-${row}`)?.addEventListener('click', () => goRowSlide(row, rs.current - 1));
-    document.getElementById(`rp-next-${row}`)?.addEventListener('click', () => goRowSlide(row, rs.current + 1));
+  /* ── Calcular dimensiones post-render ── */
+  /* Necesitamos que el wrap tenga ancho visible para medir.
+     Si es nuevo, forzamos temporalmente height:auto para leer offsetWidth. */
+  const tempReveal = isNew;
+  if (tempReveal) {
+    wrap.style.height   = 'auto';
+    wrap.style.overflow = 'visible';
+    wrap.style.opacity  = '0';
   }
 
-  /* Animación persiana: height 0 → totalH (apertura) */
+  const viewport  = wrap.querySelector(`#rp-viewport-${row}`);
+  const track     = wrap.querySelector(`#rp-track-${row}`);
+  const slides    = wrap.querySelectorAll('.rp-slide');
+  const wrapW     = wrap.offsetWidth || 600; /* fallback si aún no pintado */
+
+  /* Cada slide = exactamente el ancho del viewport */
+  slides.forEach(s => { s.style.width = wrapW + 'px'; });
+  track.style.width = (wrapW * rs.keys.length) + 'px';
+
+  /* Posicionar sin animación en el slide correcto */
+  track.style.transform = `translateX(${-(rs.current * wrapW)}px)`;
+
+  /* Calcular altura real del panel tras render */
+  const panelEl   = wrap.querySelector('.row-panel');
+  const panelH    = panelEl ? panelEl.offsetHeight + 8 : 280; /* +8 gap */
+
+  /* ── Eventos ── */
+  wrap.querySelector('.row-panel__close')
+      .addEventListener('click', () => closeRowPanel(row));
+
+  if (showNav) {
+    document.getElementById(`rp-prev-${row}`)
+      ?.addEventListener('click', () => goRowSlide(row, rs.current - 1));
+    document.getElementById(`rp-next-${row}`)
+      ?.addEventListener('click', () => goRowSlide(row, rs.current + 1));
+  }
+
+  /* ── Animación persiana GSAP ── */
   if (isNew) {
+    /* Restaurar estado oculto antes de animar */
+    wrap.style.height   = '0';
+    wrap.style.overflow = 'hidden';
+    wrap.style.opacity  = '0';
+
     gsap.fromTo(wrap,
       { height: 0, opacity: 0 },
       {
-        height: totalH,
-        opacity: 1,
-        duration: 0.4,
-        ease: 'power3.out',
+        height: panelH, opacity: 1, duration: 0.42, ease: 'power3.out',
         onComplete: () => {
-          /* Scroll suave al panel una vez abierto */
           wrap.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
       }
     );
   } else {
-    /* Panel ya existe — actualizar altura (puede haber cambiado si se añadió/quitó nav) */
-    gsap.to(wrap, { height: totalH, duration: 0.22, ease: 'power2.out' });
+    /* Panel ya existe — ajustar altura si cambió (e.g. nav apareció/desapareció) */
+    gsap.to(wrap, { height: panelH, opacity: 1, duration: 0.24, ease: 'power2.out' });
   }
 }
 
 /* ══════════════════════════════════════════════════
-   SLIDER GSAP — translateX en el track
-   Cada slide es flex: 0 0 100%, ancho fijo.
-   No hay overflow de texto entre slides.
+   SLIDER: translateX en píxeles absolutos
+   Cada .rp-slide tiene width exacto = wrap.offsetWidth
+   → cero overflow entre slides.
 ══════════════════════════════════════════════════ */
 function applyRowSlide(row, idx, animate = true) {
+  const wrap  = document.getElementById(`row-wrap-${row}`);
   const track = document.getElementById(`rp-track-${row}`);
-  if (!track) return;
+  if (!wrap || !track) return;
 
-  const total = rowState[row].keys.length;
-  /* El track tiene width = total * 100% del wrap.
-     Cada slide ocupa 100/total del track = 100% del wrap.
-     Para mostrar el slide idx movemos xPercent = -(idx * 100/total) */
-  const pct = -(idx * (100 / total));
+  const total  = rowState[row].keys.length;
+  const slideW = wrap.offsetWidth || parseInt(track.style.width, 10) / total || 600;
+  const tx     = -(idx * slideW);
 
   if (animate) {
-    gsap.to(track, { xPercent: pct, duration: 0.32, ease: 'power3.inOut' });
+    gsap.to(track, { x: tx, duration: 0.36, ease: 'power3.inOut' });
   } else {
-    gsap.set(track, { xPercent: pct });
+    gsap.set(track, { x: tx });
   }
 
-  /* Actualizar counter */
+  /* Counter */
   const counter = document.getElementById(`rp-counter-${row}`);
-  if (counter) {
-    counter.innerHTML = `<strong>${idx + 1}</strong> / ${total}`;
-  }
+  if (counter) counter.innerHTML = `<strong>${idx + 1}</strong>&thinsp;/&thinsp;${total}`;
 
-  /* Actualizar estado de flechas */
+  /* Arrows */
   const prev = document.getElementById(`rp-prev-${row}`);
   const next = document.getElementById(`rp-next-${row}`);
   if (prev) prev.disabled = idx === 0;

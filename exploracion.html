@@ -419,8 +419,8 @@
     ══════════════════════════════════════════════ */
     .row-panel-wrap {
       width: 95%;
-      overflow: hidden;
-      height: 0;          /* GSAP anima esto */
+      overflow: hidden;   /* GSAP anima height desde aquí */
+      height: 0;
       flex-shrink: 0;
     }
 
@@ -428,129 +428,137 @@
       width: 100%;
       background: var(--parchment);
       border: 1.5px solid var(--bone-300);
-      border-radius: var(--r-md);
+      border-radius: var(--r-lg);
       overflow: hidden;
-      margin-top: 0.4rem;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      margin-top: 0.5rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.07);
     }
 
     .row-panel__accent-bar {
       height: 4px;
       width: 100%;
-      border-radius: var(--r-md) var(--r-md) 0 0;
+      border-radius: var(--r-lg) var(--r-lg) 0 0;
+      flex-shrink: 0;
     }
 
+    /* Botón cerrar — esquina superior derecha */
     .row-panel__close {
       position: absolute;
-      top: 0.6rem; right: 0.65rem;
+      top: 0.7rem; right: 0.8rem;
       width: 28px; height: 28px;
-      background: rgba(0,0,0,0.08);
+      background: rgba(0,0,0,0.07);
       color: var(--dark);
       border: 1.5px solid var(--bone-300);
       border-radius: var(--r-sm);
-      font-size: 0.8rem;
-      font-weight: 700;
+      font-size: 0.8rem; font-weight: 700;
       cursor: pointer;
       display: flex; align-items: center; justify-content: center;
       transition: background 0.12s, border-color 0.12s;
       z-index: 3;
     }
     .row-panel__close:hover {
-      background: var(--dark);
-      color: var(--ivory);
+      background: var(--dark); color: var(--ivory);
       border-color: var(--dark);
     }
 
-    /* Slider — overflow:hidden para clip del translate */
-    .row-panel__slider-wrap { overflow: hidden; width: 100%; position: relative; }
-    .row-panel__track { display: flex; will-change: transform; }
+    /* ── SLIDER: viewport recorta, track desliza ── */
 
-    /* Cada slide: 100% ancho, altura fija, scroll interno */
-    .row-panel__slide {
-      flex: 0 0 100%;
+    /* 1. Viewport: clip estricto — NUNCA debe verse el slide adyacente */
+    .rp-slider-viewport {
       width: 100%;
-      height: var(--slide-h);        /* altura fija */
-      overflow-y: auto;
-      overscroll-behavior: contain;
-      padding: 1rem 2.8rem 1rem 1.15rem;
+      overflow: hidden;   /* clip absoluto */
       position: relative;
-      scrollbar-width: thin;
-      scrollbar-color: var(--bone-300) transparent;
     }
-    .row-panel__slide::-webkit-scrollbar { width: 4px; }
-    .row-panel__slide::-webkit-scrollbar-thumb { background: var(--bone-300); border-radius: 99px; }
 
-    /* Línea de acento en el top del slide */
-    .row-panel__slide::before {
+    /* 2. Track: flex en fila, ancho total = N × wrapW (calculado por JS) */
+    .rp-slider-track {
+      display: flex;
+      flex-wrap: nowrap;
+      will-change: transform;
+      /* transform: translateX(Xpx) lo gestiona GSAP */
+    }
+
+    /* 3. Cada slide: ancho exacto fijado por JS (wrapW px),
+          overflow:hidden garantiza que su texto no sangre al vecino */
+    .rp-slide {
+      flex: 0 0 auto;           /* JS fija width en px */
+      overflow: hidden;         /* ← CRÍTICO: evita overflow de texto */
+      box-sizing: border-box;
+      padding: 0;               /* el inner tiene el padding */
+      position: relative;
+    }
+
+    /* Línea de acento arriba del slide */
+    .rp-slide::before {
       content: '';
       position: absolute;
-      top: 0; left: 1.15rem;
+      top: 0; left: 1.2rem;
       width: 40px; height: 3px;
       background: var(--rp-accent, var(--cyan));
     }
 
+    /* Inner: scroll interno si el texto es largo */
+    .rp-slide__inner {
+      height: var(--slide-h);
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      padding: 1.1rem 2.8rem 1rem 1.2rem; /* right: espacio para el X */
+      scrollbar-width: thin;
+      scrollbar-color: var(--bone-300) transparent;
+    }
+    .rp-slide__inner::-webkit-scrollbar { width: 4px; }
+    .rp-slide__inner::-webkit-scrollbar-thumb {
+      background: var(--bone-300); border-radius: 99px;
+    }
+
     .row-slide__eyebrow {
       font-family: var(--font-head);
-      font-size: 0.53rem;
-      font-weight: 800;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
+      font-size: 0.53rem; font-weight: 800;
+      letter-spacing: 0.14em; text-transform: uppercase;
       color: var(--rp-accent, var(--cyan));
       margin: 0.9rem 0 0.28rem;
     }
     .row-slide__title {
       font-family: var(--font-display);
       font-size: clamp(0.85rem, 1.7vw, 1.05rem);
-      font-weight: 700;
-      color: var(--dark);
-      margin: 0 0 0.5rem;
-      line-height: 1.22;
+      font-weight: 700; color: var(--dark);
+      margin: 0 0 0.5rem; line-height: 1.22;
     }
     .row-slide__body {
       font-family: var(--font-ui);
-      font-size: 0.75rem;
-      line-height: 1.65;
-      color: var(--dark-2);
-      margin: 0;
+      font-size: 0.75rem; line-height: 1.65;
+      color: var(--dark-2); margin: 0;
     }
 
-    /* Barra de flechas — SEPARADA del área de texto */
+    /* ── Barra de navegación: FUERA del área de texto ── */
     .row-panel__nav {
-      display: flex;
-      align-items: center;
+      display: flex; align-items: center;
       height: var(--nav-bar-h);
       border-top: 1.5px solid var(--bone-300);
       background: var(--cream);
-      padding: 0 0.85rem;
-      border-radius: 0 0 var(--r-md) var(--r-md);
+      padding: 0 0.9rem;
+      border-radius: 0 0 var(--r-lg) var(--r-lg);
+      flex-shrink: 0;
     }
     .row-panel__arrow {
       display: flex; align-items: center; justify-content: center;
-      width: 30px; height: 30px;
-      background: var(--dark);
-      color: var(--ivory);
-      border: none;
-      border-radius: var(--r-sm);
-      cursor: pointer;
-      font-size: 0.95rem;
-      font-weight: 900;
+      width: 32px; height: 32px;
+      background: var(--dark); color: var(--ivory);
+      border: none; border-radius: var(--r-sm);
+      cursor: pointer; font-size: 1rem; font-weight: 900;
       flex-shrink: 0;
       transition: background 0.12s, box-shadow 0.12s, opacity 0.15s;
       user-select: none;
     }
     .row-panel__arrow:hover:not(:disabled) {
       background: var(--dark-2);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      box-shadow: 0 3px 10px rgba(0,0,0,0.2);
     }
     .row-panel__arrow:disabled { opacity: 0; pointer-events: none; }
     .row-panel__counter {
-      flex: 1;
-      text-align: center;
-      font-family: var(--font-head);
-      font-size: 0.62rem;
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      color: var(--mid);
+      flex: 1; text-align: center;
+      font-family: var(--font-head); font-size: 0.62rem;
+      font-weight: 800; letter-spacing: 0.08em; color: var(--mid);
     }
     .row-panel__counter strong { color: var(--dark); }
 
