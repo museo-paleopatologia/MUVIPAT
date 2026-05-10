@@ -648,7 +648,8 @@ function renderResults() {
   if (!container) return;
 
   const results = getFilteredPieces();
-  if (countEl) countEl.textContent = `${results.length} pieza${results.length !== 1 ? 's' : ''}`;
+  /* Escribir SOLO el número — la palabra "piezas" ya está en el HTML del topbar */
+  if (countEl) countEl.textContent = results.length;
 
   if (results.length === 0) {
     container.innerHTML = `

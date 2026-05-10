@@ -187,7 +187,9 @@
       grid-template-columns: 220px 1fr 285px;
       height: var(--panel-h);
       margin-top: calc(var(--nav-h) + var(--top-h));
-      overflow: hidden;
+      /* overflow:hidden corta las cards — usar clip solo en X */
+      overflow-x: clip;
+      overflow-y: hidden;
     }
 
     /* ══════════════════════
@@ -214,7 +216,7 @@
     #sidebar-active-chips:empty { display: none; }
 
     .panel-close {
-      display: none;
+      display: none;              /* Desktop: siempre oculto */
       position: absolute;
       top: 0.65rem; right: 0.65rem;
       width: 30px; height: 30px;
@@ -229,6 +231,9 @@
       justify-content: center;
       z-index: 2;
       transition: background 0.1s;
+      /* En desktop aunque exista en el DOM no ocupa espacio visual */
+      pointer-events: none;
+      visibility: hidden;
     }
     .panel-close:hover { background: var(--bone-200); }
 
@@ -567,12 +572,12 @@
     ══════════════════════ */
     .expl-results {
       background: var(--ivory);
-      border-left: 0;
+      border-left: 1.5px solid var(--bone-200);
       padding: 1rem 0.9rem;
       height: 100%;
       overflow-y: auto;
       overscroll-behavior: contain;
-      position: relative;
+      /* Sin position:relative — evita que .panel-close se solape con el header */
     }
     .expl-results::-webkit-scrollbar { width: 3px; }
     .expl-results::-webkit-scrollbar-thumb { background: var(--bone-300); border-radius: 99px; }
@@ -731,7 +736,14 @@
       }
       .expl-filters.is-open { transform: translateX(0); }
       .expl-results.is-open { transform: translateX(0); }
-      .panel-close { display: flex; }
+      .panel-close {
+        display: flex;
+        visibility: visible;
+        pointer-events: auto;
+      }
+      /* Los drawers tienen position:fixed, el botón se ancla a ellos */
+      .expl-filters { position: relative !important; }
+      .expl-results { position: relative !important; }
       #sidebar-active-chips { display: flex; }
     }
 
@@ -1082,12 +1094,12 @@
     overlay.addEventListener('click', closeDrawers);
     document.querySelectorAll('[data-close-panel]').forEach(b => b.addEventListener('click', closeDrawers));
 
-    /* ── Badge: evitar "piezas piezas" ── */
+    /* ── Badge: el topbar ya tiene "piezas" en HTML, el sidebar lo necesita añadido ── */
     const countEl = document.getElementById('results-count');
     if (countEl) {
       new MutationObserver(() => {
         const s = document.getElementById('results-count-side');
-        if (s) s.textContent = countEl.textContent;
+        if (s) s.textContent = countEl.textContent + ' piezas';
       }).observe(countEl, { childList: true, subtree: true, characterData: true });
     }
 
