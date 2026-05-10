@@ -184,10 +184,12 @@
     ══════════════════════ */
     .expl-layout {
       display: grid;
-      grid-template-columns: 220px 1fr 285px;
+      /* Columna derecha ligeramente más ancha para dar aire a las cards */
+      grid-template-columns: 220px 1fr 305px;
       height: var(--panel-h);
       margin-top: calc(var(--nav-h) + var(--top-h));
-      /* overflow:hidden corta las cards — usar clip solo en X */
+      /* overflow:clip en X previene scroll horizontal sin crear
+         un stacking context que recorte las sombras de las cards */
       overflow-x: clip;
       overflow-y: hidden;
     }
@@ -573,14 +575,23 @@
     .expl-results {
       background: var(--ivory);
       border-left: 1.5px solid var(--bone-200);
-      padding: 1rem 0.9rem;
+      /* Padding horizontal mayor: las sombras necesitan al menos 12px de margen */
+      padding: 1rem 1rem 1rem 1rem;
       height: 100%;
       overflow-y: auto;
+      /* overflow-x:visible permite que las sombras de las cards
+         se pinten fuera del borde sin ser recortadas */
+      overflow-x: visible;
       overscroll-behavior: contain;
-      /* Sin position:relative — evita que .panel-close se solape con el header */
     }
     .expl-results::-webkit-scrollbar { width: 3px; }
     .expl-results::-webkit-scrollbar-thumb { background: var(--bone-300); border-radius: 99px; }
+
+    /* Área interior que contiene los cards — garantiza que las sombras
+       no sean cortadas por el scroll container */
+    #results-list {
+      padding: 0 2px; /* 2px de margen extra para sombras en los lados */
+    }
 
     .results-header {
       display: flex;
@@ -607,12 +618,17 @@
       border-radius: var(--r-md);
       padding: 0.8rem 0.85rem;
       margin-bottom: 0.55rem;
+      /* width:100% + box-sizing garantiza que la card nunca desborde su contenedor */
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+      /* Sombra centrada y conservadora: no se extiende hacia los lados */
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 2px 8px rgba(0,0,0,0.04);
       transition: transform 0.12s, box-shadow 0.12s;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
     }
     .result-card:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(0,0,0,0.09);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.1);
     }
     .result-card__num { font-family: var(--font-head); font-size: 0.57rem; font-weight: 800; letter-spacing: 0.1em; color: var(--mid); margin-bottom: 0.18rem; }
     .result-card__title { font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; color: var(--dark); margin: 0 0 0.22rem; line-height: 1.2; }
@@ -759,7 +775,7 @@
     }
 
     @media (min-width: 1151px) and (max-width: 1320px) {
-      .expl-layout { grid-template-columns: 195px 1fr 255px; }
+      .expl-layout { grid-template-columns: 195px 1fr 270px; }
     }
   </style>
 </head>

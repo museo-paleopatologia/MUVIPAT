@@ -684,6 +684,10 @@ function buildResultCard(pieza, index) {
   const card = document.createElement('article');
   card.className = 'result-card';
   card.style.animationDelay = `${index * 0.04}s`;
+  /* Garantizar que la card no desborde su contenedor */
+  card.style.display    = 'block';
+  card.style.width      = '100%';
+  card.style.boxSizing  = 'border-box';
 
   card.innerHTML = `
     <div class="result-card__num">${pieza.id} · ${epocMeta.label}</div>
