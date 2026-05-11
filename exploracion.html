@@ -518,18 +518,19 @@
       background: var(--bone-300); border-radius: 99px;
     }
 
-    .row-slide__eyebrow {
-      font-family: var(--font-head);
-      font-size: 0.53rem; font-weight: 800;
-      letter-spacing: 0.14em; text-transform: uppercase;
-      color: var(--rp-accent, var(--cyan));
-      margin: 0.9rem 0 0.28rem;
-    }
+    /* eyebrow ya no se usa — mantenemos selector por si acaso pero vacío */
+    .row-slide__eyebrow { display: none; }
+
+    /* Título = nombre de la categoría: más grande y con el color de acento */
     .row-slide__title {
-      font-family: var(--font-display);
-      font-size: clamp(0.85rem, 1.7vw, 1.05rem);
-      font-weight: 700; color: var(--dark);
-      margin: 0 0 0.5rem; line-height: 1.22;
+      font-family: var(--font-head);
+      font-size: clamp(0.8rem, 1.5vw, 0.95rem);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--rp-accent, var(--cyan));
+      margin: 0.9rem 0 0.6rem;
+      line-height: 1.2;
     }
     .row-slide__body {
       font-family: var(--font-ui);
