@@ -332,8 +332,9 @@ function updateRowPanel(row) {
   }
 
   const isNew       = !wrap.querySelector('.row-panel');
-  const firstInfo   = PATOLOGIA_INFO.find(p => p.key === rs.keys[0]);
-  const accentColor = firstInfo?.color || '#00E5FF';
+  /* El color de la barra refleja el slide ACTUALMENTE visible, no el primero */
+  const currentInfo = PATOLOGIA_INFO.find(p => p.key === rs.keys[rs.current]);
+  const accentColor = currentInfo?.color || '#00E5FF';
   const showNav     = rs.keys.length > 1;
 
   rs.current = Math.min(rs.current, rs.keys.length - 1);

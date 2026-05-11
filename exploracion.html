@@ -504,12 +504,13 @@
       background: var(--rp-accent, var(--cyan));
     }
 
-    /* Inner: scroll interno si el texto es largo */
+    /* Inner: altura automática según el contenido — sin scroll forzado */
     .rp-slide__inner {
-      height: var(--slide-h);
+      height: auto;
+      max-height: 280px;          /* evita panels enormes con textos muy largos */
       overflow-y: auto;
       overscroll-behavior: contain;
-      padding: 1.1rem 2.8rem 1rem 1.2rem; /* right: espacio para el X */
+      padding: 1.1rem 2.8rem 1.1rem 1.2rem;
       scrollbar-width: thin;
       scrollbar-color: var(--bone-300) transparent;
     }
