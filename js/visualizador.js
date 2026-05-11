@@ -230,7 +230,16 @@ function renderPatologyGrid() {
   row2El.innerHTML = '';
   PATOLOGIA_INFO.slice(4, 8).forEach(info => {
     row2El.appendChild(buildPatologyCard(info, 2));
-  });
+  
+  /*══════════════════════════════════════════════════
+    MAPA DE NOMBRES: Sincroniza los badges de las 
+    cards de resultado con los nombres del grid de 
+    patologías
+  ══════════════════════════════════════════════════ */
+  const PAT_DISPLAY = Object.fromEntries(
+    PATOLOGIA_INFO.map(p =>[p.key, { name: p.name, icon: p.icon, color: p.color }])
+  );
+
 }
 
 /* Construye una card de patología para la fila indicada */
@@ -668,8 +677,14 @@ function renderResults() {
 function buildResultCard(pieza, index) {
   if (typeof VOCABULARIO === 'undefined') return document.createElement('div');
 
-  const regMeta  = VOCABULARIO.region?.[pieza.region]   || { icon: '', label: pieza.region };
-  const patMeta  = VOCABULARIO.patologia?.[pieza.patologia] || { icon: '', label: pieza.patologia, color: '#ccc' };
+  const regMeta  = VOCABULARIO.region?.[pieza.pat]   || { icon: '', label: pieza.region };
+  const patDisplay = PAT_DISPLAY[pieza.patologia];
+  const patMeta    = {
+    icon:  patDisplay?.icon  ?? VOCABULARIO.patologia?.[pieza.patologia]?.icon  ?? '',
+    label: patDisplay?.name  ?? VOCABULARIO.patologia?.[pieza.patologia]?.label ?? pieza.patologia,
+    color: patDisplay?.color ?? VOCABULARIO.patologia?.[pieza.patologia]?.color ?? '#ccc'
+  };
+  if (patDisplay?.color) card.style.setProperty('--pat-color', patDisplay.color);
   const sexMeta  = VOCABULARIO.sexo?.[pieza.sexo]        || { icon: '', label: pieza.sexo };
   const epocMeta = VOCABULARIO.epoca?.[pieza.epoca]      || { icon: '', label: pieza.epoca };
 
