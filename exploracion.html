@@ -696,30 +696,43 @@
        RESPONSIVE — 1150px
     ══════════════════════════════════════ */
     @media (max-width: 1150px) {
-      /* Layout de 1 columna */
-      .expl-layout { grid-template-columns: 1fr; }
-      .expl-center { border-right: none; width: 100%; }
+      /* En mobile el body hace scroll — las columnas no son contenedores de scroll */
+      html, body {
+        overflow: auto;
+        height: auto;
+      }
 
-      /* FABs */
+      /* Layout de 1 columna — el centro ocupa todo el ancho */
+      .expl-layout {
+        grid-template-columns: 1fr;
+        overflow: visible;
+        height: auto;
+      }
+      .expl-center {
+        border-right: none;
+        width: 100%;
+        height: auto;
+        min-height: 50vh;
+        overflow-y: visible;
+      }
+
+      /* FABs visibles en mobile */
       .mob-fab-bar { display: flex; }
 
-      /* Topbar mobile */
+      /* Topbar mobile: solo toggle de vista + limpiar */
       #active-filters-bar { display: none; }
       .topbar-search { display: none; }
       #topbar-clear-mob { display: flex; }
 
-      /* Grid y paneles en mobile */
+      /* Grid de patologías: 2 columnas en mobile */
       #patology-grid-row-1,
       #patology-grid-row-2 { grid-template-columns: repeat(2, 1fr); width: 98%; }
       .row-panel-wrap { width: 98%; }
       .view-hint { display: none; }
 
-      /* Header: solo icono en el botón buscar */
+      /* Header: "Buscar pieza" → solo icono lupa */
       .nav__actions .btn span { display: none; }
-      .nav__actions .btn {
-        padding: 0.5em 0.7em;
-        min-width: unset;
-      }
+      .nav__actions .btn { padding: 0.5em 0.7em; min-width: unset; }
       .nav__actions .btn::after {
         content: '';
         display: inline-block;
@@ -728,38 +741,52 @@
         vertical-align: middle;
       }
 
-      /* Drawers */
+      /* ── DRAWERS: position:fixed los saca del flujo del grid ──
+         El .expl-layout pasa a ser 1fr ocupando solo el centro.
+         Los drawers flotan como overlays encima de todo.        */
       .expl-filters,
       .expl-results {
-        position: fixed; top: 0; bottom: 0;
-        width: min(300px, 88vw); height: 100dvh; max-height: 100dvh;
+        position: fixed !important; /* !important para sobreescribir cualquier herencia */
+        top: 0; bottom: 0;
+        width: min(300px, 88vw);
+        height: 100dvh; max-height: 100dvh;
         z-index: 1000;
         padding-top: 3rem;
-        overflow-y: auto; overscroll-behavior: contain;
+        overflow-y: auto;
+        overscroll-behavior: contain;
         border: none;
+        /* Empezar fuera de pantalla */
         transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
         will-change: transform;
+        /* Resetear dimensiones de grid */
+        height: 100dvh;
       }
       .expl-filters {
         left: 0; right: auto;
         border-right: 1.5px solid var(--bone-200);
         transform: translateX(-110%);
+        background: var(--ivory);
       }
       .expl-results {
         right: 0; left: auto;
         border-left: 1.5px solid var(--bone-200);
         transform: translateX(110%);
+        background: var(--ivory);
       }
+      /* Drawer abierto: deslizar a posición visible */
       .expl-filters.is-open { transform: translateX(0); }
       .expl-results.is-open { transform: translateX(0); }
+
+      /* Botón ✕ dentro del drawer */
       .panel-close {
         display: flex;
         visibility: visible;
         pointer-events: auto;
+        position: absolute;
+        top: 0.65rem; right: 0.65rem;
       }
-      /* Los drawers tienen position:fixed, el botón se ancla a ellos */
-      .expl-filters { position: relative !important; }
-      .expl-results { position: relative !important; }
+
+      /* Chips de filtros activos en el sidebar mobile */
       #sidebar-active-chips { display: flex; }
     }
 
