@@ -396,7 +396,7 @@
       opacity: .6;
     }
 
-    /* Badge 3D */
+    /* Badges */
     .col-master-card__badge-3d {
       position: absolute;
       top: .75rem; right: .75rem;
@@ -410,6 +410,12 @@
       letter-spacing: .1em;
       text-transform: uppercase;
       color: var(--cyan);
+    .col-master-card__badge--h {
+      background: var(--sulfur);
+      color: var(--dark);
+      font-size: .55rem;
+      letter-spacing: .1em;
+    }
     }
 
     /* Top accent strip */
@@ -974,6 +980,20 @@
     </div>
   </section>
 
+<!-- ══════════════════════════════════
+     GALERÍA — piezas históricas
+══════════════════════════════════ -->
+<section class="col-gallery" aria-labelledby="historicas-title">
+  <div class="col-gallery__header">
+    <div>
+      <p class="col-gallery__label">Referentes históricos</p>
+      <h2 class="col-gallery__title" id="historicas-title">Piezas históricas</h2>
+    </div>
+  </div>
+  <div class="col-gallery__track-wrap" id="historicas-track-wrap">
+    <div class="col-gallery__track" id="historicas-track"></div>
+  </div>
+</section>
 
   <!-- ══════════════════════════════════
        BUSCADOR + CATÁLOGO
@@ -1050,6 +1070,7 @@
        o define el array aquí manualmente
     ══════════════════════════════════════════ */
     const MAESTRAS_IDS = ['OV-001', 'OV-004', 'OV-012', 'OV-015', 'OV-016'];
+    const HISTORICAS_IDS = ['H001']
 
     const MASTER_COLORS = ['--cyan', '--crimson', '--sulfur', '--green', '--pink'];
     const PATOL_COLORS = {
@@ -1250,8 +1271,43 @@
       }
     });
 
+    /* ── Función para la galería de piezas históricas ── */
+    function buildHistoricasGallery() {
+      const track = document.getElementById('historicas-track');
+      if (!track || typeof PIEZAS === 'undefined') return;
+
+      const historicas = PIEZAS.filter(p => HISTORICAS_IDS.includes(p.id));
+      historicas.forEach((pieza, i) => {
+        const colorVar = MASTER_COLORS[i % MASTER_COLORS.length];
+        const card = document.createElement('a');
+        card.href = pieza.ficha || `ficha-estandar.html?id=${pieza.id}`;
+        card.className = `col-master-card col-master-card--${colorVar.replace('--','')}`;
+
+        card.innerHTML = `
+          <div class="col-master-card__strip" style="background:var(${colorVar})"></div>
+          <div class="col-master-card__img">
+            ${pieza.imagen
+              ? `<img src="${pieza.imagen}" alt="${pieza.nombre}" style="width:100%;height:100%;object-fit:cover">`
+              : `<span style="font-size:2.5rem">🏛️</span>`}
+            <span class="col-master-card__badge col-master-card__badge--h">H</span>
+          </div>
+          <div class="col-master-card__body">
+            <p class="col-master-card__meta">${pieza.yacimiento || ''}</p>
+            <h3 class="col-master-card__title">${pieza.nombre}</h3>
+            <p class="col-master-card__desc">${pieza.descripcion || ''}</p>
+            <span class="col-master-card__cta">Ver ficha estándar
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/>
+              </svg>
+            </span>
+          </div>`;
+        track.appendChild(card);
+      });
+    }
+
     /* ── Init ── */
     buildGallery();
+    buildHistoricasGallery();
     initDragScroll();
     renderCatalog();
   </script>

@@ -35,6 +35,19 @@ const PIEZAS = [
   { id:'OV-014', nombre:'Tibia con raquitismo',                  region:'miembro-inferior', patologia:'metabolica',   sexo:'indeterminado', epoca:'medieval',    yacimiento:'Toledo, casco histórico',              descripcion:'Incurvación anterior y medial de la diáfisis tibial (tibia en sable). Porosidad cortical generalizada. Hipovitaminosis D severa en la infancia. Individuo subadulto.',                                          imagen:null, ficha:'/prueba-museo/ficha-estandar.html?id=OV-014' },
   { id:'OV-015', nombre:'Pelvis con artritis séptica',           region:'pelvis',           patologia:'infecciosa',   sexo:'masculino',     epoca:'romano',      yacimiento:'Emerita Augusta, Mérida',              descripcion:'Destrucción de la articulación coxofemoral izquierda con anquilosis fibrosa. Superficie articular del acetábulo completamente erosionada. Posible complicación de herida de guerra.',                              imagen:null, ficha:'/prueba-museo/ficha-maestra.html?id=OV-015' },
   { id:'OV-016', nombre:'Cráneo con trauma contuso perimortem',  region:'craneo',           patologia:'trauma',       sexo:'masculino',     epoca:'medieval',    yacimiento:'Batalla de Nájera, La Rioja',          descripcion:'Fractura deprimida en el parietal izquierdo con patrón radial. Ausencia de remodelación ósea. Lesión perimortem por objeto contundente. Contexto de violencia interpersonal.',                                    imagen:null, ficha:'/prueba-museo/ficha-maestra.html?id=OV-016' },
+  {{ id:'H001',
+    nombre:'Ötzi, el Hombre de Hielo',
+    region:'individuo-completo',
+    patologia:'trauma',
+    sexo:'masculino',
+    epoca:'prehistoria',
+    yacimiento:'Tisenjoch Pass (Hauslabjoch), Alpes de Ötzal, Italia',
+    cronologia:'ca. 3350–3105 cal BC',
+    descripcion:'Momia del Calcolítico con traumatismo perimortem por proyectil lítico. Conservada en el South Tyrol Museum of Archaeology, Bolzano.',
+    imagen:'/prueba-museo/assets/img/piezas/H001/H001_cuerpo_completo.png',
+    ficha:'/prueba-museo/ficha-estandar.html?id=H001',
+    historica: true   // ← flag que distingue piezas externas
+},}
 ];
 
 /* ═══════════════════════════════════════════════════════
