@@ -11,29 +11,25 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lexend:wght@300;400;500;600;700;800&family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
-
-  <!-- Model Viewer -->
   <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-
-  <!-- Global styles -->
   <link rel="stylesheet" href="/prueba-museo/css/style.css" />
 
   <style>
-    /* ═══════════════════════════════════════
-       FICHA ESTÁNDAR — variables y estilos
-    ═══════════════════════════════════════ */
+    /* ═══════════════════════════════════════════
+       FICHA ESTÁNDAR — estilos
+    ═══════════════════════════════════════════ */
     :root {
-      --fe-bg:      #f4f1ea;
-      --fe-ink:     #0d0d0d;
-      --fe-mid:     #6b5a43;
-      --fe-bone:    #e8dfc8;
-      --fe-border:  3px solid #0d0d0d;
-      --fe-shadow:  4px 4px 0px #0d0d0d;
+      --fe-bg:     #f4f1ea;
+      --fe-ink:    #0d0d0d;
+      --fe-mid:    #6b5a43;
+      --fe-bone:   #e8dfc8;
+      --fe-border: 3px solid #0d0d0d;
+      --fe-shadow: 4px 4px 0px #0d0d0d;
     }
-
+    *, *::before, *::after { box-sizing: border-box; }
     body { background: var(--fe-bg); }
 
-    /* ── Barra de navegación de ficha ── */
+    /* ── Barra navegación de ficha ── */
     .fe-nav-bar {
       background: var(--fe-bg);
       border-top: 1.5px solid var(--fe-bone);
@@ -44,66 +40,33 @@
       width: min(1400px, 96vw);
       margin-inline: auto;
       padding-inline: clamp(1rem, 3vw, 2rem);
-      display: flex;
-      align-items: center;
+      display: flex; align-items: center;
       justify-content: space-between;
-      gap: 1rem;
-      flex-wrap: wrap;
+      gap: 1rem; flex-wrap: wrap;
     }
     .fe-nav-bar__back {
-      display: inline-flex;
-      align-items: center;
-      gap: .5rem;
-      font-family: var(--font-head);
-      font-size: .65rem;
-      font-weight: 700;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: var(--fe-mid);
-      text-decoration: none;
+      display: inline-flex; align-items: center; gap: .5rem;
+      font-family: var(--font-head); font-size: .65rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--fe-mid); text-decoration: none;
       transition: color .15s, gap .15s;
     }
     .fe-nav-bar__back:hover { color: var(--fe-ink); gap: .7rem; }
-    .fe-nav-bar__back svg { flex-shrink: 0; }
-    .fe-nav-bar__actions {
-      display: flex;
-      align-items: center;
-      gap: .5rem;
-      flex-wrap: wrap;
-    }
+    .fe-nav-bar__actions { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
     .fe-nav-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: .4rem;
-      font-family: var(--font-head);
-      font-size: .6rem;
-      font-weight: 700;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      padding: .4em .9em;
-      border: 2px solid;
-      border-radius: 2px;
-      cursor: pointer;
-      text-decoration: none;
-      transition: transform .12s, box-shadow .12s, background .15s, color .15s;
-      box-shadow: 2px 2px 0;
-      white-space: nowrap;
+      display: inline-flex; align-items: center; gap: .4rem;
+      font-family: var(--font-head); font-size: .6rem; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      padding: .4em .9em; border: 2px solid; border-radius: 2px;
+      cursor: pointer; text-decoration: none;
+      transition: transform .12s, box-shadow .12s, background .15s;
+      box-shadow: 2px 2px 0; white-space: nowrap;
     }
     .fe-nav-btn:hover { transform: translate(-2px,-2px); }
-    .fe-nav-btn--region {
-      background: rgba(0,180,200,.06);
-      border-color: #0097a7;
-      color: #0097a7;
-      box-shadow: 2px 2px 0 #0097a7;
-    }
-    .fe-nav-btn--region:hover { background: rgba(0,180,200,.14); box-shadow: 4px 4px 0 #0097a7; }
-    .fe-nav-btn--buscar {
-      background: rgba(192,0,60,.06);
-      border-color: var(--crimson);
-      color: var(--crimson);
-      box-shadow: 2px 2px 0 var(--crimson);
-    }
-    .fe-nav-btn--buscar:hover { background: rgba(192,0,60,.14); box-shadow: 4px 4px 0 var(--crimson); }
+    .fe-nav-btn--region  { background: rgba(0,180,200,.06); border-color: #0097a7; color: #0097a7; box-shadow: 2px 2px 0 #0097a7; }
+    .fe-nav-btn--region:hover  { background: rgba(0,180,200,.14); box-shadow: 4px 4px 0 #0097a7; }
+    .fe-nav-btn--buscar  { background: rgba(192,0,60,.06); border-color: var(--crimson); color: var(--crimson); box-shadow: 2px 2px 0 var(--crimson); }
+    .fe-nav-btn--buscar:hover  { background: rgba(192,0,60,.14); box-shadow: 4px 4px 0 var(--crimson); }
 
     /* ── Layout principal ── */
     .fe-main {
@@ -111,8 +74,7 @@
       margin-inline: auto;
       padding-inline: clamp(1rem, 3vw, 2rem);
       padding-block: clamp(2rem, 4vw, 3.5rem);
-      /* ↓ padding-top extra para compensar el header fijo */
-      padding-top: calc(clamp(2rem, 4vw, 3.5rem) + clamp(56px, 7vw, 70px));
+      padding-top: calc(clamp(2rem,4vw,3.5rem) + clamp(56px,7vw,70px));
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: clamp(2rem, 4vw, 4rem);
@@ -120,347 +82,358 @@
     }
 
     /* ════════════════════════════════
-       COLUMNA IZQUIERDA — visual
+       COLUMNA IZQUIERDA
     ════════════════════════════════ */
-    .fe-visual {}
 
-    /* Imagen principal */
-    .fe-img-wrap {
+    /* ── GALERÍA DE IMÁGENES ── */
+    .fe-gallery {
       border: var(--fe-border);
       border-radius: 4px;
       overflow: hidden;
       background: var(--fe-bone);
-      aspect-ratio: 4/3;
-      position: relative;
       box-shadow: var(--fe-shadow);
       margin-bottom: 1.25rem;
-    }
-    .fe-img-wrap img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .fe-img-placeholder {
-      width: 100%; height: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: .75rem;
-      opacity: .35;
-    }
-    .fe-img-placeholder svg { width: 64px; height: 64px; }
-    .fe-img-placeholder span {
-      font-family: var(--font-head);
-      font-size: .62rem;
-      font-weight: 700;
-      letter-spacing: .15em;
-      text-transform: uppercase;
-      color: var(--fe-mid);
-    }
-
-    /* Badge tipo ficha */
-    .fe-img-badge {
-      position: absolute;
-      top: .75rem; left: .75rem;
-      background: var(--fe-ink);
-      color: var(--ivory);
-      font-family: var(--font-head);
-      font-size: .58rem;
-      font-weight: 700;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      padding: .22em .65em;
-      border-radius: 2px;
-    }
-
-    /* Model Viewer */
-    .fe-viewer-wrap {
-      border: var(--fe-border);
-      border-radius: 4px;
-      overflow: hidden;
-      background: var(--fe-ink);
-      box-shadow: var(--fe-shadow);
       position: relative;
     }
-    .fe-viewer-label {
-      position: absolute;
-      top: .75rem; right: .75rem;
-      background: rgba(0,229,255,.15);
-      border: 1.5px solid var(--cyan);
-      color: var(--cyan);
-      font-family: var(--font-head);
-      font-size: .55rem;
-      font-weight: 700;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      padding: .2em .6em;
-      border-radius: 2px;
-      z-index: 2;
-      pointer-events: none;
-    }
-    model-viewer {
+
+    /* Viewport: recorta el slider */
+    .fe-gallery__viewport {
+      overflow: hidden;
       width: 100%;
-      height: 320px;
-      background: transparent;
-      --progress-bar-color: transparent;
+      position: relative;
+      /* Aspect ratio fijo para que todas las imágenes ocupen lo mismo */
+      aspect-ratio: 4 / 3;
+      background: #1a1a1a;
     }
 
-    /* Tags de metadatos bajo el viewer */
-    .fe-tags {
+    /* Track: flex horizontal, ancho = N × 100% */
+    .fe-gallery__track {
       display: flex;
-      flex-wrap: wrap;
-      gap: .45rem;
-      margin-top: 1.25rem;
+      height: 100%;
+      will-change: transform;
+      transition: transform 0.38s cubic-bezier(0.4,0,0.2,1);
     }
+
+    /* Cada slide: ancho fijo calculado por JS */
+    .fe-gallery__slide {
+      flex: 0 0 100%;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      cursor: zoom-in;
+      position: relative;
+    }
+    .fe-gallery__slide img {
+      width: 100%; height: 100%;
+      object-fit: contain;   /* contain para ver la imagen completa */
+      object-position: center;
+      background: #1a1a1a;
+      display: block;
+      transition: transform 0.2s;
+    }
+    .fe-gallery__slide:hover img { transform: scale(1.02); }
+
+    /* Badge de tipo (esquina sup. izq.) */
+    .fe-img-badge {
+      position: absolute; top: .75rem; left: .75rem;
+      background: var(--fe-ink); color: var(--ivory);
+      font-family: var(--font-head); font-size: .58rem; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      padding: .22em .65em; border-radius: 2px; z-index: 2;
+      pointer-events: none;
+    }
+
+    /* Placeholder cuando no hay imágenes */
+    .fe-img-placeholder {
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: .75rem; opacity: .35;
+    }
+    .fe-img-placeholder span {
+      font-family: var(--font-head); font-size: .62rem; font-weight: 700;
+      letter-spacing: .15em; text-transform: uppercase; color: var(--fe-mid);
+    }
+
+    /* Flechas de navegación de la galería */
+    .fe-gallery__nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: .5rem .75rem;
+      background: var(--fe-ink);
+      min-height: 40px;
+    }
+    .fe-gallery__arrow {
+      width: 30px; height: 30px;
+      background: rgba(255,255,255,.1); color: var(--ivory);
+      border: 1.5px solid rgba(255,255,255,.2); border-radius: 2px;
+      font-size: 1rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: background .15s, opacity .15s;
+    }
+    .fe-gallery__arrow:hover { background: rgba(255,255,255,.22); }
+    .fe-gallery__arrow:disabled { opacity: .25; pointer-events: none; }
+    .fe-gallery__counter {
+      font-family: var(--font-head); font-size: .62rem; font-weight: 700;
+      letter-spacing: .12em; color: rgba(255,255,255,.6);
+    }
+    .fe-gallery__counter strong { color: var(--ivory); }
+
+    /* Pie de foto debajo de la galería */
+    .fe-gallery__caption {
+      padding: .65rem .85rem;
+      background: rgba(255,255,255,.55);
+      border-top: 1px solid var(--fe-bone);
+      font-family: var(--font-ui); font-size: .72rem; line-height: 1.5;
+      color: var(--fe-mid); font-style: italic;
+      min-height: 3.5rem;
+    }
+
+    /* ── LIGHTBOX ── */
+    .fe-lightbox {
+      position: fixed; inset: 0; z-index: 9999;
+      background: rgba(13,13,13,.92);
+      backdrop-filter: blur(6px);
+      display: none; align-items: center; justify-content: center;
+      padding: 1rem;
+    }
+    .fe-lightbox.is-open { display: flex; }
+    .fe-lightbox__inner {
+      position: relative; max-width: min(92vw, 1100px); width: 100%;
+      display: flex; flex-direction: column; gap: .75rem;
+    }
+    .fe-lightbox__img {
+      width: 100%; max-height: 80vh;
+      object-fit: contain; border-radius: 2px;
+      border: 2px solid rgba(255,255,255,.12);
+    }
+    .fe-lightbox__caption {
+      font-family: var(--font-ui); font-size: .78rem; line-height: 1.6;
+      color: rgba(255,255,255,.75); font-style: italic; text-align: center;
+    }
+    .fe-lightbox__close {
+      position: absolute; top: -.5rem; right: -.5rem;
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--crimson); color: #fff; border: none;
+      font-size: 1.1rem; font-weight: 700; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 2;
+    }
+
+    /* ── Model Viewer ── */
+    .fe-viewer-wrap {
+      border: var(--fe-border); border-radius: 4px;
+      overflow: hidden; background: var(--fe-ink);
+      box-shadow: var(--fe-shadow); position: relative;
+      margin-bottom: 1.25rem;
+    }
+    .fe-viewer-label {
+      position: absolute; top: .75rem; right: .75rem;
+      background: rgba(0,229,255,.15); border: 1.5px solid var(--cyan);
+      color: var(--cyan); font-family: var(--font-head); font-size: .55rem;
+      font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+      padding: .2em .6em; border-radius: 2px; z-index: 2; pointer-events: none;
+    }
+    model-viewer {
+      width: 100%; height: 300px;
+      background: transparent; --progress-bar-color: transparent;
+    }
+
+    /* Tags de metadatos */
+    .fe-tags { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: .5rem; }
     .fe-tag {
-      font-family: var(--font-head);
-      font-size: .6rem;
-      font-weight: 700;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      padding: .28em .7em;
-      border: 2px solid;
-      border-radius: 2px;
+      font-family: var(--font-head); font-size: .6rem; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      padding: .28em .7em; border: 2px solid; border-radius: 2px;
     }
     .fe-tag--region   { border-color: var(--cyan);    color: var(--cyan);    background: rgba(0,229,255,.06); }
     .fe-tag--patol    { border-color: var(--crimson);  color: var(--crimson); background: rgba(192,0,60,.06); }
     .fe-tag--sexo     { border-color: var(--pink);     color: var(--pink);    background: rgba(255,64,129,.06); }
     .fe-tag--epoca    { border-color: var(--bone-400); color: var(--bone-500);background: rgba(200,170,120,.08); }
     .fe-tag--master   { border-color: var(--sulfur);   color: #6a7300;        background: rgba(212,230,10,.1); }
+    .fe-tag--historica{ border-color: var(--sulfur);   color: #6a5800;        background: rgba(230,200,10,.12); }
 
     /* ════════════════════════════════
-       COLUMNA DERECHA — datos
+       COLUMNA DERECHA
     ════════════════════════════════ */
-    .fe-data {}
 
-    /* Cabecera de la ficha */
-    .fe-header {
-      margin-bottom: 1.75rem;
-      padding-bottom: 1.5rem;
-      border-bottom: var(--fe-border);
-    }
+    /* Cabecera */
+    .fe-header { margin-bottom: 1.75rem; padding-bottom: 1.5rem; border-bottom: var(--fe-border); }
     .fe-header__id {
-      font-family: var(--font-head);
-      font-size: .65rem;
-      font-weight: 700;
-      letter-spacing: .2em;
-      text-transform: uppercase;
-      color: var(--crimson);
-      margin-bottom: .4rem;
+      font-family: var(--font-head); font-size: .65rem; font-weight: 700;
+      letter-spacing: .2em; text-transform: uppercase; color: var(--crimson); margin-bottom: .4rem;
     }
     .fe-header__title {
-      font-family: var(--font-head);
-      font-size: clamp(1.5rem, 2.5vw, 2.2rem);
-      font-weight: 900;
-      letter-spacing: -.04em;
-      line-height: 1.05;
-      color: var(--fe-ink);
-      margin-bottom: .75rem;
+      font-family: var(--font-head); font-size: clamp(1.5rem,2.5vw,2.2rem);
+      font-weight: 900; letter-spacing: -.04em; line-height: 1.05;
+      color: var(--fe-ink); margin-bottom: .75rem;
     }
     .fe-header__subtitle {
-      font-family: var(--font-display);
-      font-style: italic;
-      font-size: clamp(.9rem, 1.4vw, 1.05rem);
-      color: var(--fe-mid);
-      font-weight: 400;
+      font-family: var(--font-display); font-style: italic;
+      font-size: clamp(.9rem,1.4vw,1.05rem); color: var(--fe-mid); font-weight: 400;
     }
 
-    /* Secciones de datos */
-    .fe-section {
-      margin-bottom: 1.5rem;
-    }
+    /* Secciones */
+    .fe-section { margin-bottom: 1.75rem; }
     .fe-section__title {
-      font-family: var(--font-head);
-      font-size: .6rem;
-      font-weight: 800;
-      letter-spacing: .2em;
-      text-transform: uppercase;
-      color: var(--fe-mid);
-      margin-bottom: .75rem;
-      padding-bottom: .4rem;
+      font-family: var(--font-head); font-size: .6rem; font-weight: 800;
+      letter-spacing: .2em; text-transform: uppercase; color: var(--fe-mid);
+      margin-bottom: .75rem; padding-bottom: .4rem;
       border-bottom: 1.5px solid var(--fe-bone);
-      display: flex;
-      align-items: center;
-      gap: .5rem;
+      display: flex; align-items: center; gap: .5rem;
     }
     .fe-section__title::before {
-      content: '';
-      display: block;
-      width: 16px; height: 2px;
-      background: var(--crimson);
-      flex-shrink: 0;
+      content: ''; display: block; width: 16px; height: 2px;
+      background: var(--crimson); flex-shrink: 0;
     }
 
     /* Grid de datos técnicos */
-    .fe-data-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: .6rem;
-    }
+    .fe-data-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; }
     .fe-data-item {
-      background: #fff;
-      border: 2px solid var(--fe-ink);
-      border-radius: 2px;
-      padding: .65rem .85rem;
-      box-shadow: 2px 2px 0 var(--fe-ink);
+      background: #fff; border: 2px solid var(--fe-ink); border-radius: 2px;
+      padding: .65rem .85rem; box-shadow: 2px 2px 0 var(--fe-ink);
     }
     .fe-data-item--full { grid-column: span 2; }
     .fe-data-item__label {
-      font-family: var(--font-head);
-      font-size: .55rem;
-      font-weight: 700;
-      letter-spacing: .15em;
-      text-transform: uppercase;
-      color: var(--fe-mid);
-      margin-bottom: .25rem;
+      font-family: var(--font-head); font-size: .55rem; font-weight: 700;
+      letter-spacing: .15em; text-transform: uppercase; color: var(--fe-mid); margin-bottom: .25rem;
     }
     .fe-data-item__value {
-      font-family: var(--font-head);
-      font-size: .85rem;
-      font-weight: 700;
-      color: var(--fe-ink);
-      line-height: 1.3;
-    }
-    .fe-data-item__value--light {
-      font-family: var(--font-ui);
-      font-weight: 300;
-      font-size: .82rem;
-      color: #3d3d3d;
-      line-height: 1.6;
+      font-family: var(--font-head); font-size: .85rem; font-weight: 700;
+      color: var(--fe-ink); line-height: 1.3;
     }
 
-    /* Descripción */
+    /* Descripción osteológica — párrafos */
+    .fe-desc-block { display: flex; flex-direction: column; gap: .9rem; }
     .fe-desc {
-      font-size: clamp(.85rem, 1.3vw, .95rem);
-      line-height: 1.8;
-      color: #3d3d3d;
-      font-weight: 300;
+      font-size: clamp(.85rem,1.3vw,.95rem); line-height: 1.8;
+      color: #3d3d3d; font-weight: 300;
     }
     .fe-desc strong { color: var(--fe-ink); font-weight: 700; }
 
-    /* Diagnóstico diferencial */
-    .fe-diag-list {
-      display: flex;
-      flex-direction: column;
-      gap: .5rem;
-    }
-    .fe-diag-item {
-      display: flex;
-      align-items: flex-start;
-      gap: .75rem;
-      padding: .75rem 1rem;
-      background: #fff;
-      border: 2px solid var(--fe-bone);
-      border-radius: 2px;
+    /* Diagnóstico principal */
+    .fe-diag-main {
+      padding: .9rem 1.1rem; background: #fff;
+      border-left: 4px solid var(--crimson); border-radius: 0 2px 2px 0;
+      font-size: .88rem; line-height: 1.65; color: #3d3d3d; font-weight: 300;
       box-shadow: 2px 2px 0 var(--fe-bone);
-      transition: border-color .15s, box-shadow .15s;
     }
-    .fe-diag-item:hover { border-color: var(--fe-ink); box-shadow: 2px 2px 0 var(--fe-ink); }
-    .fe-diag-item__dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      flex-shrink: 0;
-      margin-top: .35rem;
-    }
-    .fe-diag-item__text {
-      font-size: .82rem;
-      color: #3d3d3d;
-      line-height: 1.55;
-      font-weight: 300;
-    }
-    .fe-diag-item__text strong { color: var(--fe-ink); font-weight: 700; }
 
-    /* Bibliografía de la pieza */
-    .fe-bib-list {
-      display: flex;
-      flex-direction: column;
-      gap: .5rem;
+    /* ── ACORDEÓN DE HALLAZGOS ── */
+    .fe-accordion { display: flex; flex-direction: column; gap: .45rem; }
+    .fe-accordion__item {
+      border: 2px solid var(--fe-bone); border-radius: 2px;
+      overflow: hidden; background: #fff;
+      transition: border-color .15s;
     }
+    .fe-accordion__item.is-open { border-color: var(--fe-ink); }
+
+    .fe-accordion__trigger {
+      width: 100%; display: flex; align-items: center; justify-content: space-between;
+      padding: .75rem 1rem; background: none; border: none; cursor: pointer;
+      font-family: var(--font-head); font-size: .75rem; font-weight: 700;
+      letter-spacing: .04em; color: var(--fe-ink); text-align: left;
+      transition: background .12s;
+    }
+    .fe-accordion__trigger:hover { background: var(--fe-bg); }
+    .fe-accordion__item.is-open .fe-accordion__trigger { background: var(--fe-ink); color: var(--ivory); }
+
+    .fe-accordion__chevron {
+      width: 18px; height: 18px; flex-shrink: 0;
+      transition: transform .22s; display: flex; align-items: center; justify-content: center;
+      font-style: normal;
+    }
+    .fe-accordion__item.is-open .fe-accordion__chevron { transform: rotate(180deg); }
+
+    .fe-accordion__body {
+      display: none; padding: .75rem 1rem 1rem;
+      border-top: 1.5px solid var(--fe-bone);
+    }
+    .fe-accordion__item.is-open .fe-accordion__body { display: block; }
+
+    /* Lista de items dentro del acordeón */
+    .fe-hallazgo-list { display: flex; flex-direction: column; gap: .5rem; margin: 0; padding: 0; list-style: none; }
+    .fe-hallazgo-item {
+      display: flex; align-items: flex-start; gap: .65rem;
+      padding: .6rem .8rem; background: var(--fe-bg);
+      border-radius: 2px; border: 1.5px solid var(--fe-bone);
+    }
+    .fe-hallazgo-item__dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--crimson); flex-shrink: 0; margin-top: .38rem;
+    }
+    .fe-hallazgo-item__text {
+      font-size: .82rem; color: #3d3d3d; line-height: 1.6; font-weight: 300; flex: 1;
+    }
+    /* Superíndice de referencia */
+    .fe-ref-link {
+      font-family: var(--font-head); font-size: .6rem; font-weight: 700;
+      color: var(--crimson); text-decoration: none; vertical-align: super;
+      line-height: 0; margin-left: .1em;
+      transition: color .12s;
+    }
+    .fe-ref-link:hover { color: var(--fe-ink); }
+
+    /* ── REFERENCIAS ── */
+    .fe-bib-list { display: flex; flex-direction: column; gap: .5rem; }
     .fe-bib-item {
-      font-size: .78rem;
-      color: #3d3d3d;
-      line-height: 1.65;
-      padding: .7rem .85rem;
-      background: #fff;
-      border-left: 3px solid var(--blue);
-      font-weight: 300;
+      font-size: .78rem; color: #3d3d3d; line-height: 1.65;
+      padding: .7rem .85rem .7rem 1rem; background: #fff;
+      border-left: 3px solid var(--blue); font-weight: 300;
+      transition: background .15s, border-color .15s;
+      scroll-margin-top: 100px; /* espacio al hacer scroll desde superíndice */
+    }
+    /* Estado highlight cuando se navega desde un superíndice */
+    .fe-bib-item.fe-ref-highlight {
+      background: rgba(61,90,254,.08);
+      border-left-color: var(--crimson);
+      animation: fe-ref-pulse 1.4s ease-out forwards;
+    }
+    @keyframes fe-ref-pulse {
+      0%   { background: rgba(192,0,60,.16); }
+      60%  { background: rgba(192,0,60,.08); }
+      100% { background: rgba(61,90,254,.04); }
+    }
+    .fe-bib-item__num {
+      font-family: var(--font-head); font-size: .65rem; font-weight: 800;
+      color: var(--crimson); margin-right: .4rem;
     }
     .fe-bib-item em { font-style: italic; }
     .fe-bib-item strong { color: var(--fe-ink); font-weight: 700; }
     .fe-bib-item a {
-      color: var(--blue);
-      font-weight: 600;
-      font-family: var(--font-head);
-      font-size: .68rem;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: .25rem;
-      margin-top: .3rem;
+      color: var(--blue); font-weight: 600; font-family: var(--font-head);
+      font-size: .68rem; letter-spacing: .06em; text-transform: uppercase;
+      text-decoration: none; display: inline-flex; align-items: center;
+      gap: .25rem; margin-top: .3rem;
     }
     .fe-bib-item a:hover { color: var(--crimson); }
 
-    /* Enlace a ficha maestra */
+    /* ── Enlace ficha maestra ── */
     .fe-master-link {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1.1rem 1.3rem;
-      background: var(--fe-ink);
-      border: var(--fe-border);
-      border-radius: 4px;
-      box-shadow: var(--fe-shadow);
-      text-decoration: none;
-      color: var(--ivory);
-      margin-top: 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.1rem 1.3rem; background: var(--fe-ink);
+      border: var(--fe-border); border-radius: 4px; box-shadow: var(--fe-shadow);
+      text-decoration: none; color: var(--ivory); margin-top: 1.5rem;
       transition: transform .15s, box-shadow .15s;
     }
-    .fe-master-link:hover {
-      transform: translate(-3px,-3px);
-      box-shadow: 7px 7px 0 var(--fe-ink);
-    }
+    .fe-master-link:hover { transform: translate(-3px,-3px); box-shadow: 7px 7px 0 var(--fe-ink); }
     .fe-master-link__eyebrow {
-      font-family: var(--font-head);
-      font-size: .58rem;
-      font-weight: 700;
-      letter-spacing: .15em;
-      text-transform: uppercase;
-      color: var(--sulfur);
-      margin-bottom: .25rem;
+      font-family: var(--font-head); font-size: .58rem; font-weight: 700;
+      letter-spacing: .15em; text-transform: uppercase; color: var(--sulfur); margin-bottom: .25rem;
     }
-    .fe-master-link__title {
-      font-family: var(--font-head);
-      font-size: .92rem;
-      font-weight: 800;
-      letter-spacing: -.01em;
-    }
-    .fe-master-link__arrow {
-      font-size: 1.3rem;
-      color: var(--sulfur);
-      flex-shrink: 0;
-      transition: transform .2s;
-    }
+    .fe-master-link__title { font-family: var(--font-head); font-size: .92rem; font-weight: 800; }
+    .fe-master-link__arrow { font-size: 1.3rem; color: var(--sulfur); flex-shrink: 0; transition: transform .2s; }
     .fe-master-link:hover .fe-master-link__arrow { transform: translateX(5px); }
 
-    /* ── Glos-link heredado de data.js ── */
+    /* Glos-link */
     .glos-link {
-      color: var(--blue);
-      text-decoration: underline dotted;
-      text-underline-offset: 3px;
-      font-weight: 600;
-      transition: color .15s;
+      color: var(--blue); text-decoration: underline dotted; text-underline-offset: 3px;
+      font-weight: 600; transition: color .15s;
     }
     .glos-link:hover { color: var(--crimson); }
 
-    /* ════════════════════════════════
-       RESPONSIVE
-    ════════════════════════════════ */
-    @media (max-width: 900px) {
-      .fe-main { grid-template-columns: 1fr; }
-    }
+    /* ── Responsive ── */
+    @media (max-width: 900px) { .fe-main { grid-template-columns: 1fr; } }
     @media (max-width: 500px) {
       .fe-data-grid { grid-template-columns: 1fr; }
       .fe-data-item--full { grid-column: auto; }
@@ -469,9 +442,7 @@
 </head>
 <body>
 
-  <!-- ══════════════════════════════════
-       HEADER — barra de navegación global
-  ══════════════════════════════════ -->
+  <!-- HEADER -->
   <header class="site-header" id="site-header">
     <div class="container">
       <nav class="nav" role="navigation" aria-label="Navegación principal">
@@ -490,7 +461,7 @@
           <li><a href="/prueba-museo/index.html#proyecto" class="nav__link">Proyecto</a></li>
         </ul>
         <div class="nav__actions">
-          <a href="/prueba-museo/coleccion.html#buscados" class="btn btn--primary" style="font-size:.78rem;padding:.55em 1.2em;">
+          <a href="/prueba-museo/coleccion.html" class="btn btn--primary" style="font-size:.78rem;padding:.55em 1.2em;">
             <span>Ver colección</span>
           </a>
         </div>
@@ -509,39 +480,44 @@
     </div>
   </header>
 
-  <!-- ══════════════════════════════════
-       CONTENIDO PRINCIPAL
-       (padding-top compensa el header fijo)
-  ══════════════════════════════════ -->
+  <!-- CONTENIDO PRINCIPAL -->
   <main class="fe-main" id="fe-main">
 
-    <!-- ── Columna izquierda: visual ── -->
-    <div class="fe-visual">
+    <!-- COLUMNA IZQUIERDA: visual -->
+    <div class="fe-visual" id="fe-visual">
 
-      <!-- Imagen principal -->
-      <div class="fe-img-wrap" id="fe-img-wrap">
-        <span class="fe-img-badge">Ficha estándar</span>
-        <div class="fe-img-placeholder" id="fe-img-placeholder">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" fill="currentColor"/>
-          </svg>
-          <span>Imagen no disponible</span>
+      <!-- Galería de imágenes (se construye por JS) -->
+      <div class="fe-gallery" id="fe-gallery">
+        <div class="fe-gallery__viewport" id="fe-gallery-viewport">
+          <!-- Placeholder por defecto — JS lo reemplaza si hay imágenes -->
+          <div class="fe-img-placeholder" id="fe-img-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:64px;height:64px">
+              <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" fill="currentColor"/>
+            </svg>
+            <span>Imagen no disponible</span>
+          </div>
+          <span class="fe-img-badge" id="fe-img-badge">Ficha estándar</span>
         </div>
+        <!-- Barra de navegación de la galería -->
+        <div class="fe-gallery__nav" id="fe-gallery-nav" style="display:none">
+          <button class="fe-gallery__arrow" id="fe-gallery-prev" aria-label="Imagen anterior">&#8592;</button>
+          <span class="fe-gallery__counter" id="fe-gallery-counter"><strong>1</strong> / 1</span>
+          <button class="fe-gallery__arrow" id="fe-gallery-next" aria-label="Imagen siguiente">&#8594;</button>
+        </div>
+        <!-- Pie de foto -->
+        <div class="fe-gallery__caption" id="fe-gallery-caption" style="display:none"></div>
       </div>
 
-      <!-- Model Viewer 3D -->
-      <div class="fe-viewer-wrap">
+      <!-- Model Viewer 3D (se oculta si no hay modelo) -->
+      <div class="fe-viewer-wrap" id="fe-viewer-wrap" style="display:none">
         <span class="fe-viewer-label">Modelo 3D · Arrastra para rotar</span>
         <model-viewer
           id="fe-model-viewer"
-          src="/prueba-museo/assets/models/avas_skull.glb"
           alt="Modelo 3D de la pieza paleopatológica"
-          camera-controls
-          auto-rotate
-          shadow-intensity="1.2"
-          exposure="0.8"
+          camera-controls auto-rotate
+          shadow-intensity="1.2" exposure="0.8"
           environment-image="neutral"
-          style="width:100%;height:320px;background:transparent">
+          style="width:100%;height:300px;background:transparent">
         </model-viewer>
       </div>
 
@@ -550,118 +526,51 @@
 
     </div>
 
-    <!-- ── Columna derecha: datos ── -->
-    <div class="fe-data">
+    <!-- COLUMNA DERECHA: datos -->
+    <div class="fe-data" id="fe-data">
 
       <!-- Cabecera -->
       <div class="fe-header">
-        <p class="fe-header__id" id="fe-id">OV-001</p>
-        <h1 class="fe-header__title" id="fe-title">Cráneo con trepanación curada</h1>
-        <p class="fe-header__subtitle" id="fe-subtitle">Traumatismo intencional · Prehistoria</p>
+        <p class="fe-header__id"  id="fe-id">—</p>
+        <h1 class="fe-header__title" id="fe-title">Cargando…</h1>
+        <p class="fe-header__subtitle" id="fe-subtitle"></p>
       </div>
 
-      <!-- Datos de identificación -->
-      <div class="fe-section">
+      <!-- Identificación -->
+      <div class="fe-section" id="fe-section-identificacion">
         <p class="fe-section__title">Identificación</p>
-        <div class="fe-data-grid">
-          <div class="fe-data-item">
-            <p class="fe-data-item__label">Número de catálogo</p>
-            <p class="fe-data-item__value" id="fe-catalog">OV-001</p>
-          </div>
-          <div class="fe-data-item">
-            <p class="fe-data-item__label">Cronología</p>
-            <p class="fe-data-item__value" id="fe-epoca">Prehistoria · ~3200 a.C.</p>
-          </div>
-          <div class="fe-data-item">
-            <p class="fe-data-item__label">Yacimiento</p>
-            <p class="fe-data-item__value" id="fe-yacimiento">Cueva de los Murciélagos, Granada</p>
-          </div>
-          <div class="fe-data-item">
-            <p class="fe-data-item__label">Sexo biológico</p>
-            <p class="fe-data-item__value" id="fe-sexo">Masculino</p>
-          </div>
-          <div class="fe-data-item">
-            <p class="fe-data-item__label">Región anatómica</p>
-            <p class="fe-data-item__value" id="fe-region">Cráneo</p>
-          </div>
-          <div class="fe-data-item">
-            <p class="fe-data-item__label">Tipo de patología</p>
-            <p class="fe-data-item__value" id="fe-patologia">Traumatismo intencional</p>
-          </div>
-          <div class="fe-data-item">
-            <p class="fe-data-item__label">Estado de conservación</p>
-            <p class="fe-data-item__value" id="fe-conservacion">Muy bueno · Pérdida ósea &lt;5%</p>
-          </div>
-          <div class="fe-data-item">
-            <p class="fe-data-item__label">Método de digitalización</p>
-            <p class="fe-data-item__value" id="fe-digitalizacion">Fotogrametría estructurada</p>
-          </div>
+        <div class="fe-data-grid" id="fe-data-grid">
+          <!-- JS inyecta solo los campos que existen -->
         </div>
       </div>
 
-      <!-- Descripción -->
-      <div class="fe-section">
-        <p class="fe-section__title">Descripción paleopatológica</p>
-        <p class="fe-desc" id="fe-desc">
-          Trepanación circular de <strong>35 mm de diámetro</strong> localizada en el tercio
-          posterior del parietal derecho. La técnica empleada es el raspado por abrasión,
-          identificable por las estrías concéntricas en el bisel interno. Los bordes presentan
-          remodelación ósea completa con formación de tejido compacto lamelar, indicando una
-          supervivencia mínima de <strong>6–8 años</strong> post-intervención. Uno de los casos
-          más documentados de cirugía prehistórica exitosa en la Península Ibérica.
-        </p>
+      <!-- Descripción osteológica -->
+      <div class="fe-section" id="fe-section-osteologica" style="display:none">
+        <p class="fe-section__title">Descripción osteológica</p>
+        <div class="fe-desc-block" id="fe-desc-block"></div>
       </div>
 
-      <!-- Diagnóstico diferencial -->
-      <div class="fe-section">
+      <!-- Diagnóstico principal -->
+      <div class="fe-section" id="fe-section-diagnostico" style="display:none">
         <p class="fe-section__title">Diagnóstico diferencial</p>
-        <div class="fe-diag-list">
-          <div class="fe-diag-item">
-            <span class="fe-diag-item__dot" style="background:var(--crimson)"></span>
-            <p class="fe-diag-item__text">
-              <strong>Trepanación intencional (diagnóstico principal)</strong> — Técnica de raspado
-              por abrasión con supervivencia confirmada por remodelación ósea completa.
-            </p>
-          </div>
-          <div class="fe-diag-item">
-            <span class="fe-diag-item__dot" style="background:var(--bone-400)"></span>
-            <p class="fe-diag-item__text">
-              <strong>Traumatismo accidental descartado</strong> — La morfología circular y los
-              bordes biselados son incompatibles con un impacto fortuito.
-            </p>
-          </div>
-          <div class="fe-diag-item">
-            <span class="fe-diag-item__dot" style="background:var(--bone-400)"></span>
-            <p class="fe-diag-item__text">
-              <strong>Lesión postmortem descartada</strong> — La presencia de tejido neoformado en
-              los márgenes confirma actividad vital durante y después de la intervención.
-            </p>
-          </div>
-        </div>
+        <div class="fe-diag-main" id="fe-diag-main"></div>
       </div>
 
-      <!-- Bibliografía de la pieza -->
-      <div class="fe-section">
+      <!-- Hallazgos (acordeón) -->
+      <div class="fe-section" id="fe-section-hallazgos" style="display:none">
+        <p class="fe-section__title">Hallazgos</p>
+        <div class="fe-accordion" id="fe-accordion"></div>
+      </div>
+
+      <!-- Referencias -->
+      <div class="fe-section" id="fe-section-referencias" style="display:none">
         <p class="fe-section__title">Referencias bibliográficas</p>
-        <div class="fe-bib-list">
-          <div class="fe-bib-item">
-            <strong>Campillo, D.</strong> (2001). <em>Introducción a la Paleopatología</em>.
-            Edicions Bellaterra. pp. 234–251.
-          </div>
-          <div class="fe-bib-item">
-            <strong>Ortner, D.J.</strong> (2003). <em>Identification of Pathological Conditions
-            in Human Skeletal Remains</em> (2nd ed.). Academic Press. pp. 89–102.
-            <a href="https://doi.org/10.1016/B978-012528628-2/50007-3" target="_blank" rel="noopener noreferrer">
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
-              DOI
-            </a>
-          </div>
-        </div>
+        <div class="fe-bib-list" id="fe-bib-list"></div>
       </div>
 
-      <!-- Enlace a ficha maestra (se oculta automáticamente si la pieza no la tiene) -->
-      <a href="/prueba-museo/ficha-maestra.html?id=OV-001" class="fe-master-link" id="fe-master-link">
-        <div class="fe-master-link__text">
+      <!-- Enlace ficha maestra -->
+      <a href="#" class="fe-master-link" id="fe-master-link" style="display:none">
+        <div>
           <p class="fe-master-link__eyebrow">Disponible para esta pieza</p>
           <p class="fe-master-link__title">Ver ficha maestra inmersiva →</p>
         </div>
@@ -671,10 +580,7 @@
     </div>
   </main>
 
-  <!-- ══════════════════════════════════
-       BARRA DE NAVEGACIÓN INFERIOR
-       (antes del footer, igual que ficha maestra)
-  ══════════════════════════════════ -->
+  <!-- BARRA NAVEGACIÓN INFERIOR -->
   <div class="fe-nav-bar">
     <div class="fe-nav-bar__inner">
       <a href="/prueba-museo/exploracion.html" class="fe-nav-bar__back">
@@ -686,29 +592,36 @@
           <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
           Explorar región anatómica
         </a>
-        <a href="/prueba-museo/coleccion.html" class="fe-nav-btn fe-nav-btn--buscar" id="fe-btn-buscar">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="11" cy="11" r="8" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="m21 21-4.35-4.35" stroke="currentColor" stroke-width="2.5"/></svg>
+        <a href="/prueba-museo/coleccion.html" class="fe-nav-btn fe-nav-btn--buscar">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
           Buscar más piezas
         </a>
       </div>
     </div>
   </div>
 
-  <!-- ══════════════════════════════════
-       FOOTER
-  ══════════════════════════════════ -->
+  <!-- LIGHTBOX -->
+  <div class="fe-lightbox" id="fe-lightbox" role="dialog" aria-modal="true" aria-label="Imagen ampliada">
+    <div class="fe-lightbox__inner">
+      <button class="fe-lightbox__close" id="fe-lightbox-close" aria-label="Cerrar">✕</button>
+      <img class="fe-lightbox__img" id="fe-lightbox-img" src="" alt="" />
+      <p class="fe-lightbox__caption" id="fe-lightbox-caption"></p>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
   <footer class="site-footer" role="contentinfo">
     <div class="container">
       <div class="footer__inner">
         <div class="footer__logos">
-          <img src="/prueba-museo/assets/img/lav_uam2.png" alt="Laboratorio de Antropología Virtual · UAM" class="footer__logo-img footer__logo-img--lav2" />
+          <img src="/prueba-museo/assets/img/lav_uam2.png" alt="LAV · UAM" class="footer__logo-img footer__logo-img--lav2" />
           <img src="/prueba-museo/assets/img/uamciencias_blanco.png" alt="Facultad de Ciencias · UAM" class="footer__logo-img footer__logo-img--facultad" />
         </div>
         <p class="footer__meta">
           Trabajo de Fin de Grado · Grado en Biología<br>
           <span style="opacity:0.5">Museo Virtual de Paleopatología · 2025–2026</span>
         </p>
-        <nav class="footer__links" aria-label="Navegación del pie de página">
+        <nav class="footer__links" aria-label="Pie de página">
           <a href="/prueba-museo/exploracion.html" class="footer__link">Exploración</a>
           <a href="/prueba-museo/coleccion.html"   class="footer__link">Colección</a>
           <a href="/prueba-museo/aula.html"        class="footer__link">Aula</a>
@@ -719,12 +632,10 @@
     </div>
   </footer>
 
-  <!-- ══════════════════════════════════
-       SCRIPTS
-  ══════════════════════════════════ -->
+  <!-- SCRIPTS -->
   <script src="/prueba-museo/js/data.js"></script>
   <script>
-    /* ── Nav hamburger ── */
+    /* ── Hamburger ── */
     const hamburger = document.getElementById('nav-hamburger');
     const drawer    = document.getElementById('nav-mobile');
     let navOpen = false;
@@ -735,96 +646,352 @@
       hamburger.setAttribute('aria-expanded', String(navOpen));
       document.body.style.overflow = navOpen ? 'hidden' : '';
     });
-
-    /* ── Header scrolled ── */
     window.addEventListener('scroll', () => {
       document.getElementById('site-header')?.classList.toggle('scrolled', window.scrollY > 40);
     }, { passive: true });
 
-    /* ══════════════════════════════════════════════════
-       CARGA DE DATOS DESDE data.js
-       Lee el parámetro ?id=OV-001 de la URL y rellena
-       todos los campos de la ficha automáticamente.
-       Si no hay id, muestra los datos de ejemplo.
-    ══════════════════════════════════════════════════ */
+    /* ══════════════════════════════════════════
+       GALERÍA — slider con transición CSS
+    ══════════════════════════════════════════ */
+    let galleryImages  = [];
+    let galleryIdx     = 0;
+
+    function buildGallery(imagenes) {
+      if (!imagenes || imagenes.length === 0) return;
+
+      const viewport  = document.getElementById('fe-gallery-viewport');
+      const navBar    = document.getElementById('fe-gallery-nav');
+      const caption   = document.getElementById('fe-gallery-caption');
+      const placeholder = document.getElementById('fe-img-placeholder');
+
+      galleryImages = imagenes;
+
+      /* Eliminar placeholder */
+      if (placeholder) placeholder.remove();
+
+      /* Crear track + slides */
+      const track = document.createElement('div');
+      track.className = 'fe-gallery__track';
+      track.id = 'fe-gallery-track';
+      track.style.width = (imagenes.length * 100) + '%';
+
+      imagenes.forEach((img, i) => {
+        const slide = document.createElement('div');
+        slide.className = 'fe-gallery__slide';
+        slide.style.width = (100 / imagenes.length) + '%';
+
+        const image = document.createElement('img');
+        image.src = img.src;
+        image.alt = `Figura ${i + 1}`;
+        image.loading = i === 0 ? 'eager' : 'lazy';
+
+        /* Clic para abrir lightbox */
+        slide.addEventListener('click', () => openLightbox(i));
+
+        slide.appendChild(image);
+        track.appendChild(slide);
+      });
+
+      viewport.insertBefore(track, viewport.firstChild);
+
+      /* Mostrar barra de nav solo si hay más de 1 imagen */
+      if (imagenes.length > 1) {
+        navBar.style.display = 'flex';
+        document.getElementById('fe-gallery-prev').addEventListener('click', () => moveGallery(-1));
+        document.getElementById('fe-gallery-next').addEventListener('click', () => moveGallery(1));
+      }
+
+      /* Mostrar pie de foto */
+      caption.style.display = 'block';
+
+      updateGallery(0, false);
+    }
+
+    function updateGallery(idx, animate = true) {
+      const track   = document.getElementById('fe-gallery-track');
+      const counter = document.getElementById('fe-gallery-counter');
+      const caption = document.getElementById('fe-gallery-caption');
+      const prev    = document.getElementById('fe-gallery-prev');
+      const next    = document.getElementById('fe-gallery-next');
+      if (!track) return;
+
+      galleryIdx = idx;
+
+      /* Calcular desplazamiento: cada slide = 100/N % del track */
+      const pct = -(idx * (100 / galleryImages.length));
+      track.style.transition = animate ? 'transform 0.38s cubic-bezier(0.4,0,0.2,1)' : 'none';
+      track.style.transform  = `translateX(${pct}%)`;
+
+      /* Counter */
+      if (counter) counter.innerHTML = `<strong>${idx + 1}</strong> / ${galleryImages.length}`;
+
+      /* Pie de foto */
+      if (caption) caption.textContent = galleryImages[idx]?.caption || '';
+
+      /* Flechas */
+      if (prev) prev.disabled = idx === 0;
+      if (next) next.disabled = idx === galleryImages.length - 1;
+    }
+
+    function moveGallery(dir) {
+      const newIdx = galleryIdx + dir;
+      if (newIdx < 0 || newIdx >= galleryImages.length) return;
+      updateGallery(newIdx, true);
+    }
+
+    /* ── Lightbox ── */
+    function openLightbox(idx) {
+      const lb  = document.getElementById('fe-lightbox');
+      const img = document.getElementById('fe-lightbox-img');
+      const cap = document.getElementById('fe-lightbox-caption');
+      img.src = galleryImages[idx].src;
+      img.alt = `Figura ${idx + 1}`;
+      cap.textContent = galleryImages[idx].caption || '';
+      lb.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    document.getElementById('fe-lightbox-close')?.addEventListener('click', closeLightbox);
+    document.getElementById('fe-lightbox')?.addEventListener('click', e => {
+      if (e.target === e.currentTarget) closeLightbox();
+    });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+    function closeLightbox() {
+      document.getElementById('fe-lightbox').classList.remove('is-open');
+      document.body.style.overflow = '';
+    }
+
+    /* ══════════════════════════════════════════
+       SUPERÍNDICES → scroll + highlight
+    ══════════════════════════════════════════ */
+    function scrollToRef(refId) {
+      const target = document.getElementById('fe-ref-' + refId);
+      if (!target) return;
+      target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      target.classList.remove('fe-ref-highlight');
+      void target.offsetWidth; /* forzar reflow para reiniciar animación */
+      target.classList.add('fe-ref-highlight');
+      target.addEventListener('animationend', () => target.classList.remove('fe-ref-highlight'), { once: true });
+    }
+
+    /* Convierte array de refs [1,2] en superíndices HTML enlazados */
+    function makeRefs(refs) {
+      if (!refs || refs.length === 0) return '';
+      return refs.map(r =>
+        `<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(${r})" aria-label="Ver referencia ${r}">&#x00B9;${r > 1 ? r : ''}</a>`
+      ).join('');
+    }
+
+    /* Superíndices Unicode correctos: ¹²³⁴ */
+    const supMap = {'1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'};
+    function makeRefsSup(refs) {
+      if (!refs || refs.length === 0) return '';
+      return refs.map(r =>
+        `<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(${r})" aria-label="Ver referencia ${r}">${supMap[String(r)] || r}</a>`
+      ).join('');
+    }
+
+    /* ══════════════════════════════════════════
+       ACORDEÓN
+    ══════════════════════════════════════════ */
+    function buildAccordion(hallazgos) {
+      const container = document.getElementById('fe-accordion');
+      hallazgos.forEach((grupo, i) => {
+        const item = document.createElement('div');
+        item.className = 'fe-accordion__item';
+        /* Primer ítem abierto por defecto */
+        if (i === 0) item.classList.add('is-open');
+
+        const trigger = document.createElement('button');
+        trigger.className = 'fe-accordion__trigger';
+        trigger.setAttribute('aria-expanded', i === 0 ? 'true' : 'false');
+        trigger.innerHTML = `
+          <span>${grupo.titulo}</span>
+          <span class="fe-accordion__chevron" aria-hidden="true">▾</span>`;
+        trigger.addEventListener('click', () => {
+          const isOpen = item.classList.toggle('is-open');
+          trigger.setAttribute('aria-expanded', String(isOpen));
+        });
+
+        const body = document.createElement('div');
+        body.className = 'fe-accordion__body';
+
+        const list = document.createElement('ul');
+        list.className = 'fe-hallazgo-list';
+        grupo.items.forEach(hallazgo => {
+          const li = document.createElement('li');
+          li.className = 'fe-hallazgo-item';
+          li.innerHTML = `
+            <span class="fe-hallazgo-item__dot"></span>
+            <span class="fe-hallazgo-item__text">
+              ${hallazgo.texto}${makeRefsSup(hallazgo.refs)}
+            </span>`;
+          list.appendChild(li);
+        });
+
+        body.appendChild(list);
+        item.appendChild(trigger);
+        item.appendChild(body);
+        container.appendChild(item);
+      });
+    }
+
+    /* ══════════════════════════════════════════
+       REFERENCIAS BIBLIOGRÁFICAS
+    ══════════════════════════════════════════ */
+    function buildRefs(referencias) {
+      const container = document.getElementById('fe-bib-list');
+      referencias.forEach(ref => {
+        const div = document.createElement('div');
+        div.className = 'fe-bib-item';
+        div.id = 'fe-ref-' + ref.id;
+        div.setAttribute('tabindex', '-1');
+
+        let html = `<span class="fe-bib-item__num">[${ref.id}]</span>`;
+        html += `<strong>${ref.autores}</strong> (${ref.anio}). `;
+        html += `<em>${ref.titulo}</em>. ${ref.editorial || ''}.`;
+        if (ref.doi) {
+          html += ` <a href="${ref.doi}" target="_blank" rel="noopener noreferrer">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+            DOI
+          </a>`;
+        }
+        div.innerHTML = html;
+        container.appendChild(div);
+      });
+    }
+
+    /* ══════════════════════════════════════════
+       DATOS TÉCNICOS — solo campos que existen
+    ══════════════════════════════════════════ */
+    function addDataItem(grid, label, value, full = false) {
+      if (!value && value !== 0) return; /* no añadir si está vacío */
+      const div = document.createElement('div');
+      div.className = 'fe-data-item' + (full ? ' fe-data-item--full' : '');
+      div.innerHTML = `
+        <p class="fe-data-item__label">${label}</p>
+        <p class="fe-data-item__value">${value}</p>`;
+      grid.appendChild(div);
+    }
+
+    /* ══════════════════════════════════════════
+       CARGA PRINCIPAL DESDE data.js
+    ══════════════════════════════════════════ */
     document.addEventListener('DOMContentLoaded', () => {
       const params = new URLSearchParams(window.location.search);
       const id     = params.get('id');
       if (!id || typeof PIEZAS === 'undefined') return;
 
       const pieza = PIEZAS.find(p => p.id === id);
-      if (!pieza) return;
-
-      const patMeta  = VOCABULARIO.patologia[pieza.patologia];
-      const regMeta  = VOCABULARIO.region[pieza.region];
-      const sexMeta  = VOCABULARIO.sexo[pieza.sexo];
-      const epocMeta = VOCABULARIO.epoca[pieza.epoca];
-
-      /* Botones de la barra de navegación inferior */
-      const btnRegion = document.getElementById('fe-btn-region');
-      if (btnRegion) {
-        btnRegion.href = `/prueba-museo/exploracion.html?vista=anatomica&region=${pieza.region}`;
-      }
-      const btnBuscar = document.getElementById('fe-btn-buscar');
-      if (btnBuscar) {
-        btnBuscar.href = `/prueba-museo/coleccion.html?patologia=${pieza.patologia}`;
+      if (!pieza) {
+        document.getElementById('fe-title').textContent = 'Pieza no encontrada';
+        return;
       }
 
-      /* Cabecera */
-      document.getElementById('fe-id').textContent        = pieza.id;
-      document.getElementById('fe-title').textContent     = pieza.nombre;
-      document.getElementById('fe-subtitle').textContent  = `${patMeta.label} · ${epocMeta.label}`;
+      const patMeta  = VOCABULARIO.patologia[pieza.patologia] || { label: pieza.patologia, icon:'', color:'#ccc' };
+      const regMeta  = VOCABULARIO.region[pieza.region]       || { label: pieza.region,    icon:'' };
+      const sexMeta  = VOCABULARIO.sexo[pieza.sexo]           || { label: pieza.sexo,       icon:'' };
+      const epocMeta = VOCABULARIO.epoca[pieza.epoca]         || { label: pieza.epoca,      range:'' };
+
+      /* ── Título y meta ── */
+      document.getElementById('fe-id').textContent       = pieza.id;
+      document.getElementById('fe-title').textContent    = pieza.nombre;
+      document.getElementById('fe-subtitle').textContent = `${patMeta.label} · ${epocMeta.label}`;
       document.title = `${pieza.nombre} · PaleoMuseo`;
 
-      /* Datos de identificación */
-      document.getElementById('fe-catalog').textContent       = pieza.id;
-      document.getElementById('fe-epoca').textContent         = `${epocMeta.label} · ${epocMeta.range}`;
-      document.getElementById('fe-yacimiento').textContent    = pieza.yacimiento;
-      document.getElementById('fe-sexo').textContent          = sexMeta.label;
-      document.getElementById('fe-region').textContent        = regMeta.label;
-      document.getElementById('fe-patologia').textContent     = patMeta.label;
+      /* Badge tipo */
+      const badge = document.getElementById('fe-img-badge');
+      if (badge) badge.textContent = pieza.historica ? 'Pieza histórica' : 'Ficha estándar';
 
-      /* Descripción con enlaces al glosario */
-      if (typeof glosarioLink === 'function') {
-        document.getElementById('fe-desc').innerHTML = glosarioLink(pieza.descripcion);
-      } else {
-        document.getElementById('fe-desc').textContent = pieza.descripcion;
-      }
-
-      /* Imagen */
-      if (pieza.imagen) {
-        const wrap = document.getElementById('fe-img-wrap');
-        document.getElementById('fe-img-placeholder').remove();
-        const img = document.createElement('img');
-        img.src = pieza.imagen;
-        img.alt = pieza.nombre;
-        wrap.appendChild(img);
-      }
-
-      /* Modelo 3D */
-      if (pieza.modelo) {
-        document.getElementById('fe-model-viewer').setAttribute('src', pieza.modelo);
-      }
-
-      /* Enlace ficha maestra — ocultar si la pieza no la tiene */
-      const masterLink = document.getElementById('fe-master-link');
-      if (pieza.ficha && pieza.ficha.includes('ficha-maestra')) {
-        masterLink.href = pieza.ficha;
-      } else {
-        masterLink.remove();
-      }
-
-      /* Tags */
+      /* ── Tags ── */
       const tagsEl = document.getElementById('fe-tags');
       tagsEl.innerHTML = `
         <span class="fe-tag fe-tag--region">${regMeta.icon} ${regMeta.label}</span>
         <span class="fe-tag fe-tag--patol">${patMeta.icon} ${patMeta.label}</span>
         <span class="fe-tag fe-tag--sexo">${sexMeta.icon} ${sexMeta.label}</span>
         <span class="fe-tag fe-tag--epoca">📅 ${epocMeta.label}</span>
-        ${pieza.ficha?.includes('ficha-maestra')
-          ? '<span class="fe-tag fe-tag--master">⭐ Ficha maestra disponible</span>'
-          : ''}
+        ${pieza.historica ? '<span class="fe-tag fe-tag--historica">🏛️ Pieza histórica</span>' : ''}
+        ${pieza.ficha?.includes('ficha-maestra') ? '<span class="fe-tag fe-tag--master">⭐ Ficha maestra</span>' : ''}
       `;
+
+      /* ── Datos técnicos (solo campos que existen) ── */
+      const grid = document.getElementById('fe-data-grid');
+      addDataItem(grid, 'Número de catálogo', pieza.id);
+      addDataItem(grid, 'Cronología', pieza.cronologia || `${epocMeta.label} · ${epocMeta.range}`);
+      addDataItem(grid, 'Yacimiento / Procedencia', pieza.yacimiento, true);
+      addDataItem(grid, 'Sexo biológico', sexMeta.label);
+      addDataItem(grid, 'Edad estimada', pieza.edad);
+      addDataItem(grid, 'Región anatómica', regMeta.label);
+      addDataItem(grid, 'Tipo de patología', patMeta.label);
+      addDataItem(grid, 'Conservación / Localización', pieza.conservacion);
+      /* Digitalización: solo para piezas NO históricas */
+      if (!pieza.historica) {
+        addDataItem(grid, 'Estado de conservación', pieza.conservacion_fisica);
+        addDataItem(grid, 'Método de digitalización', pieza.digitalizacion);
+      }
+
+      /* ── Galería de imágenes ── */
+      if (pieza.imagenes && pieza.imagenes.length > 0) {
+        buildGallery(pieza.imagenes);
+      } else if (pieza.imagen) {
+        /* Compatibilidad con campo imagen simple */
+        buildGallery([{ src: pieza.imagen, caption: pieza.nombre }]);
+      }
+
+      /* ── Modelo 3D ── */
+      if (pieza.modelo3d) {
+        const viewerWrap = document.getElementById('fe-viewer-wrap');
+        const viewer     = document.getElementById('fe-model-viewer');
+        viewer.setAttribute('src', pieza.modelo3d);
+        viewerWrap.style.display = 'block';
+      }
+
+      /* ── Descripción osteológica (párrafos) ── */
+      if (pieza.descripcion_osteologica) {
+        const block   = document.getElementById('fe-desc-block');
+        const section = document.getElementById('fe-section-osteologica');
+        const parrafos = Array.isArray(pieza.descripcion_osteologica)
+          ? pieza.descripcion_osteologica
+          : [pieza.descripcion_osteologica];
+        parrafos.forEach(p => {
+          const el = document.createElement('p');
+          el.className = 'fe-desc';
+          el.innerHTML = typeof glosarioLink === 'function' ? glosarioLink(p) : p;
+          block.appendChild(el);
+        });
+        section.style.display = 'block';
+      }
+
+      /* ── Diagnóstico principal ── */
+      if (pieza.diagnostico_principal) {
+        const el = document.getElementById('fe-diag-main');
+        el.textContent = pieza.diagnostico_principal;
+        document.getElementById('fe-section-diagnostico').style.display = 'block';
+      }
+
+      /* ── Hallazgos (acordeón) ── */
+      if (pieza.hallazgos && pieza.hallazgos.length > 0) {
+        buildAccordion(pieza.hallazgos);
+        document.getElementById('fe-section-hallazgos').style.display = 'block';
+      }
+
+      /* ── Referencias ── */
+      if (pieza.referencias && pieza.referencias.length > 0) {
+        buildRefs(pieza.referencias);
+        document.getElementById('fe-section-referencias').style.display = 'block';
+      }
+
+      /* ── Enlace ficha maestra ── */
+      const masterLink = document.getElementById('fe-master-link');
+      if (pieza.ficha?.includes('ficha-maestra')) {
+        masterLink.href = pieza.ficha;
+        masterLink.style.display = 'flex';
+      }
+
+      /* ── Botón explorar región ── */
+      const btnRegion = document.getElementById('fe-btn-region');
+      if (btnRegion) btnRegion.href = `/prueba-museo/exploracion.html?vista=anatomica&region=${pieza.region}`;
     });
   </script>
 

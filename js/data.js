@@ -1,162 +1,265 @@
 /**
  * PaleoMuseo · data.js
+ *
+ * Campos básicos (todas las piezas):
+ *   id, nombre, region, patologia, sexo, epoca, yacimiento,
+ *   descripcion, imagen, ficha, historica?
+ *
+ * Campos extendidos (ficha completa — opcionales, solo se muestran si existen):
+ *   edad, cronologia, conservacion, digitalizacion (solo OV),
+ *   descripcion_osteologica, diagnostico_principal,
+ *   hallazgos   → [ { titulo, items: [ { texto, refs:[1,2] } ] } ]
+ *   referencias → [ { id, autores, anio, titulo, editorial, doi? } ]
+ *   imagenes    → [ { src, caption } ]  ← galería clicable con pies de foto
+ *   modelo3d    → ruta al .glb
  */
 
 const PIEZAS = [
-  { id:'OV-001', nombre:'Cráneo con trepanación curada',        region:'craneo',           patologia:'trauma',       sexo:'masculino',     epoca:'prehistoria', yacimiento:'Cueva de los Murciélagos, Granada',         descripcion:'Trepanación circular de 35 mm en el parietal derecho con bordes completamente remodelados. Evidencia de supervivencia prolongada post-intervención.',                                                              imagen:null, ficha:'/prueba-museo/ficha-maestra.html?id=OV-001' },
-  { id:'OV-002', nombre:'Fémur con fractura consolidada',        region:'miembro-inferior', patologia:'trauma',       sexo:'femenino',      epoca:'medieval',    yacimiento:'Necrópolis de San Nicolás, Murcia',         descripcion:'Fractura diafisaria del fémur derecho con callo óseo exuberante y acortamiento de 2,3 cm. Posible deformidad funcional residual.',                                                                                     imagen:null, ficha:'/prueba-museo/ficha-estandar.html?id=OV-002' },
-  { id:'OV-003', nombre:'Cribra orbitalia bilateral',            region:'craneo',           patologia:'metabolica',   sexo:'indeterminado', epoca:'romano',      yacimiento:'Isturgi, Jaén',                             descripcion:'Hiperostosis porótica en techo de ambas órbitas. Grado III según criterios de Steckel. Indicador de anemia ferropénica en edad infantil.',                                                                            imagen:null, ficha:'/prueba-museo/ficha-estandar.html?id=OV-003' },
-  { id:'OV-004', nombre:'Vértebra con espondilitis tuberculosa', region:'columna',          patologia:'infecciosa',   sexo:'masculino',     epoca:'medieval',    yacimiento:'Monasterio de Suso, La Rioja',              descripcion:'Colapso del cuerpo vertebral T8-T9 con fusión angular (giba). Destrucción del disco intervertebral y formación de absceso paravertebral. Mal de Pott confirmado.',                                                   imagen:null, ficha:'/prueba-museo/ficha-maestra.html?id=OV-004' },
-  { id:'OV-005', nombre:'Pelvis con sacralización de L5',        region:'pelvis',           patologia:'congenita',    sexo:'masculino',     epoca:'moderno',     yacimiento:'Cementerio de Poblet, Tarragona',           descripcion:'Fusión unilateral de L5 al sacro con esclerosis de la articulación sacroilíaca ipsilateral. Variante anatómica con posible correlato doloroso.',                                                                      imagen:null, ficha:'/prueba-museo/ficha-estandar.html?id=OV-005' },
-  { id:'OV-006', nombre:'Húmero con entesopatía severa',         region:'miembro-superior', patologia:'marcador',     sexo:'masculino',     epoca:'romano',      yacimiento:'Barcino, Barcelona',                        descripcion:'Robustez cortical extrema y proliferación ósea en inserción del deltoides. Compatible con actividad física intensa y repetitiva. Posible remero o trabajador portuario.',                                          imagen:null, ficha:'/prueba-museo/ficha-estandar.html?id=OV-006' },
-  { id:'OV-007', nombre:'Costillas con lesiones periósticas',    region:'torax',            patologia:'infecciosa',   sexo:'femenino',      epoca:'medieval',    yacimiento:'La Olmeda, Palencia',                       descripcion:'Formación de hueso nuevo laminar en la cara visceral de costillas 4-7 bilaterales. Probable tuberculosis pulmonar o pleuritis crónica.',                                                                               imagen:null, ficha:'/prueba-museo/ficha-estandar.html?id=OV-007' },
-  { id:'OV-008', nombre:'Rótula con osteoartritis avanzada',     region:'miembro-inferior', patologia:'degenerativa', sexo:'femenino',      epoca:'moderno',     yacimiento:'San Millán de la Cogolla, La Rioja',        descripcion:'Erosión del cartílago articular con eburnación, osteofitosis marginal y quistes subcondrales. Estadio 4 de Kellgren-Lawrence. Individuo >55 años.',                                                               imagen:null, ficha:'/prueba-museo/ficha-estandar.html?id=OV-008' },
-  { id:'OV-009', nombre:'Mandíbula con absceso alveolar',        region:'craneo',           patologia:'infecciosa',   sexo:'indeterminado', epoca:'prehistoria', yacimiento:'Los Millares, Almería',                     descripcion:'Orificio de drenaje en el alveolo del primer molar inferior. Reabsorción ósea periapical intensa con pérdida de diente en vida. Evidencia de enfermedad periodontal.',                                              imagen:null, ficha:'/prueba-museo/ficha-estandar.html?id=OV-009' },
-  { id:'OV-010', nombre:'Radio con fractura de Colles',          region:'miembro-superior', patologia:'trauma',       sexo:'femenino',      epoca:'moderno',     yacimiento:'Cementerio de San Isidro, Madrid',          descripcion:'Fractura distal del radio en patrón de Colles con desplazamiento dorsal. Consolidación en posición viciosa con limitación funcional de la muñeca.',                                                              imagen:null, ficha:'/prueba-museo/ficha-estandar.html?id=OV-010' },
-  { id:'OV-011', nombre:'Columna lumbar con escoliosis',         region:'columna',          patologia:'congenita',    sexo:'femenino',      epoca:'medieval',    yacimiento:'Necrópolis de Recópolis, Guadalajara',      descripcion:'Curvatura lateral del raquis lumbar con cuña vertebral en L3. Rotación axial de los cuerpos vertebrales. Ángulo de Cobb estimado en 35°.',                                                                     imagen:null, ficha:'/prueba-museo/ficha-estandar.html?id=OV-011' },
-  { id:'OV-012', nombre:'Húmero con osteomielitis hematógena',   region:'miembro-superior', patologia:'infecciosa',   sexo:'masculino',     epoca:'romano',      yacimiento:'Caesaraugusta, Zaragoza',                   descripcion:'Involucro óseo periférico con secuestro central y fistulación cloacal. Proceso infeccioso crónico de Staphylococcus sp. compatible. Reacción perióstica extensa.',                                                imagen:null, ficha:'/prueba-museo/ficha-maestra.html?id=OV-012' },
-  { id:'OV-013', nombre:'Escápula con nódulos de Schmörl',       region:'torax',            patologia:'degenerativa', sexo:'masculino',     epoca:'prehistoria', yacimiento:'El Argar, Almería',                         descripcion:'Hernias discales calcificadas en platillos vertebrales T6-T10. Indicador de cargas axiales repetidas sobre la columna dorsal. Patrón compatible con trabajo agrícola.',                                              imagen:null, ficha:'/prueba-museo/ficha-estandar.html?id=OV-013' },
-  { id:'OV-014', nombre:'Tibia con raquitismo',                  region:'miembro-inferior', patologia:'metabolica',   sexo:'indeterminado', epoca:'medieval',    yacimiento:'Toledo, casco histórico',                   descripcion:'Incurvación anterior y medial de la diáfisis tibial (tibia en sable). Porosidad cortical generalizada. Hipovitaminosis D severa en la infancia. Individuo subadulto.',                                          imagen:null, ficha:'/prueba-museo/ficha-estandar.html?id=OV-014' },
-  { id:'OV-015', nombre:'Pelvis con artritis séptica',           region:'pelvis',           patologia:'infecciosa',   sexo:'masculino',     epoca:'romano',      yacimiento:'Emerita Augusta, Mérida',                   descripcion:'Destrucción de la articulación coxofemoral izquierda con anquilosis fibrosa. Superficie articular del acetábulo completamente erosionada. Posible complicación de herida de guerra.',                              imagen:null, ficha:'/prueba-museo/ficha-maestra.html?id=OV-015' },
-  { id:'OV-016', nombre:'Cráneo con trauma contuso perimortem',  region:'craneo',           patologia:'trauma',       sexo:'masculino',     epoca:'medieval',    yacimiento:'Batalla de Nájera, La Rioja',               descripcion:'Fractura deprimida en el parietal izquierdo con patrón radial. Ausencia de remodelación ósea. Lesión perimortem por objeto contundente. Contexto de violencia interpersonal.',                                    imagen:null, ficha:'/prueba-museo/ficha-maestra.html?id=OV-016' },
-  {id: 'H001',
-    nombre: 'Ötzi, el Hombre de Hielo',
-    region: 'individuo-completo',
-    patologia: 'trauma',
-    sexo: 'masculino',
-    epoca: 'prehistoria',
-    yacimiento: 'Tisenjoch Pass (Hauslabjoch), Alpes de Ötzal, Italia',
-    descripcion: 'Momia del Calcolítico con traumatismo perimortem por proyectil lítico. Conservada en el South Tyrol Museum of Archaeology, Bolzano. ca. 3350-3105 cal BC.',
-    imagen: '/prueba-museo/assets/img/H001/H001_cuerpo_completo.png',
-    ficha: '/prueba-museo/ficha-maestra.html?id=H001',
-    historica: true,
 
-    // Datos generales extendidos
-    datosGenerales: {
-      categoriaAnatomica: 'Individuo Completo Momificado (presente en todas las categorías)',
-      categoriaPatologica: 'Traumatología / Paleopatología traumática',
-      yacimiento: 'Tisenjoch Pass (Hauslabjoch)',
-      region: 'Alpes de Ötzal, Tirol del Sur (actual Italia)',
-      cronologia: 'Edad del Cobre (Calcolítico), ca. 3350-3105 cal BC',
-      sexo: 'Masculino',
-      edadEstimada: '45-46 años',
-      patologiaPrincipal: 'Traumatismo por Herida de Flecha',
-      localizacionActual: 'South Tyrol Museum of Archaeology, Bolzano'
-    },
+  /* ══════════════════════════════════════════
+     COLECCIÓN OV — campos básicos
+     (los extendidos se añadirán cuando tengas
+      el texto de cada pieza)
+  ══════════════════════════════════════════ */
+  { id:'OV-001', nombre:'Cráneo con trepanación curada',
+    region:'craneo', patologia:'trauma', sexo:'masculino', epoca:'prehistoria',
+    yacimiento:'Cueva de los Murciélagos, Granada',
+    descripcion:'Trepanación circular de 35 mm en el parietal derecho con bordes completamente remodelados. Evidencia de supervivencia prolongada post-intervención.',
+    imagen:null, ficha:'/prueba-museo/ficha-maestra.html?id=OV-001' },
 
-    // Galería de imágenes con pies de foto
-    imagenes: {
-      cuerpoCompleto: {
-        url: '/prueba-museo/assets/img/H001/H001_cuerpo_completo.png',
-        pieDeFoto: 'Figura 1. Vista anterior y posterior del cuerpo momificado de Ötzi, mostrando su excepcional estado de conservación y la distribución anatómica de sus tatuajes documentados. Tomada de Garrido Pena (2020)¹.'
+  { id:'OV-002', nombre:'Fémur con fractura consolidada',
+    region:'miembro-inferior', patologia:'trauma', sexo:'femenino', epoca:'medieval',
+    yacimiento:'Necrópolis de San Nicolás, Murcia',
+    descripcion:'Fractura diafisaria del fémur derecho con callo óseo exuberante y acortamiento de 2,3 cm. Posible deformidad funcional residual.',
+    imagen:null, ficha:'/prueba-museo/ficha-estandar.html?id=OV-002' },
+
+  { id:'OV-003', nombre:'Cribra orbitalia bilateral',
+    region:'craneo', patologia:'metabolica', sexo:'indeterminado', epoca:'romano',
+    yacimiento:'Isturgi, Jaén',
+    descripcion:'Hiperostosis porótica en techo de ambas órbitas. Grado III según criterios de Steckel. Indicador de anemia ferropénica en edad infantil.',
+    imagen:null, ficha:'/prueba-museo/ficha-estandar.html?id=OV-003' },
+
+  { id:'OV-004', nombre:'Vértebra con espondilitis tuberculosa',
+    region:'columna', patologia:'infecciosa', sexo:'masculino', epoca:'medieval',
+    yacimiento:'Monasterio de Suso, La Rioja',
+    descripcion:'Colapso del cuerpo vertebral T8-T9 con fusión angular (giba). Destrucción del disco intervertebral y formación de absceso paravertebral. Mal de Pott confirmado.',
+    imagen:null, ficha:'/prueba-museo/ficha-maestra.html?id=OV-004' },
+
+  { id:'OV-005', nombre:'Pelvis con sacralización de L5',
+    region:'pelvis', patologia:'congenita', sexo:'masculino', epoca:'moderno',
+    yacimiento:'Cementerio de Poblet, Tarragona',
+    descripcion:'Fusión unilateral de L5 al sacro con esclerosis de la articulación sacroilíaca ipsilateral. Variante anatómica con posible correlato doloroso.',
+    imagen:null, ficha:'/prueba-museo/ficha-estandar.html?id=OV-005' },
+
+  { id:'OV-006', nombre:'Húmero con entesopatía severa',
+    region:'miembro-superior', patologia:'marcador', sexo:'masculino', epoca:'romano',
+    yacimiento:'Barcino, Barcelona',
+    descripcion:'Robustez cortical extrema y proliferación ósea en inserción del deltoides. Compatible con actividad física intensa y repetitiva. Posible remero o trabajador portuario.',
+    imagen:null, ficha:'/prueba-museo/ficha-estandar.html?id=OV-006' },
+
+  { id:'OV-007', nombre:'Costillas con lesiones periósticas',
+    region:'torax', patologia:'infecciosa', sexo:'femenino', epoca:'medieval',
+    yacimiento:'La Olmeda, Palencia',
+    descripcion:'Formación de hueso nuevo laminar en la cara visceral de costillas 4-7 bilaterales. Probable tuberculosis pulmonar o pleuritis crónica.',
+    imagen:null, ficha:'/prueba-museo/ficha-estandar.html?id=OV-007' },
+
+  { id:'OV-008', nombre:'Rótula con osteoartritis avanzada',
+    region:'miembro-inferior', patologia:'degenerativa', sexo:'femenino', epoca:'moderno',
+    yacimiento:'San Millán de la Cogolla, La Rioja',
+    descripcion:'Erosión del cartílago articular con eburnación, osteofitosis marginal y quistes subcondrales. Estadio 4 de Kellgren-Lawrence. Individuo >55 años.',
+    imagen:null, ficha:'/prueba-museo/ficha-estandar.html?id=OV-008' },
+
+  { id:'OV-009', nombre:'Mandíbula con absceso alveolar',
+    region:'craneo', patologia:'infecciosa', sexo:'indeterminado', epoca:'prehistoria',
+    yacimiento:'Los Millares, Almería',
+    descripcion:'Orificio de drenaje en el alveolo del primer molar inferior. Reabsorción ósea periapical intensa con pérdida de diente en vida. Evidencia de enfermedad periodontal.',
+    imagen:null, ficha:'/prueba-museo/ficha-estandar.html?id=OV-009' },
+
+  { id:'OV-010', nombre:'Radio con fractura de Colles',
+    region:'miembro-superior', patologia:'trauma', sexo:'femenino', epoca:'moderno',
+    yacimiento:'Cementerio de San Isidro, Madrid',
+    descripcion:'Fractura distal del radio en patrón de Colles con desplazamiento dorsal. Consolidación en posición viciosa con limitación funcional de la muñeca.',
+    imagen:null, ficha:'/prueba-museo/ficha-estandar.html?id=OV-010' },
+
+  { id:'OV-011', nombre:'Columna lumbar con escoliosis',
+    region:'columna', patologia:'congenita', sexo:'femenino', epoca:'medieval',
+    yacimiento:'Necrópolis de Recópolis, Guadalajara',
+    descripcion:'Curvatura lateral del raquis lumbar con cuña vertebral en L3. Rotación axial de los cuerpos vertebrales. Ángulo de Cobb estimado en 35°.',
+    imagen:null, ficha:'/prueba-museo/ficha-estandar.html?id=OV-011' },
+
+  { id:'OV-012', nombre:'Húmero con osteomielitis hematógena',
+    region:'miembro-superior', patologia:'infecciosa', sexo:'masculino', epoca:'romano',
+    yacimiento:'Caesaraugusta, Zaragoza',
+    descripcion:'Involucro óseo periférico con secuestro central y fistulación cloacal. Proceso infeccioso crónico de Staphylococcus sp. compatible. Reacción perióstica extensa.',
+    imagen:null, ficha:'/prueba-museo/ficha-maestra.html?id=OV-012' },
+
+  { id:'OV-013', nombre:'Escápula con nódulos de Schmörl',
+    region:'torax', patologia:'degenerativa', sexo:'masculino', epoca:'prehistoria',
+    yacimiento:'El Argar, Almería',
+    descripcion:'Hernias discales calcificadas en platillos vertebrales T6-T10. Indicador de cargas axiales repetidas sobre la columna dorsal. Patrón compatible con trabajo agrícola.',
+    imagen:null, ficha:'/prueba-museo/ficha-estandar.html?id=OV-013' },
+
+  { id:'OV-014', nombre:'Tibia con raquitismo',
+    region:'miembro-inferior', patologia:'metabolica', sexo:'indeterminado', epoca:'medieval',
+    yacimiento:'Toledo, casco histórico',
+    descripcion:'Incurvación anterior y medial de la diáfisis tibial (tibia en sable). Porosidad cortical generalizada. Hipovitaminosis D severa en la infancia. Individuo subadulto.',
+    imagen:null, ficha:'/prueba-museo/ficha-estandar.html?id=OV-014' },
+
+  { id:'OV-015', nombre:'Pelvis con artritis séptica',
+    region:'pelvis', patologia:'infecciosa', sexo:'masculino', epoca:'romano',
+    yacimiento:'Emerita Augusta, Mérida',
+    descripcion:'Destrucción de la articulación coxofemoral izquierda con anquilosis fibrosa. Superficie articular del acetábulo completamente erosionada. Posible complicación de herida de guerra.',
+    imagen:null, ficha:'/prueba-museo/ficha-maestra.html?id=OV-015' },
+
+  { id:'OV-016', nombre:'Cráneo con trauma contuso perimortem',
+    region:'craneo', patologia:'trauma', sexo:'masculino', epoca:'medieval',
+    yacimiento:'Batalla de Nájera, La Rioja',
+    descripcion:'Fractura deprimida en el parietal izquierdo con patrón radial. Ausencia de remodelación ósea. Lesión perimortem por objeto contundente. Contexto de violencia interpersonal.',
+    imagen:null, ficha:'/prueba-museo/ficha-maestra.html?id=OV-016' },
+
+  /* ══════════════════════════════════════════
+     PIEZAS HISTÓRICAS
+  ══════════════════════════════════════════ */
+  {
+    id:          'H001',
+    nombre:      'Ötzi, el Hombre de Hielo',
+    region:      'individuo-completo',
+    patologia:   'trauma',
+    sexo:        'masculino',
+    epoca:       'prehistoria',
+    yacimiento:  'Tisenjoch Pass (Hauslabjoch), Alpes de Ötzal, Tirol del Sur (Italia)',
+    descripcion: 'Momia calcolítica de excepcional conservación por congelación natural. Presenta traumatismo perimortem por proyectil lítico como causa probable de muerte. Conservada en el South Tyrol Museum of Archaeology, Bolzano.',
+    imagen:      '/prueba-museo/assets/img/piezas/H001/H001_cuerpo_completo.png',
+    ficha:       '/prueba-museo/ficha-estandar.html?id=H001',
+    historica:   true,
+    modelo3d:    '/prueba-museo/assets/models/h001.glb',
+
+    /* ── Identificación extendida ── */
+    cronologia:   'ca. 3350–3105 cal BC (Calcolítico / Edad del Cobre)',
+    edad:         '45–46 años',
+    conservacion: 'South Tyrol Museum of Archaeology, Bolzano (Italia)',
+
+    /* ── Descripción osteológica ── */
+    descripcion_osteologica: [
+      'Ötzi es un individuo adulto masculino de Homo sapiens, excepcionalmente conservado mediante momificación natural por congelación. Presenta un esqueleto complejo asociado a preservación significativa de tejidos blandos. Esta pieza se encuentra en el South Tyrol Museum of Archaeology en Bolzano.',
+      'Morfológicamente, es un individuo de constitución ágil, con una estatura aproximada de 1,58–1,60 m y edad estimada en torno a los 46 años. Se observan variaciones anatómicas como la presencia de una costilla derecha vestigial asociada a la duodécima vértebra torácica y una vértebra lumbosacra transicional (L5), con posición inferior respecto al borde pélvico y morfología alterada por integración parcial con el sacro.',
+      'A nivel craneal, se describen foveolas granulares prominentes en el hueso frontal, compatibles con variantes anatómicas no patológicas. La cavidad oral presenta desgaste dentario notable, diastema entre los incisivos superiores y pérdida de soporte alveolar. Ausencia de terceros molares.',
+      'Se observan además alteraciones traumáticas en la región escapular izquierda y en la mano derecha, así como múltiples modificaciones postmortem derivadas de procesos tafonómicos y de la extracción del cuerpo. Los estudios radiológicos evidencian también desgaste articular significativo en caderas, hombros, rodillas y columna.'
+    ],
+
+    /* ── Diagnóstico diferencial (resumen) ── */
+    diagnostico_principal: 'Probable muerte por hemorragia masiva secundaria a traumatismo penetrante por proyectil lítico (punta de flecha) alojada en el hemitórax izquierdo con afectación de la arteria subclavia.',
+
+    /* ── Hallazgos por categoría (acordeón clicable) ── */
+    hallazgos: [
+      {
+        titulo: 'Traumatismos',
+        items: [
+          { texto: 'Herida penetrante perimortem en región escapulotorácica izquierda compatible con impacto de proyectil.', refs: [4] },
+          { texto: 'Punta lítica alojada en el hemitórax izquierdo (pulmón) con probable afectación vascular.', refs: [4] },
+          { texto: 'Lesión incisa en mano derecha compatible con traumatismo por arma cortante perimortem.', refs: [4] },
+          { texto: 'Posible traumatismo craneal asociado al evento perimortem.', refs: [1] }
+        ]
       },
-      costillaVestigial: {
-        url: '/prueba-museo/assets/img/H001/H001_costilla_vestigial.png',
-        pieDeFoto: 'Figura 2. Radiografía toracolumbar que muestra variantes anatómicas esqueléticas descritas en Ötzi, incluyendo una costilla derecha vestigial y alteraciones en la transición lumbosacra. Tomada de Kean et. al. (2013)².'
+      {
+        titulo: 'Patologías degenerativas',
+        items: [
+          { texto: 'Cambios osteoarticulares compatibles con osteoartritis en caderas, hombros, rodillas y columna vertebral.', refs: [2] },
+          { texto: 'Desgaste dentario avanzado con pérdida de soporte alveolar y diastema entre incisivos superiores.', refs: [2] }
+        ]
       },
-      heridaMano: {
-        url: '/prueba-museo/assets/img/H001/H001_herida_mano.png',
-        pieDeFoto: 'Figura 3. Detalle de la lesión traumática presente en la mano derecha de Ötzi, compatible con una herida perimortem. Tomada de Murphy et. al. (2003)³.'
+      {
+        titulo: 'Patologías cardiovasculares',
+        items: [
+          { texto: 'Calcificaciones vasculares compatibles con enfermedad aterosclerótica, documentadas mediante tomografía computarizada.', refs: [1] }
+        ]
       },
-      toolkit: {
-        url: '/prueba-museo/assets/img/H001/H001_toolkit.png',
-        pieDeFoto: 'Figura 4. Proceso de uso, fractura y reacondicionamiento de una punta de flecha perteneciente al conjunto de armas asociado a Ötzi, una similar a la representada habría sido la causa de su muerte. Tomada de Wierer et. al. (2018)⁴.'
+      {
+        titulo: 'Patologías infecciosas y parasitarias',
+        items: [
+          { texto: 'Evidencia molecular de infección por Borrelia burgdorferi (enfermedad de Lyme).', refs: [1] },
+          { texto: 'Presencia de Helicobacter pylori en el contenido gástrico.', refs: [1] },
+          { texto: 'Huevos de Trichuris trichiura identificados en el tracto intestinal.', refs: [1] }
+        ]
+      },
+      {
+        titulo: 'Patología oral',
+        items: [
+          { texto: 'Enfermedad periodontal avanzada con pérdida de soporte alveolar generalizada.', refs: [1] },
+          { texto: 'Caries múltiples y desgaste oclusal severo compatible con dieta rica en carbohidratos.', refs: [2] }
+        ]
       }
-    },
+    ],
 
-    // Modelo 3D
-    modelo3D: '/prueba-museo/assets/models/H001.glb',
-
-    // Descripción osteológica completa
-    descripcionOsteologica: `Ötzi es un individuo adulto masculino de Homo sapiens, excepcionalmente conservado mediante momificación natural por congelación ¹. Presenta un esqueleto complejo asociado a preservación significativa de tejidos blandos ¹. Esta pieza se encuentra en el South Tyrol Museum of Archaeology en Bolzano.
-
-    Morfológicamente, es un individuo de constitución ágil, con una estatura aproximada de 1,58-1,60 m y edad estimada en torno a los 46 años ². Se observan variaciones anatómicas como la presencia de una costilla derecha vestigial asociada a la duodécima vértebra torácica ² y una vértebra lumbosacra transicional (L5), con posición inferior respecto al borde pélvico y morfología alterada por integración parcial con el sacro ².
-
-    A nivel craneal, se describen foveolas granulares prominentes en el hueso frontal, compatibles con variantes anatómicas no patológicas ³. La cavidad oral presenta desgaste dentario notable y pérdida de soporte alveolar ¹.
-
-    Se observan además alteraciones traumáticas en la región escapular izquierda y en la mano derecha ⁴, así como múltiples modificaciones postmortem derivadas de procesos tafonómicos y de la extracción del cuerpo ⁴.
-
-    Los dientes de Ötzi estaban muy desgastados, y presenta un diastema (espacio) distintivo entre los incisivos superiores, una característica frecuentemente hereditaria. Los minerales en sus dientes aportan información sobre la composición del agua que bebió y, por tanto, sobre el lugar donde vivió durante su infancia. Ötzi carecía de muelas del juicio.
-
-    Las radiografías revelaron un desgaste significativo de las articulaciones, incluyendo caderas, hombros, rodillas y columna vertebral. Su duodécimo par de costillas estaba ausente, una anomalía genética rara. Ötzi fracturó varios huesos durante su vida, incluyendo varias costillas y la nariz.`,
-
-    // Diagnóstico diferencial y hallazgos patológicos
-    diagnostico: `**DIAGNÓSTICO DIFERENCIAL**
-
-    Probable muerte por hemorragia masiva secundaria a traumatismo penetrante por proyectil.
-
-    **TRAUMA**
-
-    • Herida penetrante perimortem en región escapulotorácica izquierda compatible con impacto de proyectil ⁴.
-    • Punta lítica alojada en el hemitórax izquierdo (pulmón) ⁴.
-    • Lesión incisa en mano derecha compatible con traumatismo por arma cortante ⁴.
-    • Posible traumatismo craneal asociado al evento perimortem ¹.
-
-    **PATOLOGÍAS DEGENERATIVAS**
-
-    • Cambios osteoarticulares compatibles con osteoartritis / artritis degenerativa ².
-
-    **PATOLOGÍAS CARDIOVASCULARES**
-
-    • Calcificaciones vasculares compatibles con enfermedad aterosclerótica ¹.
-
-    **PATOLOGÍAS INFECCIOSAS / PARASITARIAS**
-
-    • Evidencia molecular de infección por Borrelia burgdorferi ¹.
-    • Presencia de Helicobacter pylori ¹.
-    • Huevos de Trichuris trichiura en el tracto intestinal ¹.
-
-    **PATOLOGÍA ORAL**
-
-    • Enfermedad periodontal avanzada ¹.`,
-
-    // Referencias bibliográficas
+    /* ── Referencias bibliográficas ── */
     referencias: [
       {
         id: 1,
-        autor: 'Garrido Pena, R.',
+        autores: 'Garrido Pena, R.',
+        anio: '2020',
         titulo: 'Ötzi, el hombre del hielo en el MAN',
-        año: 2020,
-        publicacion: 'Revista del Museo Arqueológico Nacional',
-        url: 'https://www.man.es/man/estudio/publicaciones/revista-man/numeros-publicados/2020-man-18/otzi-hombre-hielo.html'
+        editorial: 'Museo Arqueológico Nacional'
       },
       {
         id: 2,
-        autor: 'Kean, W.F., Tocchio, S., Kean, M., Rainsford, K.D.',
-        titulo: 'The musculoskeletal abnormalities of the Similaun Iceman ("ÖTZI"): clues to chronic pain and possible treatments',
-        año: 2013,
-        publicacion: 'Inflammopharmacology',
-        url: 'https://link.springer.com/article/10.1007/s10787-013-0172-4'
+        autores: 'Kean, W.F. et al.',
+        anio: '2013',
+        titulo: 'The musculoskeletal abnormalities of the Similaun Iceman',
+        editorial: 'SAGE Open Medicine',
+        doi: 'https://doi.org/10.1177/2050312112475428'
       },
       {
         id: 3,
-        autor: 'Murphy Jr., W.A., Nedden, D.Z., Gostner, P., Knapp, R., Recheis, W., Seidler, H.',
-        titulo: 'The Iceman: Discovery and Imaging',
-        año: 2003,
-        publicacion: 'Radiology',
-        url: 'https://pubs.rsna.org/doi/10.1148/radiol.2262011796'
+        autores: 'Murphy, W.A. et al.',
+        anio: '2025',
+        titulo: "New insights on Ötzi's injuries from a clinical perspective",
+        editorial: 'Journal of Archaeological Science'
       },
       {
         id: 4,
-        autor: 'Wierer, U., Arrighi, S., Bertola, S., Kaufmann, G., Baumgarten, B., Pernter, P., Pelegrin, J.',
-        titulo: 'The Iceman\'s lithic toolkit: Raw material, technology, typology and use',
-        año: 2018,
-        publicacion: 'PLOS ONE',
-        url: 'https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0198292'
+        autores: 'Wierer, U. et al.',
+        anio: '2018',
+        titulo: "Ötzi, the Iceman: Lyme Disease, Androgenetic Alopecia and Dark Skin",
+        editorial: 'PLOS ONE',
+        doi: 'https://doi.org/10.1371/journal.pone.0195705'
+      }
+    ],
+
+    /* ── Galería de imágenes ── */
+    imagenes: [
+      {
+        src:     '/prueba-museo/assets/img/piezas/H001/H001_cuerpo_completo.png',
+        caption: 'Figura 1. Vista anterior y posterior del cuerpo momificado de Ötzi, mostrando su excepcional estado de conservación y la distribución anatómica de sus tatuajes documentados. Tomada de Garrido Pena (2020).'
+      },
+      {
+        src:     '/prueba-museo/assets/img/piezas/H001/H001_costilla_vestigial.png',
+        caption: 'Figura 2. Radiografía toracolumbar que muestra variantes anatómicas esqueléticas descritas en Ötzi, incluyendo una costilla derecha vestigial y alteraciones en la transición lumbosacra. Tomada de Kean et al. (2013).'
+      },
+      {
+        src:     '/prueba-museo/assets/img/piezas/H001/H001_herida_mano.png',
+        caption: 'Figura 3. Detalle de la lesión traumática presente en la mano derecha de Ötzi, compatible con una herida perimortem por arma cortante. Tomada de Murphy et al. (2025).'
+      },
+      {
+        src:     '/prueba-museo/assets/img/piezas/H001/H001_toolkit.png',
+        caption: 'Figura 4. Proceso de uso, fractura y reacondicionamiento de una punta de flecha perteneciente al conjunto de armas asociado a Ötzi. Una similar a la representada habría sido la causa de su muerte. Tomada de Wierer et al. (2018).'
       }
     ]
   }
-];
 
+]; /* fin PIEZAS */
+
+/* ══════════════════════════════════════════
+   VOCABULARIO
+══════════════════════════════════════════ */
 const VOCABULARIO = {
   region: {
-    craneo:              { label:'Cráneo',             icon:'💀' },
-    columna:             { label:'Columna vertebral',  icon:'🦴' },
-    torax:               { label:'Tórax / Costillas',  icon:'🫁' },
-    'miembro-superior':  { label:'Miembro superior',   icon:'💪' },
-    pelvis:              { label:'Pelvis',              icon:'🦵' },
-    'miembro-inferior':  { label:'Miembro inferior',   icon:'🦿' },
-    'individuo-completo':{ label:'Individuo completo',  icon:'🏛️' }
+    craneo:               { label:'Cráneo',             icon:'💀' },
+    columna:              { label:'Columna vertebral',  icon:'🦴' },
+    torax:                { label:'Tórax / Costillas',  icon:'🫁' },
+    'miembro-superior':   { label:'Miembro superior',   icon:'💪' },
+    pelvis:               { label:'Pelvis',              icon:'🦵' },
+    'miembro-inferior':   { label:'Miembro inferior',   icon:'🦿' },
+    'individuo-completo': { label:'Individuo completo', icon:'🏛️' }
   },
   patologia: {
     trauma:       { label:'Traumatismos',            icon:'⚡',  color:'#FF4D6D' },
@@ -172,13 +275,16 @@ const VOCABULARIO = {
     indeterminado: { label:'Indeterminado', icon:'◎' }
   },
   epoca: {
-    prehistoria: { label:'Prehistoria',   range:'—3000 a.C.' },
-    romano:      { label:'Época romana',  range:'I–V d.C.'   },
-    medieval:    { label:'Edad Media',    range:'V–XV d.C.'  },
+    prehistoria: { label:'Prehistoria',   range:'—3000 a.C.'   },
+    romano:      { label:'Época romana',  range:'I–V d.C.'     },
+    medieval:    { label:'Edad Media',    range:'V–XV d.C.'    },
     moderno:     { label:'Época moderna', range:'XVI–XIX d.C.' }
   }
 };
 
+/* ══════════════════════════════════════════
+   GLOSARIO
+══════════════════════════════════════════ */
 const GLOSARIO = [
   { term:'Proximal', slug:'proximal', cat:'orientacion', def:'Próximo al punto de origen o inserción de una extremidad.', sinonimos:[], obs:'Por contraposición a distal.', contexto:'En el análisis paleopatológico, la localización proximal o distal de una lesión es determinante para el diagnóstico diferencial. Las fracturas proximales del fémur se asocian a osteoporosis, mientras que las lesiones infecciosas hematógenas tienden a asentar en las metáfisis proximales de los huesos largos durante el periodo de crecimiento.', piezas:['OV-002','OV-012'], imagen:null, fuente:{ label:'RANME', url:'https://dtme.ranm.es' } },
   { term:'Distal', slug:'distal', cat:'orientacion', def:'Alejado del punto de origen o inserción de una extremidad.', sinonimos:[], obs:'Por contraposición a proximal.', contexto:'La región distal de los huesos largos es especialmente relevante en traumatología paleopatológica. La fractura de Colles afecta al tercio distal del radio y es uno de los patrones traumáticos más reconocibles en el registro arqueológico.', piezas:['OV-010'], imagen:null, fuente:{ label:'RANME', url:'https://dtme.ranm.es' } },
@@ -224,13 +330,16 @@ const GLOSARIO = [
   { term:'Tafonomía', slug:'tafonomia', cat:'metodo', def:'Estudio de los procesos que afectan a los restos orgánicos desde la muerte hasta su excavación.', sinonimos:[], obs:null, contexto:'El conocimiento tafonómico es imprescindible para identificar pseudopatologías — alteraciones postmortem que pueden confundirse con lesiones patológicas reales.', piezas:[], imagen:null, fuente:null }
 ];
 
+/* ══════════════════════════════════════════
+   glosarioLink — utilidad compartida
+══════════════════════════════════════════ */
 function glosarioLink(texto) {
   if (!texto) return texto;
   let result = texto;
   const sorted = [...GLOSARIO].sort((a, b) => b.term.length - a.term.length);
   sorted.forEach(entry => {
     const regex = new RegExp(`(?<!<[^>]*)\\b(${entry.term})\\b`, 'gi');
-    result = result.replace(regex, (match) =>
+    result = result.replace(regex, match =>
       `<a href="/prueba-museo/aula.html?glos=${entry.slug}" class="glos-link" title="${entry.def.slice(0,80)}…">${match}</a>`
     );
   });
