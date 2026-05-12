@@ -19,7 +19,133 @@ const PIEZAS = [
   { id:'OV-014', nombre:'Tibia con raquitismo',                  region:'miembro-inferior', patologia:'metabolica',   sexo:'indeterminado', epoca:'medieval',    yacimiento:'Toledo, casco histórico',                   descripcion:'Incurvación anterior y medial de la diáfisis tibial (tibia en sable). Porosidad cortical generalizada. Hipovitaminosis D severa en la infancia. Individuo subadulto.',                                          imagen:null, ficha:'/prueba-museo/ficha-estandar.html?id=OV-014' },
   { id:'OV-015', nombre:'Pelvis con artritis séptica',           region:'pelvis',           patologia:'infecciosa',   sexo:'masculino',     epoca:'romano',      yacimiento:'Emerita Augusta, Mérida',                   descripcion:'Destrucción de la articulación coxofemoral izquierda con anquilosis fibrosa. Superficie articular del acetábulo completamente erosionada. Posible complicación de herida de guerra.',                              imagen:null, ficha:'/prueba-museo/ficha-maestra.html?id=OV-015' },
   { id:'OV-016', nombre:'Cráneo con trauma contuso perimortem',  region:'craneo',           patologia:'trauma',       sexo:'masculino',     epoca:'medieval',    yacimiento:'Batalla de Nájera, La Rioja',               descripcion:'Fractura deprimida en el parietal izquierdo con patrón radial. Ausencia de remodelación ósea. Lesión perimortem por objeto contundente. Contexto de violencia interpersonal.',                                    imagen:null, ficha:'/prueba-museo/ficha-maestra.html?id=OV-016' },
-  { id:'H001',   nombre:'Ötzi, el Hombre de Hielo',              region:'individuo-completo', patologia:'trauma',     sexo:'masculino',     epoca:'prehistoria', yacimiento:'Tisenjoch Pass (Hauslabjoch), Alpes de Ötzal, Italia', descripcion:'Momia del Calcolítico con traumatismo perimortem por proyectil lítico. Conservada en el South Tyrol Museum of Archaeology, Bolzano. ca. 3350-3105 cal BC.',                                             imagen:'/prueba-museo/assets/img/piezas/H001/H001_cuerpo_completo.png', ficha:'/prueba-museo/ficha-estandar.html?id=H001', historica:true }
+  {id: 'H001',
+    nombre: 'Ötzi, el Hombre de Hielo',
+    region: 'individuo-completo',
+    patologia: 'trauma',
+    sexo: 'masculino',
+    epoca: 'prehistoria',
+    yacimiento: 'Tisenjoch Pass (Hauslabjoch), Alpes de Ötzal, Italia',
+    descripcion: 'Momia del Calcolítico con traumatismo perimortem por proyectil lítico. Conservada en el South Tyrol Museum of Archaeology, Bolzano. ca. 3350-3105 cal BC.',
+    imagen: '/prueba-museo/assets/img/H001/H001_cuerpo_completo.png',
+    ficha: '/prueba-museo/ficha-maestra.html?id=H001',
+    historica: true,
+
+    // Datos generales extendidos
+    datosGenerales: {
+      categoriaAnatomica: 'Individuo Completo Momificado (presente en todas las categorías)',
+      categoriaPatologica: 'Traumatología / Paleopatología traumática',
+      yacimiento: 'Tisenjoch Pass (Hauslabjoch)',
+      region: 'Alpes de Ötzal, Tirol del Sur (actual Italia)',
+      cronologia: 'Edad del Cobre (Calcolítico), ca. 3350-3105 cal BC',
+      sexo: 'Masculino',
+      edadEstimada: '45-46 años',
+      patologiaPrincipal: 'Traumatismo por Herida de Flecha',
+      localizacionActual: 'South Tyrol Museum of Archaeology, Bolzano'
+    },
+
+    // Galería de imágenes con pies de foto
+    imagenes: {
+      cuerpoCompleto: {
+        url: '/prueba-museo/assets/img/H001/H001_cuerpo_completo.png',
+        pieDeFoto: 'Figura 1. Vista anterior y posterior del cuerpo momificado de Ötzi, mostrando su excepcional estado de conservación y la distribución anatómica de sus tatuajes documentados. Tomada de Garrido Pena (2020)¹.'
+      },
+      costillaVestigial: {
+        url: '/prueba-museo/assets/img/H001/H001_costilla_vestigial.png',
+        pieDeFoto: 'Figura 2. Radiografía toracolumbar que muestra variantes anatómicas esqueléticas descritas en Ötzi, incluyendo una costilla derecha vestigial y alteraciones en la transición lumbosacra. Tomada de Kean et. al. (2013)².'
+      },
+      heridaMano: {
+        url: '/prueba-museo/assets/img/H001/H001_herida_mano.png',
+        pieDeFoto: 'Figura 3. Detalle de la lesión traumática presente en la mano derecha de Ötzi, compatible con una herida perimortem. Tomada de Murphy et. al. (2003)³.'
+      },
+      toolkit: {
+        url: '/prueba-museo/assets/img/H001/H001_toolkit.png',
+        pieDeFoto: 'Figura 4. Proceso de uso, fractura y reacondicionamiento de una punta de flecha perteneciente al conjunto de armas asociado a Ötzi, una similar a la representada habría sido la causa de su muerte. Tomada de Wierer et. al. (2018)⁴.'
+      }
+    },
+
+    // Modelo 3D
+    modelo3D: '/prueba-museo/assets/models/H001.glb',
+
+    // Descripción osteológica completa
+    descripcionOsteologica: `Ötzi es un individuo adulto masculino de Homo sapiens, excepcionalmente conservado mediante momificación natural por congelación ¹. Presenta un esqueleto complejo asociado a preservación significativa de tejidos blandos ¹. Esta pieza se encuentra en el South Tyrol Museum of Archaeology en Bolzano.
+
+    Morfológicamente, es un individuo de constitución ágil, con una estatura aproximada de 1,58-1,60 m y edad estimada en torno a los 46 años ². Se observan variaciones anatómicas como la presencia de una costilla derecha vestigial asociada a la duodécima vértebra torácica ² y una vértebra lumbosacra transicional (L5), con posición inferior respecto al borde pélvico y morfología alterada por integración parcial con el sacro ².
+
+    A nivel craneal, se describen foveolas granulares prominentes en el hueso frontal, compatibles con variantes anatómicas no patológicas ³. La cavidad oral presenta desgaste dentario notable y pérdida de soporte alveolar ¹.
+
+    Se observan además alteraciones traumáticas en la región escapular izquierda y en la mano derecha ⁴, así como múltiples modificaciones postmortem derivadas de procesos tafonómicos y de la extracción del cuerpo ⁴.
+
+    Los dientes de Ötzi estaban muy desgastados, y presenta un diastema (espacio) distintivo entre los incisivos superiores, una característica frecuentemente hereditaria. Los minerales en sus dientes aportan información sobre la composición del agua que bebió y, por tanto, sobre el lugar donde vivió durante su infancia. Ötzi carecía de muelas del juicio.
+
+    Las radiografías revelaron un desgaste significativo de las articulaciones, incluyendo caderas, hombros, rodillas y columna vertebral. Su duodécimo par de costillas estaba ausente, una anomalía genética rara. Ötzi fracturó varios huesos durante su vida, incluyendo varias costillas y la nariz.`,
+
+    // Diagnóstico diferencial y hallazgos patológicos
+    diagnostico: `**DIAGNÓSTICO DIFERENCIAL**
+
+    Probable muerte por hemorragia masiva secundaria a traumatismo penetrante por proyectil.
+
+    **TRAUMA**
+
+    • Herida penetrante perimortem en región escapulotorácica izquierda compatible con impacto de proyectil ⁴.
+    • Punta lítica alojada en el hemitórax izquierdo (pulmón) ⁴.
+    • Lesión incisa en mano derecha compatible con traumatismo por arma cortante ⁴.
+    • Posible traumatismo craneal asociado al evento perimortem ¹.
+
+    **PATOLOGÍAS DEGENERATIVAS**
+
+    • Cambios osteoarticulares compatibles con osteoartritis / artritis degenerativa ².
+
+    **PATOLOGÍAS CARDIOVASCULARES**
+
+    • Calcificaciones vasculares compatibles con enfermedad aterosclerótica ¹.
+
+    **PATOLOGÍAS INFECCIOSAS / PARASITARIAS**
+
+    • Evidencia molecular de infección por Borrelia burgdorferi ¹.
+    • Presencia de Helicobacter pylori ¹.
+    • Huevos de Trichuris trichiura en el tracto intestinal ¹.
+
+    **PATOLOGÍA ORAL**
+
+    • Enfermedad periodontal avanzada ¹.`,
+
+    // Referencias bibliográficas
+    referencias: [
+      {
+        id: 1,
+        autor: 'Garrido Pena, R.',
+        titulo: 'Ötzi, el hombre del hielo en el MAN',
+        año: 2020,
+        publicacion: 'Revista del Museo Arqueológico Nacional',
+        url: 'https://www.man.es/man/estudio/publicaciones/revista-man/numeros-publicados/2020-man-18/otzi-hombre-hielo.html'
+      },
+      {
+        id: 2,
+        autor: 'Kean, W.F., Tocchio, S., Kean, M., Rainsford, K.D.',
+        titulo: 'The musculoskeletal abnormalities of the Similaun Iceman ("ÖTZI"): clues to chronic pain and possible treatments',
+        año: 2013,
+        publicacion: 'Inflammopharmacology',
+        url: 'https://link.springer.com/article/10.1007/s10787-013-0172-4'
+      },
+      {
+        id: 3,
+        autor: 'Murphy Jr., W.A., Nedden, D.Z., Gostner, P., Knapp, R., Recheis, W., Seidler, H.',
+        titulo: 'The Iceman: Discovery and Imaging',
+        año: 2003,
+        publicacion: 'Radiology',
+        url: 'https://pubs.rsna.org/doi/10.1148/radiol.2262011796'
+      },
+      {
+        id: 4,
+        autor: 'Wierer, U., Arrighi, S., Bertola, S., Kaufmann, G., Baumgarten, B., Pernter, P., Pelegrin, J.',
+        titulo: 'The Iceman\'s lithic toolkit: Raw material, technology, typology and use',
+        año: 2018,
+        publicacion: 'PLOS ONE',
+        url: 'https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0198292'
+      }
+    ]
+  }
 ];
 
 const VOCABULARIO = {
