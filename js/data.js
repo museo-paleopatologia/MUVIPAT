@@ -132,7 +132,7 @@ const PIEZAS = [
     imagen:      '/prueba-museo/assets/img/piezas/H001/H001_cuerpo_completo.png',
     ficha:       '/prueba-museo/ficha-estandar.html?id=H001',
     historica:   true,
-    modelo3d:    '/prueba-museo/assets/models/h001.glb',
+    modelo3d:    '/prueba-museo/assets/models/H001.glb',
 
     /* ── Identificación extendida ── */
     cronologia:   'ca. 3350–3105 cal BC (Calcolítico / Edad del Cobre)',
@@ -150,7 +150,6 @@ const PIEZAS = [
     /* ── Diagnóstico diferencial (resumen) ── */
     diagnostico_principal: 'Probable muerte por hemorragia masiva secundaria a traumatismo penetrante por proyectil lítico (punta de flecha) alojada en el hemitórax izquierdo con afectación de la arteria subclavia.',
 
-    /* ── Hallazgos por categoría (acordeón clicable) ── */
     hallazgos: [
       {
         titulo: 'Traumatismos',
@@ -228,19 +227,19 @@ const PIEZAS = [
     /* ── Galería de imágenes ── */
     imagenes: [
       {
-        src:     '/prueba-museo/assets/img/piezas/H001/H001_cuerpo_completo.png',
+        src:     '/prueba-museo/assets/img/H001/H001_cuerpo_completo.png',
         caption: 'Figura 1. Vista anterior y posterior del cuerpo momificado de Ötzi, mostrando su excepcional estado de conservación y la distribución anatómica de sus tatuajes documentados. Tomada de Garrido Pena (2020).'
       },
       {
-        src:     '/prueba-museo/assets/img/piezas/H001/H001_costilla_vestigial.png',
+        src:     '/prueba-museo/assets/img/H001/H001_costilla_vestigial.png',
         caption: 'Figura 2. Radiografía toracolumbar que muestra variantes anatómicas esqueléticas descritas en Ötzi, incluyendo una costilla derecha vestigial y alteraciones en la transición lumbosacra. Tomada de Kean et al. (2013).'
       },
       {
-        src:     '/prueba-museo/assets/img/piezas/H001/H001_herida_mano.png',
+        src:     '/prueba-museo/assets/img/H001/H001_herida_mano.png',
         caption: 'Figura 3. Detalle de la lesión traumática presente en la mano derecha de Ötzi, compatible con una herida perimortem por arma cortante. Tomada de Murphy et al. (2025).'
       },
       {
-        src:     '/prueba-museo/assets/img/piezas/H001/H001_toolkit.png',
+        src:     '/prueba-museo/assets/img/H001/H001_toolkit.png',
         caption: 'Figura 4. Proceso de uso, fractura y reacondicionamiento de una punta de flecha perteneciente al conjunto de armas asociado a Ötzi. Una similar a la representada habría sido la causa de su muerte. Tomada de Wierer et al. (2018).'
       }
     ]
