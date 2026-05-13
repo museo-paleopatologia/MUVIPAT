@@ -1214,8 +1214,7 @@
               : `<div class="col-piece-card__img-ph">${regMeta.icon}</div>`
             }
             ${isMaster ? `<span class="col-piece-card__master-badge">Ficha maestra</span>` : ''}
-            ${isMaster ? `<span class_"col-piece-card__master-badge" style="background:var(--sulfur);color:var(--dark);">H</span>´ : ''}
-          </div>
+            ${pieza.historica ? `<span class="col-piece-card__master-badge" style="background:var(--sulfur);color:var(--dark);">H</span>` : ''}          </div>
           <div class="col-piece-card__body">
             <div class="col-piece-card__header">
               <span class="col-piece-card__id">${pieza.id}</span>
@@ -1317,6 +1316,7 @@
             </p>
           </div>
         `;
+          track.appendChild(card);
       });
     }
 
