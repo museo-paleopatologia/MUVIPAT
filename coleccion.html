@@ -1279,12 +1279,15 @@
       const historicas = PIEZAS.filter(p => HISTORICAS_IDS.includes(p.id));
       historicas.forEach((pieza, i) => {
         const colorVar = MASTER_COLORS[i % MASTER_COLORS.length];
+        
+        const patMeta = VOCABULARIO.patologia[pieza.patologia];
+        const regMeta = VOCABULARIO.region[pieza.region];
+        const epocMeta = VOCABULARIO.epoca[pieza.epoca];
+        
         const card = document.createElement('a');
         card.href = pieza.ficha || `ficha-estandar.html?id=${pieza.id}`;
         card.className = `col-master-card col-master-card--${colorVar.replace('--','')}`;
-        card patMeta = VOCABULARIO.patologia[pieza.patologia];
-        const regMeta = VOCABULARIO.region[pieza.region];
-        const epocMeta = VOCABULARIO.epoca[pieza.epoca];
+        
         
         card.innerHTML = `
           <div class="col-master-card__strip" style="background:var(${colorVar})"></div>
