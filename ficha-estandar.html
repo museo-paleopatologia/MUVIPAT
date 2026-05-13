@@ -37,7 +37,7 @@
     .fe-nav-btn--buscar { background:rgba(192,0,60,.06); border-color:var(--crimson); color:var(--crimson); box-shadow:2px 2px 0 var(--crimson); }
     .fe-nav-btn--buscar:hover { background:rgba(192,0,60,.14); box-shadow:4px 4px 0 var(--crimson); }
 
-    /* ── LAYOUT: 1 columna estrecha centrada con la visual encima ── */
+    /* ── LAYOUT base ── */
     .fe-main {
       width: min(860px, 96vw);
       margin-inline: auto;
@@ -49,339 +49,81 @@
       gap: 0;
     }
 
-    /* ── GALERÍA ── */
-    .fe-gallery {
-      border: var(--fe-border);
-      border-radius: 4px;
-      overflow: hidden;
-      background: #111;
-      box-shadow: var(--fe-shadow);
-      margin-bottom: 1.5rem;
-      position: relative;
-    }
-    /* viewport: aspect-ratio fijo para igualar todas las imágenes */
-    .fe-gallery__viewport {
-      width: 100%;
-      aspect-ratio: 3 / 2;
-      overflow: hidden;
-      position: relative;
-      background: #111;
-    }
-    /* track: ancho total = N × 100% del viewport */
-    .fe-gallery__track {
-      display: flex;
-      width: 100%;
-      height: 100%;
-    }
-    /* slides: cada uno ocupa exactamente 100% del viewport
-       La clave: el track NO tiene width extra; usamos translateX en px */
-    .fe-gallery__slide {
-      flex: 0 0 100%;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      cursor: zoom-in;
-    }
-    .fe-gallery__slide img {
-      width: 100%; height: 100%;
-      object-fit: contain;
-      object-position: center;
-      display: block;
-      background: #111;
-      transition: transform .2s;
-    }
-    .fe-gallery__slide:hover img { transform: scale(1.015); }
-
-    /* badge esquina */
-    .fe-img-badge {
-      position: absolute; top: .75rem; left: .75rem; z-index: 2;
-      background: var(--fe-ink); color: var(--ivory);
-      font-family: var(--font-head); font-size: .58rem; font-weight: 700;
-      letter-spacing: .12em; text-transform: uppercase;
-      padding: .22em .65em; border-radius: 2px; pointer-events: none;
-    }
-    /* placeholder */
-    .fe-img-placeholder {
-      width:100%; height:100%; display:flex; flex-direction:column;
-      align-items:center; justify-content:center; gap:.75rem; opacity:.3;
-    }
-    .fe-img-placeholder span { font-family:var(--font-head); font-size:.62rem; font-weight:700; letter-spacing:.15em; text-transform:uppercase; color:var(--fe-mid); }
-
-    /* controles galería */
-    .fe-gallery__controls {
-      display: flex; align-items: center; justify-content: space-between;
-      background: var(--fe-ink); padding: .45rem .75rem; min-height: 38px;
-    }
-    .fe-gallery__arrow {
-      width: 28px; height: 28px; border-radius: 2px;
-      background: rgba(255,255,255,.1); color: var(--ivory);
-      border: 1.5px solid rgba(255,255,255,.2);
-      font-size: .9rem; font-weight: 700;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer; transition: background .15s, opacity .15s;
-      user-select: none;
-    }
-    .fe-gallery__arrow:hover { background: rgba(255,255,255,.22); }
-    .fe-gallery__arrow:disabled { opacity: .22; pointer-events: none; }
-    .fe-gallery__counter {
-      font-family: var(--font-head); font-size: .6rem; font-weight: 700;
-      letter-spacing: .12em; color: rgba(255,255,255,.55);
-    }
-    .fe-gallery__counter strong { color: #fff; }
-
-    /* pie de foto */
-    .fe-gallery__caption {
-      padding: .6rem .9rem;
-      background: rgba(255,255,255,.6);
-      border-top: 1px solid var(--fe-bone);
-      font-family: var(--font-ui); font-size: .72rem; line-height: 1.55;
-      color: var(--fe-mid); font-style: italic;
-    }
-
-    /* ── LIGHTBOX ── */
-    .fe-lightbox {
-      position: fixed; inset: 0; z-index: 9999;
-      background: rgba(13,13,13,.93);
-      backdrop-filter: blur(6px);
-      display: none; align-items: center; justify-content: center;
-      padding: 1.5rem;
-    }
-    .fe-lightbox.is-open { display: flex; }
-    .fe-lightbox__inner {
-      position: relative; max-width: min(92vw,1100px); width: 100%;
-      display: flex; flex-direction: column; gap: .75rem;
-    }
-    .fe-lightbox__img { width:100%; max-height:80vh; object-fit:contain; border-radius:2px; border:2px solid rgba(255,255,255,.12); }
-    .fe-lightbox__caption { font-family:var(--font-ui); font-size:.78rem; line-height:1.6; color:rgba(255,255,255,.7); font-style:italic; text-align:center; }
-    .fe-lightbox__close { position:absolute; top:-.6rem; right:-.6rem; width:34px; height:34px; border-radius:50%; background:var(--crimson); color:#fff; border:none; font-size:1rem; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:2; }
-
-    /* ── MODEL VIEWER ── */
-    .fe-viewer-wrap { border:var(--fe-border); border-radius:4px; overflow:hidden; background:var(--fe-ink); box-shadow:var(--fe-shadow); margin-bottom:1.5rem; position:relative; }
-    .fe-viewer-label { position:absolute; top:.75rem; right:.75rem; background:rgba(0,229,255,.15); border:1.5px solid var(--cyan); color:var(--cyan); font-family:var(--font-head); font-size:.55rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; padding:.2em .6em; border-radius:2px; z-index:2; pointer-events:none; }
-    model-viewer { width:100%; height:300px; background:transparent; --progress-bar-color:transparent; }
-
-    /* ── TAGS ── */
-    .fe-tags { display:flex; flex-wrap:wrap; gap:.45rem; margin-bottom:2rem; }
-    .fe-tag { font-family:var(--font-head); font-size:.6rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; padding:.28em .7em; border:2px solid; border-radius:2px; }
-    .fe-tag--region   { border-color:var(--cyan);    color:var(--cyan);    background:rgba(0,229,255,.06); }
-    .fe-tag--patol    { border-color:var(--crimson);  color:var(--crimson); background:rgba(192,0,60,.06); }
-    .fe-tag--sexo     { border-color:var(--pink);     color:var(--pink);    background:rgba(255,64,129,.06); }
-    .fe-tag--epoca    { border-color:var(--bone-400); color:var(--bone-500);background:rgba(200,170,120,.08); }
-    .fe-tag--master   { border-color:var(--sulfur);   color:#6a7300;        background:rgba(212,230,10,.1); }
-    .fe-tag--historica{ border-color:var(--sulfur);   color:#6a5800;        background:rgba(230,200,10,.12); }
-
-    /* ── CABECERA ── */
-    .fe-header { margin-bottom:1.75rem; padding-bottom:1.5rem; border-bottom:var(--fe-border); }
-    .fe-header__id { font-family:var(--font-head); font-size:.65rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--crimson); margin-bottom:.4rem; }
-    .fe-header__title { font-family:var(--font-head); font-size:clamp(1.6rem,3vw,2.4rem); font-weight:900; letter-spacing:-.04em; line-height:1.05; color:var(--fe-ink); margin-bottom:.75rem; }
-    .fe-header__subtitle { font-family:var(--font-display); font-style:italic; font-size:clamp(.9rem,1.4vw,1.05rem); color:var(--fe-mid); font-weight:400; }
-
-    /* ── SECCIONES ── */
-    .fe-section { margin-bottom:2rem; }
-    .fe-section__title {
-      font-family:var(--font-head); font-size:.6rem; font-weight:800;
-      letter-spacing:.2em; text-transform:uppercase; color:var(--fe-mid);
-      margin-bottom:.85rem; padding-bottom:.4rem;
-      border-bottom:1.5px solid var(--fe-bone);
-      display:flex; align-items:center; gap:.5rem;
-    }
-    .fe-section__title::before { content:''; display:block; width:16px; height:2px; background:var(--crimson); flex-shrink:0; }
-
-    /* Grid datos técnicos */
-    .fe-data-grid { display:grid; grid-template-columns:1fr 1fr; gap:.6rem; }
-    .fe-data-item { background:#fff; border:2px solid var(--fe-ink); border-radius:2px; padding:.65rem .85rem; box-shadow:2px 2px 0 var(--fe-ink); }
-    .fe-data-item--full { grid-column:span 2; }
-    .fe-data-item__label { font-family:var(--font-head); font-size:.55rem; font-weight:700; letter-spacing:.15em; text-transform:uppercase; color:var(--fe-mid); margin-bottom:.25rem; }
-    .fe-data-item__value { font-family:var(--font-head); font-size:.85rem; font-weight:700; color:var(--fe-ink); line-height:1.3; }
-
-    /* Descripción párrafos */
-    .fe-desc-block { display:flex; flex-direction:column; gap:.9rem; }
-    .fe-desc { font-size:clamp(.85rem,1.3vw,.95rem); line-height:1.8; color:#3d3d3d; font-weight:300; }
-    .fe-desc strong { color:var(--fe-ink); font-weight:700; }
-
-    /* Diagnóstico — texto resumen + acordeón */
-    .fe-diag-summary {
-      padding:.9rem 1.1rem; background:#fff;
-      border-left:4px solid var(--crimson); border-radius:0 2px 2px 0;
-      font-size:.88rem; line-height:1.65; color:#3d3d3d; font-weight:300;
-      box-shadow:2px 2px 0 var(--fe-bone); margin-bottom:1rem;
-    }
-
-    /* ── ACORDEÓN ── */
-    .fe-accordion { display:flex; flex-direction:column; gap:.45rem; }
-    .fe-accordion__item { border:2px solid var(--fe-bone); border-radius:2px; overflow:hidden; background:#fff; transition:border-color .15s; }
-    .fe-accordion__item.is-open { border-color:var(--fe-ink); }
-    .fe-accordion__trigger { width:100%; display:flex; align-items:center; justify-content:space-between; padding:.75rem 1rem; background:none; border:none; cursor:pointer; font-family:var(--font-head); font-size:.75rem; font-weight:700; letter-spacing:.04em; color:var(--fe-ink); text-align:left; transition:background .12s; }
-    .fe-accordion__trigger:hover { background:var(--fe-bg); }
-    .fe-accordion__item.is-open .fe-accordion__trigger { background:var(--fe-ink); color:var(--ivory); }
-    .fe-accordion__chevron { width:18px; height:18px; flex-shrink:0; transition:transform .22s; display:flex; align-items:center; justify-content:center; }
-    .fe-accordion__item.is-open .fe-accordion__chevron { transform:rotate(180deg); }
-    .fe-accordion__body { display:none; padding:.75rem 1rem 1rem; border-top:1.5px solid var(--fe-bone); }
-    .fe-accordion__item.is-open .fe-accordion__body { display:block; }
-    .fe-hallazgo-list { display:flex; flex-direction:column; gap:.5rem; margin:0; padding:0; list-style:none; }
-    .fe-hallazgo-item { display:flex; align-items:flex-start; gap:.65rem; padding:.6rem .8rem; background:var(--fe-bg); border-radius:2px; border:1.5px solid var(--fe-bone); }
-    .fe-hallazgo-item__dot { width:7px; height:7px; border-radius:50%; background:var(--crimson); flex-shrink:0; margin-top:.38rem; }
-    .fe-hallazgo-item__text { font-size:.82rem; color:#3d3d3d; line-height:1.6; font-weight:300; flex:1; }
-    .fe-ref-link { font-family:var(--font-head); font-size:.62rem; font-weight:700; color:var(--crimson); text-decoration:none; vertical-align:super; line-height:0; margin-left:.08em; transition:color .12s; }
-    .fe-ref-link:hover { color:var(--fe-ink); }
-
-    /* ── REFERENCIAS ── */
-    .fe-bib-list { display:flex; flex-direction:column; gap:.5rem; }
-    .fe-bib-item {
-      font-size:.78rem; color:#3d3d3d; line-height:1.65;
-      padding:.7rem .85rem .7rem 1rem; background:#fff;
-      border-left:3px solid var(--blue); font-weight:300;
-      scroll-margin-top:100px;
-      transition:background .2s, border-color .2s;
-    }
-    .fe-bib-item.fe-ref-highlight {
-      border-left-color:var(--crimson);
-      animation:fe-ref-pulse 1.6s ease-out forwards;
-    }
-    @keyframes fe-ref-pulse {
-      0%   { background:rgba(192,0,60,.18); }
-      50%  { background:rgba(192,0,60,.08); }
-      100% { background:#fff; }
-    }
-    .fe-bib-item__num { font-family:var(--font-head); font-size:.65rem; font-weight:800; color:var(--crimson); margin-right:.4rem; }
-    .fe-bib-item em { font-style:italic; }
-    .fe-bib-item strong { color:var(--fe-ink); font-weight:700; }
-    .fe-bib-item a { color:var(--blue); font-weight:600; font-family:var(--font-head); font-size:.68rem; letter-spacing:.06em; text-transform:uppercase; text-decoration:none; display:inline-flex; align-items:center; gap:.25rem; margin-top:.3rem; }
-    .fe-bib-item a:hover { color:var(--crimson); }
-
-    /* ── ENLACE FICHA MAESTRA ── */
-    .fe-master-link { display:flex; align-items:center; justify-content:space-between; padding:1.1rem 1.3rem; background:var(--fe-ink); border:var(--fe-border); border-radius:4px; box-shadow:var(--fe-shadow); text-decoration:none; color:var(--ivory); margin-top:1.5rem; transition:transform .15s,box-shadow .15s; }
-    .fe-master-link:hover { transform:translate(-3px,-3px); box-shadow:7px 7px 0 var(--fe-ink); }
-    .fe-master-link__eyebrow { font-family:var(--font-head); font-size:.58rem; font-weight:700; letter-spacing:.15em; text-transform:uppercase; color:var(--sulfur); margin-bottom:.25rem; }
-    .fe-master-link__title { font-family:var(--font-head); font-size:.92rem; font-weight:800; }
-    .fe-master-link__arrow { font-size:1.3rem; color:var(--sulfur); flex-shrink:0; transition:transform .2s; }
-    .fe-master-link:hover .fe-master-link__arrow { transform:translateX(5px); }
-
-    .glos-link { color:var(--blue); text-decoration:underline dotted; text-underline-offset:3px; font-weight:600; transition:color .15s; }
-    .glos-link:hover { color:var(--crimson); }
-
-    @media (max-width:500px) {
-      .fe-data-grid { grid-template-columns:1fr; }
-      .fe-data-item--full { grid-column:auto; }
-    }
-
     /* ════ LAYOUT ADAPTATIVO ════ */
 
-    /* MODO TALL — modelo full-height izquierda (figuras verticales) */
+    /* ── MODO TALL ──
+      Columna izquierda fija: modelo 3D full-height
+      Columna derecha: galería fotos arriba + datos abajo      */
     .fe-main--tall {
-      grid-template-columns: 260px 1fr;
-      grid-template-rows: auto auto;
-    }
-    .fe-main--tall .fe-visual {
-      grid-row: 1 / 3;
-      display: flex;
-      flex-direction: column;
-    }
-    .fe-main--tall .fe-visual .fe-img-wrap {
-      display: none;
-    }
-    .fe-main--tall .fe-viewer-wrap {
-      flex: 1;
-    }
-    .fe-main--tall model-viewer {
-      width: 100%;
-      height: 100% !important;
-      min-height: 520px;
-      aspect-ratio: unset;
+      display: grid !important;
+      width: min(1200px, 96vw);
+      grid-template-columns: 280px 1fr;
+      grid-template-rows: auto;
+      gap: clamp(1.5rem, 3vw, 2.5rem);
+      align-items: start;
     }
 
-    /* Galería de fotos horizontal — solo modo tall */
-    .fe-photos-strip {
-      display: none;
+    /* El viewer ocupa toda la columna izquierda */
+    .fe-main--tall .fe-viewer-wrap {
+      grid-column: 1;
+      grid-row: 1 / 99;
+      display: flex !important;
       flex-direction: column;
-      gap: .75rem;
-      margin-bottom: 1.5rem;
+      position: sticky;
+      top: calc(clamp(56px,7vw,70px) + 1rem);
     }
-    .fe-main--tall .fe-photos-strip {
-      display: flex;
+
+    .fe-main--tall model-viewer {
+      width: 100%;
+      height: 65vh !important;
+      min-height: 480px;
+      max-height: 700px;
     }
-    .fe-photos-strip__row {
-      display: flex;
-      gap: .5rem;
+
+    /* Todo lo demás va a la columna derecha, en orden */
+    .fe-main--tall .fe-gallery       { grid-column: 2; }
+    .fe-main--tall .fe-tags          { grid-column: 2; }
+    .fe-main--tall .fe-header        { grid-column: 2; }
+    .fe-main--tall .fe-section       { grid-column: 2; }
+    .fe-main--tall .fe-master-link   { grid-column: 2; }
+
+    /* Ocultar el viewer-wrap del flujo normal cuando está sticky */
+    .fe-main--tall .fe-viewer-wrap ~ .fe-viewer-wrap { display: none; }
+
+
+    /* ── MODO GALLERY ──
+      Modelo 3D protagonista arriba full-width
+      Galería de fotos + datos debajo en dos columnas          */
+    .fe-main--gallery {
+      display: grid !important;
+      width: min(1200px, 96vw);
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto;
+      gap: clamp(1.5rem, 3vw, 2.5rem);
+      align-items: start;
     }
-    .fe-photos-strip__main {
-      flex: 2;
-      aspect-ratio: 16/9;
-      overflow: hidden;
-      border: var(--fe-border);
-      border-radius: 4px;
-      background: var(--fe-bone);
-      box-shadow: var(--fe-shadow);
+
+    /* Modelo ocupa todo el ancho arriba */
+    .fe-main--gallery .fe-viewer-wrap {
+      grid-column: 1 / -1;
+      display: flex !important;
     }
-    .fe-photos-strip__main img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      display: block;
+
+    .fe-main--gallery model-viewer {
+      height: 55vh !important;
+      min-height: 400px;
     }
-    .fe-photos-strip__thumbs {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: .5rem;
+
+    /* Galería a la izquierda */
+    .fe-main--gallery .fe-gallery {
+      grid-column: 1;
     }
-    .fe-photos-strip__thumb {
-      flex: 1;
-      overflow: hidden;
-      border: 2px solid var(--fe-bone);
-      border-radius: 2px;
-      background: var(--fe-bone);
-      cursor: pointer;
-      transition: border-color .15s;
-    }
-    .fe-photos-strip__thumb:hover,
-    .fe-photos-strip__thumb.active {
-      border-color: var(--fe-ink);
-    }
-    .fe-photos-strip__thumb img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .fe-photos-strip__nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .fe-photos-strip__counter {
-      font-family: var(--font-head);
-      font-size: .6rem;
-      font-weight: 700;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: var(--fe-mid);
-    }
-    .fe-photos-strip__dots {
-      display: flex;
-      gap: .35rem;
-    }
-    .fe-photos-strip__dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--fe-bone);
-      border: 1.5px solid var(--fe-ink);
-      cursor: pointer;
-      transition: background .15s;
-    }
-    .fe-photos-strip__dot.active {
-      background: var(--fe-ink);
-    }
-    .fe-photos-strip__caption {
-      font-family: var(--font-ui);
-      font-size: .72rem;
-      font-weight: 300;
-      font-style: italic;
-      color: var(--fe-mid);
-      line-height: 1.55;
-      padding: .4rem .2rem 0;
-      border-top: 1.5px solid var(--fe-bone);
-      margin-top: .1rem;
-    }
-  </style>
+
+    /* Tags + header + secciones a la derecha */
+    .fe-main--gallery .fe-tags        { grid-column: 2; grid-row: 2; }
+    .fe-main--gallery .fe-header      { grid-column: 2; grid-row: 3; }
+    .fe-main--gallery .fe-section     { grid-column: 2; }
+    .fe-main--gallery .fe-master-link { grid-column: 1 / -1; }  </style>
 </head>
 <body>
 
@@ -899,51 +641,6 @@
       const layout = pieza.layoutMode || 'default';
       if (layout !== 'default') {
         document.getElementById('fe-main').classList.add(`fe-main--${layout}`);
-      }
-
-    /* ── Carrusel de fotos (modo tall) ── */
-      if (layout === 'tall' && pieza.imagenes && pieza.imagenes.length > 0) {
-        const strip = document.getElementById('fe-photos-strip');
-        if (!strip) return;
-        const imgs = pieza.imagenes;
-        let current = 0;
-
-        function buildStrip(idx) {
-          strip.innerHTML = `
-            <div class="fe-photos-strip__row">
-              <div class="fe-photos-strip__main">
-                <img src="${imgs[idx].src}" alt="${imgs[idx].caption}" />
-              </div>
-              <div class="fe-photos-strip__thumbs">
-                ${imgs.slice(0, 3).map((img, i) => `
-                  <div class="fe-photos-strip__thumb ${i === idx ? 'active' : ''}"
-                       data-idx="${i}" role="button" tabindex="0">
-                    <img src="${img.src}" alt="" aria-hidden="true" />
-                  </div>
-                `).join('')}
-              </div>
-            </div>
-            <p class="fe-photos-strip__caption">${imgs[idx].caption}</p>
-            <div class="fe-photos-strip__nav">
-              <div class="fe-photos-strip__dots">
-                ${imgs.map((_, i) => `
-                  <span class="fe-photos-strip__dot ${i === idx ? 'active' : ''}"
-                        data-idx="${i}" role="button" tabindex="0"></span>
-                `).join('')}
-              </div>
-              <span class="fe-photos-strip__counter">${idx + 1} / ${imgs.length}</span>
-            </div>
-          `;
-
-          strip.querySelectorAll('[data-idx]').forEach(el => {
-            el.addEventListener('click', () => {
-              current = parseInt(el.dataset.idx);
-              buildStrip(current);
-            });
-          });
-        }
-
-        buildStrip(0);
       }
   });
 </script>
