@@ -129,7 +129,7 @@ const PIEZAS = [
     epoca:       'prehistoria',
     yacimiento:  'Tisenjoch Pass (Hauslabjoch), Alpes de Ötzal, Tirol del Sur (Italia)',
     descripcion: 'Momia calcolítica de excepcional conservación por congelación natural. Presenta traumatismo perimortem por proyectil lítico como causa probable de muerte. Conservada en el South Tyrol Museum of Archaeology, Bolzano.',
-    imagen:      '/prueba-museo/assets/img/piezas/H001/H001_cuerpo_completo.png',
+    imagen:      '/prueba-museo/assets/img/H001/H001_cuerpo_completo.png',
     ficha:       '/prueba-museo/ficha-estandar.html?id=H001',
     historica:   true,
     modelo3d:    '/prueba-museo/assets/models/H001.glb',
