@@ -571,12 +571,6 @@
     if (layout !== 'default') {
       document.getElementById('fe-main').classList.add(`fe-main--${layout}`);
     }
-
-    /* En modo tall, forzar visibilidad del viewer aunque no haya modelo aún */
-    if (layout === 'tall') {
-      const vw = document.getElementById('fe-viewer-wrap');
-      if (vw) vw.style.removeProperty('display');
-    }
   });
 </script>
 </body>
