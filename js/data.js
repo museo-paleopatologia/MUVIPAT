@@ -242,7 +242,8 @@ const PIEZAS = [
         src:     '/prueba-museo/assets/img/H001/H001_toolkit.png',
         caption: 'Figura 4. Proceso de uso, fractura y reacondicionamiento de una punta de flecha perteneciente al conjunto de armas asociado a Ötzi. Una similar a la representada habría sido la causa de su muerte. Tomada de Wierer et al. (2018).'
       }
-    ]
+    ],
+    layoutMode: 'tall',
   }
 
 ]; /* fin PIEZAS */

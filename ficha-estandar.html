@@ -264,6 +264,123 @@
       .fe-data-grid { grid-template-columns:1fr; }
       .fe-data-item--full { grid-column:auto; }
     }
+
+    /* ════ LAYOUT ADAPTATIVO ════ */
+
+    /* MODO TALL — modelo full-height izquierda (figuras verticales) */
+    .fe-main--tall {
+      grid-template-columns: 260px 1fr;
+      grid-template-rows: auto auto;
+    }
+    .fe-main--tall .fe-visual {
+      grid-row: 1 / 3;
+      display: flex;
+      flex-direction: column;
+    }
+    .fe-main--tall .fe-visual .fe-img-wrap {
+      display: none;
+    }
+    .fe-main--tall .fe-viewer-wrap {
+      flex: 1;
+    }
+    .fe-main--tall model-viewer {
+      width: 100%;
+      height: 100% !important;
+      min-height: 520px;
+      aspect-ratio: unset;
+    }
+
+    /* Galería de fotos horizontal — solo modo tall */
+    .fe-photos-strip {
+      display: none;
+      flex-direction: column;
+      gap: .75rem;
+      margin-bottom: 1.5rem;
+    }
+    .fe-main--tall .fe-photos-strip {
+      display: flex;
+    }
+    .fe-photos-strip__row {
+      display: flex;
+      gap: .5rem;
+    }
+    .fe-photos-strip__main {
+      flex: 2;
+      aspect-ratio: 16/9;
+      overflow: hidden;
+      border: var(--fe-border);
+      border-radius: 4px;
+      background: var(--fe-bone);
+      box-shadow: var(--fe-shadow);
+    }
+    .fe-photos-strip__main img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .fe-photos-strip__thumbs {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+    }
+    .fe-photos-strip__thumb {
+      flex: 1;
+      overflow: hidden;
+      border: 2px solid var(--fe-bone);
+      border-radius: 2px;
+      background: var(--fe-bone);
+      cursor: pointer;
+      transition: border-color .15s;
+    }
+    .fe-photos-strip__thumb:hover,
+    .fe-photos-strip__thumb.active {
+      border-color: var(--fe-ink);
+    }
+    .fe-photos-strip__thumb img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .fe-photos-strip__nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .fe-photos-strip__counter {
+      font-family: var(--font-head);
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--fe-mid);
+    }
+    .fe-photos-strip__dots {
+      display: flex;
+      gap: .35rem;
+    }
+    .fe-photos-strip__dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--fe-bone);
+      border: 1.5px solid var(--fe-ink);
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .fe-photos-strip__dot.active {
+      background: var(--fe-ink);
+    }
+    .fe-photos-strip__caption {
+      font-family: var(--font-ui);
+      font-size: .72rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--fe-mid);
+      line-height: 1.55;
+      padding: .4rem .2rem 0;
+      border-top: 1.5px solid var(--fe-bone);
+      margin-top: .1rem;
+    }
   </style>
 </head>
 <body>
@@ -353,6 +470,7 @@
   <!-- IDENTIFICACIÓN -->
   <div class="fe-section" id="fe-section-identificacion">
     <p class="fe-section__title">Identificación</p>
+    <div id="fe-photos-strip" class="fe-photos-strip"></div>
     <div class="fe-data-grid" id="fe-data-grid"></div>
   </div>
 
@@ -776,6 +894,57 @@
     /* ── Botón región ── */
     const btnRegion = document.getElementById('fe-btn-region');
     if (btnRegion) btnRegion.href = `/prueba-museo/exploracion.html?vista=anatomica&region=${pieza.region}`;
+  
+    /* ── Layout adaptativo ── */
+      const layout = pieza.layoutMode || 'default';
+      if (layout !== 'default') {
+        document.getElementById('fe-main').classList.add(`fe-main--${layout}`);
+      }
+
+    /* ── Carrusel de fotos (modo tall) ── */
+      if (layout === 'tall' && pieza.imagenes && pieza.imagenes.length > 0) {
+        const strip = document.getElementById('fe-photos-strip');
+        if (!strip) return;
+        const imgs = pieza.imagenes;
+        let current = 0;
+
+        function buildStrip(idx) {
+          strip.innerHTML = `
+            <div class="fe-photos-strip__row">
+              <div class="fe-photos-strip__main">
+                <img src="${imgs[idx].src}" alt="${imgs[idx].caption}" />
+              </div>
+              <div class="fe-photos-strip__thumbs">
+                ${imgs.slice(0, 3).map((img, i) => `
+                  <div class="fe-photos-strip__thumb ${i === idx ? 'active' : ''}"
+                       data-idx="${i}" role="button" tabindex="0">
+                    <img src="${img.src}" alt="" aria-hidden="true" />
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+            <p class="fe-photos-strip__caption">${imgs[idx].caption}</p>
+            <div class="fe-photos-strip__nav">
+              <div class="fe-photos-strip__dots">
+                ${imgs.map((_, i) => `
+                  <span class="fe-photos-strip__dot ${i === idx ? 'active' : ''}"
+                        data-idx="${i}" role="button" tabindex="0"></span>
+                `).join('')}
+              </div>
+              <span class="fe-photos-strip__counter">${idx + 1} / ${imgs.length}</span>
+            </div>
+          `;
+
+          strip.querySelectorAll('[data-idx]').forEach(el => {
+            el.addEventListener('click', () => {
+              current = parseInt(el.dataset.idx);
+              buildStrip(current);
+            });
+          });
+        }
+
+        buildStrip(0);
+      }
   });
 </script>
 </body>
