@@ -157,28 +157,9 @@
 </header>
 
 <!-- CONTENIDO -->
-<main class="fe-main" id="fe-main">
+ <main class="fe-main" id="fe-main">
 
-  <!-- GALERÍA (columna única, arriba) -->
-  <div class="fe-gallery" id="fe-gallery">
-    <div class="fe-gallery__viewport" id="fe-gallery-viewport">
-      <div class="fe-img-placeholder" id="fe-img-placeholder">
-        <svg viewBox="0 0 24 24" fill="none" style="width:56px;height:56px">
-          <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" fill="currentColor"/>
-        </svg>
-        <span>Imagen no disponible</span>
-      </div>
-      <span class="fe-img-badge" id="fe-img-badge">Ficha estándar</span>
-    </div>
-    <div class="fe-gallery__controls" id="fe-gallery-controls" style="display:none">
-      <button class="fe-gallery__arrow" id="fe-gallery-prev" aria-label="Anterior">&#8592;</button>
-      <span class="fe-gallery__counter" id="fe-gallery-counter"><strong>1</strong> / 1</span>
-      <button class="fe-gallery__arrow" id="fe-gallery-next" aria-label="Siguiente">&#8594;</button>
-    </div>
-    <div class="fe-gallery__caption" id="fe-gallery-caption" style="display:none"></div>
-  </div>
-
-  <!-- MODEL VIEWER (oculto hasta que exista modelo) -->
+  <!-- MODEL VIEWER (primero para el grid tall) -->
   <div class="fe-viewer-wrap" id="fe-viewer-wrap" style="display:none">
     <span class="fe-viewer-label">Modelo 3D · Arrastra para rotar</span>
     <model-viewer id="fe-model-viewer"
@@ -190,51 +171,8 @@
     </model-viewer>
   </div>
 
-  <!-- TAGS -->
-  <div class="fe-tags" id="fe-tags"></div>
-
-  <!-- CABECERA -->
-  <div class="fe-header">
-    <p class="fe-header__id" id="fe-id">—</p>
-    <h1 class="fe-header__title" id="fe-title">Cargando…</h1>
-    <p class="fe-header__subtitle" id="fe-subtitle"></p>
-  </div>
-
-  <!-- IDENTIFICACIÓN -->
-  <div class="fe-section" id="fe-section-identificacion">
-    <p class="fe-section__title">Identificación</p>
-    <div id="fe-photos-strip" class="fe-photos-strip"></div>
-    <div class="fe-data-grid" id="fe-data-grid"></div>
-  </div>
-
-  <!-- DESCRIPCIÓN OSTEOLÓGICA -->
-  <div class="fe-section" id="fe-section-osteologica" style="display:none">
-    <p class="fe-section__title">Descripción osteológica</p>
-    <div class="fe-desc-block" id="fe-desc-block"></div>
-  </div>
-
-  <!-- DIAGNÓSTICO (resumen + acordeón de hallazgos) -->
-  <div class="fe-section" id="fe-section-diagnostico" style="display:none">
-    <p class="fe-section__title">Diagnóstico</p>
-    <div class="fe-diag-summary" id="fe-diag-summary" style="display:none"></div>
-    <div class="fe-accordion" id="fe-accordion"></div>
-  </div>
-
-  <!-- REFERENCIAS -->
-  <div class="fe-section" id="fe-section-referencias" style="display:none">
-    <p class="fe-section__title">Referencias bibliográficas</p>
-    <div class="fe-bib-list" id="fe-bib-list"></div>
-  </div>
-
-  <!-- ENLACE FICHA MAESTRA -->
-  <a href="#" class="fe-master-link" id="fe-master-link" style="display:none">
-    <div>
-      <p class="fe-master-link__eyebrow">Disponible para esta pieza</p>
-      <p class="fe-master-link__title">Ver ficha maestra inmersiva →</p>
-    </div>
-    <span class="fe-master-link__arrow">⟶</span>
-  </a>
-
+  <!-- GALERÍA -->
+  <div class="fe-gallery" id="fe-gallery">
 </main>
 
 <!-- NAV INFERIOR -->
