@@ -311,10 +311,10 @@ const GLOSARIO = [
   { term:'Osteofito', slug:'osteofito', cat:'proceso', def:'Excrecencia en la superficie de un hueso que se desarrolla en las proximidades de una articulación.', sinonimos:[], obs:null, contexto:'Los osteofitos son el signo más reconocible de la osteoartritis. Su formación intenta estabilizar la articulación degenerada.', piezas:['OV-008','OV-013'], imagen:null, fuente:{ label:'RANME', url:'https://dtme.ranm.es' } },
   { term:'Traumatismo', slug:'traumatismo', cat:'patologia', def:'Lesión interna o externa debida a la acción violenta de un agente externo.', sinonimos:['lesión traumática','trauma'], obs:null, contexto:'El análisis de los traumatismos permite reconstruir accidentes cotidianos y episodios de violencia interpersonal de las poblaciones del pasado.', piezas:['OV-001','OV-002','OV-010','OV-016'], imagen:null, fuente:{ label:'RANME', url:'https://dtme.ranm.es' } },
   { term:'Enfermedad Infecciosa', slug:'enfermedad-infecciosa', cat:'patologia', def:'Enfermedad causada por microorganismos patógenos que puede permanecer localizada o hacerse sistémica.', sinonimos:['infección'], obs:null, contexto:'Las enfermedades infecciosas son las causas más frecuentes de reacción perióstica en el registro paleopatológico.', piezas:['OV-004','OV-007','OV-009','OV-012','OV-015'], imagen:null, fuente:{ label:'RANME', url:'https://dtme.ranm.es' } },
-  { term:'Congénita', slug:'congenita', cat:'patologia', def:'Presente ya en el momento del nacimiento.', sinonimos:['innato','ingénito'], obs:null, contexto:'Las patologías congénitas deben distinguirse de las adquiridas durante la vida. Su identificación requiere demostrar que la alteración existía desde el desarrollo embrionario.', piezas:['OV-005','OV-011'], imagen:null, fuente:{ label:'RANME', url:'https://dtme.ranm.es' } },
+  { term:'Congénita', slug:'congenita', cat:'patologia', def:'Presente ya en el momento del nacimiento.', sinonimos:['innato','ingénito'], obs:null, contexto:'Las patologías congénitas deben distinguirse de las adquiridas durante la vida. Su identificación requiere demostrar que la alteración existía desde el desarrollo embrionario.', piezas:['OV-005','OV-011', 'H001'], imagen:null, fuente:{ label:'RANME', url:'https://dtme.ranm.es' } },
   { term:'Antemortem', slug:'antemortem', cat:'patologia', def:'Ocurrido antes de la muerte del individuo.', sinonimos:[], obs:null, contexto:'Las lesiones antemortem son las más informativas porque demuestran que el individuo sobrevivió al evento patológico. La remodelación ósea confirma la cronicidad antemortem.', piezas:['OV-001','OV-002','OV-004','OV-006','OV-008'], imagen:null, fuente:{ label:'RANME', url:'https://dtme.ranm.es' } },
   { term:'Perimortem', slug:'perimortem', cat:'patologia', def:'Ocurrido en el momento de la muerte o inmediatamente antes, cuando el hueso conserva sus propiedades biomecánicas.', sinonimos:[], obs:null, contexto:'La identificación de lesiones perimortem es fundamental en contextos de violencia arqueológica. El hueso fresco produce fracturas con bordes lisos y biselados.', piezas:['OV-016'], imagen:null, fuente:{ label:'RANME', url:'https://dtme.ranm.es' } },
-  { term:'Postmortem', slug:'postmortem', cat:'patologia', def:'Ocurrido tras la muerte del individuo, cuando el hueso ha perdido sus propiedades biomecánicas.', sinonimos:['tafonómico'], obs:null, contexto:'Las alteraciones postmortem o pseudopatologías son uno de los principales obstáculos del diagnóstico paleopatológico.', piezas:[], imagen:null, fuente:{ label:'RANME', url:'https://dtme.ranm.es' } },
+  { term:'Postmortem', slug:'postmortem', cat:'patologia', def:'Ocurrido tras la muerte del individuo, cuando el hueso ha perdido sus propiedades biomecánicas.', sinonimos:['tafonómico'], obs:null, contexto:'Las alteraciones postmortem o pseudopatologías son uno de los principales obstáculos del diagnóstico paleopatológico.', piezas:['H001'], imagen:null, fuente:{ label:'RANME', url:'https://dtme.ranm.es' } },
   { term:'Cribra orbitalia', slug:'cribra-orbitalia', cat:'patologia', def:'Lesión hipervascular en forma de porosidad en el techo de las órbitas, indicador de anemia o déficit vitamínico.', sinonimos:[], obs:null, contexto:'La cribra orbitalia es una de las lesiones paleopatológicas más frecuentes. Su etiología es multifactorial: anemia ferropénica, escorbuto y anemia megaloblástica.', piezas:['OV-003'], imagen:null, fuente:null },
   { term:'Periostitis', slug:'periostitis', cat:'patologia', def:'Inflamación del periostio que genera formación de hueso nuevo en la superficie cortical.', sinonimos:[], obs:null, contexto:'La periostitis es el signo óseo más inespecífico del repertorio paleopatológico, resultado de infecciones, traumatismos, escorbuto o tumores.', piezas:['OV-007','OV-012'], imagen:null, fuente:null },
   { term:'Osteomielitis', slug:'osteomielitis', cat:'patologia', def:'Infección bacteriana del tejido óseo que provoca necrosis, formación de secuestro y cloaca de drenaje.', sinonimos:[], obs:null, contexto:'La osteomielitis hematógena crónica produce involucro óseo, secuestro central y fistulación cloacal. Este patrón es el más claramente diagnóstico en paleopatología.', piezas:['OV-012'], imagen:null, fuente:null },
@@ -344,3 +344,33 @@ function glosarioLink(texto) {
   });
   return result;
 }
+
+/* ══════════════════════════════════════════
+   Auto-indexación: añade a cada término del
+   glosario las piezas que lo mencionan en
+   su descripcion_osteologica o diagnostico_principal
+══════════════════════════════════════════ */
+(function autoIndexGlosario() {
+  GLOSARIO.forEach(entry => {
+    const regex = new RegExp(`\\b${entry.term}\\b`, 'gi');
+
+    PIEZAS.forEach(pieza => {
+      if (entry.piezas.includes(pieza.id)) return; // ya está indexada
+
+      const textos = [
+        pieza.descripcion,
+        pieza.diagnostico_principal,
+        ...(Array.isArray(pieza.descripcion_osteologica)
+          ? pieza.descripcion_osteologica
+          : [pieza.descripcion_osteologica || '']),
+        ...(pieza.hallazgos || []).flatMap(g =>
+          g.items.map(i => i.texto)
+        )
+      ].filter(Boolean).join(' ');
+
+      if (regex.test(textos)) {
+        entry.piezas.push(pieza.id);
+      }
+    });
+  });
+})();
