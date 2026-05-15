@@ -146,7 +146,7 @@ const PIEZAS = [
       'A nivel craneal, se describen foveolas granulares prominentes en el hueso frontal, compatibles con variantes anatómicas no patológicas<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(3)">³</a>. La cavidad oral presenta desgaste dentario notable, diastema entre los incisivos superiores y pérdida de soporte alveolar<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>. Ausencia de terceros molares. Los estudios de isótopos en el esmalte dentario han permitido reconstruir su área de residencia en la infancia.',
       'Se observan además alteraciones traumáticas en la región escapular izquierda y en la mano derecha<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(4)">⁴</a>, así como múltiples modificaciones postmortem derivadas de procesos tafonómicos y de la extracción del cuerpo<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(4)">⁴</a>. Los estudios radiológicos evidencian desgaste articular significativo en caderas, hombros, rodillas y columna<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>. Se documentó además la ausencia congénita del duodécimo par costal bilateral, considerada una variante anatómica infrecuente<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>.',
     ],
-    /* ── Diagnóstico diferencial (resumen) ── */
+    /* ── Diagnóstico diferencial ── */
     diagnostico_principal: 'Probable muerte por hemorragia masiva secundaria a traumatismo penetrante por proyectil lítico (punta de flecha) alojada en el hemitórax izquierdo con afectación de la arteria subclavia.',
 
     hallazgos: [
@@ -220,6 +220,12 @@ const PIEZAS = [
         titulo: "Ötzi, the Iceman: Lyme Disease, Androgenetic Alopecia and Dark Skin",
         editorial: 'PLOS ONE',
         doi: 'https://doi.org/10.1371/journal.pone.0195705'
+      },
+      {
+        id: 5,
+        autores: 'kaoruiscool',
+        anio: '2026',
+        titulo: "Modelo 3D “Ötzi the Iceman”, utilizado bajo licencia Creative Commons Attribution 4.0 International (CC BY 4.0). Disponible en: https://skfb.ly/pGpTT"
       }
     ],
 
