@@ -24,7 +24,6 @@
     *, *::before, *::after { box-sizing: border-box; }
     body { background: var(--fe-bg); }
 
-    /* ── NAV BAR ── */
     .fe-nav-bar { background:var(--fe-bg); border-top:1.5px solid var(--fe-bone); border-bottom:1.5px solid var(--fe-bone); padding:.65rem 0; }
     .fe-nav-bar__inner { width:min(1200px,96vw); margin-inline:auto; padding-inline:clamp(1rem,3vw,2rem); display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; }
     .fe-nav-bar__back { display:inline-flex; align-items:center; gap:.5rem; font-family:var(--font-head); font-size:.65rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--fe-mid); text-decoration:none; transition:color .15s,gap .15s; }
@@ -37,7 +36,6 @@
     .fe-nav-btn--buscar { background:rgba(192,0,60,.06); border-color:var(--crimson); color:var(--crimson); box-shadow:2px 2px 0 var(--crimson); }
     .fe-nav-btn--buscar:hover { background:rgba(192,0,60,.14); box-shadow:4px 4px 0 var(--crimson); }
 
-    /* ── LAYOUT base ── */
     .fe-main {
       width: min(1000px, 96vw);
       margin-inline: auto;
@@ -49,7 +47,7 @@
       gap: 1.25rem;
       align-items: start;
     }
-    /* ── GALERÍA ── */
+
     .fe-gallery { border:var(--fe-border); border-radius:4px; overflow:hidden; background:#111; box-shadow:var(--fe-shadow); margin-bottom:1.5rem; position:relative; }
     .fe-gallery__viewport { width:100%; aspect-ratio:3/2; overflow:hidden; position:relative; background:#111; }
     .fe-gallery__track { display:flex; width:100%; height:100%; }
@@ -67,7 +65,6 @@
     .fe-gallery__counter strong { color:#fff; }
     .fe-gallery__caption { padding:.6rem .9rem; background:rgba(255,255,255,.6); border-top:1px solid var(--fe-bone); font-family:var(--font-ui); font-size:.72rem; line-height:1.55; color:var(--fe-mid); font-style:italic; }
 
-    /* ── LIGHTBOX ── */
     .fe-lightbox { position:fixed; inset:0; z-index:9999; background:rgba(13,13,13,.93); backdrop-filter:blur(6px); display:none; align-items:center; justify-content:center; padding:1.5rem; }
     .fe-lightbox.is-open { display:flex; }
     .fe-lightbox__inner { position:relative; max-width:min(92vw,1100px); width:100%; display:flex; flex-direction:column; gap:.75rem; }
@@ -75,12 +72,10 @@
     .fe-lightbox__caption { font-family:var(--font-ui); font-size:.78rem; line-height:1.6; color:rgba(255,255,255,.7); font-style:italic; text-align:center; }
     .fe-lightbox__close { position:absolute; top:-.6rem; right:-.6rem; width:34px; height:34px; border-radius:50%; background:var(--crimson); color:#fff; border:none; font-size:1rem; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:2; }
 
-    /* ── MODEL VIEWER ── */
     .fe-viewer-wrap { border:var(--fe-border); border-radius:4px; overflow:hidden; background:var(--fe-ink); box-shadow:var(--fe-shadow); margin-bottom:1.5rem; position:relative; }
     .fe-viewer-label { position:absolute; top:.75rem; right:.75rem; background:rgba(0,229,255,.15); border:1.5px solid var(--cyan); color:var(--cyan); font-family:var(--font-head); font-size:.55rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; padding:.2em .6em; border-radius:2px; z-index:2; pointer-events:none; }
     model-viewer { width:100%; height:300px; background:transparent; --progress-bar-color:transparent; }
 
-    /* ── TAGS ── */
     .fe-tags { display:flex; flex-wrap:wrap; gap:.45rem; margin-bottom:2rem; }
     .fe-tag { font-family:var(--font-head); font-size:.6rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; padding:.28em .7em; border:2px solid; border-radius:2px; }
     .fe-tag--region   { border-color:var(--cyan);    color:var(--cyan);    background:rgba(0,229,255,.06); }
@@ -90,92 +85,78 @@
     .fe-tag--master   { border-color:var(--sulfur);   color:#6a7300;        background:rgba(212,230,10,.1); }
     .fe-tag--historica{ border-color:var(--sulfur);   color:#6a5800;        background:rgba(230,200,10,.12); }
 
-    /* ── CABECERA ── */
     .fe-header { margin-bottom:1.75rem; padding-bottom:1.5rem; border-bottom:var(--fe-border); }
     .fe-header__id { font-family:var(--font-head); font-size:.65rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--crimson); margin-bottom:.4rem; }
     .fe-header__title { font-family:var(--font-head); font-size:clamp(1.6rem,3vw,2.4rem); font-weight:900; letter-spacing:-.04em; line-height:1.05; color:var(--fe-ink); margin-bottom:.75rem; }
     .fe-header__subtitle { font-family:var(--font-display); font-style:italic; font-size:clamp(.9rem,1.4vw,1.05rem); color:var(--fe-mid); font-weight:400; }
 
-    /* ── SECCIONES ── */
     .fe-section { margin-bottom:2rem; }
     .fe-section__title { font-family:var(--font-head); font-size:.6rem; font-weight:800; letter-spacing:.2em; text-transform:uppercase; color:var(--fe-mid); margin-bottom:.85rem; padding-bottom:.4rem; border-bottom:1.5px solid var(--fe-bone); display:flex; align-items:center; gap:.5rem; }
     .fe-section__title::before { content:''; display:block; width:16px; height:2px; background:var(--crimson); flex-shrink:0; }
 
-    /* Grid datos técnicos */
     .fe-data-grid { display:grid; grid-template-columns:1fr 1fr; gap:.6rem; }
     .fe-data-item { background:#fff; border:2px solid var(--fe-ink); border-radius:2px; padding:.65rem .85rem; box-shadow:2px 2px 0 var(--fe-ink); }
     .fe-data-item--full { grid-column:span 2; }
     .fe-data-item__label { font-family:var(--font-head); font-size:.55rem; font-weight:700; letter-spacing:.15em; text-transform:uppercase; color:var(--fe-mid); margin-bottom:.25rem; }
     .fe-data-item__value { font-family:var(--font-head); font-size:.85rem; font-weight:700; color:var(--fe-ink); line-height:1.3; }
 
-    /* Descripción */
     .fe-desc-block { display:flex; flex-direction:column; gap:.9rem; }
     .fe-desc { font-size:clamp(.85rem,1.3vw,.95rem); line-height:1.8; color:#3d3d3d; font-weight:300; }
     .fe-desc strong { color:var(--fe-ink); font-weight:700; }
 
-    /* Diagnóstico */
     .fe-diag-summary { padding:.9rem 1.1rem; background:#fff; border-left:4px solid var(--crimson); border-radius:0 2px 2px 0; font-size:.88rem; line-height:1.65; color:#3d3d3d; font-weight:300; box-shadow:2px 2px 0 var(--fe-bone); margin-bottom:1rem; }
 
-    /* Acordeón */
+    /* ── ACORDEÓN ── */
     .fe-accordion { display:flex; flex-direction:column; gap:.45rem; }
     .fe-accordion__item { border:2px solid var(--fe-bone); border-radius:2px; overflow:hidden; background:#fff; transition:border-color .2s; }
     .fe-accordion__item.is-open { border-color:var(--fe-ink); }
-    .fe-accordion__trigger { width:100%; display:flex; align-items:center; justify-content:space-between; padding:.75rem 1rem; background:none; border:none; cursor:pointer; font-family:var(--font-head); font-size:.75rem; font-weight:700; letter-spacing:.04em; color:var(--fe-ink); text-align:left; transition:background .2s, color .2s; }
+    .fe-accordion__trigger { width:100%; display:flex; align-items:center; justify-content:space-between; padding:.75rem 1rem; background:none; border:none; cursor:pointer; font-family:var(--font-head); font-size:.75rem; font-weight:700; letter-spacing:.04em; color:var(--fe-ink); text-align:left; transition:background .2s,color .2s; }
     .fe-accordion__trigger:hover { background:var(--fe-bg); }
     .fe-accordion__item.is-open .fe-accordion__trigger { background:var(--fe-ink); color:var(--ivory); }
     .fe-accordion__chevron { width:18px; height:18px; flex-shrink:0; transition:transform .3s cubic-bezier(.4,0,.2,1); display:flex; align-items:center; justify-content:center; }
     .fe-accordion__item.is-open .fe-accordion__chevron { transform:rotate(180deg); }
 
-    /* Animación de apertura con grid-template-rows */
+    /* Animación: el body externo solo anima grid-template-rows, sin padding propio */
     .fe-accordion__body {
       display: grid;
       grid-template-rows: 0fr;
-      transition: grid-template-rows .3s cubic-bezier(.4,0,.2,1);
+      transition: grid-template-rows .32s cubic-bezier(.4,0,.2,1);
       overflow: hidden;
-      padding: 0;
-      border-top: none;
     }
+    /* El inner lleva el padding y el borde — así el colapso funciona correctamente */
     .fe-accordion__body-inner {
-      overflow: hidden;
       min-height: 0;
+      overflow: hidden;
       padding: 0 1rem;
       border-top: 0px solid var(--fe-bone);
-      transition: padding .3s cubic-bezier(.4,0,.2,1),
-                  border-top-width .3s;
+      transition: padding .32s cubic-bezier(.4,0,.2,1), border-top-color .1s;
     }
-    .fe-accordion__item.is-open .fe-accordion__body {
-      grid-template-rows: 1fr;
-    }
+    .fe-accordion__item.is-open .fe-accordion__body { grid-template-rows: 1fr; }
     .fe-accordion__item.is-open .fe-accordion__body-inner {
       padding: .75rem 1rem 1rem;
       border-top: 1.5px solid var(--fe-bone);
     }
+
     .fe-hallazgo-list { display:flex; flex-direction:column; gap:.5rem; margin:0; padding:0; list-style:none; }
     .fe-hallazgo-item {
       display:flex; align-items:flex-start; gap:.65rem;
       padding:.6rem .8rem; background:var(--fe-bg);
       border-radius:2px; border:1.5px solid var(--fe-bone);
-      opacity: 0;
-      transform: translateY(6px);
-      transition: opacity .2s ease, transform .2s ease;
+      opacity:0; transform:translateY(6px);
+      transition:opacity .2s ease, transform .2s ease;
     }
-    .fe-accordion__item.is-open .fe-hallazgo-item {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    /* Escalonar la animación de cada item */
-    .fe-accordion__item.is-open .fe-hallazgo-item:nth-child(1) { transition-delay: .08s; }
-    .fe-accordion__item.is-open .fe-hallazgo-item:nth-child(2) { transition-delay: .13s; }
-    .fe-accordion__item.is-open .fe-hallazgo-item:nth-child(3) { transition-delay: .18s; }
-    .fe-accordion__item.is-open .fe-hallazgo-item:nth-child(4) { transition-delay: .23s; }
-    .fe-accordion__item.is-open .fe-hallazgo-item:nth-child(5) { transition-delay: .28s; }
+    .fe-accordion__item.is-open .fe-hallazgo-item { opacity:1; transform:translateY(0); }
+    .fe-accordion__item.is-open .fe-hallazgo-item:nth-child(1) { transition-delay:.08s; }
+    .fe-accordion__item.is-open .fe-hallazgo-item:nth-child(2) { transition-delay:.13s; }
+    .fe-accordion__item.is-open .fe-hallazgo-item:nth-child(3) { transition-delay:.18s; }
+    .fe-accordion__item.is-open .fe-hallazgo-item:nth-child(4) { transition-delay:.23s; }
+    .fe-accordion__item.is-open .fe-hallazgo-item:nth-child(5) { transition-delay:.28s; }
 
     .fe-hallazgo-item__dot { width:7px; height:7px; border-radius:50%; background:var(--crimson); flex-shrink:0; margin-top:.38rem; }
     .fe-hallazgo-item__text { font-size:.82rem; color:#3d3d3d; line-height:1.6; font-weight:300; flex:1; }
     .fe-ref-link { font-family:var(--font-head); font-size:.62rem; font-weight:700; color:var(--crimson); text-decoration:none; vertical-align:super; line-height:0; margin-left:.08em; transition:color .12s; }
     .fe-ref-link:hover { color:var(--fe-ink); }
 
-    /* Referencias */
     .fe-bib-list { display:flex; flex-direction:column; gap:.5rem; }
     .fe-bib-item { font-size:.78rem; color:#3d3d3d; line-height:1.65; padding:.7rem .85rem .7rem 1rem; background:#fff; border-left:3px solid var(--blue); font-weight:300; scroll-margin-top:100px; transition:background .2s,border-color .2s; }
     .fe-bib-item.fe-ref-highlight { border-left-color:var(--crimson); animation:fe-ref-pulse 1.6s ease-out forwards; }
@@ -186,7 +167,6 @@
     .fe-bib-item a { color:var(--blue); font-weight:600; font-family:var(--font-head); font-size:.68rem; letter-spacing:.06em; text-transform:uppercase; text-decoration:none; display:inline-flex; align-items:center; gap:.25rem; margin-top:.3rem; }
     .fe-bib-item a:hover { color:var(--crimson); }
 
-    /* Ficha maestra */
     .fe-master-link { display:flex; align-items:center; justify-content:space-between; padding:1.1rem 1.3rem; background:var(--fe-ink); border:var(--fe-border); border-radius:4px; box-shadow:var(--fe-shadow); text-decoration:none; color:var(--ivory); margin-top:1.5rem; transition:transform .15s,box-shadow .15s; }
     .fe-master-link:hover { transform:translate(-3px,-3px); box-shadow:7px 7px 0 var(--fe-ink); }
     .fe-master-link__eyebrow { font-family:var(--font-head); font-size:.58rem; font-weight:700; letter-spacing:.15em; text-transform:uppercase; color:var(--sulfur); margin-bottom:.25rem; }
@@ -202,11 +182,8 @@
       .fe-data-item--full { grid-column:auto; }
     }
 
-    /* ════════════════════════════════════════
-       LAYOUT ADAPTATIVO
-    ════════════════════════════════════════ */
+    /* ════ LAYOUT ADAPTATIVO ════ */
 
-    /* MODO TALL — modelo full-height columna izquierda sticky */
     .fe-main--tall {
       display: grid !important;
       width: min(1300px, 96vw) !important;
@@ -236,7 +213,6 @@
     .fe-main--tall .fe-section     { grid-column: 2; }
     .fe-main--tall .fe-master-link { grid-column: 2; }
 
-    /* MODO GALLERY — modelo protagonista arriba full-width */
     .fe-main--gallery {
       display: grid !important;
       width: min(1200px, 96vw) !important;
@@ -255,14 +231,13 @@
       min-height: 300px;
       max-height: 520px;
       width: 100%;
-    }    
+    }
     .fe-main--gallery .fe-gallery      { grid-column: 1; }
     .fe-main--gallery .fe-tags         { grid-column: 2; }
     .fe-main--gallery .fe-header       { grid-column: 2; }
     .fe-main--gallery .fe-section      { grid-column: 2; }
     .fe-main--gallery .fe-master-link  { grid-column: 1 / -1; }
 
-    /* Default: tags, cabecera y secciones ocupan todo el ancho */
     .fe-main:not(.fe-main--tall):not(.fe-main--gallery) .fe-tags        { grid-column: 1 / -1; }
     .fe-main:not(.fe-main--tall):not(.fe-main--gallery) .fe-header      { grid-column: 1 / -1; }
     .fe-main:not(.fe-main--tall):not(.fe-main--gallery) .fe-section     { grid-column: 1 / -1; }
@@ -271,7 +246,6 @@
 </head>
 <body>
 
-<!-- HEADER -->
 <header class="site-header" id="site-header">
   <div class="container">
     <nav class="nav" role="navigation" aria-label="Navegación principal">
@@ -309,10 +283,8 @@
   </div>
 </header>
 
-<!-- CONTENIDO -->
 <main class="fe-main" id="fe-main">
 
-  <!-- VIEWER PRIMERO — columna izquierda en modo tall -->
   <div class="fe-viewer-wrap" id="fe-viewer-wrap" style="display:none">
     <span class="fe-viewer-label">Modelo 3D · Arrastra para rotar</span>
     <model-viewer id="fe-model-viewer"
@@ -320,13 +292,13 @@
       camera-controls auto-rotate
       shadow-intensity="1.2" exposure="0.8"
       environment-image="neutral"
-      field-of-view="30deg"
-      min-field-of-view="10deg"
+      field-of-view="15deg"
+      min-field-of-view="8deg"
       max-field-of-view="40deg"
       style="width:100%;height:300px;background:transparent">
-    </model-viewer>  </div>
+    </model-viewer>
+  </div>
 
-  <!-- GALERÍA -->
   <div class="fe-gallery" id="fe-gallery">
     <div class="fe-gallery__viewport" id="fe-gallery-viewport">
       <div class="fe-img-placeholder" id="fe-img-placeholder">
@@ -345,42 +317,35 @@
     <div class="fe-gallery__caption" id="fe-gallery-caption" style="display:none"></div>
   </div>
 
-  <!-- TAGS -->
   <div class="fe-tags" id="fe-tags"></div>
 
-  <!-- CABECERA -->
   <div class="fe-header">
     <p class="fe-header__id" id="fe-id">—</p>
     <h1 class="fe-header__title" id="fe-title">Cargando…</h1>
     <p class="fe-header__subtitle" id="fe-subtitle"></p>
   </div>
 
-  <!-- IDENTIFICACIÓN -->
   <div class="fe-section" id="fe-section-identificacion">
     <p class="fe-section__title">Identificación</p>
     <div class="fe-data-grid" id="fe-data-grid"></div>
   </div>
 
-  <!-- DESCRIPCIÓN OSTEOLÓGICA -->
   <div class="fe-section" id="fe-section-osteologica" style="display:none">
     <p class="fe-section__title">Descripción osteológica</p>
     <div class="fe-desc-block" id="fe-desc-block"></div>
   </div>
 
-  <!-- DIAGNÓSTICO -->
   <div class="fe-section" id="fe-section-diagnostico" style="display:none">
     <p class="fe-section__title">Diagnóstico</p>
     <div class="fe-diag-summary" id="fe-diag-summary" style="display:none"></div>
     <div class="fe-accordion" id="fe-accordion"></div>
   </div>
 
-  <!-- REFERENCIAS -->
   <div class="fe-section" id="fe-section-referencias" style="display:none">
     <p class="fe-section__title">Referencias bibliográficas</p>
     <div class="fe-bib-list" id="fe-bib-list"></div>
   </div>
 
-  <!-- ENLACE FICHA MAESTRA -->
   <a href="#" class="fe-master-link" id="fe-master-link" style="display:none">
     <div>
       <p class="fe-master-link__eyebrow">Disponible para esta pieza</p>
@@ -391,7 +356,6 @@
 
 </main>
 
-<!-- NAV INFERIOR -->
 <div class="fe-nav-bar">
   <div class="fe-nav-bar__inner">
     <a href="/prueba-museo/exploracion.html" class="fe-nav-bar__back">
@@ -411,7 +375,6 @@
   </div>
 </div>
 
-<!-- LIGHTBOX -->
 <div class="fe-lightbox" id="fe-lightbox" role="dialog" aria-modal="true" aria-label="Imagen ampliada">
   <div class="fe-lightbox__inner">
     <button class="fe-lightbox__close" id="fe-lightbox-close" aria-label="Cerrar">✕</button>
@@ -420,7 +383,6 @@
   </div>
 </div>
 
-<!-- FOOTER -->
 <footer class="site-footer" role="contentinfo">
   <div class="container">
     <div class="footer__inner">
@@ -445,7 +407,6 @@
 
 <script src="/prueba-museo/js/data.js"></script>
 <script>
-  /* ── HAMBURGER ── */
   const hamburger = document.getElementById('nav-hamburger');
   const drawer    = document.getElementById('nav-mobile');
   let navOpen = false;
@@ -460,48 +421,38 @@
     document.getElementById('site-header')?.classList.toggle('scrolled', window.scrollY > 40);
   }, { passive: true });
 
-  /* ── GALERÍA ── */
   let galleryImages = [];
   let galleryIdx    = 0;
 
   function buildGallery(imagenes) {
     if (!imagenes || imagenes.length === 0) return;
     galleryImages = imagenes;
-
     const viewport    = document.getElementById('fe-gallery-viewport');
     const controls    = document.getElementById('fe-gallery-controls');
     const caption     = document.getElementById('fe-gallery-caption');
     const placeholder = document.getElementById('fe-img-placeholder');
-
     if (placeholder) placeholder.remove();
-
     const track = document.createElement('div');
     track.id = 'fe-gallery-track';
-    track.style.cssText = 'display:flex; width:100%; height:100%; will-change:transform; transition:transform .38s cubic-bezier(.4,0,.2,1);';
-
+    track.style.cssText = 'display:flex;width:100%;height:100%;will-change:transform;transition:transform .38s cubic-bezier(.4,0,.2,1);';
     imagenes.forEach((img, i) => {
       const slide = document.createElement('div');
-      slide.style.cssText = 'flex:0 0 100%; width:100%; height:100%; overflow:hidden; cursor:zoom-in; flex-shrink:0;';
-
+      slide.style.cssText = 'flex:0 0 100%;width:100%;height:100%;overflow:hidden;cursor:zoom-in;flex-shrink:0;';
       const image = document.createElement('img');
       image.src     = img.src;
       image.alt     = `Figura ${i + 1}`;
       image.loading = i === 0 ? 'eager' : 'lazy';
       image.style.cssText = 'width:100%;height:100%;object-fit:contain;object-position:center;display:block;background:#111;';
-
       slide.addEventListener('click', () => openLightbox(i));
       slide.appendChild(image);
       track.appendChild(slide);
     });
-
     viewport.insertBefore(track, viewport.firstChild);
-
     if (imagenes.length > 1) {
       controls.style.display = 'flex';
       document.getElementById('fe-gallery-prev').addEventListener('click', () => moveGallery(-1));
       document.getElementById('fe-gallery-next').addEventListener('click', () => moveGallery(1));
     }
-
     caption.style.display = 'block';
     updateGallery(0, false);
   }
@@ -513,13 +464,10 @@
     const prev    = document.getElementById('fe-gallery-prev');
     const next    = document.getElementById('fe-gallery-next');
     if (!track) return;
-
     galleryIdx = idx;
     const vpWidth = document.getElementById('fe-gallery-viewport').offsetWidth;
-    const tx = -(idx * vpWidth);
     track.style.transition = animate ? 'transform .38s cubic-bezier(.4,0,.2,1)' : 'none';
-    track.style.transform = `translateX(${tx}px)`;
-
+    track.style.transform  = `translateX(${-(idx * vpWidth)}px)`;
     if (counter) counter.innerHTML = `<strong>${idx + 1}</strong> / ${galleryImages.length}`;
     if (caption) caption.textContent = galleryImages[idx]?.caption || '';
     if (prev) prev.disabled = idx === 0;
@@ -538,7 +486,6 @@
     resizeTimer = setTimeout(() => updateGallery(galleryIdx, false), 120);
   }, { passive: true });
 
-  /* ── LIGHTBOX ── */
   function openLightbox(idx) {
     document.getElementById('fe-lightbox-img').src = galleryImages[idx].src;
     document.getElementById('fe-lightbox-img').alt = `Figura ${idx + 1}`;
@@ -554,7 +501,6 @@
   document.getElementById('fe-lightbox').addEventListener('click', e => { if (e.target === e.currentTarget) closeLightbox(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 
-  /* ── REFERENCIAS — scroll + highlight ── */
   function scrollToRef(refId) {
     const target = document.getElementById('fe-ref-' + refId);
     if (!target) return;
@@ -573,7 +519,10 @@
     ).join('');
   }
 
-  /* ── ACORDEÓN ── */
+  /* ── ACORDEÓN
+     IMPORTANTE: el body tiene un div inner intermedio.
+     body (grid-template-rows animado) > inner (padding + borde + contenido)
+     Sin el inner, el padding del body impide que el colapso funcione.        */
   function buildAccordion(hallazgos) {
     const container = document.getElementById('fe-accordion');
     hallazgos.forEach((grupo, i) => {
@@ -589,8 +538,11 @@
         trigger.setAttribute('aria-expanded', String(open));
       });
 
-      const body = document.createElement('div');
+      const body  = document.createElement('div');
       body.className = 'fe-accordion__body';
+
+      const inner = document.createElement('div');
+      inner.className = 'fe-accordion__body-inner';
 
       const list = document.createElement('ul');
       list.className = 'fe-hallazgo-list';
@@ -602,14 +554,14 @@
         list.appendChild(li);
       });
 
-      body.appendChild(list);
+      inner.appendChild(list);
+      body.appendChild(inner);
       item.appendChild(trigger);
       item.appendChild(body);
       container.appendChild(item);
     });
   }
 
-  /* ── REFERENCIAS ── */
   function buildRefs(referencias) {
     const container = document.getElementById('fe-bib-list');
     referencias.forEach(ref => {
@@ -617,7 +569,6 @@
       div.className = 'fe-bib-item';
       div.id        = 'fe-ref-' + ref.id;
       div.setAttribute('tabindex', '-1');
-
       let html = `<span class="fe-bib-item__num">[${ref.id}]</span>`;
       html += `<strong>${ref.autores}</strong> (${ref.anio}). <em>${ref.titulo}</em>. ${ref.editorial || ''}.`;
       if (ref.doi) {
@@ -631,7 +582,6 @@
     });
   }
 
-  /* ── DATOS TÉCNICOS ── */
   function addDataItem(grid, label, value, full = false) {
     if (value === null || value === undefined || value === '') return;
     const div = document.createElement('div');
@@ -641,7 +591,6 @@
     grid.appendChild(div);
   }
 
-  /* ── CARGA DESDE data.js ── */
   document.addEventListener('DOMContentLoaded', () => {
     const params = new URLSearchParams(window.location.search);
     const id     = params.get('id');
@@ -666,8 +615,7 @@
     const badge = document.getElementById('fe-img-badge');
     if (badge) badge.textContent = pieza.historica ? 'Pieza histórica' : 'Ficha estándar';
 
-    const tagsEl = document.getElementById('fe-tags');
-    tagsEl.innerHTML = `
+    document.getElementById('fe-tags').innerHTML = `
       <span class="fe-tag fe-tag--region">${regMeta.icon} ${regMeta.label}</span>
       <span class="fe-tag fe-tag--patol">${patMeta.icon} ${patMeta.label}</span>
       <span class="fe-tag fe-tag--sexo">${sexMeta.icon} ${sexMeta.label}</span>
@@ -690,22 +638,19 @@
       addDataItem(grid, 'Método de digitalización', pieza.digitalizacion);
     }
 
-    /* Galería */
     if (pieza.imagenes?.length > 0) {
       buildGallery(pieza.imagenes);
     } else if (pieza.imagen) {
       buildGallery([{ src: pieza.imagen, caption: pieza.nombre }]);
     }
 
-    /* Modelo 3D */
     if (pieza.modelo3d) {
       document.getElementById('fe-model-viewer').setAttribute('src', pieza.modelo3d);
       document.getElementById('fe-viewer-wrap').style.display = 'block';
     }
 
-    /* Descripción osteológica */
     if (pieza.descripcion_osteologica) {
-      const block = document.getElementById('fe-desc-block');
+      const block    = document.getElementById('fe-desc-block');
       const parrafos = Array.isArray(pieza.descripcion_osteologica)
         ? pieza.descripcion_osteologica
         : [pieza.descripcion_osteologica];
@@ -718,7 +663,6 @@
       document.getElementById('fe-section-osteologica').style.display = 'block';
     }
 
-    /* Diagnóstico */
     const hasDiag      = !!pieza.diagnostico_principal;
     const hasHallazgos = pieza.hallazgos?.length > 0;
     if (hasDiag || hasHallazgos) {
@@ -731,24 +675,20 @@
       if (hasHallazgos) buildAccordion(pieza.hallazgos);
     }
 
-    /* Referencias */
     if (pieza.referencias?.length > 0) {
       buildRefs(pieza.referencias);
       document.getElementById('fe-section-referencias').style.display = 'block';
     }
 
-    /* Ficha maestra */
     const masterLink = document.getElementById('fe-master-link');
     if (pieza.ficha?.includes('ficha-maestra')) {
       masterLink.href = pieza.ficha;
       masterLink.style.display = 'flex';
     }
 
-    /* Botón región */
     const btnRegion = document.getElementById('fe-btn-region');
     if (btnRegion) btnRegion.href = `/prueba-museo/exploracion.html?vista=anatomica&region=${pieza.region}`;
 
-    /* Layout adaptativo */
     const layout = pieza.layoutMode || 'default';
     if (layout !== 'default') {
       document.getElementById('fe-main').classList.add(`fe-main--${layout}`);
