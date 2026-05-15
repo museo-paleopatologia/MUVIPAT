@@ -251,6 +251,54 @@ const PIEZAS = [
     layoutMode: 'tall',
   }
 
+  {
+    id:          'H002',
+    nombre:      'Ricardo III',
+    region:      'individuo-completo',
+    patologia:   'Escoliosis Idiopática Adolescente',
+    sexo:        'masculino',
+    epoca:       'Edad Media Baja',
+    yacimiento:  'Grey Friars, Leicester',
+    descripcion: 'Esqueleto medieval identificado como Ricardo III, último rey de Inglaterra fallecido en combate. Presenta escoliosis idiopática adolescente severa y múltiples traumatismos perimortem compatibles con muerte violenta en batalla. Conservado por la University of Leicester.',
+    imagen:      '/prueba-museo/assets/img/H002/tumba.png',
+    ficha:       '/prueba-museo/ficha-estandar.html?id=H002',
+    historica:   true,
+    modelo3d:
+
+    /* ── Identificación extendida ── */
+    cronologia:   's. XV (Edad Media Baja)',
+    edad:         '32-34 años',
+    conservacion: 'University of Leicester',
+
+    /* ── Descripción osteológica ── */
+    descripcion_osteologica: [
+      'El esqueleto corresponde a un individuo adulto masculino de constitución grácil identificado como Richard III<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>. Presenta una marcada deformidad vertebral compatible con una curvatura escoliótica severa localizada en la región torácica, extendiéndose aproximadamente desde T6 hasta T11, con una angulación estimada en vida de entre 70 y 90º según el ángulo de Cobb<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>.',
+      'La curvatura presenta un patrón equilibrado, con alineación compensatoria en las regiones cervical y lumbar, lo que sugiere una deformidad corporal poco visible y no incapacitante<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>.',
+      'No se observan anomalías estructurales vertebrales mayores como hemivértebras o barras unilaterales<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>.',
+      'Se documentan hasta 11 lesiones perimortem, principalmente localizadas en el cráneo, así como alteraciones postmortem compatibles con procesos tafonómicos, incluyendo fractura mandibular y otras heridas faciales<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>.',
+      'Los traumatismos craneales principales son:',
+      '<b>Occipital derecho:</b> Gran herida por fuerza cortante (65 mm x 50 mm) causada por un arma de hoja grande (espada o alabarda)<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>.',
+      '<b>Occipital izquierdo:</b> Herida penetrante de 32 mm cerca del foramen magnum; el arma atravesó el cerebro hasta impactar la tabla interna opuesta<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>.',
+      '<b>Maxilar derecho:</b> Herida penetrante (10 mm) compatible con una daga rondel de sección cuadrada<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>.',
+    ],
+
+    /* ── Diagnóstico diferencial ── */
+    diagnostico_principal: 'Traumatismo craneal severo perimortem compatible con muerte violenta en combate<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>.',
+
+    hallazgos: [
+      {
+        titulo: 'Escoliosis Idiopática Adolescente Severa', refs: [2],
+        items: [
+          { texto: 'Columna torácica con una curvatura lateral severa hacia la derecha.'},
+          { texto: 'Ángulo de Cobb estimado entre 70º y 90º.'},
+          { texto: 'Inicio probable en la adolescencia temprana (~10 años)'},
+        ]
+
+      }
+    ]
+
+  }
+
 ]; /* fin PIEZAS */
 
 /* ══════════════════════════════════════════
