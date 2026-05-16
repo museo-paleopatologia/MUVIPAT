@@ -273,7 +273,6 @@ const PIEZAS = [
     conservacion: 'Leicester Cathedral, Leicester (Reino Unido)',
 
     /* ── Descripción osteológica ── */
-    'Se observan las siguientes alteraciones:<ul><li>Primera alteración documentada.>/li><li>Segunda alteración.</li><li>Tercera alteración.</li></ul>',
     descripcion_osteologica: [
       'El esqueleto corresponde a un individuo adulto masculino de constitución grácil identificado como Richard III<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>. Presenta una marcada deformidad vertebral compatible con una curvatura escoliótica severa localizada en la región torácica, extendiéndose aproximadamente desde T6 hasta T11, con una angulación estimada en vida de entre 70 y 90° según el ángulo de Cobb<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>.',
       'La curvatura presenta un patrón equilibrado, con alineación compensatoria en las regiones cervical y lumbar, lo que sugiere una deformidad corporal poco visible y no incapacitante<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>.',
