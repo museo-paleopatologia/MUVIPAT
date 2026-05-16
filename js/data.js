@@ -264,6 +264,8 @@ const PIEZAS = [
     ficha:       '/prueba-museo/ficha-estandar.html?id=H002',
     historica:   true,
     modelo3d:    null,
+    sketchfab_embed: 'https://sketchfab.com/models/00d23c7defd0476db1a36c08728fa60f/embed?autostart=1&camera=0&ui_inspector=0&ui_watermark_link=0&ui_watermark=0&ui_ar=0&ui_help=0&ui_settings=0&ui_vr=0&ui_fullscreen=0&ui_theme=dark',
+    sketchfab_title: 'King Richard III's grave · Archaeological Services (ULAS)',
 
     /* ── Identificación extendida ── */
     cronologia:   's. XV (fallecido en la batalla de Bosworth Field, 1485)',

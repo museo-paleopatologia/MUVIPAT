@@ -73,6 +73,51 @@
     .fe-lightbox__close { position:absolute; top:-.6rem; right:-.6rem; width:34px; height:34px; border-radius:50%; background:var(--crimson); color:#fff; border:none; font-size:1rem; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:2; }
 
     .fe-viewer-wrap { border:var(--fe-border); border-radius:4px; overflow:hidden; background:var(--fe-ink); box-shadow:var(--fe-shadow); margin-bottom:1.5rem; position:relative; }
+    
+    /* ── Modelo 3D: model-viewer nativo o embed Sketchfab ── */
+    const viewerWrap = document.getElementById('fe-viewer-wrap');
+
+    if (pieza.modelo3d) {
+      // Caso normal: model-viewer con .glb
+      viewerWrap.innerHTML = `
+        <span class="fe-viewer-label">Modelo 3D · Arrastra para rotar</span>
+        <model-viewer
+          src="${pieza.modelo3d}"
+          alt="Modelo 3D de ${pieza.nombre}"
+          camera-controls auto-rotate
+          shadow-intensity="1.2" exposure="0.8"
+          environment-image="neutral"
+          style="width:100%;height:320px;background:transparent">
+        </model-viewer>`;
+
+    } else if (pieza.sketchfab_embed) {
+      // Caso Sketchfab: iframe estilizado para encajar en el diseño
+      viewerWrap.innerHTML = `
+        <span class="fe-viewer-label">Modelo 3D · Sketchfab</span>
+        <iframe
+          src="${pieza.sketchfab_embed}"
+          title="${pieza.sketchfab_title || 'Modelo 3D'}"
+          frameborder="0"
+          allow="autoplay; fullscreen; xr-spatial-tracking"
+          allowfullscreen
+          style="width:100%;height:320px;border:0;display:block;background:#0d0d0d;">
+        </iframe>
+        <span class="fe-viewer-credit">
+          <a href="https://sketchfab.com" target="_blank" rel="noopener noreferrer">Sketchfab</a>
+        </span>`;
+
+    } else {
+      // Placeholder: sin modelo disponible
+      viewerWrap.innerHTML = `
+        <span class="fe-viewer-label">Modelo 3D · No disponible</span>
+        <div class="fe-viewer-placeholder">
+          <svg viewBox="0 0 24 24" fill="currentColor" style="width:48px;height:48px;opacity:.2;color:#fff">
+            <path d="M21 16.5c0 .38-.21.71-.53.88l-7.9 4.44c-.16.12-.36.18-.57.18s-.41-.06-.57-.18l-7.9-4.44A1 1 0 012 16.5v-9c0-.38.21-.71.53-.88l7.9-4.44c.16-.12.36-.18.57-.18s.41.06.57.18l7.9 4.44c.32.17.53.5.53.88v9z"/>
+          </svg>
+          <p class="fe-viewer-placeholder__title">Modelo 3D no disponible</p>
+          <span class="fe-viewer-placeholder__badge">Próximamente</span>
+        </div>`;
+    }
     .fe-viewer-label { position:absolute; top:.75rem; right:.75rem; background:rgba(0,229,255,.15); border:1.5px solid var(--cyan); color:var(--cyan); font-family:var(--font-head); font-size:.55rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; padding:.2em .6em; border-radius:2px; z-index:2; pointer-events:none; }
     model-viewer { width:100%; height:300px; background:transparent; --progress-bar-color:transparent; }
 
@@ -242,6 +287,23 @@
     .fe-main:not(.fe-main--tall):not(.fe-main--gallery) .fe-header      { grid-column: 1 / -1; }
     .fe-main:not(.fe-main--tall):not(.fe-main--gallery) .fe-section     { grid-column: 1 / -1; }
     .fe-main:not(.fe-main--tall):not(.fe-main--gallery) .fe-master-link { grid-column: 1 / -1; }
+    .fe-viewer-credit {
+      display: block;
+      padding: .35rem .75rem;
+      font-family: var(--font-head);
+      font-size: .52rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(0,229,255,.45);
+      background: var(--fe-ink);
+      border-top: 1px solid rgba(0,229,255,.12);
+    }
+    .fe-viewer-credit a {
+      color: rgba(0,229,255,.6);
+      text-decoration: none;
+    }
+    .fe-viewer-credit a:hover { color: var(--cyan); }
   </style>
 </head>
 <body>
