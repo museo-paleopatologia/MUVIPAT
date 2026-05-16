@@ -251,54 +251,129 @@ const PIEZAS = [
     layoutMode: 'tall',
   }
 
-  {
+{
     id:          'H002',
-    nombre:      'Ricardo III',
+    nombre:      'Ricardo III de Inglaterra',
     region:      'individuo-completo',
-    patologia:   'Escoliosis Idiopática Adolescente',
+    patologia:   'congenita',
     sexo:        'masculino',
-    epoca:       'Edad Media Baja',
-    yacimiento:  'Grey Friars, Leicester',
-    descripcion: 'Esqueleto medieval identificado como Ricardo III, último rey de Inglaterra fallecido en combate. Presenta escoliosis idiopática adolescente severa y múltiples traumatismos perimortem compatibles con muerte violenta en batalla. Conservado por la University of Leicester.',
+    epoca:       'medieval',
+    yacimiento:  'Grey Friars, Leicester, Inglaterra',
+    descripcion: 'Individuo adulto masculino identificado como Ricardo III de Inglaterra mediante análisis de ADN y análisis osteológico. Presenta escoliosis idiopática adolescente severa y múltiples traumatismos perimortem compatibles con muerte violenta en combate. Recuperado en excavaciones arqueológicas bajo un aparcamiento de Leicester en 2012.',
     imagen:      '/prueba-museo/assets/img/H002/tumba.png',
     ficha:       '/prueba-museo/ficha-estandar.html?id=H002',
     historica:   true,
-    modelo3d:
+    modelo3d:    null,
 
     /* ── Identificación extendida ── */
-    cronologia:   's. XV (Edad Media Baja)',
-    edad:         '32-34 años',
-    conservacion: 'University of Leicester',
+    cronologia:   's. XV (fallecido en la batalla de Bosworth Field, 1485)',
+    edad:         '30–34 años',
+    conservacion: 'Leicester Cathedral, Leicester (Reino Unido)',
 
     /* ── Descripción osteológica ── */
     descripcion_osteologica: [
-      'El esqueleto corresponde a un individuo adulto masculino de constitución grácil identificado como Richard III<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>. Presenta una marcada deformidad vertebral compatible con una curvatura escoliótica severa localizada en la región torácica, extendiéndose aproximadamente desde T6 hasta T11, con una angulación estimada en vida de entre 70 y 90º según el ángulo de Cobb<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>.',
+      'El esqueleto corresponde a un individuo adulto masculino de constitución grácil identificado como Richard III<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>. Presenta una marcada deformidad vertebral compatible con una curvatura escoliótica severa localizada en la región torácica, extendiéndose aproximadamente desde T6 hasta T11, con una angulación estimada en vida de entre 70 y 90° según el ángulo de Cobb<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>.',
       'La curvatura presenta un patrón equilibrado, con alineación compensatoria en las regiones cervical y lumbar, lo que sugiere una deformidad corporal poco visible y no incapacitante<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>.',
       'No se observan anomalías estructurales vertebrales mayores como hemivértebras o barras unilaterales<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>.',
-      'Se documentan hasta 11 lesiones perimortem, principalmente localizadas en el cráneo, así como alteraciones postmortem compatibles con procesos tafonómicos, incluyendo fractura mandibular y otras heridas faciales<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>.',
-      'Los traumatismos craneales principales son:',
-      '<b>Occipital derecho:</b> Gran herida por fuerza cortante (65 mm x 50 mm) causada por un arma de hoja grande (espada o alabarda)<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>.',
-      '<b>Occipital izquierdo:</b> Herida penetrante de 32 mm cerca del foramen magnum; el arma atravesó el cerebro hasta impactar la tabla interna opuesta<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>.',
-      '<b>Maxilar derecho:</b> Herida penetrante (10 mm) compatible con una daga rondel de sección cuadrada<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>.',
+      'Se documentan hasta 11 lesiones perimortem, principalmente localizadas en el cráneo, así como alteraciones postmortem compatibles con procesos tafonómicos, incluyendo fractura mandibular y otras heridas faciales<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>. Los traumatismos craneales principales son: <em>Occipital derecho</em>: gran herida por fuerza cortante (65 mm × 50 mm) causada por un arma de hoja grande (espada o alabarda)<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>; <em>Occipital izquierdo</em>: herida penetrante de 32 mm cerca del foramen magnum — el arma atravesó el cerebro hasta impactar la tabla interna opuesta<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>; <em>Maxilar derecho</em>: herida penetrante (10 mm) compatible con una daga rondel de sección cuadrada<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>.',
     ],
 
     /* ── Diagnóstico diferencial ── */
-    diagnostico_principal: 'Traumatismo craneal severo perimortem compatible con muerte violenta en combate<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>.',
+    diagnostico_principal: 'Traumatismo craneal severo perimortem compatible con muerte violenta en combate, asociado a escoliosis idiopática adolescente severa como patología de base.',
 
     hallazgos: [
       {
-        titulo: 'Escoliosis Idiopática Adolescente Severa', refs: [2],
+        titulo: 'Escoliosis idiopática adolescente severa',
         items: [
-          { texto: 'Columna torácica con una curvatura lateral severa hacia la derecha.'},
-          { texto: 'Ángulo de Cobb estimado entre 70º y 90º.'},
-          { texto: 'Inicio probable en la adolescencia temprana (~10 años)'},
+          { texto: 'Columna torácica con curvatura lateral severa hacia la derecha.', refs: [2] },
+          { texto: 'Ángulo de Cobb estimado entre 70° y 90°.', refs: [2] },
+          { texto: 'Inicio probable en la adolescencia temprana (~10 años).', refs: [2] },
         ]
+      },
+      {
+        titulo: 'Traumatismos craneales',
+        items: [
+          { texto: '9 heridas perimortem. Traumatismos múltiples por fuerza cortante y penetrante, compatibles con un asalto sostenido por varios atacantes.', refs: [1] },
+          { texto: 'Occipital derecho: gran herida por fuerza cortante (65 mm × 50 mm) causada por un arma de hoja grande (espada o alabarda).', refs: [1] },
+          { texto: 'Occipital izquierdo: herida penetrante de 32 mm cerca del foramen magnum; el arma atravesó el cerebro hasta impactar la tabla interna opuesta.', refs: [1] },
+          { texto: 'Maxilar derecho: herida penetrante de 10 mm compatible con una daga rondel de sección cuadrada.', refs: [1] },
+        ]
+      },
+      {
+        titulo: 'Traumatismos postcraneales',
+        items: [
+          { texto: '10.ª costilla derecha: marca de herramienta por fuerza cortante a 70 mm de la cabeza de la costilla; el impacto fue desde atrás y no penetró la cavidad torácica.', refs: [1] },
+          { texto: 'Pelvis: herida incisa de 30 mm que atraviesa la rama púbica superior. La trayectoria indica que el arma entró por la nalga derecha.', refs: [1] },
+          { texto: 'Se considera probable que estas lesiones fueran infligidas post-mortem, dada la protección que ofrecía la armadura medieval en estas zonas.', refs: [1] },
+        ]
+      },
+    ],
 
-      }
-    ]
+    /* ── Referencias bibliográficas ── */
+    referencias: [
+      {
+        id: 1,
+        autores: 'Appleby J, Mitchell P, Robinson C, Brough A, Rutty G, Harris R, et al.',
+        anio: '2015',
+        titulo: 'Perimortem trauma in King Richard III: a skeletal analysis',
+        editorial: 'Lancet',
+        doi: 'https://doi.org/10.1016/S0140-6736(14)60804-7'
+      },
+      {
+        id: 2,
+        autores: 'Halsey T, Hutton T, Carr A, Appleby J.',
+        anio: '2014',
+        titulo: 'The scoliosis of Richard III, last Plantagenet King of England: diagnosis and clinical significance',
+        editorial: 'Lancet',
+        doi: 'https://doi.org/10.1016/S0140-6736(14)60762-5'
+      },
+      {
+        id: 3,
+        autores: 'Wikimedia Commons.',
+        anio: '2026',
+        titulo: 'Portrait of King Richard III [Internet]. Wikimedia Foundation; [cited 2026 May 14]',
+        editorial: 'Wikimedia Foundation',
+        doi: 'https://commons.wikimedia.org'
+      },
+      {
+        id: 4,
+        autores: 'University of Leicester.',
+        anio: '2026',
+        titulo: 'Richard III: scientific investigation and skeletal analysis [Internet]. [cited 2026 May 14]',
+        editorial: 'University of Leicester',
+        doi: 'https://www.le.ac.uk/richardiii'
+      },
+      {
+        id: 5,
+        autores: 'OpenAI.',
+        anio: '2026',
+        titulo: 'ChatGPT [Internet]. [cited 2026 May 14]',
+        editorial: 'OpenAI, San Francisco (CA)',
+        doi: 'https://chat.openai.com'
+      },
+    ],
 
-  }
-
+    /* ── Galería de imágenes ── */
+    imagenes: [
+      {
+        src:     '/prueba-museo/assets/img/H002/rey_ricardo.png',
+        caption: 'Figura 1. Retrato histórico de Richard III. Imagen obtenida de Wikipedia Commons.'
+      },
+      {
+        src:     '/prueba-museo/assets/img/H002/heridas_craneales_reales.png',
+        caption: 'Figura 2. Vista inferior del cráneo de Richard III mostrando dos traumatismos craneales perimortem potencialmente letales: 5) extensa lesión cortante occipital y 6) herida penetrante en la base izquierda del cráneo compatible con arma blanca medieval. Imagen: University of Leicester.'
+      },
+      {
+        src:     '/prueba-museo/assets/img/H002/heridas_craneales.png',
+        caption: 'Figura 3. Reconstrucción de las principales lesiones craneales perimortem de Richard III: 1) gran lesión occipital, 2) herida penetrante en la base izquierda del cráneo, 3) corte lineal en la mandíbula derecha, 4) perforación en el maxilar derecho y 5) múltiples marcas de cortes superficiales. Ilustración generada con ChatGPT (OpenAI) a partir de evidencia paleopatológica publicada.'
+      },
+      {
+        src:     '/prueba-museo/assets/img/H002/heridas_postcraneales.png',
+        caption: 'Figura 4. Reconstrucción de las principales lesiones postcraneales y craneales adicionales de Richard III: 1) lesión cortante en la décima costilla, 2) herida incisa en la pelvis y 3) traumatismos superficiales compatibles con agresiones peri- o postmortem. Ilustración generada con ChatGPT (OpenAI) a partir de evidencia paleopatológica publicada.'
+      },
+    ],
+    layoutMode: 'default',
+  },
 ]; /* fin PIEZAS */
 
 /* ══════════════════════════════════════════
