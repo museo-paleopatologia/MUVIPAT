@@ -818,7 +818,7 @@ h1, h2, h3, h4, h5, h6 {
 
 @media (max-width: 860px) {
   .hero__content { grid-template-columns: 1fr; gap: 2.5rem; }
-  .hero__viewer { min-height: 320px; }
+  .hero__viewer { min-height: 600px; }
   .hero__viewer-frame { height: 600px; }
   .about__inner { grid-template-columns: 1fr; }
   .secondary-modules__inner { grid-template-columns: 1fr; }
