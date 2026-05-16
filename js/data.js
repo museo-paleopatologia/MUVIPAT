@@ -249,7 +249,7 @@ const PIEZAS = [
       }
     ],
     layoutMode: 'tall',
-  }
+  },
 
 {
     id:          'H002',
