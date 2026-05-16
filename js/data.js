@@ -273,11 +273,17 @@ const PIEZAS = [
     conservacion: 'Leicester Cathedral, Leicester (Reino Unido)',
 
     /* ── Descripción osteológica ── */
+    'Se observan las siguientes alteraciones:<ul><li>Primera alteración documentada.>/li><li>Segunda alteración.</li><li>Tercera alteración.</li></ul>',
     descripcion_osteologica: [
       'El esqueleto corresponde a un individuo adulto masculino de constitución grácil identificado como Richard III<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>. Presenta una marcada deformidad vertebral compatible con una curvatura escoliótica severa localizada en la región torácica, extendiéndose aproximadamente desde T6 hasta T11, con una angulación estimada en vida de entre 70 y 90° según el ángulo de Cobb<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>.',
       'La curvatura presenta un patrón equilibrado, con alineación compensatoria en las regiones cervical y lumbar, lo que sugiere una deformidad corporal poco visible y no incapacitante<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>.',
       'No se observan anomalías estructurales vertebrales mayores como hemivértebras o barras unilaterales<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>.',
-      'Se documentan hasta 11 lesiones perimortem, principalmente localizadas en el cráneo, así como alteraciones postmortem compatibles con procesos tafonómicos, incluyendo fractura mandibular y otras heridas faciales<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>. Los traumatismos craneales principales son: <em>Occipital derecho</em>: gran herida por fuerza cortante (65 mm × 50 mm) causada por un arma de hoja grande (espada o alabarda)<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>; <em>Occipital izquierdo</em>: herida penetrante de 32 mm cerca del foramen magnum — el arma atravesó el cerebro hasta impactar la tabla interna opuesta<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>; <em>Maxilar derecho</em>: herida penetrante (10 mm) compatible con una daga rondel de sección cuadrada<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>.',
+      'Se documentan hasta 11 lesiones perimortem, principalmente localizadas en el cráneo, así como alteraciones postmortem compatibles con procesos tafonómicos, incluyendo fractura mandibular y otras heridas faciales<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>. Los traumatismos craneales principales son:',
+      <ul>
+        <li><strong>Occipital derecho:</strong>gran herida por fuerza cortante (65 mm × 50 mm) causada por un arma de hoja grande (espada o alabarda)<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a></li>
+        <li><strong>Occipital izquierdo:</strong> herida penetrante de 32 mm cerca del foramen magnum — el arma atravesó el cerebro hasta impactar la tabla interna opuesta<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a></li>
+        <li><strong>Maxilar derecho:</strong> herida penetrante (10 mm) compatible con una daga rondel de sección cuadrada<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a></li>
+      </ul>
     ],
 
     /* ── Diagnóstico diferencial ── */
@@ -296,9 +302,9 @@ const PIEZAS = [
         titulo: 'Traumatismos craneales',
         items: [
           { texto: '9 heridas perimortem. Traumatismos múltiples por fuerza cortante y penetrante, compatibles con un asalto sostenido por varios atacantes.', refs: [1] },
-          { texto: 'Occipital derecho: gran herida por fuerza cortante (65 mm × 50 mm) causada por un arma de hoja grande (espada o alabarda).', refs: [1] },
-          { texto: 'Occipital izquierdo: herida penetrante de 32 mm cerca del foramen magnum; el arma atravesó el cerebro hasta impactar la tabla interna opuesta.', refs: [1] },
-          { texto: 'Maxilar derecho: herida penetrante de 10 mm compatible con una daga rondel de sección cuadrada.', refs: [1] },
+          { texto: '<strong>Occipital derecho:</strong> gran herida por fuerza cortante (65 mm × 50 mm) causada por un arma de hoja grande (espada o alabarda).', refs: [1] },
+          { texto: '<strong>Occipital izquierdo:</strong> herida penetrante de 32 mm cerca del foramen magnum; el arma atravesó el cerebro hasta impactar la tabla interna opuesta.', refs: [1] },
+          { texto: '<strong>Maxilar derecho:</strong> herida penetrante de 10 mm compatible con una daga rondel de sección cuadrada.', refs: [1] },
         ]
       },
       {
@@ -358,11 +364,11 @@ const PIEZAS = [
     /* ── Galería de imágenes ── */
     imagenes: [
       {
-        src:     '/prueba-museo/assets/img/H002/rey_ricardo.png',
+        src:     '/prueba-museo/assets/img/H002/rey_ricardo.jpg',
         caption: 'Figura 1. Retrato histórico de Richard III. Imagen obtenida de Wikipedia Commons.'
       },
       {
-        src:     '/prueba-museo/assets/img/H002/heridas_craneales_reales.png',
+        src:     '/prueba-museo/assets/img/H002/heridas_craneales_reales.jpg',
         caption: 'Figura 2. Vista inferior del cráneo de Richard III mostrando dos traumatismos craneales perimortem potencialmente letales: 5) extensa lesión cortante occipital y 6) herida penetrante en la base izquierda del cráneo compatible con arma blanca medieval. Imagen: University of Leicester.'
       },
       {
