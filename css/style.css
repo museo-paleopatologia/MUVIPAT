@@ -472,12 +472,13 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 0;
+  width: 75%;
+  margin-left: auto;
 }
 .hero__viewer-frame {
   width: 100%;
-  height: clamp(380px, 58vh, 560px);
-  min-height: unset;
+  aspect-ratio: 3 / 5;
+  max-height: 78vh;
   background: rgba(255,255,255,0.03);
   border: var(--border-thick);
   border-color: rgba(0,229,255,0.3);
@@ -550,8 +551,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .hero__model-viewer {
   width: 100%;
-  height: clamp(380px, 58vh, 560px);
-  min-height: unset;
+  height: 100%;
   background: transparent;
   --poster-color: transparent;
   border: none;
