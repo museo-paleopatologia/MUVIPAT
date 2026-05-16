@@ -472,13 +472,13 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 75%;
+  width: 60%;
   margin-left: auto;
 }
 .hero__viewer-frame {
   width: 100%;
   aspect-ratio: 3 / 5;
-  max-height: 78vh;
+  max-height: 62vh;
   background: rgba(255,255,255,0.03);
   border: var(--border-thick);
   border-color: rgba(0,229,255,0.3);
