@@ -1342,6 +1342,51 @@ function getPlanosWidget() {
   /* ═══════════════════════════════════════════════════════
      BIBLIOGRAFÍA — render + filtrado
   ═══════════════════════════════════════════════════════ */
+
+  // AUTO-EXTRACCIÓN DE REFERENCIAS DESDE PIEZAS
+
+  (function extractRefsFromPiezas() {
+    const seen = new Set();
+
+    // Marca las referencias hardcodeadas como ya vistas
+    BIBLIOGRAFIA.forEach(e => {
+      const key = e.ref.replace(/<[^>]+>/g, '').trim().slice(0, 60);
+      seen.add(key);
+    });
+
+    PIEZAS.forEach(pieza => {
+      if (!pieza.referencias || !pieza.referencias.length) return;
+
+      pieza.referencias.forEach(ref => {
+        // Construir texto de referencia en formato autor-año
+        let refText = `<strong>${ref.autores}</strong> (${ref.anio}). <em>${ref.titulo}</em>.`;
+        if (ref.editorial) refText += ` ${ref.editorial}.`;
+
+        const key = `${ref.autores} ${ref.anio} ${ref.titulo}`.slice(0, 60);
+        if (seen.has(key)) return;
+        seen.add(key);
+
+        // Determinar categoría automáticamente
+        const titulo = (ref.titulo + ' ' + (ref.editorial || '')).toLowerCase();
+        let cat = 'paleopatologia';
+        if (titulo.includes('3d') || titulo.includes('scan') || titulo.includes('fotogram') || titulo.includes('digital') || titulo.includes('model')) {
+          cat = 'digital';
+        } else if (titulo.includes('method') || titulo.includes('standard') || titulo.includes('manual') || titulo.includes('laboratory')) {
+          cat = 'metodologia';
+        } else if (titulo.includes('bioarch') || titulo.includes('bioarqueol') || titulo.includes('skeletal') || titulo.includes('esquelét')) {
+          cat = 'bioarqueologia';
+        }
+
+        BIBLIOGRAFIA.push({
+          cat,
+          ref: refText,
+          doi: ref.doi ? ref.doi.replace('https://doi.org/', '') : null,
+          url: ref.doi || null,
+          piezaId: pieza.id  // para filtrar por pieza en el futuro
+        });
+      });
+    });
+  })();
   let biblioQuery = '', biblioCat = 'all';
 
   function renderBibliografia() {
