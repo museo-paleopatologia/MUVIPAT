@@ -362,7 +362,7 @@ const PIEZAS = [
         caption: 'Figura 1. Retrato histórico de Richard III. Imagen obtenida de Wikipedia Commons.'
       },
       {
-        src:     '/prueba-museo/assets/img/H002/heridas_craneales_reales.jpg',
+        src:     '/prueba-museo/assets/img/H002/heridas_craneales_real.jpg',
         caption: 'Figura 2. Vista inferior del cráneo de Richard III mostrando dos traumatismos craneales perimortem potencialmente letales: 5) extensa lesión cortante occipital y 6) herida penetrante en la base izquierda del cráneo compatible con arma blanca medieval. Imagen: University of Leicester.'
       },
       {
