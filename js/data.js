@@ -1,32 +1,148 @@
 /**
  * PaleoMuseo · data.js
+ * ─────────────────────────────────────────────────────────────────
+ * FUENTE ÚNICA DE VERDAD de todo el contenido del museo.
  *
- * Campos básicos (todas las piezas):
- *   id, nombre, region, patologia, sexo, epoca, yacimiento,
- *   descripcion, imagen, ficha, historica?
+ * ESTRUCTURA:
+ *   PIEZAS[]          → todo el contenido de cada pieza
+ *   ETIQUETAS_CAMPOS  → labels legibles para cada campo de pieza
+ *   FICHAS_MAESTRAS{} → instrucciones de scrollytelling (solo refs a PIEZAS)
+ *   VOCABULARIO{}     → metadatos de regiones, patologías, sexo, época
+ *   GLOSARIO[]        → diccionario de términos
  *
- * Campos extendidos (ficha completa — opcionales, solo se muestran si existen):
- *   edad, cronologia, conservacion, digitalizacion (solo OV),
- *   descripcion_osteologica, diagnostico_principal,
- *   hallazgos   → [ { titulo, items: [ { texto, refs:[1,2] } ] } ]
- *   referencias → [ { id, autores, anio, titulo, editorial, doi? } ]
- *   imagenes    → [ { src, caption } ]  ← galería clicable con pies de foto
- *   modelo3d    → ruta al .glb
+ * REGLA DE ORO:
+ *   - ¿Es un dato de la pieza?             → va en PIEZAS
+ *   - ¿Es cómo mostrarlo en scrollytelling? → va en FICHAS_MAESTRAS
+ *   - ¿Es su etiqueta legible?              → va en ETIQUETAS_CAMPOS
+ *   - ¿Es estructura visual o renderizado?  → va en ficha-maestra.html
+ *
+ * CAMPOS DE PIEZAS:
+ *   Básicos (todas):
+ *     id, nombre, region, patologia, sexo, epoca,
+ *     yacimiento, descripcion, imagen, ficha
+ *
+ *   Extendidos (fichas completas):
+ *     edad, cronologia, conservacion, diagnostico_principal, modelo3d,
+ *     descripcion_osteologica  → string[]
+ *     hallazgos                → [ { titulo, items: [ { texto, refs? } ] } ]
+ *     referencias              → [ { id, autores, anio, titulo, editorial, doi? } ]
+ *     imagenes                 → [ { src, caption } ]
+ *
+ *   Datos patológicos específicos (usados en grids de ficha maestra):
+ *     Se añaden como campos propios de la pieza. Cada campo nuevo
+ *     necesita su etiqueta en ETIQUETAS_CAMPOS.
  */
 
+
+/* ══════════════════════════════════════════════════════════════════
+   PIEZAS
+══════════════════════════════════════════════════════════════════ */
 const PIEZAS = [
 
-  /* ══════════════════════════════════════════
-     COLECCIÓN OV — campos básicos
-     (los extendidos se añadirán cuando tengas
-      el texto de cada pieza)
-  ══════════════════════════════════════════ */
-  { id:'OV-001', nombre:'Cráneo con trepanación curada',
-    region:'craneo', patologia:'trauma', sexo:'masculino', epoca:'prehistoria',
-    yacimiento:'Cueva de los Murciélagos, Granada',
-    descripcion:'Trepanación circular de 35 mm en el parietal derecho con bordes completamente remodelados. Evidencia de supervivencia prolongada post-intervención.',
-    imagen:null, ficha:'/prueba-museo/ficha-maestra.html?id=OV-001' },
+  /* ── OV-001 ─────────────────────────────────────────────────── */
+  {
+    /* Básicos */
+    id:          'OV-001',
+    nombre:      'Cráneo con trepanación curada',
+    region:      'craneo',
+    patologia:   'trauma',
+    sexo:        'masculino',
+    epoca:       'prehistoria',
+    yacimiento:  'Cueva de los Murciélagos, Granada',
+    descripcion: 'Trepanación circular de 35 mm en el parietal derecho con bordes completamente remodelados. Evidencia de supervivencia prolongada post-intervención.',
+    imagen:      null,
+    ficha:       '/prueba-museo/ficha-maestra.html?id=OV-001',
+    modelo3d:    '/prueba-museo/assets/models/avas_skull.glb',
 
+    /* Identificación extendida */
+    edad:        '35–45 años',
+    cronologia:  '~3200 a.C.',
+    epoca_label: 'Neolítico Final',
+    conservacion:'Muy buena',
+
+    /* Datos morfológicos */
+    indice_cefalico:   '76.4 — Mesocéfalo',
+    indice_nasal:      '42.1 — Leptorrino',
+    capacidad_craneal: '1.380 cc',
+    forma_craneal:     'Ovoide',
+    sutura_sagital:    'Sinostosis total',
+
+    /* Datos patológicos */
+    diametro_lesion:     '35 mm',
+    localizacion_lesion: 'Parietal derecho',
+    tecnica_quirurgica:  'Raspado abrasivo',
+    supervivencia:       '6–8 años post-op.',
+    bisel_interno:       'Estrías concéntricas',
+    remodelacion:        'Completa / lamelar',
+    senal_infeccion:     'Ausente',
+    inion:               'Marcado — robustez',
+    suturas_lambdoideas: 'Permeables',
+    patologia_adicional: 'No detectada',
+
+    /* Diagnóstico */
+    diagnostico_principal: 'Trepanación circular por raspado abrasivo con supervivencia confirmada',
+
+    /* Descripción osteológica (ficha estándar) */
+    descripcion_osteologica: [
+      'El espécimen presenta una <strong>morfología craneal robusta</strong>, típica de individuos masculinos del Neolítico peninsular. La normocrania general está bien preservada, con pérdida mínima de material óseo post-depositacional. El índice cefálico calculado es de 76,4 (mesocéfalo).',
+      'La <strong>capacidad craneal estimada</strong> mediante el método de Pearson es de 1.380 cc, dentro del rango normal para la especie. La sutura sagital muestra fusión completa en el tramo posterior (sinostosis senil).'
+    ],
+
+    /*
+     * hallazgos[] — fuente de texto para la ficha maestra.
+     * El índice de cada entrada se corresponde con hallazgoIndex
+     * en FICHAS_MAESTRAS['OV-001']:
+     *   [0] Vista general
+     *   [1] Norma faciei
+     *   [2] Trepanación
+     *   [3] Detalle bisel
+     *   [4] Norma occipitalis
+     */
+    hallazgos: [
+      {
+        titulo: 'Vista general',
+        items: [
+          { texto: 'Morfología craneal robusta típica de individuos masculinos del Neolítico peninsular. Normocrania bien preservada con pérdida mínima de material óseo post-depositacional. Índice cefálico de 76,4 (mesocéfalo).' },
+          { texto: 'Capacidad craneal estimada de 1.380 cc mediante el método de Pearson. Sutura sagital con fusión completa en el tramo posterior (sinostosis senil).' }
+        ]
+      },
+      {
+        titulo: 'Norma faciei',
+        items: [
+          { texto: 'Frente moderadamente inclinada con <strong>arcos superciliares</strong> marcados. Arcos cigomáticos prominentes y bien desarrollados, coherentes con una musculatura masticatoria robusta.' },
+          { texto: '<strong>Órbitas</strong> de morfología cuadrangular con bordes superiores agudos. Ligera asimetría facial izquierda, posiblemente de origen funcional. Abertura piriforme estrecha, de tipo leptorrino (índice nasal = 42,1).' }
+        ]
+      },
+      {
+        titulo: 'Trepanación — Parietal derecho',
+        items: [
+          { texto: '<strong>Trepanación circular</strong> de 35 mm de diámetro localizada en el tercio posterior del parietal derecho. Técnica de <strong>raspado por abrasión</strong>, identificable por las estrías concéntricas en el bisel interno.' },
+          { texto: 'Bordes con <strong>remodelación ósea completa</strong> y formación de tejido compacto lamelar. Supervivencia mínima de 6–8 años post-intervención, convirtiéndolo en uno de los casos más documentados de cirugía prehistórica exitosa en la Península Ibérica.' }
+        ]
+      },
+      {
+        titulo: 'Detalle del bisel',
+        items: [
+          { texto: 'Bisel interno con <strong>estrías concéntricas</strong> que revelan el movimiento rotatorio del instrumento de abrasión, posiblemente un sílex o herramienta de hueso.' },
+          { texto: '<strong>Remodelación perilesional</strong> activa: tejido óseo compacto claramente distinto al hueso original. Ausencia total de signos de infección perilesional.' }
+        ]
+      },
+      {
+        titulo: 'Norma occipitalis',
+        items: [
+          { texto: 'Inión marcado, coherente con el perfil de robustez del individuo. <strong>Suturas lambdoideas</strong> permeables, sin evidencias de sinostosis prematura ni alteraciones morfológicas adicionales.' },
+          { texto: 'Estado de conservación muy bueno en el segmento posterior. Mínima fragmentación y ausencia de pérdida de sustancia ósea post-depositacional en esta región.' }
+        ]
+      }
+    ],
+
+    referencias: [
+      { id:1, autores:'Ortner DJ', anio:2003, titulo:'Identification of Pathological Conditions in Human Skeletal Remains', editorial:'Academic Press, San Diego' },
+      { id:2, autores:'Roberts C, Manchester K', anio:2005, titulo:'The Archaeology of Disease', editorial:'Sutton Publishing, Stroud' }
+    ]
+  },
+
+  /* ── OV-002 al OV-016 — campos básicos ──────────────────────── */
   { id:'OV-002', nombre:'Fémur con fractura consolidada',
     region:'miembro-inferior', patologia:'trauma', sexo:'femenino', epoca:'medieval',
     yacimiento:'Necrópolis de San Nicolás, Murcia',
@@ -117,266 +233,332 @@ const PIEZAS = [
     descripcion:'Fractura deprimida en el parietal izquierdo con patrón radial. Ausencia de remodelación ósea. Lesión perimortem por objeto contundente. Contexto de violencia interpersonal.',
     imagen:null, ficha:'/prueba-museo/ficha-maestra.html?id=OV-016' },
 
+
   /* ══════════════════════════════════════════
      PIEZAS HISTÓRICAS
   ══════════════════════════════════════════ */
   {
-    id:          'H001',
-    nombre:      'Ötzi, el Hombre de Hielo',
-    region:      'individuo-completo',
-    patologia:   'trauma',
-    sexo:        'masculino',
-    epoca:       'prehistoria',
-    yacimiento:  'Tisenjoch Pass (Hauslabjoch), Alpes de Ötzal, Tirol del Sur (Italia)',
-    descripcion: 'Momia calcolítica de excepcional conservación por congelación natural. Presenta traumatismo perimortem por proyectil lítico como causa probable de muerte. Conservada en el South Tyrol Museum of Archaeology, Bolzano.',
-    imagen:      '/prueba-museo/assets/img/H001/H001_cuerpo_completo.png',
-    ficha:       '/prueba-museo/ficha-estandar.html?id=H001',
-    historica:   true,
-    modelo3d:    '/prueba-museo/assets/models/H001.glb',
-
-    /* ── Identificación extendida ── */
-    cronologia:   'ca. 3350–3105 cal BC (Calcolítico / Edad del Cobre)',
-    edad:         '45–46 años',
-    conservacion: 'South Tyrol Museum of Archaeology, Bolzano (Italia)',
-
-    /* ── Descripción osteológica ── */
+    id:'H001', nombre:'Ötzi, el Hombre de Hielo',
+    region:'individuo-completo', patologia:'trauma', sexo:'masculino', epoca:'prehistoria',
+    yacimiento:'Tisenjoch Pass (Hauslabjoch), Alpes de Ötzal, Tirol del Sur (Italia)',
+    descripcion:'Momia calcolítica de excepcional conservación por congelación natural. Presenta traumatismo perimortem por proyectil lítico como causa probable de muerte. Conservada en el South Tyrol Museum of Archaeology, Bolzano.',
+    imagen:'/prueba-museo/assets/img/H001/H001_cuerpo_completo.png',
+    ficha:'/prueba-museo/ficha-estandar.html?id=H001',
+    historica:true,
+    modelo3d:'/prueba-museo/assets/models/H001.glb',
+    cronologia:'ca. 3350–3105 cal BC (Calcolítico / Edad del Cobre)',
+    edad:'45–46 años',
+    conservacion:'South Tyrol Museum of Archaeology, Bolzano (Italia)',
+    diagnostico_principal:'Probable muerte por hemorragia masiva secundaria a traumatismo penetrante por proyectil lítico (punta de flecha) alojada en el hemitórax izquierdo con afectación de la arteria subclavia.',
     descripcion_osteologica: [
       'Ötzi es un individuo adulto masculino de Homo sapiens, excepcionalmente conservado mediante momificación natural por congelación<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>. Presenta un esqueleto complejo asociado a preservación significativa de tejidos blandos<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>. Esta pieza se encuentra en el South Tyrol Museum of Archaeology en Bolzano.',
       'Morfológicamente, es un individuo de constitución ágil, con una estatura aproximada de 1,58–1,60 m y edad estimada en torno a los 46 años<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>. Se observan variaciones anatómicas como la presencia de una costilla derecha vestigial asociada a la duodécima vértebra torácica<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a> y una vértebra lumbosacra transicional (L5), con posición inferior respecto al borde pélvico y morfología alterada por integración parcial con el sacro<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>.',
       'A nivel craneal, se describen foveolas granulares prominentes en el hueso frontal, compatibles con variantes anatómicas no patológicas<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(3)">³</a>. La cavidad oral presenta desgaste dentario notable, diastema entre los incisivos superiores y pérdida de soporte alveolar<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>. Ausencia de terceros molares. Los estudios de isótopos en el esmalte dentario han permitido reconstruir su área de residencia en la infancia.',
       'Se observan además alteraciones traumáticas en la región escapular izquierda y en la mano derecha<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(4)">⁴</a>, así como múltiples modificaciones postmortem derivadas de procesos tafonómicos y de la extracción del cuerpo<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(4)">⁴</a>. Los estudios radiológicos evidencian desgaste articular significativo en caderas, hombros, rodillas y columna<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>. Se documentó además la ausencia congénita del duodécimo par costal bilateral, considerada una variante anatómica infrecuente<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>.',
     ],
-    /* ── Diagnóstico diferencial ── */
-    diagnostico_principal: 'Probable muerte por hemorragia masiva secundaria a traumatismo penetrante por proyectil lítico (punta de flecha) alojada en el hemitórax izquierdo con afectación de la arteria subclavia.',
-
     hallazgos: [
-      {
-        titulo: 'Traumatismos',
-        items: [
-          { texto: 'Herida penetrante perimortem en región escapulotorácica izquierda compatible con impacto de proyectil.', refs: [4] },
-          { texto: 'Punta lítica alojada en el hemitórax izquierdo (pulmón) con probable afectación vascular.', refs: [4] },
-          { texto: 'Lesión incisa en mano derecha compatible con traumatismo por arma cortante perimortem.', refs: [4] },
-          { texto: 'Posible traumatismo craneal asociado al evento perimortem.', refs: [1] }
-        ]
-      },
-      {
-        titulo: 'Patologías degenerativas',
-        items: [
-          { texto: 'Cambios osteoarticulares compatibles con osteoartritis en caderas, hombros, rodillas y columna vertebral.', refs: [2] },
-          { texto: 'Desgaste dentario avanzado con pérdida de soporte alveolar y diastema entre incisivos superiores.', refs: [2] }
-        ]
-      },
-      {
-        titulo: 'Patologías cardiovasculares',
-        items: [
-          { texto: 'Calcificaciones vasculares compatibles con enfermedad aterosclerótica, documentadas mediante tomografía computarizada.', refs: [1] }
-        ]
-      },
-      {
-        titulo: 'Patologías infecciosas y parasitarias',
-        items: [
-          { texto: 'Evidencia molecular de infección por Borrelia burgdorferi (enfermedad de Lyme).', refs: [1] },
-          { texto: 'Presencia de Helicobacter pylori en el contenido gástrico.', refs: [1] },
-          { texto: 'Huevos de Trichuris trichiura identificados en el tracto intestinal.', refs: [1] }
-        ]
-      },
-      {
-        titulo: 'Patología oral',
-        items: [
-          { texto: 'Enfermedad periodontal avanzada con pérdida de soporte alveolar generalizada.', refs: [1] },
-          { texto: 'Caries múltiples y desgaste oclusal severo compatible con dieta rica en carbohidratos.', refs: [2] }
-        ]
-      }
+      { titulo:'Traumatismos', items:[
+        { texto:'Herida penetrante perimortem en región escapulotorácica izquierda compatible con impacto de proyectil.', refs:[4] },
+        { texto:'Punta lítica alojada en el hemitórax izquierdo (pulmón) con probable afectación vascular.', refs:[4] },
+        { texto:'Lesión incisa en mano derecha compatible con traumatismo por arma cortante perimortem.', refs:[4] },
+        { texto:'Posible traumatismo craneal asociado al evento perimortem.', refs:[1] }
+      ]},
+      { titulo:'Patologías degenerativas', items:[
+        { texto:'Cambios osteoarticulares compatibles con osteoartritis en caderas, hombros, rodillas y columna vertebral.', refs:[2] },
+        { texto:'Desgaste dentario avanzado con pérdida de soporte alveolar y diastema entre incisivos superiores.', refs:[2] }
+      ]},
+      { titulo:'Patologías cardiovasculares', items:[
+        { texto:'Calcificaciones vasculares compatibles con enfermedad aterosclerótica, documentadas mediante tomografía computarizada.', refs:[1] }
+      ]},
+      { titulo:'Patologías infecciosas y parasitarias', items:[
+        { texto:'Evidencia molecular de infección por Borrelia burgdorferi (enfermedad de Lyme).', refs:[1] },
+        { texto:'Presencia de Helicobacter pylori en el contenido gástrico.', refs:[1] },
+        { texto:'Huevos de Trichuris trichiura identificados en el tracto intestinal.', refs:[1] }
+      ]},
+      { titulo:'Patología oral', items:[
+        { texto:'Enfermedad periodontal avanzada con pérdida de soporte alveolar generalizada.', refs:[1] },
+        { texto:'Caries múltiples y desgaste oclusal severo compatible con dieta rica en carbohidratos.', refs:[2] }
+      ]}
     ],
-
-    /* ── Referencias bibliográficas ── */
     referencias: [
-      {
-        id: 1,
-        autores: 'Garrido Pena, R.',
-        anio: '2020',
-        titulo: 'Ötzi, el hombre del hielo en el MAN',
-        editorial: 'Museo Arqueológico Nacional'
-      },
-      {
-        id: 2,
-        autores: 'Kean, W.F. et al.',
-        anio: '2013',
-        titulo: 'The musculoskeletal abnormalities of the Similaun Iceman',
-        editorial: 'SAGE Open Medicine',
-        doi: 'https://doi.org/10.1177/2050312112475428'
-      },
-      {
-        id: 3,
-        autores: 'Murphy, W.A. et al.',
-        anio: '2025',
-        titulo: "New insights on Ötzi's injuries from a clinical perspective",
-        editorial: 'Journal of Archaeological Science'
-      },
-      {
-        id: 4,
-        autores: 'Wierer, U. et al.',
-        anio: '2018',
-        titulo: "Ötzi, the Iceman: Lyme Disease, Androgenetic Alopecia and Dark Skin",
-        editorial: 'PLOS ONE',
-        doi: 'https://doi.org/10.1371/journal.pone.0195705'
-      },
-      {
-        id: 5,
-        autores: 'kaoruiscool',
-        anio: '2026',
-        titulo: "Modelo 3D “Ötzi the Iceman”, utilizado bajo licencia Creative Commons Attribution 4.0 International (CC BY 4.0). Disponible en: https://skfb.ly/pGpTT"
-      }
+      { id:1, autores:'Garrido Pena, R.', anio:'2020', titulo:'Ötzi, el hombre del hielo en el MAN', editorial:'Museo Arqueológico Nacional' },
+      { id:2, autores:'Kean, W.F. et al.', anio:'2013', titulo:'The musculoskeletal abnormalities of the Similaun Iceman', editorial:'SAGE Open Medicine', doi:'https://doi.org/10.1177/2050312112475428' },
+      { id:3, autores:'Murphy, W.A. et al.', anio:'2025', titulo:"New insights on Ötzi's injuries from a clinical perspective", editorial:'Journal of Archaeological Science' },
+      { id:4, autores:'Wierer, U. et al.', anio:'2018', titulo:"Ötzi, the Iceman: Lyme Disease, Androgenetic Alopecia and Dark Skin", editorial:'PLOS ONE', doi:'https://doi.org/10.1371/journal.pone.0195705' },
+      { id:5, autores:'kaoruiscool', anio:'2026', titulo:'Modelo 3D "Ötzi the Iceman", CC BY 4.0. https://skfb.ly/pGpTT' }
     ],
-
-    /* ── Galería de imágenes ── */
     imagenes: [
-      {
-        src:     '/prueba-museo/assets/img/H001/H001_cuerpo_completo.png',
-        caption: 'Figura 1. Vista anterior y posterior del cuerpo momificado de Ötzi, mostrando su excepcional estado de conservación y la distribución anatómica de sus tatuajes documentados. Tomada de Garrido Pena (2020).'
-      },
-      {
-        src:     '/prueba-museo/assets/img/H001/H001_costilla_vestigial.png',
-        caption: 'Figura 2. Radiografía toracolumbar que muestra variantes anatómicas esqueléticas descritas en Ötzi, incluyendo una costilla derecha vestigial y alteraciones en la transición lumbosacra. Tomada de Kean et al. (2013).'
-      },
-      {
-        src:     '/prueba-museo/assets/img/H001/H001_herida_mano.png',
-        caption: 'Figura 3. Detalle de la lesión traumática presente en la mano derecha de Ötzi, compatible con una herida perimortem por arma cortante. Tomada de Murphy et al. (2025).'
-      },
-      {
-        src:     '/prueba-museo/assets/img/H001/H001_toolkit.png',
-        caption: 'Figura 4. Proceso de uso, fractura y reacondicionamiento de una punta de flecha perteneciente al conjunto de armas asociado a Ötzi. Una similar a la representada habría sido la causa de su muerte. Tomada de Wierer et al. (2018).'
-      }
+      { src:'/prueba-museo/assets/img/H001/H001_cuerpo_completo.png', caption:'Figura 1. Vista anterior y posterior del cuerpo momificado de Ötzi, mostrando su excepcional estado de conservación y la distribución anatómica de sus tatuajes documentados. Tomada de Garrido Pena (2020).' },
+      { src:'/prueba-museo/assets/img/H001/H001_costilla_vestigial.png', caption:'Figura 2. Radiografía toracolumbar que muestra variantes anatómicas esqueléticas descritas en Ötzi, incluyendo una costilla derecha vestigial y alteraciones en la transición lumbosacra. Tomada de Kean et al. (2013).' },
+      { src:'/prueba-museo/assets/img/H001/H001_herida_mano.png', caption:'Figura 3. Detalle de la lesión traumática presente en la mano derecha de Ötzi, compatible con una herida perimortem por arma cortante. Tomada de Murphy et al. (2025).' },
+      { src:'/prueba-museo/assets/img/H001/H001_toolkit.png', caption:'Figura 4. Proceso de uso, fractura y reacondicionamiento de una punta de flecha perteneciente al conjunto de armas asociado a Ötzi. Una similar a la representada habría sido la causa de su muerte. Tomada de Wierer et al. (2018).' }
     ],
-    layoutMode: 'tall',
+    layoutMode:'tall'
   },
 
-{
-    id:          'H002',
-    nombre:      'Ricardo III de Inglaterra',
-    region:      'individuo-completo',
-    patologia:   'congenita',
-    sexo:        'masculino',
-    epoca:       'medieval',
-    yacimiento:  'Grey Friars, Leicester, Inglaterra',
-    descripcion: 'Individuo adulto masculino identificado como Ricardo III de Inglaterra mediante análisis de ADN y análisis osteológico. Presenta escoliosis idiopática adolescente severa y múltiples traumatismos perimortem compatibles con muerte violenta en combate. Recuperado en excavaciones arqueológicas bajo un aparcamiento de Leicester en 2012.',
-    imagen:      '/prueba-museo/assets/img/H002/tumba.png',
-    ficha:       '/prueba-museo/ficha-estandar.html?id=H002',
-    historica:   true,
-    modelo3d:    null,
-    sketchfab_embed: 'https://sketchfab.com/models/00d23c7defd0476db1a36c08728fa60f/embed?autostart=1&camera=0&ui_inspector=0&ui_watermark_link=0&ui_watermark=0&ui_ar=0&ui_help=0&ui_settings=0&ui_vr=0&ui_fullscreen=0&ui_theme=dark',
-    sketchfab_title: "King Richard III's grave · Archaeological Services (ULAS)",
-
-    /* ── Identificación extendida ── */
-    cronologia:   's. XV (fallecido en la batalla de Bosworth Field, 1485)',
-    edad:         '30–34 años',
-    conservacion: 'Leicester Cathedral, Leicester (Reino Unido)',
-
-    /* ── Descripción osteológica ── */
+  {
+    id:'H002', nombre:'Ricardo III de Inglaterra',
+    region:'individuo-completo', patologia:'congenita', sexo:'masculino', epoca:'medieval',
+    yacimiento:'Grey Friars, Leicester, Inglaterra',
+    descripcion:'Individuo adulto masculino identificado como Ricardo III de Inglaterra mediante análisis de ADN y análisis osteológico. Presenta escoliosis idiopática adolescente severa y múltiples traumatismos perimortem compatibles con muerte violenta en combate. Recuperado en excavaciones arqueológicas bajo un aparcamiento de Leicester en 2012.',
+    imagen:'/prueba-museo/assets/img/H002/tumba.png',
+    ficha:'/prueba-museo/ficha-estandar.html?id=H002',
+    historica:true,
+    modelo3d:null,
+    sketchfab_embed:'https://sketchfab.com/models/00d23c7defd0476db1a36c08728fa60f/embed?autostart=1&camera=0&ui_inspector=0&ui_watermark_link=0&ui_watermark=0&ui_ar=0&ui_help=0&ui_settings=0&ui_vr=0&ui_fullscreen=0&ui_theme=dark',
+    sketchfab_title:"King Richard III's grave · Archaeological Services (ULAS)",
+    cronologia:'s. XV (fallecido en la batalla de Bosworth Field, 1485)',
+    edad:'30–34 años',
+    conservacion:'Leicester Cathedral, Leicester (Reino Unido)',
+    diagnostico_principal:'Traumatismo craneal severo perimortem compatible con muerte violenta en combate, asociado a escoliosis idiopática adolescente severa como patología de base.',
     descripcion_osteologica: [
       'El esqueleto corresponde a un individuo adulto masculino de constitución grácil identificado como Richard III<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>. Presenta una marcada deformidad vertebral compatible con una curvatura escoliótica severa localizada en la región torácica, extendiéndose aproximadamente desde T6 hasta T11, con una angulación estimada en vida de entre 70 y 90° según el ángulo de Cobb<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>.',
       'La curvatura presenta un patrón equilibrado, con alineación compensatoria en las regiones cervical y lumbar, lo que sugiere una deformidad corporal poco visible y no incapacitante<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>.',
       'No se observan anomalías estructurales vertebrales mayores como hemivértebras o barras unilaterales<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>.',
-      'Se documentan hasta 11 lesiones perimortem, principalmente localizadas en el cráneo, así como alteraciones postmortem compatibles con procesos tafonómicos, incluyendo fractura mandibular y otras heridas faciales<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>. Los traumatismos craneales principales son: <ul><li><strong>·Occipital derecho:</strong> gran herida por fuerza cortante (65 mm \u00d7 50 mm) causada por un arma de hoja grande (espada o alabarda)<a class=\"fe-ref-link\" href=\"javascript:void(0)\" onclick=\"scrollToRef(1)\">\u00b9</a></li><li><strong>·Occipital izquierdo:</strong> herida penetrante de 32 mm cerca del foramen magnum \u2014 el arma atrave\u00f3 el cerebro hasta impactar la tabla interna opuesta<a class=\"fe-ref-link\" href=\"javascript:void(0)\" onclick=\"scrollToRef(1)\">\u00b9</a></li><li><strong>·Maxilar derecho:</strong> herida penetrante (10 mm) compatible con una daga rondel de secci\u00f3n cuadrada<a class=\"fe-ref-link\" href=\"javascript:void(0)\" onclick=\"scrollToRef(1)\">\u00b9</a></li></ul>',
+      'Se documentan hasta 11 lesiones perimortem, principalmente localizadas en el cráneo, así como alteraciones postmortem compatibles con procesos tafonómicos, incluyendo fractura mandibular y otras heridas faciales<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>.',
     ],
-
-    /* ── Diagnóstico diferencial ── */
-    diagnostico_principal: 'Traumatismo craneal severo perimortem compatible con muerte violenta en combate, asociado a escoliosis idiopática adolescente severa como patología de base.',
-
     hallazgos: [
-      {
-        titulo: 'Escoliosis idiopática adolescente severa',
-        items: [
-          { texto: 'Columna torácica con curvatura lateral severa hacia la derecha.', refs: [2] },
-          { texto: 'Ángulo de Cobb estimado entre 70° y 90°.', refs: [2] },
-          { texto: 'Inicio probable en la adolescencia temprana (~10 años).', refs: [2] },
-        ]
-      },
-      {
-        titulo: 'Traumatismos craneales',
-        items: [
-          { texto: '9 heridas perimortem. Traumatismos múltiples por fuerza cortante y penetrante, compatibles con un asalto sostenido por varios atacantes.', refs: [1] },
-          { texto: '<strong>Occipital derecho:</strong> gran herida por fuerza cortante (65 mm × 50 mm) causada por un arma de hoja grande (espada o alabarda).', refs: [1] },
-          { texto: '<strong>Occipital izquierdo:</strong> herida penetrante de 32 mm cerca del foramen magnum; el arma atravesó el cerebro hasta impactar la tabla interna opuesta.', refs: [1] },
-          { texto: '<strong>Maxilar derecho:</strong> herida penetrante de 10 mm compatible con una daga rondel de sección cuadrada.', refs: [1] },
-        ]
-      },
-      {
-        titulo: 'Traumatismos postcraneales',
-        items: [
-          { texto: '10.ª costilla derecha: marca de herramienta por fuerza cortante a 70 mm de la cabeza de la costilla; el impacto fue desde atrás y no penetró la cavidad torácica.', refs: [1] },
-          { texto: 'Pelvis: herida incisa de 30 mm que atraviesa la rama púbica superior. La trayectoria indica que el arma entró por la nalga derecha.', refs: [1] },
-          { texto: 'Se considera probable que estas lesiones fueran infligidas post-mortem, dada la protección que ofrecía la armadura medieval en estas zonas.', refs: [1] },
-        ]
-      },
+      { titulo:'Escoliosis idiopática adolescente severa', items:[
+        { texto:'Columna torácica con curvatura lateral severa hacia la derecha.', refs:[2] },
+        { texto:'Ángulo de Cobb estimado entre 70° y 90°.', refs:[2] },
+        { texto:'Inicio probable en la adolescencia temprana (~10 años).', refs:[2] }
+      ]},
+      { titulo:'Traumatismos craneales', items:[
+        { texto:'9 heridas perimortem. Traumatismos múltiples por fuerza cortante y penetrante, compatibles con un asalto sostenido por varios atacantes.', refs:[1] },
+        { texto:'<strong>Occipital derecho:</strong> gran herida por fuerza cortante (65 mm × 50 mm) causada por un arma de hoja grande (espada o alabarda).', refs:[1] },
+        { texto:'<strong>Occipital izquierdo:</strong> herida penetrante de 32 mm cerca del foramen magnum; el arma atravesó el cerebro hasta impactar la tabla interna opuesta.', refs:[1] },
+        { texto:'<strong>Maxilar derecho:</strong> herida penetrante de 10 mm compatible con una daga rondel de sección cuadrada.', refs:[1] }
+      ]},
+      { titulo:'Traumatismos postcraneales', items:[
+        { texto:'10.ª costilla derecha: marca de herramienta por fuerza cortante a 70 mm de la cabeza de la costilla; el impacto fue desde atrás y no penetró la cavidad torácica.', refs:[1] },
+        { texto:'Pelvis: herida incisa de 30 mm que atraviesa la rama púbica superior. La trayectoria indica que el arma entró por la nalga derecha.', refs:[1] },
+        { texto:'Se considera probable que estas lesiones fueran infligidas post-mortem, dada la protección que ofrecía la armadura medieval en estas zonas.', refs:[1] }
+      ]}
     ],
-
-    /* ── Referencias bibliográficas ── */
     referencias: [
-      {
-        id: 1,
-        autores: 'Appleby J, Mitchell P, Robinson C, Brough A, Rutty G, Harris R, et al.',
-        anio: '2015',
-        titulo: 'Perimortem trauma in King Richard III: a skeletal analysis',
-        editorial: 'Lancet',
-        doi: 'https://doi.org/10.1016/S0140-6736(14)60804-7'
-      },
-      {
-        id: 2,
-        autores: 'Halsey T, Hutton T, Carr A, Appleby J.',
-        anio: '2014',
-        titulo: 'The scoliosis of Richard III, last Plantagenet King of England: diagnosis and clinical significance',
-        editorial: 'Lancet',
-        doi: 'https://doi.org/10.1016/S0140-6736(14)60762-5'
-      },
-      {
-        id: 3,
-        autores: 'Wikimedia Commons.',
-        anio: '2026',
-        titulo: 'Portrait of King Richard III [Internet]. Wikimedia Foundation; [cited 2026 May 14]',
-        editorial: 'Wikimedia Foundation',
-        doi: 'https://commons.wikimedia.org'
-      },
-      {
-        id: 4,
-        autores: 'University of Leicester.',
-        anio: '2026',
-        titulo: 'Richard III: scientific investigation and skeletal analysis [Internet]. [cited 2026 May 14]',
-        editorial: 'University of Leicester',
-        doi: 'https://www.le.ac.uk/richardiii'
-      },
-      {
-        id: 5,
-        autores: 'OpenAI.',
-        anio: '2026',
-        titulo: 'ChatGPT [Internet]. [cited 2026 May 14]',
-        editorial: 'OpenAI, San Francisco (CA)',
-        doi: 'https://chat.openai.com'
-      },
+      { id:1, autores:'Appleby J, Mitchell P, Robinson C, Brough A, Rutty G, Harris R, et al.', anio:'2015', titulo:'Perimortem trauma in King Richard III: a skeletal analysis', editorial:'Lancet', doi:'https://doi.org/10.1016/S0140-6736(14)60804-7' },
+      { id:2, autores:'Halsey T, Hutton T, Carr A, Appleby J.', anio:'2014', titulo:'The scoliosis of Richard III, last Plantagenet King of England: diagnosis and clinical significance', editorial:'Lancet', doi:'https://doi.org/10.1016/S0140-6736(14)60762-5' },
+      { id:3, autores:'Wikimedia Commons.', anio:'2026', titulo:'Portrait of King Richard III [Internet]. Wikimedia Foundation; [cited 2026 May 14]', editorial:'Wikimedia Foundation', doi:'https://commons.wikimedia.org' },
+      { id:4, autores:'University of Leicester.', anio:'2026', titulo:'Richard III: scientific investigation and skeletal analysis [Internet]. [cited 2026 May 14]', editorial:'University of Leicester', doi:'https://www.le.ac.uk/richardiii' },
+      { id:5, autores:'OpenAI.', anio:'2026', titulo:'ChatGPT [Internet]. [cited 2026 May 14]', editorial:'OpenAI, San Francisco (CA)', doi:'https://chat.openai.com' }
     ],
-
-    /* ── Galería de imágenes ── */
     imagenes: [
-      {
-        src:     '/prueba-museo/assets/img/H002/rey_ricardo.jpg',
-        caption: 'Figura 1. Retrato histórico de Richard III. Imagen obtenida de Wikipedia Commons.'
-      },
-      {
-        src:     '/prueba-museo/assets/img/H002/heridas_craneales_real.jpg',
-        caption: 'Figura 2. Vista inferior del cráneo de Richard III mostrando dos traumatismos craneales perimortem potencialmente letales: 5) extensa lesión cortante occipital y 6) herida penetrante en la base izquierda del cráneo compatible con arma blanca medieval. Imagen: University of Leicester.'
-      },
-      {
-        src:     '/prueba-museo/assets/img/H002/heridas_craneales.png',
-        caption: 'Figura 3. Reconstrucción de las principales lesiones craneales perimortem de Richard III: 1) gran lesión occipital, 2) herida penetrante en la base izquierda del cráneo, 3) corte lineal en la mandíbula derecha, 4) perforación en el maxilar derecho y 5) múltiples marcas de cortes superficiales. Ilustración generada con ChatGPT (OpenAI) a partir de evidencia paleopatológica publicada.'
-      },
-      {
-        src:     '/prueba-museo/assets/img/H002/heridas_postcraneales.png',
-        caption: 'Figura 4. Reconstrucción de las principales lesiones postcraneales y craneales adicionales de Richard III: 1) lesión cortante en la décima costilla, 2) herida incisa en la pelvis y 3) traumatismos superficiales compatibles con agresiones peri- o postmortem. Ilustración generada con ChatGPT (OpenAI) a partir de evidencia paleopatológica publicada.'
-      },
+      { src:'/prueba-museo/assets/img/H002/rey_ricardo.jpg', caption:'Figura 1. Retrato histórico de Richard III. Imagen obtenida de Wikipedia Commons.' },
+      { src:'/prueba-museo/assets/img/H002/heridas_craneales_real.jpg', caption:'Figura 2. Vista inferior del cráneo de Richard III mostrando dos traumatismos craneales perimortem potencialmente letales: 5) extensa lesión cortante occipital y 6) herida penetrante en la base izquierda del cráneo compatible con arma blanca medieval. Imagen: University of Leicester.' },
+      { src:'/prueba-museo/assets/img/H002/heridas_craneales.png', caption:'Figura 3. Reconstrucción de las principales lesiones craneales perimortem de Richard III: 1) gran lesión occipital, 2) herida penetrante en la base izquierda del cráneo, 3) corte lineal en la mandíbula derecha, 4) perforación en el maxilar derecho y 5) múltiples marcas de cortes superficiales. Ilustración generada con ChatGPT (OpenAI) a partir de evidencia paleopatológica publicada.' },
+      { src:'/prueba-museo/assets/img/H002/heridas_postcraneales.png', caption:'Figura 4. Reconstrucción de las principales lesiones postcraneales y craneales adicionales de Richard III: 1) lesión cortante en la décima costilla, 2) herida incisa en la pelvis y 3) traumatismos superficiales compatibles con agresiones peri- o postmortem. Ilustración generada con ChatGPT (OpenAI) a partir de evidencia paleopatológica publicada.' }
     ],
-    layoutMode: 'default',
-  },
+    layoutMode:'default'
+  }
+
 ]; /* fin PIEZAS */
+
+
+/* ══════════════════════════════════════════════════════════════════
+   ETIQUETAS_CAMPOS
+   ──────────────────────────────────────────────────────────────────
+   Mapea cada clave de campo de PIEZAS a su etiqueta legible para
+   los grids de datos de la ficha maestra.
+   Añade aquí cualquier campo nuevo que uses en datosKeys[].
+══════════════════════════════════════════════════════════════════ */
+const ETIQUETAS_CAMPOS = {
+  /* Identificación */
+  yacimiento:           'Yacimiento',
+  cronologia:           'Cronología',
+  sexo:                 'Sexo biológico',
+  edad:                 'Edad estimada',
+  conservacion:         'Conservación',
+  diagnostico_principal:'Diagnóstico',
+
+  /* Morfología craneal */
+  indice_cefalico:      'Índice cefálico',
+  indice_nasal:         'Índice nasal',
+  capacidad_craneal:    'Capacidad craneal',
+  forma_craneal:        'Forma craneal',
+  sutura_sagital:       'Sutura sagital',
+
+  /* Datos patológicos */
+  diametro_lesion:      'Diámetro lesión',
+  localizacion_lesion:  'Localización',
+  tecnica_quirurgica:   'Técnica',
+  supervivencia:        'Supervivencia',
+  bisel_interno:        'Bisel interno',
+  remodelacion:         'Remodelación',
+  senal_infeccion:      'Señal infección',
+  inion:                'Inión',
+  suturas_lambdoideas:  'Sut. lambdoideas',
+  patologia_adicional:  'Pat. adicional'
+};
+
+
+/* ══════════════════════════════════════════════════════════════════
+   FICHAS MAESTRAS
+   ──────────────────────────────────────────────────────────────────
+   Solo instrucciones de scrollytelling. Cero datos, cero textos.
+   Todo el contenido viene de PIEZAS[id].
+
+   Cada step:
+     hallazgoIndex → pieza.hallazgos[N] (fuente del texto)
+     datosKeys[]   → campos de la pieza a mostrar en la grid
+                     (las etiquetas vienen de ETIQUETAS_CAMPOS)
+     accentColor   → color CSS de la barra superior de la card
+     alerta        → aviso específico del step (null si no hay)
+     tags          → array de { texto, color, borderColor }
+                     (null si no hay)
+     camara{}      → instrucciones para model-viewer
+
+   SISTEMA DE CÁMARA:
+     orbit  = "azimuth elevation zoom"
+       azimuth:    0deg=frente  90deg=derecha  180deg=espalda  -90deg=izquierda
+       elevation: 90deg=ecuador  0deg=cenital  180deg=inferior
+       zoom:     100%=base  80%=cerca  60%=muy cerca  120%=lejos
+     target = "Xm Ym Zm"  (desplaza el pivote del modelo)
+       Y positivo → sube (hacia el techo del cráneo)
+       X positivo → desplaza a la derecha del modelo
+
+   CALIBRACIÓN MANUAL:
+     1. Añade camera-controls al #main-viewer en ficha-maestra.html
+     2. Navega al ángulo deseado en el navegador
+     3. DevTools consola:
+          document.querySelector('#main-viewer').cameraOrbit
+          document.querySelector('#main-viewer').cameraTarget
+     4. Copia los valores aquí y quita camera-controls
+══════════════════════════════════════════════════════════════════ */
+const FICHAS_MAESTRAS = {
+
+  /* ── OV-001 · Cráneo con trepanación ──────────────────────── */
+  'OV-001': [
+
+    /* STEP 0 — Vista general / rotación automática */
+    {
+      hallazgoIndex: 0,
+      datosKeys:    ['yacimiento', 'cronologia', 'sexo', 'edad'],
+      accentColor:  'var(--fm-cyan)',
+      alerta:       null,
+      tags: [
+        { texto:'💀 Cráneo',      color:'#00a8bf', borderColor:'#00e5ff' },
+        { texto:'⚡ Traumatismo', color:'#c0003c', borderColor:'#c0003c' },
+        { texto:'📅 Neolítico',   color:'#b08d55', borderColor:'#b08d55' }
+      ],
+      camara: {
+        orbit:      '0deg 80deg 100%',
+        target:     '0m 0m 0m',
+        label:      'Vista general',
+        autorotate: true,
+        zoomLabel:  'zoom ×1',
+        hint:       'Vista rotativa — el modelo gira automáticamente'
+      }
+    },
+
+    /* STEP 1 — Norma faciei
+       Cambio vs anterior: zoom +28%, pivote sube hacia región orbital */
+    {
+      hallazgoIndex: 1,
+      datosKeys:    ['indice_cefalico', 'indice_nasal', 'capacidad_craneal', 'forma_craneal'],
+      accentColor:  'var(--fm-crimson)',
+      alerta:       null,
+      tags:         null,
+      camara: {
+        orbit:      '0deg 78deg 72%',
+        target:     '0m 0.04m 0.01m',
+        label:      'Vista frontal — norma faciei',
+        autorotate: false,
+        zoomLabel:  'zoom ×1.4',
+        hint:       'Acercamiento frontal — norma faciei (zoom ×1.4)'
+      }
+    },
+
+    /* STEP 2 — Trepanación parietal derecho
+       Cambio vs anterior: giro 55° + casi cenital + zoom ×1.8
+       ⚠ Si la lesión queda fuera: incrementar target Y (0.10, 0.12...)
+               o ajustar azimuth a 65–75deg si está más atrás */
+    {
+      hallazgoIndex: 2,
+      datosKeys:    ['diametro_lesion', 'localizacion_lesion', 'tecnica_quirurgica', 'supervivencia'],
+      accentColor:  'var(--fm-crimson)',
+      alerta:       'Hallazgo principal — trepanación circular de 35 mm en el tercio posterior del parietal derecho.',
+      tags:         null,
+      camara: {
+        orbit:      '55deg 35deg 55%',
+        target:     '0.02m 0.09m 0m',
+        label:      'Parietal derecho — localización',
+        autorotate: false,
+        zoomLabel:  'zoom ×1.8',
+        hint:       'Vista superior-derecha — parietal derecho (zoom ×1.8)'
+      }
+    },
+
+    /* STEP 3 — Detalle del bisel
+       Cambio vs anterior: casi cenital + zoom ×2.4 (máximo)
+       ⚠ Si el modelo se recorta: subir zoom a 48–50% */
+    {
+      hallazgoIndex: 3,
+      datosKeys:    ['bisel_interno', 'remodelacion', 'senal_infeccion', 'supervivencia'],
+      accentColor:  'var(--fm-sulfur)',
+      alerta:       null,
+      tags:         null,
+      camara: {
+        orbit:      '60deg 20deg 42%',
+        target:     '0.025m 0.1m -0.01m',
+        label:      'Detalle máximo — bisel de trepanación',
+        autorotate: false,
+        zoomLabel:  'zoom ×2.4',
+        hint:       'Vista cenital — norma verticalis, máximo detalle (zoom ×2.4)'
+      }
+    },
+
+    /* STEP 4 — Norma occipitalis
+       Cambio vs anterior: giro 180° al reverso + zoom out */
+    {
+      hallazgoIndex: 4,
+      datosKeys:    ['inion', 'suturas_lambdoideas', 'conservacion', 'patologia_adicional'],
+      accentColor:  'var(--fm-cyan)',
+      alerta:       null,
+      tags: [
+        { texto:'Pieza destacada',         color:'#8a9200', borderColor:'#d4e60a' },
+        { texto:'Ficha maestra',            color:'#00a8bf', borderColor:'#00e5ff' },
+        { texto:'Supervivencia confirmada', color:'#c0003c', borderColor:'#c0003c' }
+      ],
+      camara: {
+        orbit:      '180deg 85deg 90%',
+        target:     '0m 0.02m 0m',
+        label:      'Vista posterior — norma occipitalis',
+        autorotate: false,
+        zoomLabel:  'zoom ×1.1',
+        hint:       'Vista posterior — norma occipitalis (giro 180° respecto al frente)'
+      }
+    }
+
+  ], /* fin OV-001 */
+
+  /*
+   * PLANTILLA PARA NUEVA FICHA MAESTRA
+   * ─────────────────────────────────────────────────────────────
+   * 1. Añade los campos de datos a la pieza en PIEZAS
+   *    (ej: diametro_lesion, tecnica_quirurgica...)
+   * 2. Añade sus etiquetas en ETIQUETAS_CAMPOS
+   * 3. Añade los hallazgos[] a la pieza (uno por step)
+   * 4. Crea su entrada aquí:
+   *
+   * 'OV-004': [
+   *   {
+   *     hallazgoIndex: 0,
+   *     datosKeys: ['yacimiento', 'cronologia', 'edad', 'sexo'],
+   *     accentColor: 'var(--fm-cyan)',
+   *     alerta: null,
+   *     tags: null,
+   *     camara: {
+   *       orbit: '0deg 80deg 100%', target: '0m 0m 0m',
+   *       label: 'Vista general', autorotate: true,
+   *       zoomLabel: 'zoom ×1', hint: '...'
+   *     }
+   *   },
+   *   { hallazgoIndex: 1, datosKeys: [...], camara: {...} },
+   * ]
+   */
+
+}; /* fin FICHAS_MAESTRAS */
+
 
 /* ══════════════════════════════════════════
    VOCABULARIO
@@ -412,6 +594,7 @@ const VOCABULARIO = {
   }
 };
 
+
 /* ══════════════════════════════════════════
    GLOSARIO
 ══════════════════════════════════════════ */
@@ -442,7 +625,7 @@ const GLOSARIO = [
   { term:'Osteofito', slug:'osteofito', cat:'proceso', def:'Excrecencia en la superficie de un hueso que se desarrolla en las proximidades de una articulación.', sinonimos:[], obs:null, contexto:'Los osteofitos son el signo más reconocible de la osteoartritis. Su formación intenta estabilizar la articulación degenerada.', piezas:['OV-008','OV-013'], imagen:null, fuente:{ label:'RANME', url:'https://dtme.ranm.es' } },
   { term:'Traumatismo', slug:'traumatismo', cat:'patologia', def:'Lesión interna o externa debida a la acción violenta de un agente externo.', sinonimos:['lesión traumática','trauma'], obs:null, contexto:'El análisis de los traumatismos permite reconstruir accidentes cotidianos y episodios de violencia interpersonal de las poblaciones del pasado.', piezas:['OV-001','OV-002','OV-010','OV-016'], imagen:null, fuente:{ label:'RANME', url:'https://dtme.ranm.es' } },
   { term:'Enfermedad Infecciosa', slug:'enfermedad-infecciosa', cat:'patologia', def:'Enfermedad causada por microorganismos patógenos que puede permanecer localizada o hacerse sistémica.', sinonimos:['infección'], obs:null, contexto:'Las enfermedades infecciosas son las causas más frecuentes de reacción perióstica en el registro paleopatológico.', piezas:['OV-004','OV-007','OV-009','OV-012','OV-015'], imagen:null, fuente:{ label:'RANME', url:'https://dtme.ranm.es' } },
-  { term:'Congénita', slug:'congenita', cat:'patologia', def:'Presente ya en el momento del nacimiento.', sinonimos:['innato','ingénito'], obs:null, contexto:'Las patologías congénitas deben distinguirse de las adquiridas durante la vida. Su identificación requiere demostrar que la alteración existía desde el desarrollo embrionario.', piezas:['OV-005','OV-011', 'H001'], imagen:null, fuente:{ label:'RANME', url:'https://dtme.ranm.es' } },
+  { term:'Congénita', slug:'congenita', cat:'patologia', def:'Presente ya en el momento del nacimiento.', sinonimos:['innato','ingénito'], obs:null, contexto:'Las patologías congénitas deben distinguirse de las adquiridas durante la vida. Su identificación requiere demostrar que la alteración existía desde el desarrollo embrionario.', piezas:['OV-005','OV-011','H001'], imagen:null, fuente:{ label:'RANME', url:'https://dtme.ranm.es' } },
   { term:'Antemortem', slug:'antemortem', cat:'patologia', def:'Ocurrido antes de la muerte del individuo.', sinonimos:[], obs:null, contexto:'Las lesiones antemortem son las más informativas porque demuestran que el individuo sobrevivió al evento patológico. La remodelación ósea confirma la cronicidad antemortem.', piezas:['OV-001','OV-002','OV-004','OV-006','OV-008'], imagen:null, fuente:{ label:'RANME', url:'https://dtme.ranm.es' } },
   { term:'Perimortem', slug:'perimortem', cat:'patologia', def:'Ocurrido en el momento de la muerte o inmediatamente antes, cuando el hueso conserva sus propiedades biomecánicas.', sinonimos:[], obs:null, contexto:'La identificación de lesiones perimortem es fundamental en contextos de violencia arqueológica. El hueso fresco produce fracturas con bordes lisos y biselados.', piezas:['OV-016'], imagen:null, fuente:{ label:'RANME', url:'https://dtme.ranm.es' } },
   { term:'Postmortem', slug:'postmortem', cat:'patologia', def:'Ocurrido tras la muerte del individuo, cuando el hueso ha perdido sus propiedades biomecánicas.', sinonimos:['tafonómico'], obs:null, contexto:'Las alteraciones postmortem o pseudopatologías son uno de los principales obstáculos del diagnóstico paleopatológico.', piezas:['H001'], imagen:null, fuente:{ label:'RANME', url:'https://dtme.ranm.es' } },
@@ -460,6 +643,7 @@ const GLOSARIO = [
   { term:'Tafonomía', slug:'tafonomia', cat:'metodo', def:'Estudio de los procesos que afectan a los restos orgánicos desde la muerte hasta su excavación.', sinonimos:[], obs:null, contexto:'El conocimiento tafonómico es imprescindible para identificar pseudopatologías — alteraciones postmortem que pueden confundirse con lesiones patológicas reales.', piezas:[], imagen:null, fuente:null }
 ];
 
+
 /* ══════════════════════════════════════════
    glosarioLink — utilidad compartida
 ══════════════════════════════════════════ */
@@ -476,32 +660,24 @@ function glosarioLink(texto) {
   return result;
 }
 
+
 /* ══════════════════════════════════════════
-   Auto-indexación: añade a cada término del
-   glosario las piezas que lo mencionan en
-   su descripcion_osteologica o diagnostico_principal
+   Auto-indexación del glosario
 ══════════════════════════════════════════ */
 (function autoIndexGlosario() {
   GLOSARIO.forEach(entry => {
     const regex = new RegExp(`\\b${entry.term}\\b`, 'gi');
-
     PIEZAS.forEach(pieza => {
-      if (entry.piezas.includes(pieza.id)) return; // ya está indexada
-
+      if (entry.piezas.includes(pieza.id)) return;
       const textos = [
         pieza.descripcion,
         pieza.diagnostico_principal,
         ...(Array.isArray(pieza.descripcion_osteologica)
           ? pieza.descripcion_osteologica
           : [pieza.descripcion_osteologica || '']),
-        ...(pieza.hallazgos || []).flatMap(g =>
-          g.items.map(i => i.texto)
-        )
+        ...(pieza.hallazgos || []).flatMap(g => g.items.map(i => i.texto))
       ].filter(Boolean).join(' ');
-
-      if (regex.test(textos)) {
-        entry.piezas.push(pieza.id);
-      }
+      if (regex.test(textos)) entry.piezas.push(pieza.id);
     });
   });
 })();
