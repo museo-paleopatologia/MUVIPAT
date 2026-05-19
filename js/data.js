@@ -571,7 +571,7 @@ const VOCABULARIO = {
     'miembro-superior':   { label:'Miembro superior',   icon:'💪' },
     pelvis:               { label:'Pelvis',              icon:'🦵' },
     'miembro-inferior':   { label:'Miembro inferior',   icon:'🦿' },
-    'individuo-completo': { label:'Individuo completo', icon:'🏛️' }
+    'individuo-completo': { label:'Individuo completo', icon:'🧍🏼' }
   },
   patologia: {
     trauma:       { label:'Traumatismos',            icon:'⚡',  color:'#FF4D6D' },
