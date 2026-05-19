@@ -168,7 +168,7 @@ const PIEZAS = [
     imagen:null, ficha:'/prueba-museo/ficha-estandar.html?id=OV-005' },
 
   { id:'OV-006', nombre:'Húmero con entesopatía severa',
-    region:'miembro-superior', patologia:'marcador', sexo:'masculino', epoca:'romano',
+    region:'miembro-superior', patologia:'congenita', sexo:'masculino', epoca:'romano',
     yacimiento:'Barcino, Barcelona',
     descripcion:'Robustez cortical extrema y proliferación ósea en inserción del deltoides. Compatible con actividad física intensa y repetitiva. Posible remero o trabajador portuario.',
     imagen:null, ficha:'/prueba-museo/ficha-estandar.html?id=OV-006' },
