@@ -576,12 +576,14 @@ const VOCABULARIO = {
   patologia: {
     trauma:       { label:'Traumatismos',            icon:'⚡',  color:'#FF4D6D' },
     infecciosa:   { label:'Infecciosas',             icon:'🦠',  color:'#00E5FF' },
-    metabolica:   { label:'Metabólicas',             icon:'🔬',  color:'#C6E800' },
+    especifica:   { label:'Enf. específicas',        icon:'🔬',  color:'#7B00CC' },  // ← AÑADIR
+    metabolica:   { label:'Metabólicas',             icon:'🧬',  color:'#C6E800' },
+    endocrino:    { label:'T. endocrinos',           icon:'⚗️', color:'#C87800' },  // ← AÑADIR
+    tumor:        { label:'Tumores y quistes',       icon:'🔴',  color:'#CC4400' },  // ← AÑADIR
     degenerativa: { label:'Degenerativas',           icon:'⚙️', color:'#FFB300' },
     congenita:    { label:'Congénitas',              icon:'🧬',  color:'#FF6EB4' },
-    marcador:     { label:'Marcadores de actividad', icon:'💪',  color:'#3D5AFE' }
-  },
-  sexo: {
+  }, 
+sexo: {
     masculino:     { label:'Masculino',     icon:'♂' },
     femenino:      { label:'Femenino',      icon:'♀' },
     indeterminado: { label:'Indeterminado', icon:'◎' }
