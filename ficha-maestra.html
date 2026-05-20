@@ -16,7 +16,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
-  <!-- DATA — debe cargarse antes que el script de esta página -->
   <script src="/prueba-museo/js/data.js"></script>
 
   <link rel="stylesheet" href="/prueba-museo/css/style.css" />
@@ -24,7 +23,6 @@
   <style>
     /* ═══════════════════════════════════════════════════
        FICHA MAESTRA — variables y estilos locales
-       Solo diseño. Cero datos hardcodeados.
     ═══════════════════════════════════════════════════ */
     :root {
       --fm-bg:      #f4f1ea;
@@ -52,13 +50,11 @@
     .site-header { background: var(--fm-bg) !important; }
     .site-header.scrolled { background: rgba(244,241,234,.96) !important; }
 
-    /* ── Error ── */
     #fm-error { display:none; min-height:100svh; align-items:center; justify-content:center; flex-direction:column; gap:1rem; font-family:'Lexend',sans-serif; color:var(--fm-crimson); text-align:center; padding:2rem; }
     #fm-error.visible { display:flex; }
     #fm-root { display:none; }
     #fm-root.visible { display:block; }
 
-    /* ── Hero ── */
     .fm-hero { min-height:100svh; display:flex; align-items:center; padding-top:clamp(56px,7vw,70px); background:var(--fm-ink); position:relative; overflow:hidden; }
     .fm-hero__grid { position:absolute; inset:0; background-image:linear-gradient(rgba(0,229,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,.05) 1px,transparent 1px); background-size:55px 55px; animation:gridDrift 25s linear infinite; pointer-events:none; }
     @keyframes gridDrift { 0%{transform:translate(0,0)} 100%{transform:translate(55px,55px)} }
@@ -90,16 +86,11 @@
     .fm-hero__viewer-preview::before { top:10px; left:10px; border-width:2px 0 0 2px; }
     .fm-hero__viewer-preview::after  { bottom:10px; right:10px; border-width:0 2px 2px 0; }
 
-    /* ── Scrollytelling ── */
     .fm-story { display:grid; grid-template-columns:1fr 1fr; position:relative; }
 
     .fm-sticky-viewer {
       position:sticky;
       top:clamp(56px,7vw,70px);
-      /*
-        El viewer ocupa toda la altura disponible bajo la nav.
-        height:100% del panel — sin max-height que lo limite.
-      */
       height:calc(100svh - clamp(56px,7vw,70px));
       display:flex; flex-direction:column; align-items:center; justify-content:center;
       background:var(--fm-ink); border-right:var(--fm-border);
@@ -147,7 +138,6 @@
     .fm-alert-box { background:rgba(192,0,60,.06); border:2px solid rgba(192,0,60,.35); border-radius:2px; padding:.8rem 1rem; margin:1rem 0; font-size:.78rem; color:var(--fm-crimson); font-family:'Lexend',sans-serif; font-weight:600; display:flex; align-items:flex-start; gap:.5rem; line-height:1.5; }
     .fm-alert-box svg { flex-shrink:0; margin-top:.15rem; }
 
-    /* ── Footer técnico ── */
     .fm-footer-section { background:var(--fm-ink); border-top:var(--fm-border); padding:clamp(3rem,6vw,6rem) 0; }
     .fm-footer-inner { width:min(1400px,96vw); margin-inline:auto; padding-inline:clamp(1rem,3vw,2rem); }
     .fm-footer-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:1.5rem; margin-bottom:3rem; }
@@ -160,7 +150,6 @@
     .fm-footer-nav__back { font-family:'Lexend',sans-serif; font-size:.75rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#6b5a43; display:flex; align-items:center; gap:.4rem; transition:color .2s; text-decoration:none; }
     .fm-footer-nav__back:hover { color:var(--fm-cyan); }
 
-    /* ── Responsive ── */
     @media (max-width: 860px) {
       .fm-hero__inner { grid-template-columns:1fr; }
       .fm-hero__viewer-preview { order:-1; }
@@ -178,9 +167,6 @@
 </head>
 <body>
 
-  <!-- ══════════════════════════════════
-       HEADER
-  ══════════════════════════════════ -->
   <header class="site-header" id="site-header">
     <div class="container">
       <nav class="nav" role="navigation" aria-label="Navegación principal">
@@ -223,18 +209,7 @@
 
   <div id="fm-root"></div>
 
-
   <script>
-  /* ════════════════════════════════════════════════════════════════
-     ficha-maestra.html — lógica de renderizado
-     ────────────────────────────────────────────────────────────────
-     Lee ?id= de la URL.
-     Texto     ← PIEZAS[id].hallazgos[step.hallazgoIndex]
-     Datos     ← PIEZAS[id][key]  (keys desde step.datosKeys[])
-     Etiquetas ← ETIQUETAS_CAMPOS[key]
-     Cámara    ← FICHAS_MAESTRAS[id][i].camara
-  ════════════════════════════════════════════════════════════════ */
-
   const urlId  = new URLSearchParams(window.location.search).get('id');
   const pieza  = (typeof PIEZAS          !== 'undefined') ? PIEZAS.find(p => p.id === urlId) : null;
   const steps  = (typeof FICHAS_MAESTRAS !== 'undefined') ? FICHAS_MAESTRAS[urlId]           : null;
@@ -250,14 +225,10 @@
     document.title = `${pieza.nombre} · Ficha Maestra · PaleoMuseo`;
     document.querySelector('meta[name="description"]').content = pieza.descripcion || '';
 
-    /* ── Iconos ── */
     const ICO_EYE   = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg>`;
     const ICO_ALERT = `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>`;
     const ICO_BACK  = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6z"/></svg>`;
 
-    /* ── Helpers de renderizado ── */
-
-    /* Grid de datos: lee pieza[key] y ETIQUETAS_CAMPOS[key] */
     function renderDataGrid(datosKeys) {
       if (!datosKeys?.length) return '';
       return `<div class="fm-data-grid">${
@@ -269,14 +240,12 @@
       }</div>`;
     }
 
-    /* Texto del step: lee pieza.hallazgos[hallazgoIndex].items */
     function renderCuerpo(hallazgoIndex) {
       return (pieza.hallazgos?.[hallazgoIndex]?.items || [])
         .map(item => `<p class="fm-card__body">${item.texto}</p>`)
         .join('');
     }
 
-    /* Título del step: lee pieza.hallazgos[hallazgoIndex].titulo */
     function tituloStep(hallazgoIndex) {
       return pieza.hallazgos?.[hallazgoIndex]?.titulo || '';
     }
@@ -293,7 +262,6 @@
       return `<div class="fm-alert-box">${ICO_ALERT}<span>${texto}</span></div>`;
     }
 
-    /* ── Hero ── */
     const heroOrbit = steps[0]?.camara?.orbit || '0deg 80deg 100%';
     const modelSrc  = pieza.modelo3d || '';
     const [nombreBase, nombreSub] = pieza.nombre.split(' con ');
@@ -334,7 +302,6 @@
         </div>
       </section>`;
 
-    /* ── Steps ── */
     const stepsHTML = steps.map((step, i) => {
       const titulo = tituloStep(step.hallazgoIndex);
       return `
@@ -352,7 +319,6 @@
         </section>`;
     }).join('');
 
-    /* ── Footer técnico ── */
     const footerHTML = `
       <section class="fm-footer-section" aria-label="Datos técnicos y navegación">
         <div class="fm-footer-inner">
@@ -396,7 +362,6 @@
         </div>
       </section>`;
 
-    /* ── Inyectar todo ── */
     document.getElementById('fm-root').innerHTML = `
       ${heroHTML}
       <div class="fm-story" id="story">
@@ -423,10 +388,6 @@
 
     document.getElementById('fm-root').classList.add('visible');
 
-    /* ════════════════════════════════════════════════════════════════
-       GSAP ScrollTrigger
-       Lee step.camara directamente de FICHAS_MAESTRAS.
-    ════════════════════════════════════════════════════════════════ */
     const hamburger = document.getElementById('nav-hamburger');
     const drawer    = document.getElementById('nav-mobile');
     let navOpen = false;
@@ -455,8 +416,6 @@
       if (!viewer) return;
 
       viewer.addEventListener('load', () => {
-
-        /* Vincular cada step del DOM con su camara en FICHAS_MAESTRAS */
         stepEls.forEach((el, i) => {
           ScrollTrigger.create({
             trigger: el, start:'top 55%', end:'bottom 45%',
@@ -472,7 +431,6 @@
             onLeaveBack: () => card.classList.remove('in-view'),
           });
         });
-
       });
 
       function moverCamara(cam, idx) {
@@ -501,12 +459,10 @@
       gsap.from('.fm-hero__desc',           { y:15, opacity:0, duration:.5, ease:'power2.out', delay:.7 });
       gsap.from('.fm-hero__scroll-hint',    { y:10, opacity:0, duration:.5, ease:'power2.out', delay:.9 });
       gsap.from('.fm-hero__viewer-preview', { x:30, opacity:0, duration:.8, ease:'power3.out', delay:.4 });
-
     });
 
-  } /* end else */
+  }
   </script>
-
 
   <footer class="site-footer" role="contentinfo">
     <div class="container">
@@ -529,6 +485,184 @@
       </div>
     </div>
   </footer>
+
+  <!-- ═══════════════════════════════════════════════════════
+       TUTORIAL DEL VISUALIZADOR 3D
+       NOTA: data-scrollytelling="true" activa el hint
+       del scrollytelling automáticamente en fichas maestras
+  ═══════════════════════════════════════════════════════ -->
+  <div class="viewer-tutorial" id="viewerTutorial"
+       data-scrollytelling="true"
+       role="dialog" aria-modal="true" aria-label="Tutorial del visualizador 3D">
+    <div class="vt-box">
+
+      <div class="vt-header">
+        <div class="vt-header__left">
+          <span class="vt-eyebrow">Guía de uso</span>
+          <h2 class="vt-title">Visualizador 3D</h2>
+        </div>
+        <button class="vt-close" id="vtClose" aria-label="Cerrar tutorial">✕</button>
+      </div>
+
+      <div class="vt-steps">
+
+        <div class="vt-step">
+          <div class="vt-icon vt-icon--rotate" aria-hidden="true">
+            <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="26" cy="26" rx="14" ry="18" stroke="#252525" stroke-width="2" fill="#1a1a1a"/>
+              <ellipse cx="26" cy="26" rx="10" ry="13" stroke="#3d3d3d" stroke-width="1.5" fill="none"/>
+              <line x1="26" y1="10" x2="26" y2="42" stroke="#3d3d3d" stroke-width="1"/>
+              <g class="icon-hand">
+                <path d="M38 32 C43 28, 46 22, 42 17" stroke="#00e5ff" stroke-width="2" stroke-linecap="round" fill="none"/>
+                <circle cx="42" cy="17" r="3" fill="#00e5ff" opacity=".7"/>
+                <path d="M10 32 C5 28, 2 22, 6 17" stroke="#00e5ff" stroke-width="2" stroke-linecap="round" fill="none" opacity=".4"/>
+              </g>
+              <path d="M14 40 A18 18 0 0 0 38 40" stroke="#00e5ff" stroke-width="1.5" stroke-linecap="round" fill="none" opacity=".3" stroke-dasharray="3 3"/>
+            </svg>
+          </div>
+          <div class="vt-step__label">Gesto 01</div>
+          <div class="vt-step__title">Rotar</div>
+          <div class="vt-step__desc">Arrastra con un dedo o mantén pulsado el botón izquierdo del ratón para girar el modelo en cualquier dirección.</div>
+          <span class="vt-step__badge vt-step__badge--touch">👆 Táctil</span>
+          <span class="vt-step__badge vt-step__badge--mouse">🖱 Ratón</span>
+        </div>
+
+        <div class="vt-step">
+          <div class="vt-icon vt-icon--zoom" aria-hidden="true">
+            <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <ellipse class="icon-circle-outer" cx="26" cy="26" rx="18" ry="18" stroke="#00e5ff" stroke-width="1.5" fill="none" opacity=".3" stroke-dasharray="4 3"/>
+              <ellipse cx="26" cy="26" rx="11" ry="14" stroke="#252525" stroke-width="2" fill="#1a1a1a"/>
+              <ellipse cx="26" cy="26" rx="7" ry="10" stroke="#3d3d3d" stroke-width="1.5" fill="none"/>
+              <circle cx="40" cy="12" r="7" fill="#0d0d0d" stroke="#00e5ff" stroke-width="1.5"/>
+              <line x1="37" y1="12" x2="43" y2="12" stroke="#00e5ff" stroke-width="1.5" stroke-linecap="round"/>
+              <line x1="40" y1="9" x2="40" y2="15" stroke="#00e5ff" stroke-width="1.5" stroke-linecap="round"/>
+              <circle cx="12" cy="40" r="7" fill="#0d0d0d" stroke="#00e5ff" stroke-width="1.5" opacity=".5"/>
+              <line x1="9" y1="40" x2="15" y2="40" stroke="#00e5ff" stroke-width="1.5" stroke-linecap="round" opacity=".5"/>
+            </svg>
+          </div>
+          <div class="vt-step__label">Gesto 02</div>
+          <div class="vt-step__title">Zoom</div>
+          <div class="vt-step__desc">Pellizca con dos dedos para acercar o alejar. En escritorio usa la rueda del ratón o el gesto de pellizco en el trackpad.</div>
+          <span class="vt-step__badge vt-step__badge--touch">✌ Pellizco</span>
+          <span class="vt-step__badge vt-step__badge--mouse">⚙ Rueda</span>
+        </div>
+
+        <div class="vt-step">
+          <div class="vt-icon vt-icon--drag" aria-hidden="true">
+            <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="22" cy="26" rx="11" ry="14" stroke="#252525" stroke-width="2" fill="#1a1a1a"/>
+              <ellipse cx="22" cy="26" rx="7" ry="10" stroke="#3d3d3d" stroke-width="1.5" fill="none"/>
+              <g class="icon-hand">
+                <rect x="12" y="33" width="20" height="12" rx="3" fill="#1a1a1a" stroke="#b08d55" stroke-width="1.5"/>
+                <line x1="17" y1="33" x2="17" y2="28" stroke="#b08d55" stroke-width="1.5" stroke-linecap="round"/>
+                <line x1="22" y1="33" x2="22" y2="27" stroke="#b08d55" stroke-width="1.5" stroke-linecap="round"/>
+                <line x1="27" y1="33" x2="27" y2="28" stroke="#b08d55" stroke-width="1.5" stroke-linecap="round"/>
+              </g>
+              <g class="icon-arrow">
+                <line x1="35" y1="26" x2="47" y2="26" stroke="#00e5ff" stroke-width="2" stroke-linecap="round"/>
+                <polyline points="43,22 47,26 43,30" stroke="#00e5ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              </g>
+            </svg>
+          </div>
+          <div class="vt-step__label">Gesto 03</div>
+          <div class="vt-step__title">Desplazar</div>
+          <div class="vt-step__desc">Arrastra con dos dedos o mantén pulsado el botón derecho del ratón para mover el modelo horizontalmente.</div>
+          <span class="vt-step__badge vt-step__badge--touch">☞ 2 dedos</span>
+          <span class="vt-step__badge vt-step__badge--mouse">🖱 Btn. derecho</span>
+        </div>
+
+        <div class="vt-step">
+          <div class="vt-icon vt-icon--expand" aria-hidden="true">
+            <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="26" cy="26" rx="10" ry="13" stroke="#252525" stroke-width="2" fill="#1a1a1a"/>
+              <g class="icon-corner">
+                <polyline points="6,14 6,6 14,6"    stroke="#00e5ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                <polyline points="38,6 46,6 46,14"  stroke="#00e5ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                <polyline points="46,38 46,46 38,46" stroke="#00e5ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                <polyline points="14,46 6,46 6,38"   stroke="#00e5ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              </g>
+              <circle cx="42" cy="10" r="6" fill="#0d0d0d" stroke="#b08d55" stroke-width="1.5"/>
+              <path d="M39.5 10 A3 3 0 1 1 42 13" stroke="#b08d55" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+              <polyline points="42,13 44,11 42,9" stroke="#b08d55" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+          </div>
+          <div class="vt-step__label">Extras</div>
+          <div class="vt-step__title">Pantalla completa</div>
+          <div class="vt-step__desc">Usa el botón de pantalla completa del visualizador para maximizarlo. El botón circular ↺ restaura la posición inicial.</div>
+          <span class="vt-step__badge vt-step__badge--mouse">⛶ Pantalla completa</span>
+          <span class="vt-step__badge vt-step__badge--mouse">↺ Restablecer</span>
+        </div>
+
+      </div>
+
+      <!-- Hint scrollytelling — visible automáticamente en fichas maestras -->
+      <div class="vt-scroll-hint" id="vtScrollHint" style="display:none; margin-top:.75rem; margin-bottom:.75rem;">
+        <span class="vt-scroll-hint__icon">📜</span>
+        <p class="vt-scroll-hint__text">
+          <strong>Ficha maestra</strong> — mientras lees, la cámara se mueve automáticamente hacia cada lesión descrita. Solo desplázate hacia abajo y el modelo te guiará.
+        </p>
+      </div>
+
+      <div class="vt-footer">
+        <label class="vt-check-label">
+          <input type="checkbox" id="vtDontShow">
+          <span>No volver a mostrar</span>
+        </label>
+        <button class="vt-btn-ok" id="vtOk">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+          ¡Entendido!
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    const STORAGE_KEY = 'mvp_viewer_tutorial_seen';
+    const overlay    = document.getElementById('viewerTutorial');
+    const btnClose   = document.getElementById('vtClose');
+    const btnOk      = document.getElementById('vtOk');
+    const chkDont    = document.getElementById('vtDontShow');
+    const scrollHint = document.getElementById('vtScrollHint');
+
+    const isScrollytelling = overlay && overlay.dataset.scrollytelling === 'true';
+    if (isScrollytelling && scrollHint) scrollHint.style.display = 'flex';
+
+    function openTutorial() {
+      if (!overlay) return;
+      overlay.classList.add('is-open');
+      overlay.focus();
+    }
+
+    function closeTutorial() {
+      if (!overlay) return;
+      overlay.classList.remove('is-open');
+      if (chkDont && chkDont.checked) {
+        localStorage.setItem(STORAGE_KEY, '1');
+      }
+    }
+
+    window.openTutorial = openTutorial;
+
+    if (!localStorage.getItem(STORAGE_KEY)) {
+      setTimeout(openTutorial, 600);
+    }
+
+    btnClose && btnClose.addEventListener('click', closeTutorial);
+    btnOk    && btnOk.addEventListener('click', closeTutorial);
+
+    overlay && overlay.addEventListener('click', function (e) {
+      if (e.target === overlay) closeTutorial();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && overlay && overlay.classList.contains('is-open')) {
+        closeTutorial();
+      }
+    });
+  })();
+  </script>
 
 </body>
 </html>
