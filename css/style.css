@@ -1286,6 +1286,7 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   justify-content: center;
   padding: 1.5rem;
+  padding-top: max(1.5rem, env(safe-area-inset-top));
   background: rgba(13,13,13,.82);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
@@ -1304,6 +1305,8 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: var(--card-radius);
   box-shadow: 10px 10px 0 var(--cyan);
   width: min(560px, 100%);
+  max-height: calc(100svh - 3rem);
+  overflow-y: auto;
   overflow: hidden;
   transform: translateY(16px) scale(.97);
   transition: transform .32s cubic-bezier(.34,1.56,.64,1);
