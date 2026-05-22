@@ -17,81 +17,73 @@
 
   <link rel="stylesheet" href="/prueba-museo/css/style.css" />
 
-  <link rel="stylesheet" href="/prueba-museo/css/loader.css" />
-
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
 
   <style>
     /* ══════════════════════════════════════════
+       MAPA DE YACIMIENTOS
+    ══════════════════════════════════════════ */
+    .yac-section { background:var(--bone-50); border-top:var(--border-thick); border-bottom:var(--border-thick); padding-block:clamp(3rem,6vw,5.5rem); overflow:hidden; }
+    .yac-inner { width:min(1400px,96vw); margin-inline:auto; padding-inline:clamp(1rem,3vw,2rem); }
+    .yac-header { display:grid; grid-template-columns:1fr auto; align-items:end; gap:2rem; margin-bottom:2.5rem; }
+    .yac-eyebrow { font-family:var(--font-head); font-size:.7rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--orange); display:flex; align-items:center; gap:.5rem; margin-bottom:.75rem; }
+    .yac-eyebrow::before { content:''; display:block; width:25px; height:2.5px; background:var(--orange); }
+    .yac-title { font-family:var(--font-head); font-size:clamp(1.8rem,3.5vw,2.8rem); font-weight:900; letter-spacing:-.04em; line-height:1.05; color:var(--dark); }
+    .yac-title em { font-family:var(--font-display); font-style:italic; color:var(--crimson); }
+    .yac-stats { display:flex; gap:2rem; flex-wrap:wrap; }
+    .yac-stat { text-align:right; }
+    .yac-stat__num { font-family:var(--font-head); font-size:clamp(1.4rem,2.5vw,2rem); font-weight:900; letter-spacing:-.04em; color:var(--dark); display:block; line-height:1; }
+    .yac-stat__label { font-family:var(--font-head); font-size:.6rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--bone-500); }
+    .yac-layout { display:grid; grid-template-columns:1fr 300px; gap:1.5rem; align-items:start; }
+    .yac-map-wrap { background:#fff; border:var(--border-thick); border-radius:4px; box-shadow:var(--shadow-md); overflow:hidden; position:relative; }
+    #yac-map-svg { width:100%; height:auto; display:block; }
+    .yac-region { fill:var(--bone-200); stroke:#fff; stroke-width:0.5; }
+    .yac-dot { cursor:pointer; transition:transform .2s cubic-bezier(.34,1.56,.64,1); transform-origin:center; transform-box:fill-box; }
+    .yac-dot:hover { transform:scale(1.5); }
+    .yac-dot.is-active { transform:scale(1.7); }
+    .yac-dot__circle { stroke:#fff; stroke-width:1.5; filter:drop-shadow(0 1px 3px rgba(0,0,0,.3)); }
+    .yac-dot__pulse { opacity:0; animation:yacPulse 2.5s ease-out infinite; }
+    .yac-dot.is-active .yac-dot__pulse { opacity:1; }
+    @keyframes yacPulse { 0%{r:7;opacity:.6} 100%{r:18;opacity:0} }
+    .yac-tooltip { position:absolute; pointer-events:none; z-index:10; background:var(--dark); border:2px solid var(--orange); border-radius:2px; padding:.5rem .75rem; box-shadow:3px 3px 0 var(--dark); min-width:160px; max-width:220px; opacity:0; transform:translateY(6px); transition:opacity .15s,transform .15s; }
+    .yac-tooltip.is-visible { opacity:1; transform:translateY(0); }
+    .yac-tooltip__id   { font-family:var(--font-head); font-size:.55rem; font-weight:800; letter-spacing:.15em; text-transform:uppercase; color:var(--orange); margin-bottom:.2rem; }
+    .yac-tooltip__name { font-family:var(--font-head); font-size:.78rem; font-weight:800; color:var(--ivory); line-height:1.2; margin-bottom:.3rem; }
+    .yac-tooltip__place{ font-size:.65rem; font-weight:300; color:var(--bone-400); line-height:1.4; }
+    .yac-list { display:flex; flex-direction:column; gap:.5rem; max-height:520px; overflow-y:auto; scrollbar-width:thin; scrollbar-color:var(--bone-300) transparent; }
+    .yac-item { display:flex; align-items:flex-start; gap:.75rem; padding:.7rem .9rem; background:#fff; border:2px solid var(--bone-200); border-radius:2px; cursor:pointer; text-decoration:none; transition:border-color .15s,box-shadow .15s,transform .12s; }
+    .yac-item:hover { border-color:var(--dark); box-shadow:3px 3px 0 var(--dark); transform:translate(-2px,-2px); }
+    .yac-item.is-active { border-color:var(--orange); box-shadow:3px 3px 0 var(--orange); background:rgba(255,109,0,.04); }
+    .yac-item__dot  { width:10px; height:10px; border-radius:50%; flex-shrink:0; margin-top:.3rem; }
+    .yac-item__id   { font-family:var(--font-head); font-size:.55rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; margin-bottom:.15rem; }
+    .yac-item__name { font-family:var(--font-head); font-size:.72rem; font-weight:800; color:var(--dark); line-height:1.2; margin-bottom:.2rem; letter-spacing:-.01em; }
+    .yac-item__place{ font-size:.63rem; font-weight:300; color:var(--bone-500); line-height:1.4; }
+    .yac-item__tag  { display:inline-flex; margin-top:.3rem; font-family:var(--font-head); font-size:.5rem; font-weight:700; letter-spacing:.07em; text-transform:uppercase; padding:.15em .5em; border-radius:2px; border:1.5px solid; }
+    .yac-legend { display:flex; flex-wrap:wrap; gap:.65rem; margin-top:1.25rem; padding-top:1rem; border-top:1.5px solid var(--bone-200); }
+    .yac-legend-item { display:flex; align-items:center; gap:.4rem; font-family:var(--font-head); font-size:.58rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--bone-500); }
+    .yac-legend-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+    @media (max-width:900px) {
+      .yac-layout { grid-template-columns:1fr; }
+      .yac-header { grid-template-columns:1fr; }
+      .yac-stats  { justify-content:flex-start; }
+      .yac-stat   { text-align:left; }
+      .yac-list   { max-height:280px; }
+    }
+
+    /* ══════════════════════════════════════════
        SECCIÓN INVESTIGADORES
     ══════════════════════════════════════════ */
-    .research-cta {
-      background: var(--dark);
-      border-top: var(--border-thick);
-      border-bottom: var(--border-thick);
-      padding-block: clamp(3rem, 6vw, 5rem);
-      position: relative;
-      overflow: hidden;
-    }
-    /* Grid decorativo de fondo */
-    .research-cta::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(0,229,255,.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,229,255,.04) 1px, transparent 1px);
-      background-size: 48px 48px;
-      pointer-events: none;
-    }
-    .research-cta__inner {
-      position: relative;
-      z-index: 1;
-      width: min(1400px, 96vw);
-      margin-inline: auto;
-      padding-inline: clamp(1rem, 3vw, 2rem);
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: clamp(2rem, 5vw, 5rem);
-      align-items: center;
-    }
-    .research-cta__eyebrow {
-      font-family: var(--font-head);
-      font-size: .65rem; font-weight: 700;
-      letter-spacing: .22em; text-transform: uppercase;
-      color: var(--cyan);
-      display: flex; align-items: center; gap: .5rem;
-      margin-bottom: .9rem;
-    }
-    .research-cta__eyebrow::before {
-      content: ''; display: block;
-      width: 22px; height: 2px; background: var(--cyan);
-    }
-    .research-cta__title {
-      font-family: var(--font-head);
-      font-size: clamp(1.5rem, 3vw, 2.4rem);
-      font-weight: 900; letter-spacing: -.04em;
-      line-height: 1.05; color: var(--ivory);
-      margin-bottom: 1rem;
-    }
-    .research-cta__title em {
-      font-family: var(--font-display);
-      font-style: italic; color: var(--cyan);
-    }
-    .research-cta__desc {
-      font-size: clamp(.85rem, 1.4vw, .98rem);
-      line-height: 1.75; color: var(--bone-400);
-      font-weight: 300; max-width: 58ch;
-    }
-    .research-cta__desc strong { color: var(--ivory); font-weight: 600; }
-    .research-cta__action { flex-shrink: 0; }
-
-    @media (max-width: 700px) {
-      .research-cta__inner {
-        grid-template-columns: 1fr;
-        gap: 1.75rem;
-      }
-    }
+    .research-cta { background:var(--dark); border-top:var(--border-thick); border-bottom:var(--border-thick); padding-block:clamp(3rem,6vw,5rem); position:relative; overflow:hidden; }
+    .research-cta::before { content:''; position:absolute; inset:0; background-image:linear-gradient(rgba(0,229,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,.04) 1px,transparent 1px); background-size:48px 48px; pointer-events:none; }
+    .research-cta__inner { position:relative; z-index:1; width:min(1400px,96vw); margin-inline:auto; padding-inline:clamp(1rem,3vw,2rem); display:grid; grid-template-columns:1fr auto; gap:clamp(2rem,5vw,5rem); align-items:center; }
+    .research-cta__eyebrow { font-family:var(--font-head); font-size:.65rem; font-weight:700; letter-spacing:.22em; text-transform:uppercase; color:var(--cyan); display:flex; align-items:center; gap:.5rem; margin-bottom:.9rem; }
+    .research-cta__eyebrow::before { content:''; display:block; width:22px; height:2px; background:var(--cyan); }
+    .research-cta__title { font-family:var(--font-head); font-size:clamp(1.5rem,3vw,2.4rem); font-weight:900; letter-spacing:-.04em; line-height:1.05; color:var(--ivory); margin-bottom:1rem; }
+    .research-cta__title em { font-family:var(--font-display); font-style:italic; color:var(--cyan); }
+    .research-cta__desc { font-size:clamp(.85rem,1.4vw,.98rem); line-height:1.75; color:var(--bone-400); font-weight:300; max-width:58ch; }
+    .research-cta__desc strong { color:var(--ivory); font-weight:600; }
+    .research-cta__action { flex-shrink:0; }
+    @media (max-width:700px) { .research-cta__inner { grid-template-columns:1fr; gap:1.75rem; } }
   </style>
 </head>
 
@@ -103,38 +95,30 @@
   <header class="site-header" id="site-header">
     <div class="container">
       <nav class="nav" role="navigation" aria-label="Navegación principal">
-
         <a href="/prueba-museo/index.html" class="nav__logo" aria-label="PaleoMuseo — Inicio">
-          <img
-            src="/prueba-museo/assets/img/lav_uam.png"
-            alt="Laboratorio de Antropología Virtual · UAM"
-            class="nav__logo-img" />
+          <img src="/prueba-museo/assets/img/lav_uam.png" alt="Laboratorio de Antropología Virtual · UAM" class="nav__logo-img" />
           <div>
             <div>Paleo<strong>Museo</strong></div>
             <div style="font-size:0.6em;font-weight:400;opacity:0.5;letter-spacing:0.1em">PALEOPATOLOGÍA</div>
           </div>
         </a>
-
         <ul class="nav__links" role="list">
           <li><a href="exploracion.html" class="nav__link">Exploración</a></li>
-          <li><a href="coleccion.html" class="nav__link">Colección</a></li>
-          <li><a href="aula.html" class="nav__link">Aula Virtual</a></li>
-          <li><a href="actualidad.html" class="nav__link">Actualidad</a></li>
-          <li><a href="#proyecto" class="nav__link">Proyecto</a></li>
+          <li><a href="coleccion.html"   class="nav__link">Colección</a></li>
+          <li><a href="aula.html"        class="nav__link">Aula Virtual</a></li>
+          <li><a href="actualidad.html"  class="nav__link">Actualidad</a></li>
+          <li><a href="#proyecto"        class="nav__link">Proyecto</a></li>
         </ul>
-
         <div class="nav__actions">
           <a href="coleccion.html#buscados" class="btn btn--cyan" style="font-size:0.78rem;padding:0.55em 1.2em;">
             <span>Buscar pieza</span>
           </a>
         </div>
-
         <button class="nav__hamburger" id="nav-hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-mobile">
           <span></span><span></span><span></span>
         </button>
       </nav>
     </div>
-
     <div class="nav__mobile" id="nav-mobile" role="dialog" aria-label="Menú móvil">
       <ul role="list" style="display:flex;flex-direction:column;align-items:center;gap:2rem;text-align:center;">
         <li><a href="exploracion.html" class="nav__link" style="font-size:1.6rem">Exploración</a></li>
@@ -143,9 +127,7 @@
         <li><a href="actualidad.html"  class="nav__link" style="font-size:1.6rem">Actualidad</a></li>
         <li><a href="#proyecto"        class="nav__link" style="font-size:1.6rem">Proyecto</a></li>
       </ul>
-      <a href="coleccion.html#buscados" class="btn btn--cyan" style="margin-top:1rem">
-        <span>Buscar pieza</span>
-      </a>
+      <a href="coleccion.html#buscados" class="btn btn--cyan" style="margin-top:1rem"><span>Buscar pieza</span></a>
     </div>
   </header>
 
@@ -156,29 +138,22 @@
   <section class="hero" id="hero" aria-label="Presentación del museo">
     <div class="hero__grid-bg" aria-hidden="true"></div>
     <div class="hero__noise"    aria-hidden="true"></div>
-
     <div class="container">
       <div class="hero__content">
-
         <div class="hero__text">
           <p class="hero__eyebrow" data-reveal>Trabajo de Fin de Grado · Biología</p>
-
           <h1 class="hero__title" data-reveal data-reveal-delay="1">
             <span>Museo Virtual de</span>
             PALEO<span class="accent--crimson" style="display:inline">PATO</span>LOGÍA
           </h1>
-
           <p class="hero__subtitle" data-reveal data-reveal-delay="2">
             Explora colecciones osteológicas únicas, comprende las enfermedades del pasado
             y sumérgete en la historia de la vida a través de piezas interactivas
             y contenido científico accesible.
           </p>
-
           <div class="hero__actions" data-reveal data-reveal-delay="3">
             <a href="exploracion.html" class="btn btn--cyan">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
-              </svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
               <span>Explorar ahora</span>
             </a>
             <a href="coleccion.html" class="btn btn--ghost-light">
@@ -186,46 +161,28 @@
               <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
             </a>
           </div>
-
           <div class="hero__stats" data-reveal data-reveal-delay="4">
-            <div>
-              <span class="hero__stat-num" data-count="40">+40</span>
-              <span class="hero__stat-label">Piezas catalogadas</span>
-            </div>
-            <div>
-              <span class="hero__stat-num" data-count="12">12</span>
-              <span class="hero__stat-label">Patologías descritas</span>
-            </div>
-            <div>
-              <span class="hero__stat-num">3D</span>
-              <span class="hero__stat-label">Visualización inmersiva</span>
-            </div>
+            <div><span class="hero__stat-num" data-count="40">+40</span><span class="hero__stat-label">Piezas catalogadas</span></div>
+            <div><span class="hero__stat-num" data-count="12">12</span><span class="hero__stat-label">Patologías descritas</span></div>
+            <div><span class="hero__stat-num">3D</span><span class="hero__stat-label">Visualización inmersiva</span></div>
           </div>
         </div>
-
         <div class="hero__viewer" data-reveal data-reveal-delay="2">
           <div class="hero__viewer-frame">
             <div class="hero__scan-line" aria-hidden="true"></div>
             <model-viewer
               src="/prueba-museo/assets/models/esqueleto_hero.glb"
               alt="Modelo 3D de esqueleto humano"
-              loading="eager"
-              autoplay
-              camera-orbit="0deg 90deg 120%"
-              field-of-view="30deg"
-              disable-zoom
-              disable-pan
-              interaction-prompt="none"
-              shadow-intensity="0"
-              exposure="1.2"
-              class="hero__model-viewer"
-              aria-label="Esqueleto humano 3D">
+              loading="eager" autoplay
+              camera-orbit="0deg 90deg 120%" field-of-view="30deg"
+              disable-zoom disable-pan interaction-prompt="none"
+              shadow-intensity="0" exposure="1.2"
+              class="hero__model-viewer" aria-label="Esqueleto humano 3D">
             </model-viewer>
           </div>
         </div>
       </div>
     </div>
-
     <div class="hero__scroll" aria-hidden="true">
       <div class="hero__scroll-arrow"></div>
       <span>Explorar</span>
@@ -238,31 +195,23 @@
   ===================================================== -->
   <section class="modules section" id="modulos" aria-labelledby="modules-title">
     <div class="container">
-
       <div class="modules__header">
         <div>
           <p class="modules__label">Módulos principales</p>
-          <h2 class="modules__title" id="modules-title" data-reveal>
-            Elige tu<br>modo de exploración
-          </h2>
+          <h2 class="modules__title" id="modules-title" data-reveal>Elige tu<br>modo de exploración</h2>
         </div>
         <a href="exploracion.html" class="btn btn--outline" data-reveal data-reveal-delay="2">
           <span>Ir al explorador</span>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
         </a>
       </div>
-
       <div class="modules__grid">
-
-        <a href="exploracion.html?vista=anatomica"
-           class="module-card module-card--anatomia"
-           data-reveal data-reveal-delay="1"
-           aria-label="Exploración Anatómica">
+        <a href="exploracion.html?vista=anatomica" class="module-card module-card--anatomia" data-reveal data-reveal-delay="1" aria-label="Exploración Anatómica">
           <div class="module-card__strip" aria-hidden="true"></div>
           <div class="module-card__inner">
             <span class="module-card__number">01</span>
             <div class="module-card__icon-wrap" aria-hidden="true">
-              <svg class="module-card__icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg class="module-card__icon" viewBox="0 0 100 100" fill="none">
                 <circle cx="50" cy="16" r="9" fill="none" stroke="#00e5ff" stroke-width="2.5"/>
                 <line x1="50" y1="25" x2="50" y2="53" stroke="#00e5ff" stroke-width="2.5"/>
                 <line x1="28" y1="33" x2="72" y2="33" stroke="#00e5ff" stroke-width="2.5"/>
@@ -286,16 +235,12 @@
             </div>
           </div>
         </a>
-
-        <a href="exploracion.html?vista=patologica"
-           class="module-card module-card--patologia"
-           data-reveal data-reveal-delay="2"
-           aria-label="Exploración Patológica">
+        <a href="exploracion.html?vista=patologica" class="module-card module-card--patologia" data-reveal data-reveal-delay="2" aria-label="Exploración Patológica">
           <div class="module-card__strip" aria-hidden="true"></div>
           <div class="module-card__inner">
             <span class="module-card__number">02</span>
             <div class="module-card__icon-wrap" aria-hidden="true">
-              <svg class="module-card__icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg class="module-card__icon" viewBox="0 0 100 100" fill="none">
                 <ellipse cx="30" cy="24" rx="9" ry="11" fill="none" stroke="#fdf8f0" stroke-width="2.5"/>
                 <rect x="22" y="35" width="16" height="26" rx="2" fill="none" stroke="#fdf8f0" stroke-width="2.5"/>
                 <ellipse cx="30" cy="72" rx="9" ry="11" fill="none" stroke="#fdf8f0" stroke-width="2.5"/>
@@ -315,16 +260,12 @@
             </div>
           </div>
         </a>
-
-        <a href="coleccion.html"
-           class="module-card module-card--coleccion"
-           data-reveal data-reveal-delay="3"
-           aria-label="Colección completa">
+        <a href="coleccion.html" class="module-card module-card--coleccion" data-reveal data-reveal-delay="3" aria-label="Colección completa">
           <div class="module-card__strip" aria-hidden="true"></div>
           <div class="module-card__inner">
             <span class="module-card__number">03</span>
             <div class="module-card__icon-wrap" aria-hidden="true">
-              <svg class="module-card__icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg class="module-card__icon" viewBox="0 0 100 100" fill="none">
                 <rect x="10" y="76" width="80" height="5" rx="1" fill="#1a1a1a"/>
                 <rect x="10" y="46" width="80" height="5" rx="1" fill="#1a1a1a"/>
                 <rect x="10" y="16" width="80" height="5" rx="1" fill="#1a1a1a"/>
@@ -344,7 +285,6 @@
             </div>
           </div>
         </a>
-
       </div>
     </div>
   </section>
@@ -356,12 +296,9 @@
   <div class="secondary-modules" aria-label="Módulos secundarios">
     <div style="width:100%">
       <div class="secondary-modules__inner">
-
         <a href="aula.html" class="secondary-module secondary-module--aula" aria-label="Aula Virtual">
           <div class="secondary-module__icon-box">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/>
-            </svg>
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>
           </div>
           <div class="secondary-module__text">
             <p class="secondary-module__eyebrow">Módulo 04</p>
@@ -370,12 +307,9 @@
           </div>
           <svg class="secondary-module__chevron" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
         </a>
-
         <a href="actualidad.html" class="secondary-module secondary-module--actualidad" aria-label="Noticias y Actualidad">
           <div class="secondary-module__icon-box">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M20 3H4v10c0 2.21 1.79 4 4 4h6c2.21 0 4-1.79 4-4v-3h2c1.11 0 2-.89 2-2V5c0-1.11-.89-2-2-2zm0 5h-2V5h2v3zM4 19h16v2H4z"/>
-            </svg>
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M20 3H4v10c0 2.21 1.79 4 4 4h6c2.21 0 4-1.79 4-4v-3h2c1.11 0 2-.89 2-2V5c0-1.11-.89-2-2-2zm0 5h-2V5h2v3zM4 19h16v2H4z"/></svg>
           </div>
           <div class="secondary-module__text">
             <p class="secondary-module__eyebrow">Módulo 05</p>
@@ -384,89 +318,82 @@
           </div>
           <svg class="secondary-module__chevron" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
         </a>
-
       </div>
     </div>
   </div>
 
 
   <!-- ====================================================
-       ABOUT / PROJECT
+       MAPA DE YACIMIENTOS
   ===================================================== -->
-  <section class="about section" id="proyecto" aria-labelledby="about-title">
-    <div class="container">
-      <div class="about__inner">
+  <section class="yac-section" aria-labelledby="yac-title">
+    <div class="yac-inner">
 
+      <div class="yac-header">
         <div>
-          <p class="about__label" data-reveal>El Proyecto</p>
-          <h2 class="about__title" data-reveal data-reveal-delay="1" id="about-title">
-            ¿Qué es este proyecto?
-          </h2>
-          <p class="about__lead" data-reveal data-reveal-delay="2">
-            PaleoMuseo nace como Trabajo de Fin de Grado en Biología con el objetivo principal de
-            democratizar el acceso a colecciones paleopatológicas, hasta ahora restringidas a entornos
-            físicos y académicos.
-          </p>
-          <p class="about__lead" data-reveal data-reveal-delay="2">
-            Esta disciplina sufre muchas limitaciones por acceso, y para ello creamos esta página web 
-            pública en la que usuarios de todos los perfiles pueden enriquecerse aprendiendo paleopatología
-            y disciplinas asociadas.
-          </p>
-          <p class="about__lead" data-reveal data-reveal-delay="3" style="font-size:0.9rem;margin-bottom:0">
-            Combinando el uso de <strong>modelos 3D</strong> de piezas de la colección de la UAM con piezas históricamente
-            reconocidas por la antropología pretendemos acercar una ciencia esencial para la comprensión de 
-            nuestra evolución.
-          </p>
-          <p class="about__lead" data-reveal data-reveal-delay="3" style="font-size:0.9rem;margin-bottom:0">
-            No solo aspiramos a recopilar y publicar esta colección privada, sino que queremos formar parte de
-            todos los cambios actuales que están sucediendo en el aprendizaje.
-          </p>
+          <p class="yac-eyebrow">Patrimonio en el territorio</p>
+          <h2 class="yac-title" id="yac-title">Mapa de <em>yacimientos</em></h2>
+        </div>
+        <div class="yac-stats">
+          <div class="yac-stat">
+            <span class="yac-stat__num" id="yac-stat-total">18</span>
+            <span class="yac-stat__label">Yacimientos</span>
+          </div>
+          <div class="yac-stat">
+            <span class="yac-stat__num">5</span>
+            <span class="yac-stat__label">Épocas</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="yac-layout">
+
+        <div class="yac-map-wrap">
+          <svg id="yac-map-svg" viewBox="0 0 700 560" xmlns="http://www.w3.org/2000/svg">
+            <rect width="700" height="560" fill="#e8f4f8"/>
+            <path class="yac-region" d="M 120,60 L 160,40 L 210,35 L 260,30 L 320,28 L 380,30 L 440,32 L 490,40 L 530,55 L 560,75 L 575,100 L 580,130 L 575,160 L 570,185 L 565,210 L 570,240 L 575,265 L 570,290 L 560,310 L 545,330 L 530,345 L 510,355 L 490,365 L 470,370 L 450,375 L 430,378 L 410,380 L 390,382 L 370,383 L 350,382 L 330,380 L 310,376 L 290,370 L 268,362 L 248,352 L 228,340 L 210,326 L 195,312 L 180,298 L 165,282 L 152,265 L 140,248 L 128,230 L 115,212 L 105,193 L 98,172 L 94,150 L 93,128 L 96,107 L 105,87 L 120,60 Z"/>
+            <path d="M 120,60 L 105,87 L 96,107 L 93,128 L 94,150 L 98,172 L 105,193 L 115,212 L 128,230 L 140,248 L 148,262 L 155,268 L 158,260 L 155,245 L 152,230 L 148,215 L 145,200 L 143,185 L 142,170 L 140,155 L 138,140 L 136,125 L 133,110 L 130,95 L 126,80 L 120,60 Z" fill="#d5cdb8" stroke="#fff" stroke-width="0.5"/>
+            <defs>
+              <pattern id="mapGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(0,0,0,.04)" stroke-width="0.5"/>
+              </pattern>
+            </defs>
+            <rect width="700" height="560" fill="url(#mapGrid)"/>
+            <path d="M 420,95 Q 390,120 360,140 Q 330,155 310,165 Q 280,175 260,188" fill="none" stroke="rgba(100,160,200,.35)" stroke-width="1.2"/>
+            <path d="M 310,170 Q 280,185 255,195 Q 230,205 205,215 Q 185,222 165,230" fill="none" stroke="rgba(100,160,200,.35)" stroke-width="1"/>
+            <path d="M 330,285 Q 305,295 280,305 Q 255,315 235,325 Q 215,332 198,338" fill="none" stroke="rgba(100,160,200,.35)" stroke-width="1"/>
+            <g id="yac-dots-layer"></g>
+            <!-- LAV-UAM Madrid -->
+            <g class="yac-dot" data-id="LAV" transform="translate(310,178)">
+              <circle class="yac-dot__pulse" cx="0" cy="0" r="7" fill="#00e5ff" opacity=".5"/>
+              <circle class="yac-dot__circle" cx="0" cy="0" r="7" fill="#0d0d0d" stroke="#00e5ff" stroke-width="2.5"/>
+              <text x="0" y="1" text-anchor="middle" dominant-baseline="middle" font-family="Montserrat,sans-serif" font-size="6.5" font-weight="900" fill="#00e5ff">L</text>
+            </g>
+            <text x="130" y="155" font-family="Montserrat,sans-serif" font-size="7.5" fill="rgba(0,0,0,.18)" font-weight="700" letter-spacing="1">PORTUGAL</text>
+            <text x="310" y="145" font-family="Montserrat,sans-serif" font-size="7.5" fill="rgba(0,0,0,.14)" font-weight="700" letter-spacing="1">ESPAÑA</text>
+            <line x1="520" y1="440" x2="590" y2="440" stroke="rgba(0,0,0,.25)" stroke-width="1.5"/>
+            <line x1="520" y1="436" x2="520" y2="444" stroke="rgba(0,0,0,.25)" stroke-width="1.5"/>
+            <line x1="590" y1="436" x2="590" y2="444" stroke="rgba(0,0,0,.25)" stroke-width="1.5"/>
+            <text x="555" y="455" text-anchor="middle" font-family="Montserrat,sans-serif" font-size="7" fill="rgba(0,0,0,.35)">≈ 200 km</text>
+            <text x="640" y="58" text-anchor="middle" font-family="Montserrat,sans-serif" font-size="11" font-weight="900" fill="rgba(0,0,0,.25)">N</text>
+            <line x1="640" y1="62" x2="640" y2="76" stroke="rgba(0,0,0,.25)" stroke-width="1.5"/>
+            <polygon points="640,62 637,71 640,68 643,71" fill="rgba(0,0,0,.25)"/>
+          </svg>
+          <div class="yac-tooltip" id="yac-tooltip">
+            <p class="yac-tooltip__id"    id="yac-tip-id"></p>
+            <p class="yac-tooltip__name"  id="yac-tip-name"></p>
+            <p class="yac-tooltip__place" id="yac-tip-place"></p>
+          </div>
         </div>
 
         <div>
-          <p class="about__label" data-reveal>Objetivos del proyecto</p>
-          <div class="about__objectives" data-reveal data-reveal-delay="1">
-
-            <div class="about__obj">
-              <span class="about__obj-num">01</span>
-              <div class="about__obj-text">
-                <strong>Digitalización de Piezas</strong>
-                <p>Seleccionar piezas representativas de la colección del Dpto. de Antropología de la UAM y generar réplicas digitales tridimensionales.</p>
-              </div>
-            </div>
-
-            <div class="about__obj">
-              <span class="about__obj-num">02</span>
-              <div class="about__obj-text">
-                <strong>Desarrollo de la plataforma web</strong>
-                <p>Diseñar una plataforma web interactiva que permita la navegación por la colección mediante criterios anatómicos, patológicos y cronológicos entre otros.</p>
-              </div>
-            </div>
-
-            <div class="about__obj">
-              <span class="about__obj-num">03</span>
-              <div class="about__obj-text">
-                <strong>Desarrollo de contenido educativo</strong>
-                <p>Creación de contenidos educativos complementarios a las fichas (glosario, cuestionarios y actualidad) para acercar el aprendizaje a cualquier perfil.</p>
-              </div>
-            </div>
-
-            <div class="about__obj">
-              <span class="about__obj-num">04</span>
-              <div class="about__obj-text">
-                <strong>Facilitar el análisis morfológico</strong>
-                <p>Favorecer la observación detallada de lesiones y alteraciones osteológicas mediante los modelos 3D.</p>
-              </div>
-            </div>
-
-            <div class="about__obj">
-              <span class="about__obj-num">05</span>
-              <div class="about__obj-text">
-                <strong>Accesibilidad del patrimonio científico</strong>
-                <p>Reducir las limitaciones de todo tipo usuales en colecciones especializadas de esta ciencia gracias a este entorno digital.</p>
-              </div>
-            </div>
-
+          <div class="yac-list" id="yac-list"></div>
+          <div class="yac-legend">
+            <div class="yac-legend-item"><div class="yac-legend-dot" style="background:#c8793a"></div>Prehistoria</div>
+            <div class="yac-legend-item"><div class="yac-legend-dot" style="background:#c0003c"></div>Romano</div>
+            <div class="yac-legend-item"><div class="yac-legend-dot" style="background:#2979ff"></div>Medieval</div>
+            <div class="yac-legend-item"><div class="yac-legend-dot" style="background:#00a060"></div>Moderno</div>
+            <div class="yac-legend-item"><div class="yac-legend-dot" style="background:#0d0d0d;border:2px solid #00e5ff"></div>LAV · UAM</div>
           </div>
         </div>
 
@@ -476,15 +403,86 @@
 
 
   <!-- ====================================================
-       SECCIÓN INVESTIGADORES ← NUEVO
+       ABOUT / PROJECT
+  ===================================================== -->
+  <section class="about section" id="proyecto" aria-labelledby="about-title">
+    <div class="container">
+      <div class="about__inner">
+        <div>
+          <p class="about__label" data-reveal>El Proyecto</p>
+          <h2 class="about__title" data-reveal data-reveal-delay="1" id="about-title">¿Qué es este proyecto?</h2>
+          <p class="about__lead" data-reveal data-reveal-delay="2">
+            PaleoMuseo nace como Trabajo de Fin de Grado en Biología con el objetivo principal de
+            democratizar el acceso a colecciones paleopatológicas, hasta ahora restringidas a entornos
+            físicos y académicos.
+          </p>
+          <p class="about__lead" data-reveal data-reveal-delay="2">
+            Esta disciplina sufre muchas limitaciones por acceso, y para ello creamos esta página web
+            pública en la que usuarios de todos los perfiles pueden enriquecerse aprendiendo paleopatología
+            y disciplinas asociadas.
+          </p>
+          <p class="about__lead" data-reveal data-reveal-delay="3" style="font-size:0.9rem;margin-bottom:0">
+            Combinando el uso de <strong>modelos 3D</strong> de piezas de la colección de la UAM con piezas históricamente
+            reconocidas por la antropología pretendemos acercar una ciencia esencial para la comprensión de nuestra evolución.
+          </p>
+          <p class="about__lead" data-reveal data-reveal-delay="3" style="font-size:0.9rem;margin-bottom:0">
+            No solo aspiramos a recopilar y publicar esta colección privada, sino que queremos formar parte de
+            todos los cambios actuales que están sucediendo en el aprendizaje.
+          </p>
+        </div>
+        <div>
+          <p class="about__label" data-reveal>Objetivos del proyecto</p>
+          <div class="about__objectives" data-reveal data-reveal-delay="1">
+            <div class="about__obj">
+              <span class="about__obj-num">01</span>
+              <div class="about__obj-text">
+                <strong>Digitalización de Piezas</strong>
+                <p>Seleccionar piezas representativas de la colección del Dpto. de Antropología de la UAM y generar réplicas digitales tridimensionales.</p>
+              </div>
+            </div>
+            <div class="about__obj">
+              <span class="about__obj-num">02</span>
+              <div class="about__obj-text">
+                <strong>Desarrollo de la plataforma web</strong>
+                <p>Diseñar una plataforma web interactiva que permita la navegación por la colección mediante criterios anatómicos, patológicos y cronológicos entre otros.</p>
+              </div>
+            </div>
+            <div class="about__obj">
+              <span class="about__obj-num">03</span>
+              <div class="about__obj-text">
+                <strong>Desarrollo de contenido educativo</strong>
+                <p>Creación de contenidos educativos complementarios a las fichas para acercar el aprendizaje a cualquier perfil.</p>
+              </div>
+            </div>
+            <div class="about__obj">
+              <span class="about__obj-num">04</span>
+              <div class="about__obj-text">
+                <strong>Facilitar el análisis morfológico</strong>
+                <p>Favorecer la observación detallada de lesiones y alteraciones osteológicas mediante los modelos 3D.</p>
+              </div>
+            </div>
+            <div class="about__obj">
+              <span class="about__obj-num">05</span>
+              <div class="about__obj-text">
+                <strong>Accesibilidad del patrimonio científico</strong>
+                <p>Reducir las limitaciones de todo tipo usuales en colecciones especializadas de esta ciencia gracias a este entorno digital.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ====================================================
+       SECCIÓN INVESTIGADORES
   ===================================================== -->
   <section class="research-cta" aria-label="Acceso para investigadores">
     <div class="research-cta__inner">
       <div>
         <p class="research-cta__eyebrow">LAV · UAM</p>
-        <h2 class="research-cta__title">
-          ¿Eres <em>investigador/a</em>?
-        </h2>
+        <h2 class="research-cta__title">¿Eres <em>investigador/a</em>?</h2>
         <p class="research-cta__desc">
           Las colecciones digitales del Laboratorio de Antropología Virtual están disponibles para
           proyectos de <strong>investigación académica y científica</strong>. Presenta tu solicitud
@@ -493,9 +491,7 @@
       </div>
       <div class="research-cta__action">
         <a href="/prueba-museo/contacto.html" class="btn btn--cyan">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-          </svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
           <span>Solicitar acceso</span>
         </a>
       </div>
@@ -529,9 +525,128 @@
     </div>
   </footer>
 
-  <script src="js/main.js" defer></script>
+  <!-- Mapa de yacimientos JS -->
+  <script>
+  (function () {
+    const YACIMIENTOS = [
+      { id:'OV-001', nombre:'Cráneo con trepanación curada',        lugar:'Cueva de los Murciélagos, Granada',       lat:36.73, lon:-3.03,  epoca:'prehistoria', ficha:'/prueba-museo/ficha-maestra.html?id=OV-001',  master:true  },
+      { id:'OV-002', nombre:'Fémur con fractura consolidada',        lugar:'Necrópolis de San Nicolás, Murcia',       lat:37.98, lon:-1.13,  epoca:'medieval',    ficha:'/prueba-museo/ficha-estandar.html?id=OV-002', master:false },
+      { id:'OV-003', nombre:'Cribra orbitalia bilateral',            lugar:'Isturgi, Andújar, Jaén',                  lat:38.05, lon:-4.05,  epoca:'romano',      ficha:'/prueba-museo/ficha-estandar.html?id=OV-003', master:false },
+      { id:'OV-004', nombre:'Vértebra con espondilitis tuberculosa', lugar:'Monasterio de Suso, La Rioja',            lat:42.32, lon:-2.87,  epoca:'medieval',    ficha:'/prueba-museo/ficha-maestra.html?id=OV-004',  master:true  },
+      { id:'OV-005', nombre:'Pelvis con sacralización de L5',        lugar:'Cementerio de Poblet, Tarragona',         lat:41.37, lon:1.07,   epoca:'moderno',     ficha:'/prueba-museo/ficha-estandar.html?id=OV-005', master:false },
+      { id:'OV-006', nombre:'Húmero con entesopatía severa',         lugar:'Barcino, Barcelona',                      lat:41.38, lon:2.17,   epoca:'romano',      ficha:'/prueba-museo/ficha-estandar.html?id=OV-006', master:false },
+      { id:'OV-007', nombre:'Costillas con lesiones periósticas',    lugar:'La Olmeda, Palencia',                     lat:42.17, lon:-4.62,  epoca:'medieval',    ficha:'/prueba-museo/ficha-estandar.html?id=OV-007', master:false },
+      { id:'OV-008', nombre:'Rótula con osteoartritis avanzada',     lugar:'San Millán de la Cogolla, La Rioja',      lat:42.30, lon:-2.88,  epoca:'moderno',     ficha:'/prueba-museo/ficha-estandar.html?id=OV-008', master:false },
+      { id:'OV-009', nombre:'Mandíbula con absceso alveolar',        lugar:'Los Millares, Almería',                   lat:37.06, lon:-2.68,  epoca:'prehistoria', ficha:'/prueba-museo/ficha-estandar.html?id=OV-009', master:false },
+      { id:'OV-010', nombre:'Radio con fractura de Colles',          lugar:'Cementerio de San Isidro, Madrid',        lat:40.40, lon:-3.71,  epoca:'moderno',     ficha:'/prueba-museo/ficha-estandar.html?id=OV-010', master:false },
+      { id:'OV-011', nombre:'Columna lumbar con escoliosis',         lugar:'Necrópolis de Recópolis, Guadalajara',    lat:40.53, lon:-2.78,  epoca:'medieval',    ficha:'/prueba-museo/ficha-estandar.html?id=OV-011', master:false },
+      { id:'OV-012', nombre:'Húmero con osteomielitis hematógena',   lugar:'Caesaraugusta, Zaragoza',                 lat:41.65, lon:-0.88,  epoca:'romano',      ficha:'/prueba-museo/ficha-maestra.html?id=OV-012',  master:true  },
+      { id:'OV-013', nombre:'Escápula con nódulos de Schmörl',       lugar:'El Argar, Antas, Almería',                lat:37.32, lon:-1.87,  epoca:'prehistoria', ficha:'/prueba-museo/ficha-estandar.html?id=OV-013', master:false },
+      { id:'OV-014', nombre:'Tibia con raquitismo',                  lugar:'Toledo, casco histórico',                 lat:39.86, lon:-4.02,  epoca:'medieval',    ficha:'/prueba-museo/ficha-estandar.html?id=OV-014', master:false },
+      { id:'OV-015', nombre:'Pelvis con artritis séptica',           lugar:'Emerita Augusta, Mérida',                 lat:38.91, lon:-6.34,  epoca:'romano',      ficha:'/prueba-museo/ficha-maestra.html?id=OV-015',  master:true  },
+      { id:'OV-016', nombre:'Cráneo con trauma contuso perimortem',  lugar:'Batalla de Nájera, La Rioja',             lat:42.42, lon:-2.73,  epoca:'medieval',    ficha:'/prueba-museo/ficha-maestra.html?id=OV-016',  master:true  },
+      { id:'H001',   nombre:'Ötzi, el Hombre de Hielo',             lugar:'Alpes de Ötzal, Tirol del Sur (Italia)',  lat:46.78, lon:10.85,  epoca:'prehistoria', ficha:'/prueba-museo/ficha-estandar.html?id=H001',   master:false, fuera:true, fueraSvg:{x:645,y:75}  },
+      { id:'H002',   nombre:'Ricardo III de Inglaterra',            lugar:'Grey Friars, Leicester, Inglaterra',      lat:52.63, lon:-1.13,  epoca:'medieval',    ficha:'/prueba-museo/ficha-estandar.html?id=H002',   master:false, fuera:true, fueraSvg:{x:310,y:22}  },
+    ];
 
-  <script src="/prueba-museo/js/loader.js"></script>
-  
+    const EPOCH_COLOR = { prehistoria:'#c8793a', romano:'#c0003c', medieval:'#2979ff', moderno:'#00a060' };
+
+    function toSVG(lat, lon) {
+      return {
+        x: Math.round((lon - (-9.5)) / 13  * 500 + 90),
+        y: Math.round((43.8 - lat)  /  8   * 380 + 60)
+      };
+    }
+
+    const dotsLayer = document.getElementById('yac-dots-layer');
+    const listEl    = document.getElementById('yac-list');
+    const tooltip   = document.getElementById('yac-tooltip');
+    const tipId     = document.getElementById('yac-tip-id');
+    const tipName   = document.getElementById('yac-tip-name');
+    const tipPlace  = document.getElementById('yac-tip-place');
+    const mapWrap   = document.querySelector('.yac-map-wrap');
+
+    if (!dotsLayer || !listEl) return;
+
+    let activeId = null;
+
+    YACIMIENTOS.forEach(y => {
+      const color = EPOCH_COLOR[y.epoca] || '#b08d55';
+      const pos   = y.fuera ? y.fueraSvg : toSVG(y.lat, y.lon);
+
+      /* SVG dot */
+      const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      g.setAttribute('class', 'yac-dot');
+      g.setAttribute('data-id', y.id);
+      g.setAttribute('transform', `translate(${pos.x},${pos.y})`);
+      g.setAttribute('role', 'button');
+      g.setAttribute('tabindex', '0');
+      g.setAttribute('aria-label', `${y.id}: ${y.nombre}`);
+
+      const r = y.master ? 6.5 : 5;
+      g.innerHTML = `
+        <circle class="yac-dot__pulse" cx="0" cy="0" r="7" fill="${color}"/>
+        <circle class="yac-dot__circle" cx="0" cy="0" r="${r}" fill="${color}" stroke-width="${y.master ? 2.5 : 1.5}"/>
+        ${y.master ? '<circle cx="0" cy="0" r="2" fill="#fff"/>' : ''}
+        ${y.fuera  ? `<text x="0" y="16" text-anchor="middle" font-family="Montserrat,sans-serif" font-size="6" font-weight="700" fill="${color}">${y.id}</text>` : ''}`;
+      dotsLayer.appendChild(g);
+
+      /* Lista item */
+      const item = document.createElement('a');
+      item.href = y.ficha || '#';
+      item.className = 'yac-item';
+      item.dataset.id = y.id;
+      item.setAttribute('aria-label', y.nombre);
+      item.innerHTML = `
+        <div class="yac-item__dot" style="background:${color}"></div>
+        <div>
+          <p class="yac-item__id" style="color:${color}">${y.id}${y.fuera ? ' 🌍' : ''}</p>
+          <p class="yac-item__name">${y.nombre}</p>
+          <p class="yac-item__place">${y.lugar}</p>
+          <span class="yac-item__tag" style="color:${color};border-color:${color}">${y.epoca}</span>
+          ${y.master ? '<span class="yac-item__tag" style="color:#d4e60a;border-color:#d4e60a;margin-left:.3rem">★ maestra</span>' : ''}
+        </div>`;
+      listEl.appendChild(item);
+
+      function activate() {
+        if (activeId) {
+          document.querySelector(`.yac-dot[data-id="${activeId}"]`)?.classList.remove('is-active');
+          document.querySelector(`.yac-item[data-id="${activeId}"]`)?.classList.remove('is-active');
+        }
+        activeId = y.id;
+        g.classList.add('is-active');
+        item.classList.add('is-active');
+        item.scrollIntoView({ behavior:'smooth', block:'nearest' });
+      }
+
+      function showTip() {
+        tipId.textContent    = y.id;
+        tipName.textContent  = y.nombre;
+        tipPlace.textContent = y.lugar;
+        tooltip.classList.add('is-visible');
+        const wr = mapWrap.getBoundingClientRect();
+        const sv = document.getElementById('yac-map-svg').getBoundingClientRect();
+        const sx = sv.width / 700, sy = sv.height / 560;
+        let tx = pos.x * sx + (sv.left - wr.left) + 12;
+        let ty = pos.y * sy + (sv.top  - wr.top)  - 10;
+        if (tx + 230 > wr.width) tx -= 240;
+        if (ty < 0) ty = 8;
+        tooltip.style.left = tx + 'px';
+        tooltip.style.top  = ty + 'px';
+      }
+
+      g.addEventListener('mouseenter', () => { activate(); showTip(); });
+      g.addEventListener('mouseleave', () => tooltip.classList.remove('is-visible'));
+      g.addEventListener('click', e => { e.preventDefault(); activate(); window.location.href = y.ficha; });
+      g.addEventListener('keydown', e => { if (e.key === 'Enter') window.location.href = y.ficha; });
+      item.addEventListener('mouseenter', activate);
+    });
+
+    const statEl = document.getElementById('yac-stat-total');
+    if (statEl) statEl.textContent = YACIMIENTOS.length;
+  })();
+  </script>
+
+  <script src="js/main.js" defer></script>
 </body>
 </html>

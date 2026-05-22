@@ -147,13 +147,15 @@ const PIEZAS = [
     region:'miembro-inferior', patologia:'trauma', sexo:'femenino', epoca:'medieval',
     yacimiento:'Necrópolis de San Nicolás, Murcia',
     descripcion:'Fractura diafisaria del fémur derecho con callo óseo exuberante y acortamiento de 2,3 cm. Posible deformidad funcional residual.',
-    imagen:null, ficha:'/prueba-museo/ficha-estandar.html?id=OV-002' },
+    imagen:null, ficha:'/prueba-museo/ficha-estandar.html?id=OV-002',
+    modelo3d:'/prueba-museo/assets/models/craneo-def.glb' },
 
   { id:'OV-003', nombre:'Cribra orbitalia bilateral',
     region:'craneo', patologia:'metabolica', sexo:'indeterminado', epoca:'romano',
     yacimiento:'Isturgi, Jaén',
     descripcion:'Hiperostosis porótica en techo de ambas órbitas. Grado III según criterios de Steckel. Indicador de anemia ferropénica en edad infantil.',
-    imagen:null, ficha:'/prueba-museo/ficha-estandar.html?id=OV-003' },
+    imagen:null, ficha:'/prueba-museo/ficha-estandar.html?id=OV-003' 
+    modelo3d:'/prueba-museo/assets/models/al-03-1897.glb' },
 
   { id:'OV-004', nombre:'Vértebra con espondilitis tuberculosa',
     region:'columna', patologia:'infecciosa', sexo:'masculino', epoca:'medieval',
