@@ -1097,8 +1097,7 @@
           .getPropertyValue(colorVar.replace('--','--')).trim() || '#00e5ff';
 
         const card = document.createElement('a');
-        card.href = pieza.ficha || `ficha-maestra.html?id=${pieza.id}`;
-        card.className = `col-master-card col-master-card${colorVar}`;
+        card.href = pieza.ficha || `ficha-estandar.html?id=${pieza.id}`;         card.className = `col-master-card col-master-card${colorVar}`;
         card.setAttribute('aria-label', `Ficha maestra: ${pieza.nombre}`);
 
         card.innerHTML = `
