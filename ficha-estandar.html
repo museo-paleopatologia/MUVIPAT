@@ -854,13 +854,13 @@
       if (!overlay) return;
       overlay.classList.remove('is-open');
       if (chkDont && chkDont.checked) {
-        localStorage.setItem(STORAGE_KEY, '1');
+        sessionStorage.setItem(STORAGE_KEY, '1');
       }
     }
 
     window.openTutorial = openTutorial;
 
-    if (!localStorage.getItem(STORAGE_KEY)) {
+    if (!sessionStorage.getItem(STORAGE_KEY)) {
       setTimeout(openTutorial, 600);
     }
 
