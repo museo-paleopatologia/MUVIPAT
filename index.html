@@ -8,19 +8,89 @@
   <meta name="description" content="Museo Virtual de Paleopatología — Explora, aprende y descubre las enfermedades del pasado a través de colecciones osteológicas interactivas." />
   <title>PaleoMuseo · Museo Virtual de Paleopatología</title>
 
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lexend:wght@300;400;500;600;700;800&family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
 
-  <!-- GSAP CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 
-  <!-- Global Styles -->
   <link rel="stylesheet" href="/prueba-museo/css/style.css" />
 
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+
+  <style>
+    /* ══════════════════════════════════════════
+       SECCIÓN INVESTIGADORES
+    ══════════════════════════════════════════ */
+    .research-cta {
+      background: var(--dark);
+      border-top: var(--border-thick);
+      border-bottom: var(--border-thick);
+      padding-block: clamp(3rem, 6vw, 5rem);
+      position: relative;
+      overflow: hidden;
+    }
+    /* Grid decorativo de fondo */
+    .research-cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,229,255,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,229,255,.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+    }
+    .research-cta__inner {
+      position: relative;
+      z-index: 1;
+      width: min(1400px, 96vw);
+      margin-inline: auto;
+      padding-inline: clamp(1rem, 3vw, 2rem);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: clamp(2rem, 5vw, 5rem);
+      align-items: center;
+    }
+    .research-cta__eyebrow {
+      font-family: var(--font-head);
+      font-size: .65rem; font-weight: 700;
+      letter-spacing: .22em; text-transform: uppercase;
+      color: var(--cyan);
+      display: flex; align-items: center; gap: .5rem;
+      margin-bottom: .9rem;
+    }
+    .research-cta__eyebrow::before {
+      content: ''; display: block;
+      width: 22px; height: 2px; background: var(--cyan);
+    }
+    .research-cta__title {
+      font-family: var(--font-head);
+      font-size: clamp(1.5rem, 3vw, 2.4rem);
+      font-weight: 900; letter-spacing: -.04em;
+      line-height: 1.05; color: var(--ivory);
+      margin-bottom: 1rem;
+    }
+    .research-cta__title em {
+      font-family: var(--font-display);
+      font-style: italic; color: var(--cyan);
+    }
+    .research-cta__desc {
+      font-size: clamp(.85rem, 1.4vw, .98rem);
+      line-height: 1.75; color: var(--bone-400);
+      font-weight: 300; max-width: 58ch;
+    }
+    .research-cta__desc strong { color: var(--ivory); font-weight: 600; }
+    .research-cta__action { flex-shrink: 0; }
+
+    @media (max-width: 700px) {
+      .research-cta__inner {
+        grid-template-columns: 1fr;
+        gap: 1.75rem;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -63,7 +133,6 @@
       </nav>
     </div>
 
-    <!-- Mobile Drawer -->
     <div class="nav__mobile" id="nav-mobile" role="dialog" aria-label="Menú móvil">
       <ul role="list" style="display:flex;flex-direction:column;align-items:center;gap:2rem;text-align:center;">
         <li><a href="exploracion.html" class="nav__link" style="font-size:1.6rem">Exploración</a></li>
@@ -89,7 +158,6 @@
     <div class="container">
       <div class="hero__content">
 
-        <!-- Text side -->
         <div class="hero__text">
           <p class="hero__eyebrow" data-reveal>Trabajo de Fin de Grado · Biología</p>
 
@@ -133,11 +201,9 @@
           </div>
         </div>
 
-        <!-- 3D Viewer side -->
         <div class="hero__viewer" data-reveal data-reveal-delay="2">
           <div class="hero__viewer-frame">
             <div class="hero__scan-line" aria-hidden="true"></div>
-
             <model-viewer
               src="/prueba-museo/assets/models/esqueleto_hero.glb"
               alt="Modelo 3D de esqueleto humano"
@@ -153,7 +219,6 @@
               class="hero__model-viewer"
               aria-label="Esqueleto humano 3D">
             </model-viewer>
-
           </div>
         </div>
       </div>
@@ -167,7 +232,7 @@
 
 
   <!-- ====================================================
-       MAIN MODULES — 3 navigation cards
+       MAIN MODULES
   ===================================================== -->
   <section class="modules section" id="modulos" aria-labelledby="modules-title">
     <div class="container">
@@ -187,11 +252,10 @@
 
       <div class="modules__grid">
 
-        <!-- 01 Exploración Anatómica -->
         <a href="exploracion.html?vista=anatomica"
            class="module-card module-card--anatomia"
            data-reveal data-reveal-delay="1"
-           aria-label="Exploración Anatómica — esqueleto interactivo">
+           aria-label="Exploración Anatómica">
           <div class="module-card__strip" aria-hidden="true"></div>
           <div class="module-card__inner">
             <span class="module-card__number">01</span>
@@ -216,19 +280,15 @@
               <p class="module-card__tag">Vista A · Esqueleto interactivo</p>
               <h3 class="module-card__title">Exploración<br>Anatómica</h3>
               <p class="module-card__desc">Navega por el esqueleto humano de forma interactiva. Selecciona huesos, visualiza regiones y filtra por periodo, sexo o edad biológica.</p>
-              <span class="module-card__arrow">
-                Explorar anatomía
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
-              </span>
+              <span class="module-card__arrow">Explorar anatomía <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg></span>
             </div>
           </div>
         </a>
 
-        <!-- 02 Exploración Patológica -->
         <a href="exploracion.html?vista=patologica"
            class="module-card module-card--patologia"
            data-reveal data-reveal-delay="2"
-           aria-label="Exploración Patológica — grid de patologías">
+           aria-label="Exploración Patológica">
           <div class="module-card__strip" aria-hidden="true"></div>
           <div class="module-card__inner">
             <span class="module-card__number">02</span>
@@ -237,7 +297,6 @@
                 <ellipse cx="30" cy="24" rx="9" ry="11" fill="none" stroke="#fdf8f0" stroke-width="2.5"/>
                 <rect x="22" y="35" width="16" height="26" rx="2" fill="none" stroke="#fdf8f0" stroke-width="2.5"/>
                 <ellipse cx="30" cy="72" rx="9" ry="11" fill="none" stroke="#fdf8f0" stroke-width="2.5"/>
-                <!-- Pathology markers -->
                 <circle cx="62" cy="28" r="5" fill="#d4e60a"/>
                 <circle cx="74" cy="50" r="7" fill="#d4e60a" opacity="0.75"/>
                 <circle cx="60" cy="70" r="5.5" fill="#d4e60a" opacity="0.6"/>
@@ -250,33 +309,26 @@
               <p class="module-card__tag">Vista B · Grid visual</p>
               <h3 class="module-card__title">Exploración<br>Patológica</h3>
               <p class="module-card__desc">Descubre las enfermedades más frecuentes del registro óseo. Filtra por tipo de patología, hueso afectado o cronología histórica.</p>
-              <span class="module-card__arrow">
-                Explorar patologías
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
-              </span>
+              <span class="module-card__arrow">Explorar patologías <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg></span>
             </div>
           </div>
         </a>
 
-        <!-- 03 Colección -->
         <a href="coleccion.html"
            class="module-card module-card--coleccion"
            data-reveal data-reveal-delay="3"
-           aria-label="Colección completa de piezas">
+           aria-label="Colección completa">
           <div class="module-card__strip" aria-hidden="true"></div>
           <div class="module-card__inner">
             <span class="module-card__number">03</span>
             <div class="module-card__icon-wrap" aria-hidden="true">
               <svg class="module-card__icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <!-- Shelves -->
                 <rect x="10" y="76" width="80" height="5" rx="1" fill="#1a1a1a"/>
                 <rect x="10" y="46" width="80" height="5" rx="1" fill="#1a1a1a"/>
                 <rect x="10" y="16" width="80" height="5" rx="1" fill="#1a1a1a"/>
-                <!-- Items shelf 3 -->
                 <ellipse cx="27" cy="71" rx="6" ry="5" fill="#1a1a1a" opacity="0.45"/>
                 <rect x="43" y="55" width="10" height="21" rx="1" fill="#1a1a1a" opacity="0.45"/>
                 <ellipse cx="69" cy="68" rx="5" ry="8" fill="#1a1a1a" opacity="0.45"/>
-                <!-- Items shelf 2 -->
                 <rect x="18" y="28" width="13" height="18" rx="1" fill="#1a1a1a" opacity="0.45"/>
                 <ellipse cx="54" cy="36" rx="5.5" ry="10" fill="#1a1a1a" opacity="0.45"/>
                 <rect x="67" y="26" width="14" height="20" rx="1" fill="#1a1a1a" opacity="0.45"/>
@@ -286,10 +338,7 @@
               <p class="module-card__tag">Buscador · Fichas completas</p>
               <h3 class="module-card__title">Colección<br>Completa</h3>
               <p class="module-card__desc">Accede al catálogo íntegro de piezas. Busca, filtra y compara especímenes con fichas estándar e inmersivas con scrollytelling.</p>
-              <span class="module-card__arrow">
-                Ver colección
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
-              </span>
+              <span class="module-card__arrow">Ver colección <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg></span>
             </div>
           </div>
         </a>
@@ -300,7 +349,7 @@
 
 
   <!-- ====================================================
-       SECONDARY MODULES — Aula + Actualidad
+       SECONDARY MODULES
   ===================================================== -->
   <div class="secondary-modules" aria-label="Módulos secundarios">
     <div style="width:100%">
@@ -340,7 +389,7 @@
 
 
   <!-- ====================================================
-       ABOUT / PROJECT OVERVIEW
+       ABOUT / PROJECT
   ===================================================== -->
   <section class="about section" id="proyecto" aria-labelledby="about-title">
     <div class="container">
@@ -357,14 +406,15 @@
             físicos y académicos.
           </p>
           <p class="about__lead" data-reveal data-reveal-delay="2">
-            Esta disciplina sufre muchas limitaciones por acceso y, para ello, creamos esta página web 
-            pública en la que usuario de todos los perfiles puedne enriquecerse de aprender paleopatología
+            Esta disciplina sufre muchas limitaciones por acceso, y para ello creamos esta página web 
+            pública en la que usuarios de todos los perfiles pueden enriquecerse aprendiendo paleopatología
             y disciplinas asociadas.
           </p>
           <p class="about__lead" data-reveal data-reveal-delay="3" style="font-size:0.9rem;margin-bottom:0">
             Combinando el uso de <strong>modelos 3D</strong> de piezas de la colección de la UAM con piezas históricamente
             reconocidas por la antropología pretendemos acercar una ciencia esencial para la comprensión de 
             nuestra evolución.
+          </p>
           <p class="about__lead" data-reveal data-reveal-delay="3" style="font-size:0.9rem;margin-bottom:0">
             No solo aspiramos a recopilar y publicar esta colección privada, sino que queremos formar parte de
             todos los cambios actuales que están sucediendo en el aprendizaje.
@@ -387,7 +437,7 @@
               <span class="about__obj-num">02</span>
               <div class="about__obj-text">
                 <strong>Desarrollo de la plataforma web</strong>
-                <p>Diseñar una plataforma web interactiva que permita la navegación por la colección mediante criterior anatómicos, patológicos y cronológicos entre otros.</p>
+                <p>Diseñar una plataforma web interactiva que permita la navegación por la colección mediante criterios anatómicos, patológicos y cronológicos entre otros.</p>
               </div>
             </div>
 
@@ -411,7 +461,7 @@
               <span class="about__obj-num">05</span>
               <div class="about__obj-text">
                 <strong>Accesibilidad del patrimonio científico</strong>
-                <p>Reducir las limitaciones de todo tipo usuales en colecciones especializadas de esta ciencia gracias a este entono digital.</p>
+                <p>Reducir las limitaciones de todo tipo usuales en colecciones especializadas de esta ciencia gracias a este entorno digital.</p>
               </div>
             </div>
 
@@ -423,7 +473,35 @@
   </section>
 
 
-<!-- ====================================================
+  <!-- ====================================================
+       SECCIÓN INVESTIGADORES ← NUEVO
+  ===================================================== -->
+  <section class="research-cta" aria-label="Acceso para investigadores">
+    <div class="research-cta__inner">
+      <div>
+        <p class="research-cta__eyebrow">LAV · UAM</p>
+        <h2 class="research-cta__title">
+          ¿Eres <em>investigador/a</em>?
+        </h2>
+        <p class="research-cta__desc">
+          Las colecciones digitales del Laboratorio de Antropología Virtual están disponibles para
+          proyectos de <strong>investigación académica y científica</strong>. Presenta tu solicitud
+          al Comité Evaluador del LAV-UAM y accede a los datos bajo el protocolo oficial de préstamo.
+        </p>
+      </div>
+      <div class="research-cta__action">
+        <a href="/prueba-museo/contacto.html" class="btn btn--cyan">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+          </svg>
+          <span>Solicitar acceso</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ====================================================
        FOOTER
   ===================================================== -->
   <footer class="site-footer" role="contentinfo">
@@ -438,18 +516,17 @@
           <span style="opacity:0.5">Museo Virtual de Paleopatología · 2025–2026</span>
         </p>
         <nav class="footer__links" aria-label="Navegación del pie de página">
-          <a href="exploracion.html" class="footer__link">Exploración</a>
-          <a href="coleccion.html"   class="footer__link">Colección</a>
-          <a href="aula.html"        class="footer__link">Aula</a>
-          <a href="actualidad.html"  class="footer__link">Actualidad</a>
-          <a href="#proyecto"        class="footer__link">Proyecto</a>
+          <a href="exploracion.html"  class="footer__link">Exploración</a>
+          <a href="coleccion.html"    class="footer__link">Colección</a>
+          <a href="aula.html"         class="footer__link">Aula</a>
+          <a href="actualidad.html"   class="footer__link">Actualidad</a>
+          <a href="#proyecto"         class="footer__link">Proyecto</a>
+          <a href="/prueba-museo/contacto.html" class="footer__link">Acceso investigadores</a>
         </nav>
       </div>
     </div>
   </footer>
 
-  
-  <!-- Main JS -->
   <script src="js/main.js" defer></script>
 </body>
 </html>

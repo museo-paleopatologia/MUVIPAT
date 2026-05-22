@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="/prueba-museo/assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="/prueba-museo/assets/img/favicon.png">
+  <meta name="description" content="Solicitud de acceso a las colecciones digitales del Laboratorio de Antropología Virtual · UAM" />
+  <title>Solicitud de Acceso · LAV·UAM</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lexend:wght@300;400;500;600;700;800&family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/prueba-museo/css/style.css" />
+
+  <style>
+    :root {
+      --ct-bg:     #f4f1ea;
+      --ct-ink:    #0d0d0d;
+      --ct-mid:    #6b5a43;
+      --ct-bone:   #e8dfc8;
+      --ct-border: 3px solid #0d0d0d;
+      --ct-shadow: 5px 5px 0 #0d0d0d;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    body { background: var(--ct-bg); }
+
+    /* ── Layout ── */
+    .ct-main {
+      width: min(1140px, 96vw);
+      margin-inline: auto;
+      padding-inline: clamp(1rem, 3vw, 2rem);
+      padding-top: calc(clamp(56px, 7vw, 70px) + clamp(2rem, 4vw, 3.5rem));
+      padding-bottom: clamp(3rem, 6vw, 6rem);
+      display: grid;
+      grid-template-columns: 1fr 1.65fr;
+      gap: clamp(2rem, 5vw, 5rem);
+      align-items: start;
+    }
+
+    /* ══════════════════════════════
+       COLUMNA IZQUIERDA
+    ══════════════════════════════ */
+    .ct-eyebrow {
+      font-family: var(--font-head);
+      font-size: .65rem; font-weight: 700;
+      letter-spacing: .2em; text-transform: uppercase;
+      color: var(--crimson);
+      display: flex; align-items: center; gap: .5rem;
+      margin-bottom: 1rem;
+    }
+    .ct-eyebrow::before {
+      content: ''; display: block;
+      width: 24px; height: 2.5px; background: var(--crimson);
+    }
+    .ct-title {
+      font-family: var(--font-head);
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 900; letter-spacing: -.04em;
+      line-height: 1.05; color: var(--ct-ink);
+      margin-bottom: 1.25rem;
+    }
+    .ct-title em {
+      font-family: var(--font-display);
+      font-style: italic; font-weight: 700;
+      color: var(--crimson);
+    }
+    .ct-lead {
+      font-size: clamp(.85rem, 1.3vw, .95rem);
+      line-height: 1.75; color: var(--ct-mid);
+      font-weight: 300; margin-bottom: 2rem;
+    }
+
+    /* Pasos del proceso */
+    .ct-process { display: flex; flex-direction: column; gap: 0; margin-bottom: 2rem; }
+    .ct-process-step {
+      display: flex; gap: 1rem;
+      padding-bottom: 1.25rem;
+      position: relative;
+    }
+    .ct-process-step:not(:last-child)::before {
+      content: '';
+      position: absolute;
+      left: 15px; top: 32px; bottom: 0;
+      width: 2px; background: var(--ct-bone);
+    }
+    .ct-process-step__num {
+      width: 32px; height: 32px; flex-shrink: 0;
+      background: var(--ct-ink); color: var(--ivory);
+      border-radius: 2px; border: 2px solid var(--ct-ink);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-head); font-size: .65rem;
+      font-weight: 900; letter-spacing: .04em;
+      position: relative; z-index: 1;
+    }
+    .ct-process-step__title {
+      font-family: var(--font-head); font-size: .75rem;
+      font-weight: 800; letter-spacing: .02em;
+      color: var(--ct-ink); margin-bottom: .25rem;
+    }
+    .ct-process-step__text {
+      font-size: .78rem; color: var(--ct-mid);
+      line-height: 1.55; font-weight: 300;
+    }
+
+    /* Info cards */
+    .ct-info-cards { display: flex; flex-direction: column; gap: .65rem; }
+    .ct-info-card {
+      display: flex; align-items: flex-start; gap: .85rem;
+      padding: .85rem 1rem;
+      background: #fff; border: var(--ct-border);
+      border-radius: 2px; box-shadow: 3px 3px 0 var(--ct-ink);
+    }
+    .ct-info-card__icon { font-size: 1.1rem; flex-shrink: 0; margin-top: .1rem; }
+    .ct-info-card__title {
+      font-family: var(--font-head); font-size: .65rem;
+      font-weight: 800; letter-spacing: .06em;
+      color: var(--ct-ink); margin-bottom: .2rem;
+    }
+    .ct-info-card__text {
+      font-size: .76rem; color: var(--ct-mid);
+      line-height: 1.55; font-weight: 300;
+    }
+
+    /* ══════════════════════════════
+       FORMULARIO
+    ══════════════════════════════ */
+    .ct-form-wrap {
+      background: #fff;
+      border: var(--ct-border); border-radius: 4px;
+      box-shadow: var(--ct-shadow);
+      overflow: hidden;
+    }
+    .ct-form-header {
+      background: var(--ct-ink);
+      padding: 1.2rem 1.5rem;
+      display: flex; align-items: center; gap: .75rem;
+    }
+    .ct-form-header__dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--cyan); flex-shrink: 0;
+      box-shadow: 0 0 8px rgba(0,229,255,.6);
+    }
+    .ct-form-header__title {
+      font-family: var(--font-head); font-size: .72rem;
+      font-weight: 800; letter-spacing: .15em; text-transform: uppercase;
+      color: var(--ivory);
+    }
+    .ct-form-header__lang {
+      margin-left: auto;
+      font-family: var(--font-head); font-size: .58rem;
+      font-weight: 600; letter-spacing: .1em;
+      color: rgba(249,244,232,.35);
+    }
+
+    .ct-form {
+      padding: 1.75rem 1.5rem 1.5rem;
+      display: flex; flex-direction: column; gap: 1.1rem;
+    }
+
+    .ct-field { display: flex; flex-direction: column; gap: .4rem; }
+    .ct-field--row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    .ct-label {
+      font-family: var(--font-head); font-size: .58rem;
+      font-weight: 800; letter-spacing: .15em; text-transform: uppercase;
+      color: var(--ct-mid);
+      display: flex; align-items: baseline; gap: .4rem;
+    }
+    .ct-label__sub {
+      font-weight: 400; font-style: italic; font-size: .55rem;
+      letter-spacing: .04em; text-transform: none;
+      color: #a08060;
+    }
+    .ct-label__req { color: var(--crimson); }
+
+    .ct-input, .ct-select, .ct-textarea {
+      font-family: var(--font-ui); font-size: .85rem;
+      font-weight: 400; color: var(--ct-ink);
+      background: var(--ct-bg);
+      border: 2px solid var(--ct-bone); border-radius: 2px;
+      padding: .65rem .85rem;
+      transition: border-color .15s, box-shadow .15s;
+      outline: none; width: 100%;
+    }
+    .ct-input::placeholder, .ct-textarea::placeholder { color: #b08d55; opacity: .6; }
+    .ct-input:focus, .ct-select:focus, .ct-textarea:focus {
+      border-color: var(--ct-ink);
+      box-shadow: 3px 3px 0 var(--ct-ink);
+    }
+    .ct-input.error, .ct-select.error, .ct-textarea.error {
+      border-color: var(--crimson);
+      box-shadow: 3px 3px 0 var(--crimson);
+    }
+    .ct-select {
+      appearance: none; -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b5a43' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right .85rem center;
+      padding-right: 2.2rem; cursor: pointer;
+    }
+    .ct-textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
+
+    .ct-field__hint {
+      font-size: .63rem; color: var(--ct-mid);
+      font-family: var(--font-ui); font-weight: 300;
+      font-style: italic;
+    }
+    .ct-field__error {
+      font-size: .62rem; color: var(--crimson);
+      font-family: var(--font-head); font-weight: 700;
+      letter-spacing: .04em; display: none;
+    }
+    .ct-field__error.visible { display: block; }
+
+    .ct-sep { border: none; border-top: 1.5px solid var(--ct-bone); margin: .15rem 0; }
+
+    /* Sección con título interno */
+    .ct-section-title {
+      font-family: var(--font-head); font-size: .58rem;
+      font-weight: 800; letter-spacing: .2em; text-transform: uppercase;
+      color: var(--ct-mid); padding-bottom: .5rem;
+      border-bottom: 1.5px solid var(--ct-bone);
+      display: flex; align-items: center; gap: .5rem;
+    }
+    .ct-section-title::before {
+      content: ''; display: block;
+      width: 14px; height: 2px; background: var(--crimson); flex-shrink: 0;
+    }
+
+    /* Checkbox */
+    .ct-check-label {
+      display: flex; align-items: flex-start; gap: .65rem;
+      cursor: pointer; user-select: none;
+    }
+    .ct-check-label input[type="checkbox"] {
+      appearance: none; -webkit-appearance: none;
+      width: 16px; height: 16px; flex-shrink: 0;
+      border: 2px solid var(--ct-bone); border-radius: 2px;
+      background: transparent; cursor: pointer;
+      transition: all .15s; position: relative; margin-top: .1rem;
+    }
+    .ct-check-label input:checked {
+      background: var(--ct-ink); border-color: var(--ct-ink);
+    }
+    .ct-check-label input:checked::after {
+      content: '✓'; position: absolute;
+      top: 50%; left: 50%; transform: translate(-50%,-50%);
+      font-size: 10px; color: var(--ivory); font-weight: 900;
+    }
+    .ct-check-label input.error { border-color: var(--crimson); }
+    .ct-check-text {
+      font-size: .73rem; color: var(--ct-mid);
+      line-height: 1.55; font-weight: 300;
+    }
+    .ct-check-text strong { color: var(--ct-ink); font-weight: 700; }
+    .ct-check-text a { color: var(--ct-ink); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+
+    /* Botón */
+    .ct-submit {
+      display: inline-flex; align-items: center; gap: .5rem;
+      font-family: var(--font-head); font-size: .78rem;
+      font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+      padding: .85rem 1.75rem;
+      background: var(--ct-ink); color: var(--ivory);
+      border: var(--ct-border); border-radius: 2px; cursor: pointer;
+      box-shadow: 5px 5px 0 var(--ct-ink);
+      transition: transform .15s cubic-bezier(.34,1.56,.64,1), box-shadow .15s;
+      position: relative; overflow: hidden;
+      align-self: flex-start;
+    }
+    .ct-submit::before {
+      content: ''; position: absolute; inset: 0;
+      background: var(--crimson);
+      transform: translateX(-105%);
+      transition: transform .3s cubic-bezier(.77,0,.18,1); z-index: 0;
+    }
+    .ct-submit:hover::before { transform: translateX(0); }
+    .ct-submit:hover { transform: translate(-3px,-3px); box-shadow: 8px 8px 0 var(--ct-ink); }
+    .ct-submit:active { transform: translate(1px,1px); box-shadow: 2px 2px 0 var(--ct-ink); }
+    .ct-submit > * { position: relative; z-index: 1; }
+    .ct-submit:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+    .ct-submit__spinner {
+      width: 14px; height: 14px;
+      border: 2px solid rgba(249,244,232,.3);
+      border-top-color: var(--ivory); border-radius: 50%;
+      animation: spin .7s linear infinite; display: none;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .ct-submit.loading .ct-submit__spinner { display: block; }
+    .ct-submit.loading .ct-submit__text { opacity: .6; }
+
+    /* Éxito */
+    .ct-success {
+      display: none; flex-direction: column;
+      align-items: center; text-align: center;
+      gap: 1rem; padding: 3.5rem 2rem;
+    }
+    .ct-success.visible { display: flex; }
+    .ct-success__icon {
+      width: 56px; height: 56px;
+      background: var(--ct-ink); border: var(--ct-border);
+      border-radius: 2px; box-shadow: 4px 4px 0 var(--ct-ink);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--cyan); font-size: 1.5rem;
+    }
+    .ct-success__title {
+      font-family: var(--font-head); font-size: 1.2rem;
+      font-weight: 900; letter-spacing: -.03em; color: var(--ct-ink);
+    }
+    .ct-success__text {
+      font-size: .85rem; color: var(--ct-mid);
+      line-height: 1.65; font-weight: 300; max-width: 40ch;
+    }
+    .ct-success__back {
+      font-family: var(--font-head); font-size: .7rem;
+      font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--ct-mid); text-decoration: none;
+      display: flex; align-items: center; gap: .4rem; transition: color .2s;
+    }
+    .ct-success__back:hover { color: var(--ct-ink); }
+
+    /* Responsive */
+    @media (max-width: 860px) {
+      .ct-main { grid-template-columns: 1fr; gap: 2rem; }
+      .ct-field--row { grid-template-columns: 1fr; gap: 1rem; }
+    }
+    @media (max-width: 500px) {
+      .ct-form { padding: 1.25rem 1rem; }
+      .ct-form-header { padding: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header" id="site-header">
+  <div class="container">
+    <nav class="nav" role="navigation" aria-label="Navegación principal">
+      <a href="/prueba-museo/index.html" class="nav__logo" aria-label="PaleoMuseo — Inicio">
+        <img src="/prueba-museo/assets/img/lav_uam.png" alt="LAV · UAM" class="nav__logo-img" />
+        <div>
+          <div>Paleo<strong>Museo</strong></div>
+          <div style="font-size:0.6em;font-weight:400;opacity:0.5;letter-spacing:0.1em">PALEOPATOLOGÍA</div>
+        </div>
+      </a>
+      <ul class="nav__links" role="list">
+        <li><a href="/prueba-museo/exploracion.html" class="nav__link">Exploración</a></li>
+        <li><a href="/prueba-museo/coleccion.html"   class="nav__link">Colección</a></li>
+        <li><a href="/prueba-museo/aula.html"        class="nav__link">Aula Virtual</a></li>
+        <li><a href="/prueba-museo/actualidad.html"  class="nav__link">Actualidad</a></li>
+      </ul>
+      <div class="nav__actions">
+        <a href="/prueba-museo/coleccion.html" class="btn btn--primary" style="font-size:.78rem;padding:.55em 1.2em;">
+          <span>Ver colección</span>
+        </a>
+      </div>
+      <button class="nav__hamburger" id="nav-hamburger" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </div>
+  <div class="nav__mobile" id="nav-mobile">
+    <ul role="list" style="display:flex;flex-direction:column;align-items:center;gap:2rem;text-align:center;">
+      <li><a href="/prueba-museo/exploracion.html" class="nav__link" style="font-size:1.6rem">Exploración</a></li>
+      <li><a href="/prueba-museo/coleccion.html"   class="nav__link" style="font-size:1.6rem">Colección</a></li>
+      <li><a href="/prueba-museo/aula.html"        class="nav__link" style="font-size:1.6rem">Aula Virtual</a></li>
+      <li><a href="/prueba-museo/actualidad.html"  class="nav__link" style="font-size:1.6rem">Actualidad</a></li>
+    </ul>
+  </div>
+</header>
+
+<main class="ct-main">
+
+  <!-- ══ Columna izquierda ══ -->
+  <aside>
+    <p class="ct-eyebrow">LAV · UAM</p>
+    <h1 class="ct-title">
+      Solicitud de acceso<br>
+      <em>a colecciones digitales</em>
+    </h1>
+    <p class="ct-lead">
+      El Laboratorio de Antropología Virtual de la UAM gestiona colecciones osteológicas digitales para investigación, docencia y divulgación científica. Las solicitudes son valoradas por el Comité Evaluador del LAV-UAM.
+    </p>
+
+    <!-- Proceso -->
+    <div class="ct-process">
+      <div class="ct-process-step">
+        <div class="ct-process-step__num">01</div>
+        <div>
+          <p class="ct-process-step__title">Presenta tu solicitud</p>
+          <p class="ct-process-step__text">Rellena el formulario indicando los ejemplares, el fin del acceso, la metodología y las fechas propuestas.</p>
+        </div>
+      </div>
+      <div class="ct-process-step">
+        <div class="ct-process-step__num">02</div>
+        <div>
+          <p class="ct-process-step__title">Evaluación del Comité</p>
+          <p class="ct-process-step__text">La Gestora de Colecciones y un técnico del LAV-UAM revisan tu solicitud en un plazo de 5–10 días hábiles.</p>
+        </div>
+      </div>
+      <div class="ct-process-step">
+        <div class="ct-process-step__num">03</div>
+        <div>
+          <p class="ct-process-step__title">Firma de obligaciones</p>
+          <p class="ct-process-step__text">Si es aprobada, firmarás el documento de "Obligaciones de los usuarios de colecciones" antes de recibir acceso.</p>
+        </div>
+      </div>
+      <div class="ct-process-step">
+        <div class="ct-process-step__num">04</div>
+        <div>
+          <p class="ct-process-step__title">Acceso a los datos</p>
+          <p class="ct-process-step__text">Los datos se entregarán mediante enlace seguro. El solicitante se compromete a informar sobre resultados y publicaciones derivadas.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Info cards -->
+    <div class="ct-info-cards">
+      <div class="ct-info-card">
+        <span class="ct-info-card__icon">📋</span>
+        <div>
+          <p class="ct-info-card__title">Tipos de solicitud admitidos</p>
+          <p class="ct-info-card__text">Investigación académica (TFG/TFM/tesis), uso docente, divulgación científica, investigación científica y proyectos interinstitucionales.</p>
+        </div>
+      </div>
+      <div class="ct-info-card">
+        <span class="ct-info-card__icon">⚖️</span>
+        <div>
+          <p class="ct-info-card__title">Uso responsable</p>
+          <p class="ct-info-card__text">Los datos son exclusivos para el fin declarado. No se permite su redistribución ni la impresión de réplicas sin autorización expresa del LAV-UAM.</p>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ══ Formulario ══ -->
+  <div class="ct-form-wrap">
+    <div class="ct-form-header">
+      <div class="ct-form-header__dot"></div>
+      <span class="ct-form-header__title">Formulario de solicitud · Request form</span>
+      <span class="ct-form-header__lang">ES / EN</span>
+    </div>
+
+    <form class="ct-form" id="ct-form" novalidate
+          action="https://formspree.io/f/mqejbbyr"
+          method="POST">
+
+      <!-- ── Datos del solicitante ── -->
+      <p class="ct-section-title">Datos del solicitante · Applicant data</p>
+
+      <div class="ct-field--row">
+        <div class="ct-field">
+          <label class="ct-label" for="ct-nombre">
+            Nombre <span class="ct-label__req">*</span>
+            <span class="ct-label__sub">First name</span>
+          </label>
+          <input class="ct-input" type="text" id="ct-nombre" name="nombre"
+                 placeholder="Ana" autocomplete="given-name" />
+          <span class="ct-field__error" id="err-nombre">Campo obligatorio.</span>
+        </div>
+        <div class="ct-field">
+          <label class="ct-label" for="ct-apellidos">
+            Apellidos <span class="ct-label__req">*</span>
+            <span class="ct-label__sub">Family name</span>
+          </label>
+          <input class="ct-input" type="text" id="ct-apellidos" name="apellidos"
+                 placeholder="García López" autocomplete="family-name" />
+          <span class="ct-field__error" id="err-apellidos">Campo obligatorio.</span>
+        </div>
+      </div>
+
+      <div class="ct-field--row">
+        <div class="ct-field">
+          <label class="ct-label" for="ct-email">
+            Correo electrónico <span class="ct-label__req">*</span>
+            <span class="ct-label__sub">Email</span>
+          </label>
+          <input class="ct-input" type="email" id="ct-email" name="email"
+                 placeholder="ana.garcia@uam.es" autocomplete="email" />
+          <span class="ct-field__error" id="err-email">Introduce un email válido.</span>
+        </div>
+        <div class="ct-field">
+          <label class="ct-label" for="ct-institucion">
+            Institución <span class="ct-label__req">*</span>
+            <span class="ct-label__sub">Home institution</span>
+          </label>
+          <input class="ct-input" type="text" id="ct-institucion" name="institucion"
+                 placeholder="Universidad Autónoma de Madrid" />
+          <span class="ct-field__error" id="err-institucion">Campo obligatorio.</span>
+        </div>
+      </div>
+
+      <div class="ct-field--row">
+        <div class="ct-field">
+          <label class="ct-label" for="ct-tipo">
+            Tipo de solicitud <span class="ct-label__req">*</span>
+            <span class="ct-label__sub">Request type</span>
+          </label>
+          <select class="ct-select" id="ct-tipo" name="tipo_solicitud">
+            <option value="" disabled selected>Selecciona…</option>
+            <option value="investigacion-academica">Investigación académica (TFG/TFM/Tesis)</option>
+            <option value="docente-didactico">Uso docente y didáctico</option>
+            <option value="divulgacion">Divulgación y difusión científica</option>
+            <option value="investigacion-cientifica">Investigación científica</option>
+            <option value="interinstitucional">Proyecto colaborativo / interinstitucional</option>
+          </select>
+          <span class="ct-field__error" id="err-tipo">Selecciona el tipo de solicitud.</span>
+        </div>
+        <div class="ct-field">
+          <label class="ct-label" for="ct-referencia">
+            Referencia académica <span class="ct-label__req">*</span>
+            <span class="ct-label__sub">Academic supervisor / PI</span>
+          </label>
+          <input class="ct-input" type="text" id="ct-referencia" name="referencia_academica"
+                 placeholder="Dr. / Dra. …" />
+          <p class="ct-field__hint">Director/a de tesis, docente responsable o IP del proyecto.</p>
+          <span class="ct-field__error" id="err-referencia">Campo obligatorio.</span>
+        </div>
+      </div>
+
+      <hr class="ct-sep" />
+
+      <!-- ── Detalles de la solicitud ── -->
+      <p class="ct-section-title">Detalles de la solicitud · Request details</p>
+
+      <!-- Pregunta 1 -->
+      <div class="ct-field">
+        <label class="ct-label" for="ct-proposito">
+          1. Propósito del análisis <span class="ct-label__req">*</span>
+          <span class="ct-label__sub">Research question &amp; justification</span>
+        </label>
+        <textarea class="ct-textarea" id="ct-proposito" name="proposito"
+                  placeholder="Describa en detalle el propósito del análisis que se planea llevar a cabo y explique la relevancia del mismo. / Provide a detailed explanation about the research question/s and justify its interest."
+                  rows="4"></textarea>
+        <span class="ct-field__error" id="err-proposito">Campo obligatorio.</span>
+      </div>
+
+      <!-- Pregunta 2 -->
+      <div class="ct-field">
+        <label class="ct-label" for="ct-ejemplares">
+          2. Ejemplares solicitados <span class="ct-label__req">*</span>
+          <span class="ct-label__sub">Specimens requested</span>
+        </label>
+        <textarea class="ct-textarea" id="ct-ejemplares" name="ejemplares"
+                  placeholder="Enumere con el máximo detalle posible los ejemplares que solicita analizar. / List the specimens that you are requesting access to."
+                  rows="3"></textarea>
+        <span class="ct-field__error" id="err-ejemplares">Campo obligatorio.</span>
+      </div>
+
+      <!-- Pregunta 3 -->
+      <div class="ct-field">
+        <label class="ct-label" for="ct-metodo">
+          3. Metodología <span class="ct-label__req">*</span>
+          <span class="ct-label__sub">Methodology</span>
+        </label>
+        <textarea class="ct-textarea" id="ct-metodo" name="metodologia"
+                  placeholder="Describa brevemente el método que va a utilizar para el estudio de la muestra. / Provide a brief description of the methodology that will be used to analyse the sample."
+                  rows="3"></textarea>
+        <span class="ct-field__error" id="err-metodo">Campo obligatorio.</span>
+      </div>
+
+      <!-- Pregunta 4 -->
+      <div class="ct-field">
+        <label class="ct-label" for="ct-valor">
+          4. Valor añadido para la colección
+          <span class="ct-label__sub">Benefit for the collection</span>
+        </label>
+        <textarea class="ct-textarea" id="ct-valor" name="valor_anadido"
+                  placeholder="Indique si sus análisis van a proporcionar algún valor añadido a la colección. / Describe any possible benefit of your research for the collection."
+                  rows="2"></textarea>
+      </div>
+
+      <!-- Pregunta 5 -->
+      <div class="ct-field">
+        <label class="ct-label" for="ct-fechas">
+          5. Fechas propuestas de acceso <span class="ct-label__req">*</span>
+          <span class="ct-label__sub">Proposed access dates</span>
+        </label>
+        <input class="ct-input" type="text" id="ct-fechas" name="fechas_propuestas"
+               placeholder="Ej: junio – septiembre 2025 / June – September 2025" />
+        <span class="ct-field__error" id="err-fechas">Campo obligatorio.</span>
+      </div>
+
+      <hr class="ct-sep" />
+
+      <!-- Compromiso -->
+      <div class="ct-field">
+        <label class="ct-check-label">
+          <input type="checkbox" id="ct-compromiso" name="compromiso" />
+          <span class="ct-check-text">
+            Me comprometo a <strong>informar al LAV-UAM sobre los resultados</strong> del análisis (positivos o negativos) y a enviar una copia digital de todas las publicaciones derivadas. Entiendo que, si la solicitud es aceptada, deberé firmar el documento de <strong>«Obligaciones de los usuarios de colecciones»</strong> antes de recibir acceso a los datos.
+          </span>
+        </label>
+        <span class="ct-field__error" id="err-compromiso">Debes aceptar el compromiso para continuar.</span>
+      </div>
+
+      <!-- LOPD -->
+      <div class="ct-field">
+        <label class="ct-check-label">
+          <input type="checkbox" id="ct-lopd" name="lopd" />
+          <span class="ct-check-text">
+            He leído y acepto la <a href="#" target="_blank">política de privacidad</a>. Los datos facilitados serán tratados por la UAM exclusivamente para gestionar esta solicitud de acceso.
+          </span>
+        </label>
+        <span class="ct-field__error" id="err-lopd">Debes aceptar la política de privacidad.</span>
+      </div>
+
+      <!-- Enviar -->
+      <button type="submit" class="ct-submit" id="ct-submit">
+        <span class="ct-submit__spinner"></span>
+        <span class="ct-submit__text">Enviar solicitud</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+        </svg>
+      </button>
+
+    </form>
+
+    <!-- Estado éxito -->
+    <div class="ct-success" id="ct-success" role="alert" aria-live="polite">
+      <div class="ct-success__icon" aria-hidden="true">✓</div>
+      <p class="ct-success__title">Solicitud enviada</p>
+      <p class="ct-success__text">
+        Hemos recibido tu solicitud. El Comité Evaluador del LAV-UAM la revisará y te contactará en los próximos días hábiles.
+      </p>
+      <a href="/prueba-museo/coleccion.html" class="ct-success__back">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+        Volver a la colección
+      </a>
+    </div>
+
+  </div><!-- /ct-form-wrap -->
+
+</main>
+
+<footer class="site-footer" role="contentinfo">
+  <div class="container">
+    <div class="footer__inner">
+      <div class="footer__logos">
+        <img src="/prueba-museo/assets/img/lav_uam2.png" alt="LAV · UAM" class="footer__logo-img footer__logo-img--lav2" />
+        <img src="/prueba-museo/assets/img/uamciencias_blanco.png" alt="Facultad de Ciencias · UAM" class="footer__logo-img footer__logo-img--facultad" />
+      </div>
+      <p class="footer__meta">
+        Trabajo de Fin de Grado · Grado en Biología<br>
+        <span style="opacity:0.5">Museo Virtual de Paleopatología · 2025–2026</span>
+      </p>
+      <nav class="footer__links" aria-label="Pie de página">
+        <a href="/prueba-museo/exploracion.html" class="footer__link">Exploración</a>
+        <a href="/prueba-museo/coleccion.html"   class="footer__link">Colección</a>
+        <a href="/prueba-museo/aula.html"        class="footer__link">Aula</a>
+        <a href="/prueba-museo/actualidad.html"  class="footer__link">Actualidad</a>
+        <a href="/prueba-museo/index.html#proyecto" class="footer__link">Proyecto</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* ── Nav ── */
+  const hamburger = document.getElementById('nav-hamburger');
+  const drawer    = document.getElementById('nav-mobile');
+  let navOpen = false;
+  hamburger?.addEventListener('click', () => {
+    navOpen = !navOpen;
+    hamburger.classList.toggle('open', navOpen);
+    drawer.classList.toggle('open', navOpen);
+    hamburger.setAttribute('aria-expanded', String(navOpen));
+    document.body.style.overflow = navOpen ? 'hidden' : '';
+  });
+  window.addEventListener('scroll', () => {
+    document.getElementById('site-header')?.classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive: true });
+
+  /* ── Validación y envío ── */
+  const form    = document.getElementById('ct-form');
+  const btn     = document.getElementById('ct-submit');
+  const success = document.getElementById('ct-success');
+
+  function validate() {
+    let ok = true;
+
+    const fields = [
+      { id: 'ct-nombre',      err: 'err-nombre',      check: v => v.trim().length > 1 },
+      { id: 'ct-apellidos',   err: 'err-apellidos',   check: v => v.trim().length > 1 },
+      { id: 'ct-email',       err: 'err-email',       check: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
+      { id: 'ct-institucion', err: 'err-institucion', check: v => v.trim().length > 2 },
+      { id: 'ct-tipo',        err: 'err-tipo',        check: v => v !== '' },
+      { id: 'ct-referencia',  err: 'err-referencia',  check: v => v.trim().length > 2 },
+      { id: 'ct-proposito',   err: 'err-proposito',   check: v => v.trim().length > 10 },
+      { id: 'ct-ejemplares',  err: 'err-ejemplares',  check: v => v.trim().length > 5 },
+      { id: 'ct-metodo',      err: 'err-metodo',      check: v => v.trim().length > 5 },
+      { id: 'ct-fechas',      err: 'err-fechas',      check: v => v.trim().length > 2 },
+    ];
+
+    fields.forEach(({ id, err, check }) => {
+      const el  = document.getElementById(id);
+      const msg = document.getElementById(err);
+      const valid = check(el.value);
+      el.classList.toggle('error', !valid);
+      msg?.classList.toggle('visible', !valid);
+      if (!valid) ok = false;
+    });
+
+    /* Checkboxes */
+    ['ct-compromiso', 'ct-lopd'].forEach(id => {
+      const cb  = document.getElementById(id);
+      const err = document.getElementById('err-' + id.replace('ct-', ''));
+      cb.classList.toggle('error', !cb.checked);
+      err?.classList.toggle('visible', !cb.checked);
+      if (!cb.checked) ok = false;
+    });
+
+    return ok;
+  }
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!validate()) return;
+
+    btn.classList.add('loading');
+    btn.disabled = true;
+
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (res.ok) {
+        form.style.display = 'none';
+        success.classList.add('visible');
+        success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } else {
+        throw new Error('Error en el servidor');
+      }
+    } catch {
+      alert('Ha ocurrido un error al enviar el formulario. Por favor, inténtalo de nuevo o contacta directamente con el LAV-UAM.');
+      btn.classList.remove('loading');
+      btn.disabled = false;
+    }
+  });
+
+  /* Limpiar error al escribir */
+  document.querySelectorAll('.ct-input, .ct-select, .ct-textarea').forEach(el => {
+    el.addEventListener('input', () => {
+      el.classList.remove('error');
+      const errId = 'err-' + el.id.replace('ct-', '');
+      document.getElementById(errId)?.classList.remove('visible');
+    });
+  });
+  document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+    cb.addEventListener('change', () => {
+      cb.classList.remove('error');
+      const errId = 'err-' + cb.id.replace('ct-', '');
+      document.getElementById(errId)?.classList.remove('visible');
+    });
+  });
+</script>
+
+</body>
+</html>
