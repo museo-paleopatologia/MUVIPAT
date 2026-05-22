@@ -134,15 +134,22 @@ const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
   }
 
   /* DOMContentLoaded → intentar enganchar model-viewer */
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      const hasViewers = watchModelViewers();
-      /* Si no hay model-viewer, cerrar al terminar window.load */
-      if (!hasViewers) {
-        window.addEventListener('load', hide, { once: true });
-        /* Fallback máximo: 3s */
-        setTimeout(hide, 3000);
-      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+          const hasViewers = watchModelViewers();
+          /* Si no hay model-viewer, cerrar al terminar window.load */
+          if (!hasViewers) {
+      const MIN_TIME = 1200; // milisegundos mínimos que se ve el loader
+      const startTime = Date.now();
+
+      window.addEventListener('load', () => {
+        const elapsed = Date.now() - startTime;
+        const remaining = Math.max(0, MIN_TIME - elapsed);
+        setTimeout(hide, remaining);
+      }, { once: true });
+
+      setTimeout(hide, 3000);
+    }
     });
   } else {
     /* El DOM ya estaba listo */
