@@ -237,16 +237,6 @@ window.addEventListener('load', () => {
   });
 
   if (typeof ScrollTrigger !== 'undefined') {
-    gsap.from('.module-card', {
-      scrollTrigger: {
-        trigger: '.modules__grid',
-        start: 'top 85%',
-        once: true,
-      },
-      y: 50, opacity: 0, stagger: 0.12, duration: 0.65, ease: 'power2.out',
-      immediateRender: false,
-    });
-
     gsap.from('.about__obj', {
       scrollTrigger: { trigger: '.about__objectives', start: 'top 82%' },
       x: -25, opacity: 0, stagger: 0.1, duration: 0.55, ease: 'power2.out'
