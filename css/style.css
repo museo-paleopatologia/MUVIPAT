@@ -1704,3 +1704,34 @@ h1, h2, h3, h4, h5, h6 {
       bottom: -24px; right: -24px;
       border-width: 0 2px 2px 0;
     }
+
+    /* ── Botón pantalla completa viewer ── */
+      .viewer-fullscreen-btn {
+        position: absolute;
+        bottom: .85rem;
+        right: .85rem;
+        z-index: 10;
+        width: 32px; height: 32px;
+        background: rgba(13,13,13,.75);
+        border: 1.5px solid rgba(255,255,255,.2);
+        border-radius: 3px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: rgba(255,255,255,.7);
+        backdrop-filter: blur(4px);
+        transition: background .15s, border-color .15s, color .15s, transform .12s;
+      }
+      .viewer-fullscreen-btn:hover {
+        background: rgba(0,229,255,.15);
+        border-color: var(--cyan);
+        color: var(--cyan);
+        transform: scale(1.08);
+      }
+      .viewer-fullscreen-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+      /* Cuando está en fullscreen, cambiar icono de salir */
+      .viewer-fullscreen-btn .icon-exit { display: none; }
+      :fullscreen .viewer-fullscreen-btn .icon-enter { display: none; }
+      :fullscreen .viewer-fullscreen-btn .icon-exit  { display: block; }
