@@ -239,8 +239,19 @@ window.addEventListener('load', () => {
   if (typeof ScrollTrigger !== 'undefined') {
     gsap.from('.module-card', {
       scrollTrigger: { trigger: '.modules__grid', start: 'top 82%' },
-      y: 50, opacity: 0, stagger: 0.12, duration: 0.65, ease: 'power2.out'
+      y: 50, opacity: 0, stagger: 0.12, duration: 0.65, ease: 'power2.out',
+      onComplete: () => {
+        document.querySelectorAll('.module-card').forEach(el => el.style.opacity = '');
+      }
     });
+
+    /* Fallback: si ScrollTrigger no dispara en 2s, mostrar las cards */
+    setTimeout(() => {
+      document.querySelectorAll('.module-card').forEach(el => {
+        if (getComputedStyle(el).opacity === '0') el.style.opacity = '1';
+      });
+    }, 2000);
+    
     gsap.from('.about__obj', {
       scrollTrigger: { trigger: '.about__objectives', start: 'top 82%' },
       x: -25, opacity: 0, stagger: 0.1, duration: 0.55, ease: 'power2.out'
