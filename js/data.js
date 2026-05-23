@@ -165,7 +165,8 @@ const PIEZAS = [
     yacimiento:'Monasterio de Suso, La Rioja',
     coords: [867, 336],
     descripcion:'Colapso del cuerpo vertebral T8-T9 con fusión angular (giba). Destrucción del disco intervertebral y formación de absceso paravertebral. Mal de Pott confirmado.',
-    imagen:null, ficha:'/prueba-museo/ficha-maestra.html?id=OV-004' },
+    imagen:null, ficha:'/prueba-museo/ficha-maestra.html?id=OV-004',
+    modelo3d:'/prueba-museo/assets/models/femur_a.glb' },
 
   { id:'OV-005', nombre:'Pelvis con sacralización de L5',
     region:'pelvis', patologia:'congenita', sexo:'masculino', epoca:'moderno',
