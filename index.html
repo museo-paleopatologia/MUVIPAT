@@ -77,15 +77,15 @@
     /* ══════════════════════════════════════════
        SECCIÓN INVESTIGADORES
     ══════════════════════════════════════════ */
-    .research-cta { background:var(--bone-300); border-top:var(--border-thick); border-bottom:var(--border-thick); padding-block:clamp(3rem,6vw,5rem); position:relative; overflow:hidden; }
+    .research-cta { background:var(--bone-300); padding-block:clamp(3rem,6vw,5rem); position:relative; overflow:hidden; }
     .research-cta::before { content:''; position:absolute; inset:0; background-image:linear-gradient(rgba(0,229,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,.04) 1px,transparent 1px); background-size:48px 48px; pointer-events:none; }
     .research-cta__inner { position:relative; z-index:1; width:min(1400px,96vw); margin-inline:auto; padding-inline:clamp(1rem,3vw,2rem); display:grid; grid-template-columns:1fr auto; gap:clamp(2rem,5vw,5rem); align-items:center; }
-    .research-cta__eyebrow { font-family:var(--font-head); font-size:.65rem; font-weight:700; letter-spacing:.22em; text-transform:uppercase; color:var(--cyan); display:flex; align-items:center; gap:.5rem; margin-bottom:.9rem; }
-    .research-cta__eyebrow::before { content:''; display:block; width:22px; height:2px; background:var(--cyan); }
-    .research-cta__title { font-family:var(--font-head); font-size:clamp(1.5rem,3vw,2.4rem); font-weight:900; letter-spacing:-.04em; line-height:1.05; color:var(--ivory); margin-bottom:1rem; }
-    .research-cta__title em { font-family:var(--font-display); font-style:italic; color:var(--cyan); }
+    .research-cta__eyebrow { font-family:var(--font-head); font-size:.65rem; font-weight:700; letter-spacing:.22em; text-transform:uppercase; color:var(--cyan-dark); display:flex; align-items:center; gap:.5rem; margin-bottom:.9rem; }
+    .research-cta__eyebrow::before { content:''; display:block; width:22px; height:2px; background:var(--cyan-dark); }
+    .research-cta__title { font-family:var(--font-head); font-size:clamp(1.5rem,3vw,2.4rem); font-weight:900; letter-spacing:-.04em; line-height:1.05; color:var(--dark); margin-bottom:1rem; }
+    .research-cta__title em { font-family:var(--font-display); font-style:italic; color:var(--cyan-dark); }
     .research-cta__desc { font-size:clamp(.85rem,1.4vw,.98rem); line-height:1.75; color:var(--dark); font-weight:300; max-width:58ch; }
-    .research-cta__desc strong { color:var(--cyan); font-weight:600; }
+    .research-cta__desc strong { color:var(--cyan-dark); font-weight:600; }
     .research-cta__action { flex-shrink:0; }
     @media (max-width:700px) { .research-cta__inner { grid-template-columns:1fr; gap:1.75rem; } }
   </style>
