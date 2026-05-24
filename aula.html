@@ -780,12 +780,12 @@
         </div>
         <div class="au-filter-pills" id="glos-pills">
           <button class="au-pill active" data-gf="all">Todos</button>
-          <button class="au-pill" data-gf="orientacion">Orientación</button>
-          <button class="au-pill" data-gf="anatomia">Anatomía</button>
-          <button class="au-pill" data-gf="proceso">Dinámica ósea</button>
-          <button class="au-pill" data-gf="patologia">Patología</button>
-          <button class="au-pill" data-gf="metodo">Metodología</button>
-          <button class="au-pill" data-gf="cronologia">Cronología</button>
+          <button class="au-pill" data-gf="ORIENTACIÓN">Orientación</button>
+          <button class="au-pill" data-gf="ANATOMÍA">Anatomía</button>
+          <button class="au-pill" data-gf="LESIONES">Lesiones</button>
+          <button class="au-pill" data-gf="ENFERMEDADES">Enfermedades</button>
+          <button class="au-pill" data-gf="PALEOPATOLOGÍA">Paleopatología</button>
+          <button class="au-pill" data-gf="TAFONOMÍA">Tafonomía</button>
         </div>
         <span class="au-count-label"><strong id="glos-count">0</strong> términos</span>
       </div>
@@ -1034,12 +1034,12 @@
      COLORES POR CATEGORÍA
   ═══════════════════════════════════════════════════════ */
   const CAT_COLORS = {
-    orientacion: { color: '#ff9800', bg: 'rgba(255,152,0,.08)' },
-    anatomia:    { color: '#00e5ff', bg: 'rgba(0,229,255,.08)' },
-    proceso:     { color: '#00e676', bg: 'rgba(0,230,118,.08)' },
-    patologia:   { color: '#c0003c', bg: 'rgba(192,0,60,.08)'  },
-    metodo:      { color: '#2979ff', bg: 'rgba(41,121,255,.08)' },
-    cronologia:  { color: '#d4e60a', bg: 'rgba(212,230,10,.08)' },
+    'ORIENTACIÓN':    { color: '#ff9800', bg: 'rgba(255,152,0,.08)' },
+    'ANATOMÍA':       { color: '#00e5ff', bg: 'rgba(0,229,255,.08)' },
+    'LESIONES':       { color: '#00e676', bg: 'rgba(0,230,118,.08)' },
+    'ENFERMEDADES':   { color: '#c0003c', bg: 'rgba(192,0,60,.08)'  },
+    'PALEOPATOLOGÍA': { color: '#2979ff', bg: 'rgba(41,121,255,.08)' },
+    'TAFONOMÍA':      { color: '#d4e60a', bg: 'rgba(212,230,10,.08)' },
   };
   const BIBLIO_COLORS = {
     paleopatologia: { color: '#c0003c', bg: 'rgba(192,0,60,.08)' },
@@ -1048,12 +1048,12 @@
     digital:        { color: '#aa00ff', bg: 'rgba(170,0,255,.08)' },
   };
   const CAT_LABELS = {
-    orientacion:    'Orientación anatómica',
-    anatomia:       'Anatomía',
-    proceso:        'Dinámica ósea',
-    patologia:      'Patología',
-    metodo:         'Metodología',
-    cronologia:     'Cronología',
+    'ORIENTACIÓN':    'Orientación',
+    'ANATOMÍA':       'Anatomía',
+    'LESIONES':       'Lesiones',
+    'ENFERMEDADES':   'Enfermedades',
+    'PALEOPATOLOGÍA': 'Paleopatología',
+    'TAFONOMÍA':      'Tafonomía',
     // bibliografía (se quedan igual):
     paleopatologia: 'Paleopatología',
     metodologia:    'Metodología',
@@ -1069,15 +1069,15 @@
 /* ── Modal del glosario ── */
 function openGlosModal(entry) {
   const overlay = document.getElementById('glos-modal');
-  const cc = CAT_COLORS[entry.cat] || { color:'#6b5a43', bg:'rgba(107,90,67,.08)' };
+  const cc = CAT_COLORS[entry.categoria] || { color:'#6b5a43', bg:'rgba(107,90,67,.08)' };
 
   /* ── Cabecera ── */
   const catEl = document.getElementById('glos-modal-cat');
-  catEl.textContent      = CAT_LABELS[entry.cat] || entry.cat;
+  catEl.textContent      = CAT_LABELS[entry.categoria] || entry.categoria;
   catEl.style.color      = cc.color;
   catEl.style.borderColor = cc.color;
   catEl.style.background  = cc.bg;
-  document.getElementById('glos-modal-term').textContent = entry.term;
+  document.getElementById('glos-modal-term').textContent = entry.termino;
   document.getElementById('glos-modal-header').style.borderBottomColor = cc.color;
 
   const sinEl = document.getElementById('glos-modal-sin');
@@ -1085,14 +1085,21 @@ function openGlosModal(entry) {
     ? 'Sin.: ' + entry.sinonimos.join(', ') : '';
 
   /* ── Definición ── */
-  document.getElementById('glos-modal-def').textContent = entry.def;
+  const defEl = document.getElementById('glos-modal-def');
+  if (entry.acepciones && entry.acepciones.length > 1) {
+    defEl.innerHTML = entry.acepciones.map((a, i) => `<span style="font-weight:700;margin-right:.3em">${i + 1}.</span>${a}`).join('<br><br>');
+  } else {
+    defEl.textContent = (entry.acepciones && entry.acepciones[0]) || '';
+  }
   const obsEl = document.getElementById('glos-modal-obs');
   obsEl.textContent = entry.obs || '';
 
   /* ── Fuente ── */
   const srcEl = document.getElementById('glos-modal-source');
-  if (entry.fuente) {
-    srcEl.innerHTML = `<a href="${entry.fuente.url}" target="_blank" rel="noopener noreferrer">${entry.fuente.label} ↗</a>`;
+  if (entry.fuentes && entry.fuentes.length) {
+    srcEl.innerHTML = entry.fuentes.map(f =>
+      f.url ? `<a href="${f.url}" target="_blank" rel="noopener noreferrer">${f.nombre} ↗</a>` : `<span>${f.nombre}</span>`
+    ).join(' · ');
     srcEl.style.display = '';
   } else {
     srcEl.innerHTML = ''; srcEl.style.display = 'none';
@@ -1101,8 +1108,8 @@ function openGlosModal(entry) {
   /* ── Contexto ── */
   const ctxWrap = document.getElementById('glos-modal-contexto-wrap');
   const ctxEl   = document.getElementById('glos-modal-contexto');
-  if (entry.contexto) {
-    ctxEl.textContent = entry.contexto;
+  if (entry.contextoPaleopatologico) {
+    ctxEl.textContent = entry.contextoPaleopatologico;
     ctxWrap.style.display = '';
   } else { ctxWrap.style.display = 'none'; }
 
@@ -1157,7 +1164,7 @@ function openGlosModal(entry) {
     imgWrap.style.display = '';
     const img = document.getElementById('glos-modal-img');
     img.src = entry.imagen;
-    img.alt = entry.term;
+    img.alt = entry.termino;
 
     // Limpiar hotspots anteriores
     const inner = document.getElementById('glos-modal-img-inner');
@@ -1207,6 +1214,10 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeGlosModal();
 });
 
+function slugify(str) {
+  return str.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+
 /* ── renderGlosario — versión con modal ── */
 function renderGlosario() {
   const grid    = document.getElementById('glos-grid');
@@ -1214,8 +1225,8 @@ function renderGlosario() {
   const q = glosQuery.toLowerCase().trim();
 
   const filtered = GLOSARIO.filter(e => {
-    const matchCat = glosCat === 'all' || e.cat === glosCat;
-    const matchQ   = !q || e.term.toLowerCase().includes(q) || e.def.toLowerCase().includes(q);
+    const matchCat = glosCat === 'all' || e.categoria === glosCat;
+    const matchQ   = !q || e.termino.toLowerCase().includes(q) || (e.acepciones[0] || '').toLowerCase().includes(q);
     return matchCat && matchQ;
   });
 
@@ -1228,29 +1239,27 @@ function renderGlosario() {
   }
 
   filtered.forEach(e => {
-    const cc = CAT_COLORS[e.cat] || { color:'#6b5a43', bg:'rgba(107,90,67,.08)' };
-    const hasPiezas  = e.piezas && e.piezas.length > 0;
-    const hasContext = !!e.contexto;
+    const cc = CAT_COLORS[e.categoria] || { color:'#6b5a43', bg:'rgba(107,90,67,.08)' };
+    const hasContext = !!(e.contextoPaleopatologico);
 
     const card = document.createElement('div');
     card.className = 'glos-card';
-    card.id = 'glos-' + e.slug;
+    card.id = 'glos-' + slugify(e.termino);
     card.setAttribute('role', 'button');
     card.setAttribute('tabindex', '0');
-    card.setAttribute('aria-label', 'Ver definición completa de ' + e.term);
+    card.setAttribute('aria-label', 'Ver definición completa de ' + e.termino);
 
     card.innerHTML = `
       <div class="glos-card__accent" style="background:${cc.color}"></div>
       <div class="glos-card__inner">
-        <p class="glos-card__term">${e.term}</p>
-        <p class="glos-card__cat" style="color:${cc.color}">${CAT_LABELS[e.cat] || e.cat}</p>
-        <p class="glos-card__def">${e.def}</p>
+        <p class="glos-card__term">${e.termino}</p>
+        <p class="glos-card__cat" style="color:${cc.color}">${CAT_LABELS[e.categoria] || e.categoria}</p>
+        <p class="glos-card__def">${e.acepciones[0] || ''}</p>
         <div class="glos-card__footer">
           ${e.sinonimos && e.sinonimos.length
             ? `<span class="glos-card__sin">Sin.: ${e.sinonimos.slice(0,2).join(', ')}${e.sinonimos.length > 2 ? '…' : ''}</span>`
             : '<span></span>'}
           <span class="glos-card__cta">
-            ${hasPiezas  ? `<span class="glos-card__badge glos-card__badge--pieza">${e.piezas.length} pieza${e.piezas.length > 1 ? 's' : ''}</span>` : ''}
             ${hasContext ? `<span class="glos-card__badge glos-card__badge--ctx">+ contexto</span>` : ''}
             <span class="glos-card__expand-icon">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
@@ -1804,7 +1813,7 @@ function getPlanosWidget() {
 
   // Buscar la entrada en el GLOSARIO y abrir el modal directamente
   setTimeout(() => {
-    const entry = GLOSARIO.find(e => e.slug === target);
+    const entry = GLOSARIO.find(e => slugify(e.termino) === target);
     if (entry) {
       openGlosModal(entry);  // abre el modal con toda la info
     } else {
