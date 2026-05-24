@@ -45,7 +45,7 @@
     .yac-dot__circle { stroke:#fff; stroke-width:1.5; filter:drop-shadow(0 1px 3px rgba(0,0,0,.3)); }
     .yac-dot__pulse { opacity:0; animation:yacPulse 2.5s ease-out infinite; }
     .yac-dot.is-active .yac-dot__pulse { opacity:1; }
-    @keyframes yacPulse { 0%{r:8;opacity:.6} 100%{r:22;opacity:0} }
+    @keyframes yacPulse { 0%{r:16;opacity:.6} 100%{r:36;opacity:0} }
  
     /* Tooltip SVG inline */
     .yac-tooltip-svg { pointer-events:none; opacity:0; transition:opacity .15s; }
@@ -726,7 +726,7 @@
     if (!dotsLayer || !accordionEl || !tooltipG) return;
  
     const NS = 'http://www.w3.org/2000/svg';
-    const R  = 8;
+    const R  = 14;
  
     function mkEl(tag, attrs) {
       const e = document.createElementNS(NS, tag);
@@ -905,7 +905,7 @@
  
   })();
   </script>
-  
+
   <script src="js/main.js" defer></script>
 </body>
 </html>
