@@ -83,6 +83,16 @@
     .hs-desc-box.visible { display: block; }
     /* Modal más ancho cuando tiene visual */
     .glos-modal-box.has-visual { width: min(900px, 100%); }
+    /* Modal tamaño fijo con scroll interno */
+    .glos-modal-box {
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .glos-modal-body {
+      overflow-y: auto;
+      flex: 1;
+    }
     @media (max-width: 640px) {
       .glos-modal-body.has-visual { grid-template-columns: 1fr; }
     }
@@ -286,6 +296,9 @@
       transition: transform .15s ease, box-shadow .15s ease;
       position: relative;
       overflow: hidden;
+      height: 200px;
+      display: flex;
+      flex-direction: column;
     }
     .glos-card:hover { transform: translate(-2px,-2px); box-shadow: var(--au-shadow); }
     .glos-card__accent {
@@ -317,8 +330,42 @@
       color: #3d3d3d;
       font-weight: 300;
       padding-left: .6rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
     .glos-card__def strong { font-weight: 700; color: var(--au-ink); }
+    .glos-card__inner {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      overflow: hidden;
+    }
+    .glos-card__footer {
+      margin-top: auto;
+      padding-top: .5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: .72rem;
+      color: var(--au-mid);
+    }
+    .glos-card__badge--ctx {
+      font-size: .6rem;
+      font-family: var(--font-head);
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: .15rem .4rem;
+      border: 1.5px solid currentColor;
+      border-radius: 2px;
+    }
+    .glos-card__expand-icon {
+      display: flex;
+      align-items: center;
+      opacity: .5;
+    }
     .glos-empty {
       grid-column: 1/-1;
       text-align: center;
@@ -1237,6 +1284,8 @@ function renderGlosario() {
     grid.innerHTML = '<p class="glos-empty">Sin resultados. Prueba otro término.</p>';
     return;
   }
+
+  filtered.sort((a, b) => a.termino.localeCompare(b.termino, 'es'));
 
   filtered.forEach(e => {
     const cc = CAT_COLORS[e.categoria] || { color:'#6b5a43', bg:'rgba(107,90,67,.08)' };
