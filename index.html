@@ -54,7 +54,7 @@
     .yac-tip-name { fill:var(--orange,#ff6d00); font-family:var(--font-head,Montserrat,sans-serif); font-size:18px; font-weight:800; }
     .yac-tip-sub  { fill:#888; font-family:var(--font-head,Montserrat,sans-serif); font-size:14px; font-weight:400; }
  
-    .yac-list { display:flex; flex-direction:column; gap:.5rem; max-height:520px; overflow-y:auto; scrollbar-width:thin; scrollbar-color:var(--bone-300) transparent; }
+    .yac-list { display:none; flex-direction:column; gap:.5rem; max-height:520px; overflow-y:auto; scrollbar-width:thin; scrollbar-color:var(--bone-300) transparent; }
     .yac-item { display:flex; align-items:flex-start; gap:.75rem; padding:.7rem .9rem; background:#fff; border:2px solid var(--bone-200); border-radius:2px; cursor:pointer; text-decoration:none; transition:border-color .15s,box-shadow .15s,transform .12s; }
     .yac-item:hover { border-color:var(--dark); box-shadow:3px 3px 0 var(--dark); transform:translate(-2px,-2px); }
     .yac-item.is-active { border-color:var(--orange); box-shadow:3px 3px 0 var(--orange); background:rgba(255,109,0,.04); }
@@ -74,43 +74,51 @@
       .yac-list   { max-height:280px; }
     }
 
-     /* ── ACORDEONES DE YACIMIENTOS ─────────────────────────── */
-    .yac-accordion { display:flex; flex-direction:column; gap:.4rem; }
-  
+    /* ── ACORDEONES DE YACIMIENTOS ─────────────────────────── */
+    .yac-accordion-wrap {
+      max-height: 520px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--bone-300) transparent;
+    }
+    .yac-accordion { display: flex; flex-direction: column; gap: .5rem; }
+
+    /* Cabecera — mismo look que el .yac-item anterior */
     .yac-acc-item {
+      background: #fff;
       border: 2px solid var(--bone-200);
       border-radius: 2px;
-      background: #fff;
-      overflow: hidden;
-      transition: border-color .15s, box-shadow .15s;
+      cursor: pointer;
+      transition: border-color .15s, box-shadow .15s, transform .12s;
+    }
+    .yac-acc-item:hover {
+      border-color: var(--dark);
+      box-shadow: 3px 3px 0 var(--dark);
+      transform: translate(-2px, -2px);
     }
     .yac-acc-item.is-active {
       border-color: var(--orange);
       box-shadow: 3px 3px 0 var(--orange);
+      background: rgba(255,109,0,.04);
+      transform: none;
     }
-  
-    /* Cabecera del acordeón */
+
     .yac-acc-header {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       gap: .75rem;
       padding: .7rem .9rem;
-      cursor: pointer;
-      user-select: none;
-      background: #fff;
+      background: transparent;
       border: none;
       width: 100%;
       text-align: left;
-      transition: background .12s;
+      cursor: pointer;
     }
-    .yac-acc-header:hover { background: var(--bone-50, #faf9f6); }
-    .yac-acc-item.is-active .yac-acc-header { background: rgba(255,109,0,.04); }
-  
     .yac-acc-dot {
       width: 10px; height: 10px;
       border-radius: 50%;
       flex-shrink: 0;
-      margin-top: 1px;
+      margin-top: .3rem;
     }
     .yac-acc-info { flex: 1; min-width: 0; }
     .yac-acc-name {
@@ -120,50 +128,51 @@
       color: var(--dark);
       line-height: 1.2;
       letter-spacing: -.01em;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      display: block;
+      margin-bottom: .2rem;
     }
     .yac-acc-meta {
-      font-size: .6rem;
+      font-size: .63rem;
       font-weight: 300;
       color: var(--bone-500);
-      margin-top: .1rem;
+      line-height: 1.4;
+      display: block;
+      margin-bottom: .3rem;
     }
     .yac-acc-tag {
+      display: inline-flex;
       font-family: var(--font-head);
-      font-size: .48rem;
+      font-size: .5rem;
       font-weight: 700;
       letter-spacing: .07em;
       text-transform: uppercase;
       padding: .15em .5em;
       border-radius: 2px;
       border: 1.5px solid;
-      flex-shrink: 0;
     }
     .yac-acc-chevron {
       width: 14px; height: 14px;
       flex-shrink: 0;
       color: var(--bone-400);
+      margin-top: .2rem;
       transition: transform .2s;
     }
     .yac-acc-item.is-active .yac-acc-chevron { transform: rotate(180deg); }
-  
-    /* Cuerpo del acordeón */
+
+    /* Cuerpo desplegable */
     .yac-acc-body {
       max-height: 0;
       overflow: hidden;
       transition: max-height .28s ease;
     }
-    .yac-acc-item.is-active .yac-acc-body {
-      max-height: 600px; /* suficiente para cualquier número de piezas */
-    }
+    .yac-acc-item.is-active .yac-acc-body { max-height: 600px; }
+
     .yac-acc-inner {
       padding: .5rem .9rem .75rem;
       border-top: 1px solid var(--bone-200);
     }
-  
-    /* Lista de piezas dentro del acordeón */
+
+    /* Lista de piezas */
     .yac-piece-list { display: flex; flex-direction: column; gap: .35rem; margin-bottom: .65rem; }
     .yac-piece-row {
       display: flex;
@@ -209,8 +218,8 @@
       transition: background .12s, color .12s;
     }
     .yac-piece-row__btn:hover { background: var(--dark); color: #fff; }
-  
-    /* Botón "Ver colección filtrada" */
+
+    /* Botón colección */
     .yac-acc-coleccion {
       display: inline-flex;
       align-items: center;
@@ -230,14 +239,6 @@
     }
     .yac-acc-coleccion:hover { background: var(--orange); color: #fff; }
     .yac-acc-coleccion svg { width: 10px; height: 10px; }
-  
-    /* Lista contenedor con scroll */
-    .yac-accordion-wrap {
-      max-height: 520px;
-      overflow-y: auto;
-      scrollbar-width: thin;
-      scrollbar-color: var(--bone-300) transparent;
-    }
 
     /* ══════════════════════════════════════════
        SECCIÓN INVESTIGADORES
