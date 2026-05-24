@@ -39,9 +39,9 @@
     #yac-map-svg { width:100%; height:auto; display:block; }
  
     /* Dots — transform-box+transform-origin: hover sin offset */
-    .yac-dot { cursor:pointer; transition:transform .2s cubic-bezier(.34,1.56,.64,1); transform-origin:center; transform-box:fill-box; }
-    .yac-dot:hover { transform:scale(1.5); }
-    .yac-dot.is-active { transform:scale(1.7); }
+    .yac-dot { cursor:pointer; transition:transform .2s cubic-bezier(.34,1.56,.64,1); transform-box:fill-box; transform-origin: center; }
+    .yac-dot:hover { transform: scale(1.5); }
+    .yac-dot.is-active { transform: scale(1.7); }
     .yac-dot__circle { stroke:#fff; stroke-width:1.5; filter:drop-shadow(0 1px 3px rgba(0,0,0,.3)); }
     .yac-dot__pulse { opacity:0; animation:yacPulse 2.5s ease-out infinite; }
     .yac-dot.is-active .yac-dot__pulse { opacity:1; }
@@ -590,14 +590,12 @@
           const g = mkEl('g', {
             class:       'yac-dot',
             'data-yac':  yac.nombre,
-            transform:   `translate(${cx},${cy})`,
             role:        'button',
             tabindex:    '0',
             'aria-label': `${yac.nombre} — ${yac.piezas.length} piezas`
           });
-          g.appendChild(mkEl('circle', { class:'yac-dot__pulse', cx:'0', cy:'0', r: R + 1, fill: color }));
-          g.appendChild(mkEl('circle', { class:'yac-dot__circle', cx:'0', cy:'0', r: R, fill: color }));
-          dotsLayer.appendChild(g);
+          g.appendChild(mkEl('circle', { class:'yac-dot__pulse', cx, cy, r: R + 1, fill: color }));
+          g.appendChild(mkEl('circle', { class:'yac-dot__circle', cx, cy, r: R, fill: color }));          dotsLayer.appendChild(g);
     
           // — Lista lateral —
           const item = document.createElement('a');
