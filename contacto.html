@@ -322,6 +322,67 @@
     }
     .ct-success__back:hover { color: var(--ct-ink); }
 
+    /* Tarjeta protocolo */
+    .ct-protocolo {
+      margin-top: 1.25rem;
+      padding: 1rem 1.1rem 1rem 1.35rem;
+      background: #fff;
+      border: 1.5px solid #dce8f5;
+      border-left: 4px solid #2563eb;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(37,99,235,.07);
+      display: flex;
+      flex-direction: column;
+      gap: .55rem;
+    }
+    .ct-protocolo__head {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+    }
+    .ct-protocolo__icon {
+      font-size: 1.25rem;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+    .ct-protocolo__title {
+      font-family: var(--font-head);
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .04em;
+      color: var(--ct-ink);
+    }
+    .ct-protocolo__desc {
+      font-size: .75rem;
+      color: var(--ct-mid);
+      line-height: 1.55;
+      font-weight: 300;
+    }
+    .ct-protocolo__btn {
+      align-self: flex-start;
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      font-family: var(--font-head);
+      font-size: .63rem;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: #2563eb;
+      background: #eff6ff;
+      border: 1.5px solid #bfdbfe;
+      border-radius: 4px;
+      padding: .42rem .9rem;
+      transition: background .18s, color .18s, border-color .18s;
+    }
+    .ct-protocolo__btn:hover {
+      background: #2563eb;
+      color: #fff;
+      border-color: #2563eb;
+    }
+    .ct-protocolo__btn svg { flex-shrink: 0; }
+
     /* Responsive */
     @media (max-width: 860px) {
       .ct-main { grid-template-columns: 1fr; gap: 2rem; }
@@ -433,6 +494,27 @@
         </div>
       </div>
     </div>
+
+    <!-- Tarjeta protocolo -->
+    <div class="ct-protocolo">
+      <div class="ct-protocolo__head">
+        <span class="ct-protocolo__icon" aria-hidden="true">📄</span>
+        <p class="ct-protocolo__title">Protocolo para investigadores</p>
+      </div>
+      <p class="ct-protocolo__desc">
+        Consulta las condiciones de uso, el proceso de evaluación y las obligaciones de los usuarios antes de enviar tu solicitud.
+      </p>
+      <a class="ct-protocolo__btn"
+         href="./assets/documents/protocolo_investigadores.pdf"
+         target="_blank"
+         rel="noopener noreferrer">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 7V3.5L18.5 9H13zM8 13h8v1.5H8V13zm0 3h8v1.5H8V16zm0-6h3v1.5H8V10z"/>
+        </svg>
+        Ver protocolo (PDF)
+      </a>
+    </div>
+
   </aside>
 
   <!-- ══ Formulario ══ -->
