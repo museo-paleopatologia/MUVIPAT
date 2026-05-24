@@ -548,7 +548,7 @@ const FICHAS_MAESTRAS = {
    * 3. Añade los hallazgos[] a la pieza (uno por step)
    * 4. Crea su entrada aquí:
    *
-   * 'OV-004': [
+   * 'OV-001': [
    *   {
    *     hallazgoIndex: 0,
    *     datosKeys: ['yacimiento', 'cronologia', 'edad', 'sexo'],
