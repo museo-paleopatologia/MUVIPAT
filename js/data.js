@@ -620,7 +620,7 @@ const GLOSARIO = [
     sinonimos: [],
     obs: "Generalmente por contraposición a distal.",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -633,7 +633,7 @@ const GLOSARIO = [
     sinonimos: [],
     obs: "Generalmente por contraposición a proximal.",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -646,7 +646,7 @@ const GLOSARIO = [
     sinonimos: ["Interno"],
     obs: "Generalmente por contraposición a lateral.",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -659,7 +659,7 @@ const GLOSARIO = [
     sinonimos: ["externo"],
     obs: "Generalmente por contraposición a medial.",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -672,7 +672,7 @@ const GLOSARIO = [
     sinonimos: ["frontal", "ventral"],
     obs: "En la cabeza se usa también con este sentido \"rostral\".",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -685,7 +685,7 @@ const GLOSARIO = [
     sinonimos: [],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -699,7 +699,7 @@ const GLOSARIO = [
     sinonimos: ["plano mediano", "plano medio", "plano mediosagital", "plano sagital medio", "plano paramediano", "plano parasagital"],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -712,7 +712,7 @@ const GLOSARIO = [
     sinonimos: [],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -758,7 +758,7 @@ const GLOSARIO = [
     sinonimos: [],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -771,7 +771,7 @@ const GLOSARIO = [
     sinonimos: [],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -784,7 +784,7 @@ const GLOSARIO = [
     sinonimos: [],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -797,7 +797,7 @@ const GLOSARIO = [
     sinonimos: ["proceso"],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -810,7 +810,7 @@ const GLOSARIO = [
     sinonimos: [],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -836,7 +836,7 @@ const GLOSARIO = [
     sinonimos: [],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -849,7 +849,7 @@ const GLOSARIO = [
     sinonimos: ["periostio interno"],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -862,7 +862,7 @@ const GLOSARIO = [
     sinonimos: ["sustancia compacta", "tejido compacto", "tejido óseo compacto"],
     obs: "Los términos \"hueso compacto\" y \"hueso cortical\" se usan con frecuencia de forma intercambiable.",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -897,7 +897,7 @@ const GLOSARIO = [
     sinonimos: [],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -910,7 +910,7 @@ const GLOSARIO = [
     sinonimos: [],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -924,7 +924,7 @@ const GLOSARIO = [
     sinonimos: [],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -946,7 +946,7 @@ const GLOSARIO = [
     sinonimos: [],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -959,7 +959,7 @@ const GLOSARIO = [
     sinonimos: [],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -983,7 +983,7 @@ const GLOSARIO = [
     sinonimos: [],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -997,7 +997,7 @@ const GLOSARIO = [
     sinonimos: ["carilla articular"],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -1010,7 +1010,7 @@ const GLOSARIO = [
     sinonimos: [],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -1034,7 +1034,7 @@ const GLOSARIO = [
     sinonimos: ["séptulo (infrecuente)"],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -1047,7 +1047,7 @@ const GLOSARIO = [
     sinonimos: ["médula", "tuétano (coloquial)"],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -1070,7 +1070,7 @@ const GLOSARIO = [
     sinonimos: ["fibra perforante"],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -1083,7 +1083,7 @@ const GLOSARIO = [
     sinonimos: [],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -1096,7 +1096,7 @@ const GLOSARIO = [
     sinonimos: ["articulación sindesmótica", "sínfisis fibrosa"],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -1109,7 +1109,7 @@ const GLOSARIO = [
     sinonimos: ["articulación sincondrótica (infrecuente)"],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -1136,7 +1136,7 @@ const GLOSARIO = [
     sinonimos: ["ostión", "sistema de Havers", "sistema haversiano", "sistema laminar de Havers (infrecuente)"],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -1152,7 +1152,7 @@ const GLOSARIO = [
     sinonimos: [],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -1200,7 +1200,7 @@ const GLOSARIO = [
     sinonimos: [],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -1213,7 +1213,7 @@ const GLOSARIO = [
     sinonimos: ["condensación ósea", "eburnación", "esclerosis ósea", "osteocondensación"],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -1227,7 +1227,7 @@ const GLOSARIO = [
     sinonimos: ["esqueletógeno", "osteógeno"],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -1282,7 +1282,7 @@ const GLOSARIO = [
     sinonimos: [],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -1295,7 +1295,7 @@ const GLOSARIO = [
     sinonimos: ["hernia discal intraesponjosa", "hernia de Schmorl"],
     obs: "Con frecuencia en plural.",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -1317,7 +1317,7 @@ const GLOSARIO = [
     sinonimos: ["hiperosteogénesis (infrecuente)", "hiperosteogenia (infrecuente)"],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -1330,7 +1330,7 @@ const GLOSARIO = [
     sinonimos: [],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -1381,7 +1381,7 @@ const GLOSARIO = [
     sinonimos: ["falsa articulación", "pseudoarticulación", "pseudoartrosis", "seudoarticulación"],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -1396,7 +1396,7 @@ const GLOSARIO = [
     sinonimos: ["abarticulación (infrecuente)", "desarticulación (infrecuente)", "dislocación", "lujación", "zafadura (coloquial)"],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -1411,7 +1411,7 @@ const GLOSARIO = [
     sinonimos: ["perforación", "transformación (infrecuente)", "tresis (infrecuente)", "tripesis (infrecuente)", "trefinación (desaconsejado)"],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -1424,7 +1424,7 @@ const GLOSARIO = [
     sinonimos: ["acampsia (infrecuente)", "artroclisis (infrecuente)"],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -1438,7 +1438,7 @@ const GLOSARIO = [
     sinonimos: ["caries dental", "caries dentaria", "saprodoncia (infrecuente)", "picadura (coloquial)"],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -1460,7 +1460,7 @@ const GLOSARIO = [
     sinonimos: ["abrasión", "abrasión dental", "abrasión dentaria", "atrición dental", "atrición dentaria", "desgaste dental", "desgaste dentario", "erosión dentaria"],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -1473,7 +1473,7 @@ const GLOSARIO = [
     sinonimos: ["cálculo dental", "cálculo dentario", "odontolito", "sarro dental", "sarro dentario", "tártaro", "tártaro dental", "tártaro dentario", "toba (infrecuente)"],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -1495,7 +1495,7 @@ const GLOSARIO = [
     sinonimos: ["acuñamiento", "acuñamiento del cuerpo vertebral", "acuñamiento vertebral", "aplastamiento del cuerpo vertebral", "colapso del cuerpo vertebral", "colapso vertebral", "compresión del cuerpo vertebral", "compresión vertebral"],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -1519,7 +1519,7 @@ const GLOSARIO = [
     sinonimos: ["enfermedad ósea de Paget", "osteítis deformante", "osteopatía de Paget", "escleromalacia múltiple (infrecuente)", "osteítis deformante hipertrófica (infrecuente)", "osteodistrofia deformante (infrecuente)", "osteopatía pagética (infrecuente)", "osteosis pagética (infrecuente)", "síndrome de Paget (infrecuente)"],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -1532,7 +1532,7 @@ const GLOSARIO = [
     sinonimos: ["mielitis (infrecuente)"],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -1554,7 +1554,7 @@ const GLOSARIO = [
     sinonimos: ["osteopatía condensante diseminada", "osteopoiquilia", "enfermedad de los huesos manchados (coloquial)", "huesos manchados (coloquial)"],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -1567,7 +1567,7 @@ const GLOSARIO = [
     sinonimos: ["melorreosteosis", "enfermedad de Léri (infrecuente)", "hiperostosis monomélica (infrecuente)", "osteosis eburneizante monomélica (infrecuente)", "síndrome de Léri (infrecuente)", "síndrome de Léri-Joanny (infrecuente)"],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -1580,7 +1580,7 @@ const GLOSARIO = [
     sinonimos: ["enfermedad de Albers-Schönberg", "enfermedad marmórea de los huesos", "enfermedad de los huesos de marfil (coloquial)", "enfermedad de los huesos de mármol (coloquial)", "huesos de marfil (coloquial)", "huesos de mármol (coloquial)", "osteoesclerosis congénita generalizada (infrecuente)"],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -1593,7 +1593,7 @@ const GLOSARIO = [
     sinonimos: ["osteopetrosis acroosteolítica (infrecuente)", "síndrome de Toulouse-Lautrec (infrecuente)"],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -1618,7 +1618,7 @@ const GLOSARIO = [
     sinonimos: ["artrosis discal", "artrosis raquídea", "artrosis vertebral", "discartrosis", "discoartrosis", "discopatía degenerativa", "enfermedad degenerativa discal", "enfermedad discal degenerativa", "espondilartrosis", "espondilodiscartrosis", "espondilodiscoartrosis"],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -1631,7 +1631,7 @@ const GLOSARIO = [
     sinonimos: ["artritis deformante", "artropatía deformante", "artropatía degenerativa", "artrosis deformante", "osteoartrosis", "reumatismo articular degenerativo (infrecuente)", "artritis degenerativa"],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -1644,7 +1644,7 @@ const GLOSARIO = [
     sinonimos: ["lesión traumática", "trauma"],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -1657,7 +1657,7 @@ const GLOSARIO = [
     sinonimos: ["connatal", "ingénito", "innato", "nativo"],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -1671,7 +1671,7 @@ const GLOSARIO = [
     sinonimos: [],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -1684,7 +1684,7 @@ const GLOSARIO = [
     sinonimos: ["enfermedad infectocontagiosa", "infección"],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -1699,7 +1699,7 @@ const GLOSARIO = [
     sinonimos: ["séptico"],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -1713,7 +1713,7 @@ const GLOSARIO = [
     sinonimos: ["neoformación", "neoplasma", "tumor", "tumoración", "blastoma", "oncoma"],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -1726,7 +1726,7 @@ const GLOSARIO = [
     sinonimos: ["tumoral", "oncótico"],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -1739,7 +1739,7 @@ const GLOSARIO = [
     sinonimos: [],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -1752,7 +1752,7 @@ const GLOSARIO = [
     sinonimos: [],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   },
@@ -1765,7 +1765,7 @@ const GLOSARIO = [
     sinonimos: ["enfermedad metabólica"],
     obs: "",
     fuentes: [
-      { nombre: "RANME", url: "https://dicciomed.ranm.es/" }
+      { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
   }
