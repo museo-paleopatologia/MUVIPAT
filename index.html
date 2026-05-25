@@ -52,9 +52,9 @@
     /* Tooltip SVG inline */
     .yac-tooltip-svg { pointer-events:none; opacity:0; transition:opacity .15s; }
     .yac-tooltip-svg.is-visible { opacity:1; }
-    .yac-tooltip-svg rect { fill:#0d0d0d; stroke:var(--orange,#ff6d00); stroke-width:1.5; }
-    .yac-tip-name { fill:var(--orange,#ff6d00); font-family:var(--font-head,Montserrat,sans-serif); font-size:24px; font-weight:800; }
-    .yac-tip-sub  { fill:#aaa; font-family:var(--font-head,Montserrat,sans-serif); font-size:18px; font-weight:400; }
+    .yac-tooltip-svg rect { fill:#0d0d0d; stroke:var(--orange,#ff6d00); stroke-width:4; }
+    .yac-tip-name { fill:var(--orange,#ff6d00); font-family:var(--font-head,Montserrat,sans-serif); font-size:52px; font-weight:800; }
+    .yac-tip-sub  { fill:#bbb; font-family:var(--font-head,Montserrat,sans-serif); font-size:40px; font-weight:400; }
  
     .yac-list { display:none; flex-direction:column; gap:.5rem; max-height:520px; overflow-y:auto; scrollbar-width:thin; scrollbar-color:var(--bone-300) transparent; }
     .yac-item { display:flex; align-items:flex-start; gap:.75rem; padding:.7rem .9rem; background:#fff; border:2px solid var(--bone-200); border-radius:2px; cursor:pointer; text-decoration:none; transition:border-color .15s,box-shadow .15s,transform .12s; }
@@ -868,12 +868,12 @@
       function showTooltip() {
         const label = yac.nombre;
         const sub   = `${yac.piezas.length} pieza${yac.piezas.length !== 1 ? 's' : ''} · ${yac.epoca}`;
-        const w = Math.max(label.length * 14 + 32, 230);
-        const h = 68;
+        const w = Math.max(label.length * 31 + 84, 460);
+        const h = 155;
         tipRect.setAttribute('width',  w);
         tipRect.setAttribute('height', h);
-        tipName.setAttribute('x', 14); tipName.setAttribute('y', 26);
-        tipSub.setAttribute('x',  14); tipSub.setAttribute('y',  52);
+        tipName.setAttribute('x', 42); tipName.setAttribute('y', 65);
+        tipSub.setAttribute('x',  42); tipSub.setAttribute('y', 118);
         tipName.textContent = label;
         tipSub.textContent  = sub;
         let tx = cx - w / 2;
