@@ -35,7 +35,7 @@
     .yac-stat { text-align:right; }
     .yac-stat__num { font-family:var(--font-head); font-size:clamp(1.4rem,2.5vw,2rem); font-weight:900; letter-spacing:-.04em; color:var(--dark); display:block; line-height:1; }
     .yac-stat__label { font-family:var(--font-head); font-size:.6rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--bone-500); }
-    .yac-layout { display:grid; grid-template-columns:300px 1fr; gap:1.5rem; align-items:stretch; }
+    .yac-layout { display:grid; grid-template-columns:clamp(280px,28vw,380px) 1fr; gap:1.5rem; align-items:stretch; }
     .yac-map-col { display:flex; flex-direction:column; }
     .yac-map-wrap { background:#fff; border:var(--border-thick); border-radius:4px; box-shadow:var(--shadow-md); overflow:hidden; position:relative; }
     #yac-map-svg { width:100%; height:auto; display:block; }
@@ -57,25 +57,43 @@
     .yac-tip-sub  { fill:#888; font-family:var(--font-head,Montserrat,sans-serif); font-size:14px; font-weight:400; }
  
     .yac-list { display:none; flex-direction:column; gap:.5rem; max-height:520px; overflow-y:auto; scrollbar-width:thin; scrollbar-color:var(--bone-300) transparent; }
-    .yac-item { display:flex; align-items:flex-start; gap:.75rem; padding:.7rem .9rem; background:#fff; border:2px solid var(--bone-200); border-radius:2px; cursor:pointer; text-decoration:none; transition:border-color .15s,box-shadow .15s,transform .12s; }
+    .yac-item { display:flex; align-items:flex-start; gap:.75rem; padding:.85rem 1rem; background:#fff; border:2px solid var(--bone-200); border-radius:2px; cursor:pointer; text-decoration:none; transition:border-color .15s,box-shadow .15s,transform .12s; }
     .yac-item:hover { border-color:var(--dark); box-shadow:3px 3px 0 var(--dark); transform:translate(-2px,-2px); }
     .yac-item.is-active { border-color:var(--orange); box-shadow:3px 3px 0 var(--orange); background:rgba(255,109,0,.04); }
-    .yac-item__dot  { width:10px; height:10px; border-radius:50%; flex-shrink:0; margin-top:.3rem; }
-    .yac-item__id   { font-family:var(--font-head); font-size:.55rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; margin-bottom:.15rem; }
-    .yac-item__name { font-family:var(--font-head); font-size:.72rem; font-weight:800; color:var(--dark); line-height:1.2; margin-bottom:.2rem; letter-spacing:-.01em; }
-    .yac-item__place{ font-size:.63rem; font-weight:300; color:var(--bone-500); line-height:1.4; }
-    .yac-item__tag  { display:inline-flex; margin-top:.3rem; font-family:var(--font-head); font-size:.5rem; font-weight:700; letter-spacing:.07em; text-transform:uppercase; padding:.15em .5em; border-radius:2px; border:1.5px solid; }
+    .yac-item__dot  { width:12px; height:12px; border-radius:50%; flex-shrink:0; margin-top:.3rem; }
+    .yac-item__id   { font-family:var(--font-head); font-size:.65rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; margin-bottom:.15rem; }
+    .yac-item__name { font-family:var(--font-head); font-size:.85rem; font-weight:800; color:var(--dark); line-height:1.2; margin-bottom:.25rem; letter-spacing:-.01em; }
+    .yac-item__place{ font-size:.75rem; font-weight:300; color:var(--bone-500); line-height:1.4; }
+    .yac-item__tag  { display:inline-flex; margin-top:.35rem; font-family:var(--font-head); font-size:.6rem; font-weight:700; letter-spacing:.07em; text-transform:uppercase; padding:.2em .55em; border-radius:2px; border:1.5px solid; }
     .yac-legend { display:flex; flex-wrap:wrap; gap:.65rem; margin-top:1.25rem; padding-top:1rem; border-top:1.5px solid var(--bone-200); }
-    .yac-legend-item { display:flex; align-items:center; gap:.4rem; font-family:var(--font-head); font-size:.58rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--bone-500); }
-    .yac-legend-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+    .yac-legend-item { display:flex; align-items:center; gap:.4rem; font-family:var(--font-head); font-size:.68rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--bone-500); }
+    .yac-legend-dot { width:11px; height:11px; border-radius:50%; flex-shrink:0; }
     @media (max-width:900px) {
       .yac-layout { grid-template-columns:1fr; align-items:start; }
       .yac-header { grid-template-columns:1fr; }
       .yac-stats  { justify-content:flex-start; }
       .yac-stat   { text-align:left; }
-      .yac-list   { max-height:280px; }
-      .yac-accordion-wrap { height:auto; max-height:280px; order:2; }
+      .yac-list   { max-height:340px; }
+      .yac-accordion-wrap { height:auto; max-height:340px; order:2; }
       .yac-map-col { order:1; }
+      .yac-acc-name { font-size:.9rem; }
+      .yac-acc-meta { font-size:.78rem; }
+      .yac-acc-tag  { font-size:.62rem; }
+      .yac-piece-row__name { font-size:.78rem; }
+      .yac-piece-row__pat  { font-size:.7rem; }
+      .yac-piece-row__btn  { font-size:.62rem; }
+      .yac-acc-coleccion   { font-size:.65rem; }
+    }
+    @media (max-width:480px) {
+      .yac-acc-header { padding: .9rem 1rem; }
+      .yac-acc-name { font-size:.95rem; }
+      .yac-acc-meta { font-size:.82rem; }
+      .yac-acc-tag  { font-size:.65rem; }
+      .yac-piece-row { flex-wrap:wrap; gap:.5rem; }
+      .yac-piece-row__name { font-size:.82rem; white-space:normal; }
+      .yac-piece-row__pat  { font-size:.72rem; }
+      .yac-piece-row__btn  { font-size:.65rem; align-self:flex-end; }
+      .yac-acc-coleccion   { font-size:.68rem; width:100%; justify-content:center; }
     }
 
     /* ── ACORDEONES DE YACIMIENTOS ─────────────────────────── */
@@ -111,7 +129,7 @@
       display: flex;
       align-items: flex-start;
       gap: .75rem;
-      padding: .7rem .9rem;
+      padding: .85rem 1rem;
       background: transparent;
       border: none;
       width: 100%;
@@ -119,34 +137,34 @@
       cursor: pointer;
     }
     .yac-acc-dot {
-      width: 10px; height: 10px;
+      width: 12px; height: 12px;
       border-radius: 50%;
       flex-shrink: 0;
-      margin-top: .3rem;
+      margin-top: .35rem;
     }
     .yac-acc-info { flex: 1; min-width: 0; }
     .yac-acc-name {
       font-family: var(--font-head);
-      font-size: .72rem;
+      font-size: clamp(.8rem, 1.4vw, .95rem);
       font-weight: 800;
       color: var(--dark);
       line-height: 1.2;
       letter-spacing: -.01em;
       display: block;
-      margin-bottom: .2rem;
+      margin-bottom: .25rem;
     }
     .yac-acc-meta {
-      font-size: .63rem;
+      font-size: clamp(.72rem, 1.1vw, .8rem);
       font-weight: 300;
       color: var(--bone-500);
       line-height: 1.4;
       display: block;
-      margin-bottom: .3rem;
+      margin-bottom: .35rem;
     }
     .yac-acc-tag {
       display: inline-flex;
       font-family: var(--font-head);
-      font-size: .5rem;
+      font-size: clamp(.58rem, .9vw, .65rem);
       font-weight: 700;
       letter-spacing: .07em;
       text-transform: uppercase;
@@ -155,10 +173,10 @@
       border: 1.5px solid;
     }
     .yac-acc-chevron {
-      width: 14px; height: 14px;
+      width: 16px; height: 16px;
       flex-shrink: 0;
       color: var(--bone-400);
-      margin-top: .2rem;
+      margin-top: .25rem;
       transition: transform .2s;
     }
     .yac-acc-item.is-active .yac-acc-chevron { transform: rotate(180deg); }
@@ -172,17 +190,17 @@
     .yac-acc-item.is-active .yac-acc-body { max-height: 600px; }
 
     .yac-acc-inner {
-      padding: .5rem .9rem .75rem;
+      padding: .65rem 1rem .9rem;
       border-top: 1px solid var(--bone-200);
     }
 
     /* Lista de piezas */
-    .yac-piece-list { display: flex; flex-direction: column; gap: .35rem; margin-bottom: .65rem; }
+    .yac-piece-list { display: flex; flex-direction: column; gap: .4rem; margin-bottom: .75rem; }
     .yac-piece-row {
       display: flex;
       align-items: center;
-      gap: .6rem;
-      padding: .45rem .6rem;
+      gap: .7rem;
+      padding: .55rem .75rem;
       background: var(--bone-50, #faf9f6);
       border-radius: 2px;
       border: 1px solid var(--bone-200);
@@ -190,7 +208,7 @@
     .yac-piece-row__info { flex: 1; min-width: 0; }
     .yac-piece-row__name {
       font-family: var(--font-head);
-      font-size: .65rem;
+      font-size: clamp(.72rem, 1.2vw, .8rem);
       font-weight: 700;
       color: var(--dark);
       white-space: nowrap;
@@ -199,19 +217,19 @@
       display: block;
     }
     .yac-piece-row__pat {
-      font-size: .57rem;
+      font-size: clamp(.65rem, 1vw, .72rem);
       font-weight: 300;
       color: var(--bone-500);
       display: block;
-      margin-top: .05rem;
+      margin-top: .07rem;
     }
     .yac-piece-row__btn {
       font-family: var(--font-head);
-      font-size: .5rem;
+      font-size: clamp(.58rem, .9vw, .65rem);
       font-weight: 700;
       letter-spacing: .07em;
       text-transform: uppercase;
-      padding: .25em .55em;
+      padding: .3em .65em;
       border-radius: 2px;
       border: 1.5px solid var(--dark);
       color: var(--dark);
@@ -229,11 +247,11 @@
       align-items: center;
       gap: .4rem;
       font-family: var(--font-head);
-      font-size: .55rem;
+      font-size: clamp(.62rem, 1vw, .7rem);
       font-weight: 700;
       letter-spacing: .1em;
       text-transform: uppercase;
-      padding: .35em .75em;
+      padding: .4em .85em;
       border-radius: 2px;
       border: 1.5px solid var(--orange);
       color: var(--orange);
@@ -242,7 +260,7 @@
       transition: background .12s, color .12s;
     }
     .yac-acc-coleccion:hover { background: var(--orange); color: #fff; }
-    .yac-acc-coleccion svg { width: 10px; height: 10px; }
+    .yac-acc-coleccion svg { width: 11px; height: 11px; }
 
     /* ══════════════════════════════════════════
        SECCIÓN INVESTIGADORES
