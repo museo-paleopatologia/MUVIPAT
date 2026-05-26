@@ -240,6 +240,115 @@ const PIEZAS = [
     yacimiento:'Batalla de Nájera, La Rioja',
     descripcion:'Fractura deprimida en el parietal izquierdo con patrón radial. Ausencia de remodelación ósea. Lesión perimortem por objeto contundente. Contexto de violencia interpersonal.',
     imagen:null, ficha:'/prueba-museo/ficha-maestra.html?id=OV-016' },
+  
+  { id: 'OV-017',
+    nombre: 'Cráneo con traumatismo por arma blanca',
+    region: 'craneo',
+    patologia: 'trauma',
+    sexo: 'masculino',
+    epoca: 'medieval',
+    yacimiento: 'Cementerio Islámico de San Nicolás, Murcia',
+    descripcion: 'Lesión traumática craneal elipsoidal en cresta superciliar con evidencia de remodelación ósea parcial. Compatible con traumatismo por instrumento cortante en contexto de violencia interpersonal.',
+    imagen: null,
+    ficha: '/prueba-museo/ficha-estandar.html?id=OV-017',
+
+    cronologia: 'Siglos XI–XII',
+    edad: 'Adulto joven',
+    conservacion: null,
+
+    descripcion_osteologica: [
+      'La pieza procede de la maqbara isl\u00e1mica de San Nicol\u00e1s, un espacio funerario asociado a la poblaci\u00f3n hispano-musulmana de Murcia con uso documentado entre los siglos XI y XIII<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">\u00b9</a>. Este cementerio refleja pr\u00e1cticas isl\u00e1micas caracter\u00edsticas como enterramientos en dec\u00fabitos laterales y orientaci\u00f3n oeste-este<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">\u00b9</a>.',
+      'El individuo presenta una lesi\u00f3n traum\u00e1tica craneal de morfolog\u00eda elipsoidal, localizada en la regi\u00f3n de la cresta superciliar hasta cerca de la sutura coronal<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">\u00b2</a>. La lesi\u00f3n presenta una longitud aproximada de 66 mm y una anchura transversal de 40,2 mm<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">\u00b2</a>.',
+      'El borde derecho aparece irregular y sin signos de reparaci\u00f3n, mientras que el izquierdo muestra adelgazamiento y evidencias de remodelaci\u00f3n \u00f3sea, indicando una supervivencia inicial al trauma<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">\u00b2</a>.',
+      'Presenta otros indicadores osteol\u00f3gicos como hipoplasia de esmalte dental, c\u00e1lculo dental, caries, rebordes artr\u00f3sicos y n\u00f3dulos de Schm\u00f6rl<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">\u00b2</a>.'
+    ],
+
+    diagnostico_principal: 'Traumatismo por fuerza cortante compatible con instrumento de hoja. La morfolog\u00eda elipsoidal, su orientaci\u00f3n anat\u00f3mica y la presencia de remodelaci\u00f3n \u00f3sea parcial apoyan un episodio de violencia interpersonal no letal inicialmente.',
+
+    hallazgos: [
+      {
+        titulo: 'Traumatismo craneal',
+        items: [
+          { texto: 'Lesi\u00f3n elipsoidal en cresta superciliar con longitud de 66 mm y anchura de 40,2 mm.', refs: [2] },
+          { texto: 'Borde derecho irregular sin signos de reparaci\u00f3n; borde izquierdo con remodelaci\u00f3n \u00f3sea.', refs: [2] },
+          { texto: 'Patr\u00f3n compatible con traumatismo por instrumento cortante y violencia interpersonal.', refs: [2] }
+        ]
+      },
+      {
+        titulo: 'Indicadores osteol\u00f3gicos asociados',
+        items: [
+          { texto: 'Hipoplasia de esmalte dental, c\u00e1lculo dental y caries.', refs: [2] },
+          { texto: 'Rebordes artr\u00f3sicos y n\u00f3dulos de Schm\u00f6rl.', refs: [2] }
+        ]
+      }
+    ],
+
+    referencias: [
+      {
+        id: 1,
+        autores: 'Navarro Palaz\u00f3n, J.',
+        anio: '1986',
+        titulo: 'El cementerio isl\u00e1mico de San Nicol\u00e1s de Murcia. Memoria preliminar',
+        editorial: 'Actas del I Congreso de Arqueolog\u00eda Medieval Espa\u00f1ola, Zaragoza. p. 7\u201337'
+      },
+      {
+        id: 2,
+        autores: 'Pimentel de Francisco, G., Rodr\u00edguez Gonz\u00e1lez, A.I., Gonz\u00e1lez Mart\u00edn, A., Campo Mart\u00edn, M., Robles Rodr\u00edguez, F.J., Arzoz del Val, L.',
+        anio: '2001',
+        titulo: 'Evidencia de violencia en la poblaci\u00f3n hispanomusulmana de San Nicol\u00e1s (Murcia, s XI a s XIII)',
+        editorial: 'Actas del VI Congreso Nacional de Paleopatolog\u00eda. p. 542\u2013544'
+      }
+    ],
+
+    imagenes: [],
+    layoutMode: 'default' 
+  },
+
+  { id: 'OV-018',
+      nombre: 'Mand\u00edbula con hipoplasia de esmalte dental',
+    region: 'craneo',
+    patologia: 'metabolica',
+    sexo: 'indeterminado',
+    epoca: 'medieval',
+    yacimiento: 'Cementerio Isl\u00e1mico de San Nicol\u00e1s, Murcia',
+    descripcion: 'Mandíbula con defectos compatibles con hipoplasia del esmalte dental, indicador de estrés metabólico, nutricional o infeccioso durante la infancia.',
+    imagen: null,
+    ficha: '/prueba-museo/ficha-estandar.html?id=OV-018',
+
+    cronologia: 'Siglos XI\u2013XIII',
+    edad: null,
+    conservacion: null,
+
+    descripcion_osteologica: [
+      'La pieza presenta alteraciones compatibles con hipoplasia del esmalte (HE), un defecto permanente en la formaci\u00f3n del esmalte dental derivado de interrupciones durante la amelogénesis<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">\u00b9</a>.',
+      'Este hallazgo es interesante por coexistir con una elevada frecuencia poblacional de cribra orbitalia (CO), ambos indicadores asociados a estr\u00e9s metab\u00f3lico, nutricional o infeccioso<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">\u00b9</a>.'
+    ],
+
+    diagnostico_principal: 'Hipoplasia del esmalte dental compatible con alteraciones en la formaci\u00f3n del esmalte durante la infancia por estr\u00e9s metab\u00f3lico, nutricional o infeccioso.',
+
+    hallazgos: [
+      {
+        titulo: 'Hipoplasia del esmalte dental',
+        items: [
+          { texto: 'Defectos permanentes en la formaci\u00f3n del esmalte dental por interrupci\u00f3n de la amelogénesis.', refs: [1] },
+          { texto: 'Coexistencia con cribra orbitalia en la poblaci\u00f3n, ambos indicadores de estr\u00e9s sist\u00e9mico.', refs: [1] }
+        ]
+      }
+    ],
+
+    referencias: [
+      {
+        id: 1,
+        autores: 'Robles, F.J., Gonz\u00e1lez, A., Garc\u00eda, C.',
+        anio: '1996',
+        titulo: 'Indicadores de estr\u00e9s en la poblaci\u00f3n hispano-musulmana de San Nicol\u00e1s (Murcia, s. XI a XIII)',
+        editorial: 'En: P\u00e9rez-P\u00e9rez A, editor. Salud, enfermedad y muerte en el pasado. Barcelona: Fundaci\u00f3n Uriach 1838. p. 109\u2013119'
+      }
+    ],
+
+    imagenes: [],
+    layoutMode: 'default'
+  },
 
 
   /* ══════════════════════════════════════════
