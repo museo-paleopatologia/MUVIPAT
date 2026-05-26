@@ -732,10 +732,13 @@
     }
     @media (max-width: 640px) {
       .au-tabs { width: 100%; }
-      .au-tab  { flex: 1; justify-content: center; padding: .6rem .5rem; font-size: .62rem; }
+      .au-tab  { flex: 1; justify-content: center; padding: .6rem .4rem; font-size: .6rem; white-space: normal; text-align: center; line-height: 1.2; }
       .glos-grid   { grid-template-columns: 1fr; }
       .biblio-grid { grid-template-columns: 1fr; }
       .quiz-match  { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 400px) {
+      .quiz-list-item { min-width: 100%; }
     }
   </style>
 </head>
@@ -1904,6 +1907,7 @@ function getPlanosWidget() {
           <a href="./aula.html"        class="footer__link">Aula</a>
           <a href="./actualidad.html"  class="footer__link">Actualidad</a>
           <a href="./index.html#proyecto" class="footer__link">Proyecto</a>
+          <a href="./contacto.html"       class="footer__link">Contacto</a>
         </nav>
       </div>
     </div>

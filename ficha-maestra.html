@@ -161,6 +161,12 @@
       .fm-card { max-width:100%; }
       .fm-footer-grid { grid-template-columns:1fr 1fr; }
     }
+    @media (max-width: 540px) {
+      .fm-hero__viewer-preview { display:none; }
+      .fm-hero__inner { gap: 1.5rem; }
+      .fm-hero__title { font-size: clamp(2.2rem, 10vw, 3rem); }
+      .fm-sticky-viewer { height: 45svh; }
+    }
     @media (max-width: 500px) {
       .fm-footer-grid { grid-template-columns:1fr; }
       .fm-data-grid   { grid-template-columns:1fr; }
@@ -502,6 +508,7 @@
           <a href="./aula.html"        class="footer__link">Aula</a>
           <a href="./actualidad.html"  class="footer__link">Actualidad</a>
           <a href="./index.html#proyecto" class="footer__link">Proyecto</a>
+          <a href="./contacto.html"       class="footer__link">Contacto</a>
         </nav>
       </div>
     </div>

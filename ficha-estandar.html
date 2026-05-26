@@ -176,7 +176,27 @@
     .glos-link { color:var(--blue); text-decoration:underline dotted; text-underline-offset:3px; font-weight:600; transition:color .15s; }
     .glos-link:hover { color:var(--crimson); }
 
-    @media (max-width:500px) {
+    @media (max-width: 700px) {
+      .fe-main { grid-template-columns: 1fr; }
+      .fe-main--tall {
+        grid-template-columns: 1fr !important;
+      }
+      .fe-main--tall .fe-viewer-wrap {
+        grid-column: auto; grid-row: auto;
+        position: static;
+      }
+      .fe-main--tall model-viewer {
+        height: 55vw !important;
+        min-height: 220px !important;
+        max-height: 380px !important;
+      }
+      .fe-main--tall .fe-gallery,
+      .fe-main--tall .fe-tags,
+      .fe-main--tall .fe-header,
+      .fe-main--tall .fe-section,
+      .fe-main--tall .fe-master-link { grid-column: auto; }
+    }
+    @media (max-width: 500px) {
       .fe-data-grid { grid-template-columns:1fr; }
       .fe-data-item--full { grid-column:auto; }
     }
@@ -406,6 +426,7 @@
         <a href="./aula.html"        class="footer__link">Aula</a>
         <a href="./actualidad.html"  class="footer__link">Actualidad</a>
         <a href="./index.html#proyecto" class="footer__link">Proyecto</a>
+        <a href="./contacto.html"       class="footer__link">Contacto</a>
       </nav>
     </div>
   </div>
