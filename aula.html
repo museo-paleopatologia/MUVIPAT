@@ -41,8 +41,9 @@
     /* Layout de dos columnas cuando hay imagen o widget */
     .glos-modal-body.has-visual {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
+      grid-template-columns: 55fr 45fr;
+      gap: 1.75rem;
+      align-items: start;
     }
     .glos-modal-col-left,
     .glos-modal-col-right {
@@ -50,6 +51,26 @@
       flex-direction: column;
       gap: 1.2rem;
     }
+    /* Figura educativa */
+    .glos-modal-figure {
+      margin: 0;
+      border: 2px solid #0d0d0d;
+      border-radius: 2px;
+      box-shadow: 3px 3px 0 #0d0d0d;
+      overflow: hidden;
+    }
+    .glos-modal-figcaption {
+      font-family: var(--font-ui);
+      font-size: .72rem;
+      font-weight: 300;
+      font-style: italic;
+      color: #5a4a35;
+      line-height: 1.55;
+      padding: .55rem .75rem;
+      border-top: 1.5px solid rgba(13,13,13,.12);
+      background: rgba(13,13,13,.03);
+    }
+    .glos-modal-figcaption:empty { display: none; }
     /* Imagen con hotspots */
     .img-hotspot {
       position: absolute;
@@ -1214,7 +1235,10 @@ function openGlosModal(entry) {
     imgWrap.style.display = '';
     const img = document.getElementById('glos-modal-img');
     img.src = entry.imagen;
-    img.alt = entry.termino;
+    img.alt = entry.imagenCaption || entry.termino;
+
+    const figcaption = document.getElementById('glos-modal-figcaption');
+    if (figcaption) figcaption.textContent = entry.imagenCaption || '';
 
     // Limpiar hotspots anteriores
     const inner = document.getElementById('glos-modal-img-inner');
@@ -1968,10 +1992,12 @@ function getPlanosWidget() {
             </div>
 
             <div class="glos-modal-img-wrap" id="glos-modal-img-wrap" style="display:none">
-              <p class="glos-modal-img-label">Imagen con anotaciones</p>
+              <figure class="glos-modal-figure">
               <div style="position:relative" id="glos-modal-img-inner">
                 <img id="glos-modal-img" alt="" style="width:100%;height:auto;display:block" />
               </div>
+              <figcaption class="glos-modal-figcaption" id="glos-modal-figcaption"></figcaption>
+              </figure>
               <div class="hs-desc-box" id="glos-hs-desc"></div>
             </div>
 

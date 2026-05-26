@@ -1879,6 +1879,21 @@ const GLOSARIO = [
       { nombre: "RANME", url: "https://dptm.es/" }
     ],
     contextoPaleopatologico: ""
+  },
+  {
+    termino: "Pseudopatología",
+    categoria: "PALEOPATOLOGÍA",
+    acepciones: [
+      "s.f. Alteración o daño en el tejido óseo de restos arqueológicos que presenta una apariencia anormal similar a la de una enfermedad o trauma, pero que en realidad no es el resultado de un proceso biológico en vida (antemortem), sino producto de la destrucción física del hueso ocurrida después de la muerte."
+    ],
+    sinonimos: ["alteración tafonómica"],
+    obs: "",
+    fuentes: [
+      { nombre: "Ortner & Putschar (1981)", url: "" }
+    ],
+    contextoPaleopatologico: "Las pseudopatologías son el resultado del entorno de entierro (acción de microorganismos, componentes químicos de la tierra o fauna) y el uso de técnicas de excavación descuidadas. Distinguir una pseudopatología de una patología real no es sencillo. Por ejemplo, un daño causado por una pala durante la excavación puede confundirse con un trauma antemortem. Por otro lado, se debe ser cuidadoso al clasificar un daño ambiental como pseudopatología, puesto que muchas enfermedades reales debilitan el hueso en vida, haciéndolo más susceptible a deteriorarse rápidamente en la tierra tras el entierro.",
+    imagen: "./assets/img/glosario/pseudopatologia.jpg",
+    imagenCaption: "Diferencias macroscópicas entre lesión patológica y pseudopatología."
   }
 
 ];
