@@ -1892,7 +1892,7 @@ const GLOSARIO = [
       { nombre: "Ortner & Putschar (1981)", url: "" }
     ],
     contextoPaleopatologico: "Las pseudopatologías son el resultado del entorno de entierro (acción de microorganismos, componentes químicos de la tierra o fauna) y el uso de técnicas de excavación descuidadas. Distinguir una pseudopatología de una patología real no es sencillo. Por ejemplo, un daño causado por una pala durante la excavación puede confundirse con un trauma antemortem. Por otro lado, se debe ser cuidadoso al clasificar un daño ambiental como pseudopatología, puesto que muchas enfermedades reales debilitan el hueso en vida, haciéndolo más susceptible a deteriorarse rápidamente en la tierra tras el entierro.",
-    imagen: "./assets/img/glosario/pseudopatologia.jpg",
+    imagen: "./assets/img/glosario/pseudopatologia.png",
     imagenCaption: "Diferencias macroscópicas entre lesión patológica y pseudopatología."
   }
 
