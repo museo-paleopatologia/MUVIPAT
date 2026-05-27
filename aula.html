@@ -452,6 +452,34 @@
     }
     .biblio-card__doi:hover { gap: .55rem; }
 
+    /* Panel contextual de bibliografía */
+    .biblio-ctx-panel {
+      display: flex;
+      align-items: flex-start;
+      gap: .65rem;
+      padding: .7rem 1rem;
+      background: #fff;
+      border: 2px solid #0d0d0d;
+      border-left: 4px solid #6b5a43;
+      border-radius: 2px;
+      box-shadow: 2px 2px 0 rgba(13,13,13,.1);
+      margin-bottom: .25rem;
+    }
+    .biblio-ctx-panel__icon {
+      flex-shrink: 0;
+      color: #8a7a65;
+      margin-top: .1rem;
+    }
+    .biblio-ctx-panel__text {
+      font-family: var(--font-ui);
+      font-size: .78rem;
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.65;
+      color: #5a4a35;
+      margin: 0;
+    }
+
     /* ═══════════════════════════════════════
        QUIZZES
     ═══════════════════════════════════════ */
@@ -877,11 +905,20 @@
         <div class="au-filter-pills" id="biblio-pills">
           <button class="au-pill active" data-bf="all">Todas</button>
           <button class="au-pill" data-bf="paleopatologia">Paleopatología</button>
-          <button class="au-pill" data-bf="metodologia">Metodología</button>
-          <button class="au-pill" data-bf="bioarqueologia">Bioarqueología</button>
-          <button class="au-pill" data-bf="digital">Digitalización 3D</button>
+          <button class="au-pill" data-bf="antropologia">Antropología</button>
+          <button class="au-pill" data-bf="museos">Museos</button>
+          <button class="au-pill" data-bf="historicos">Casos Históricos</button>
+          <button class="au-pill" data-bf="coleccion">Colección</button>
+          <button class="au-pill" data-bf="lecturas">Lecturas</button>
         </div>
         <span class="au-count-label"><strong id="biblio-count">0</strong> referencias</span>
+      </div>
+
+      <div class="biblio-ctx-panel" id="biblio-ctx-panel">
+        <span class="biblio-ctx-panel__icon" aria-hidden="true">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+        </span>
+        <p class="biblio-ctx-panel__text" id="biblio-ctx-text"></p>
       </div>
 
       <div class="biblio-grid" id="biblio-grid"></div>
@@ -922,55 +959,37 @@
      DATOS — Bibliografía (16 referencias)
   ═══════════════════════════════════════════════════════ */
   const BIBLIOGRAFIA = [
-    {
-      cat: 'paleopatologia',
-      ref: '<strong>Aufderheide, A.C.</strong> & Rodríguez-Martín, C. (1998). <em>The Cambridge Encyclopedia of Human Paleopathology</em>. Cambridge University Press.',
-      doi: null, url: null
-    },
+
+    /* ── PALEOPATOLOGÍA ── */
     {
       cat: 'paleopatologia',
       ref: '<strong>Ortner, D.J.</strong> (2003). <em>Identification of Pathological Conditions in Human Skeletal Remains</em> (2nd ed.). Academic Press.',
-      doi: null, url: null
-    },
-    {
-      cat: 'bioarqueologia',
-      ref: '<strong>Buikstra, J.E.</strong> & Ubelaker, D.H. (Eds.) (1994). <em>Standards for Data Collection from Human Skeletal Remains</em>. Arkansas Archaeological Survey.',
-      doi: null, url: null
-    },
-    {
-      cat: 'metodologia',
-      ref: '<strong>Brothwell, D.R.</strong> (1981). <em>Digging Up Bones: The Excavation, Treatment and Study of Human Skeletal Remains</em>. Cornell University Press.',
-      doi: null, url: null
+      doi: null, url: 'https://www.sciencedirect.com/book/edited-volume/9780125286282/identification-of-pathological-conditions-in-human-skeletal-remains'
     },
     {
       cat: 'paleopatologia',
-      ref: '<strong>Roberts, C.</strong> & Manchester, K. (2005). <em>The Archaeology of Disease</em> (3rd ed.). The History Press.',
-      doi: null, url: null
-    },
-    {
-      cat: 'bioarqueologia',
-      ref: '<strong>Larsen, C.S.</strong> (1997). <em>Bioarchaeology: Interpreting Behavior from the Human Skeleton</em>. Cambridge University Press.',
-      doi: '10.1017/CBO9780511802676', url: 'https://doi.org/10.1017/CBO9780511802676'
+      ref: '<strong>Ruffer, M.A.</strong> (1921). <em>Studies in the Palaeopathology of Egypt</em>. University of Chicago Press.',
+      doi: null, url: 'https://books.google.bj/books?id=GyYwAAAAYAAJ&hl=fr'
     },
     {
       cat: 'paleopatologia',
-      ref: '<strong>Campillo, D.</strong> (2001). <em>Introducción a la Paleopatología</em>. Edicions Bellaterra.',
-      doi: null, url: null
+      ref: '<strong>Roberts, C.</strong> & Manchester, K. (2005). <em>The Archaeology of Disease</em> (3rd ed.). Sutton Publishing.',
+      doi: null, url: 'https://doi.org/10.1002/oa.895'
     },
     {
-      cat: 'metodologia',
-      ref: '<strong>Bass, W.M.</strong> (2005). <em>Human Osteology: A Laboratory and Field Manual</em> (5th ed.). Missouri Archaeological Society.',
-      doi: null, url: null
+      cat: 'paleopatologia',
+      ref: '<strong>Roberts, C.A.</strong> (2011). Palaeopathology and its relevance to understanding health and disease in the past. <em>International Journal of Paleopathology</em>, 1(1), 1–8.',
+      doi: null, url: 'https://doi.org/10.1515/anre-2016-0001'
     },
     {
-      cat: 'digital',
-      ref: '<strong>Galeazzi, F.</strong> (2016). Towards the definition of best 3D practices in archaeology: Assessing 3D documentation techniques for intra-site data recording. <em>Journal of Cultural Heritage</em>, 17, 159–169.',
-      doi: '10.1016/j.culher.2015.04.003', url: 'https://doi.org/10.1016/j.culher.2015.04.003'
+      cat: 'paleopatologia',
+      ref: '<strong>Aufderheide, A.C.</strong> & Rodríguez-Martín, C. (1998). <em>The Cambridge Encyclopedia of Human Paleopathology</em>. Cambridge University Press.',
+      doi: null, url: 'https://www.researchgate.net/publication/24823062_The_Cambridge_Encyclopedia_of_Human_Paleopathology'
     },
     {
-      cat: 'digital',
-      ref: '<strong>Kuzminsky, S.C.</strong> & Gardiner, M.S. (2012). Three-dimensional laser scanning: potential uses for museum conservation and scientific research. <em>Journal of Archaeological Science</em>, 39(8), 2744–2751.',
-      doi: '10.1016/j.jas.2012.04.020', url: 'https://doi.org/10.1016/j.jas.2012.04.020'
+      cat: 'paleopatologia',
+      ref: '<strong>Wood, J.W.</strong>, Milner, G.R., Harpending, H.C. & Weiss, K.M. (1992). The osteological paradox: problems of inferring prehistoric health from skeletal samples. <em>Current Anthropology</em>, 33(4), 343–370.',
+      doi: null, url: 'https://www.jstor.org/stable/2743861'
     },
     {
       cat: 'paleopatologia',
@@ -978,30 +997,104 @@
       doi: '10.1017/CBO9780511811036', url: 'https://doi.org/10.1017/CBO9780511811036'
     },
     {
-      cat: 'bioarqueologia',
-      ref: '<strong>Sofaer, J.R.</strong> (2006). <em>The Body as Material Culture: A Theoretical Osteoarchaeology</em>. Cambridge University Press.',
-      doi: '10.1017/CBO9780511816666', url: 'https://doi.org/10.1017/CBO9780511816666'
-    },
-    {
-      cat: 'metodologia',
-      ref: '<strong>Ferembach, D.</strong>, Schwidetzky, I. & Stloukal, M. (1980). Recommendations for age and sex diagnoses of skeletons. <em>Journal of Human Evolution</em>, 9(7), 517–549.',
-      doi: '10.1016/0047-2484(80)90061-5', url: 'https://doi.org/10.1016/0047-2484(80)90061-5'
-    },
-    {
       cat: 'paleopatologia',
-      ref: '<strong>Santos, A.L.</strong> & Roberts, C.A. (2006). Anatomy of a serial killer: differential diagnosis of tuberculosis based on rib lesions of adult individuals from the Coimbra Identified Skeletal Collection, Portugal. <em>American Journal of Physical Anthropology</em>, 130(1), 38–49.',
-      doi: '10.1002/ajpa.20160', url: 'https://doi.org/10.1002/ajpa.20160'
+      ref: '<strong>Campillo, D.</strong> (2001). <em>Introducción a la Paleopatología</em>. Edicions Bellaterra.',
+      doi: null, url: null
+    },
+
+    /* ── ANTROPOLOGÍA ── */
+    {
+      cat: 'antropologia',
+      ref: '<strong>Jurmain, R.</strong>, Kilgore, L., Trevathan, W. & Ciochon, R.L. (2018). <em>Essentials of Physical Anthropology</em> (12th ed.). Cengage Learning.',
+      doi: null, url: 'https://books.google.es/books/about/Essentials_of_Physical_Anthropology.html?id=0x71CAAAQBAJ&redir_esc=y'
     },
     {
-      cat: 'digital',
-      ref: '<strong>Means, B.</strong> (Ed.) (2013). <em>Mobilizing the Past for a Digital Future: The Potential of Digital Archaeology</em>. The Digital Press at the University of North Dakota.',
-      doi: null, url: 'https://digitalpress.library.und.edu/mobilizing'
+      cat: 'antropologia',
+      ref: '<strong>Larsen, C.S.</strong> (2015). <em>Bioarchaeology: Interpreting Behavior from the Human Skeleton</em> (2nd ed.). Cambridge University Press.',
+      doi: null, url: 'https://www.cambridge.org/gb/universitypress/subjects/life-sciences/biological-anthropology-and-primatology/bioarchaeology-interpreting-behavior-human-skeleton-2nd-edition'
     },
     {
-      cat: 'bioarqueologia',
-      ref: '<strong>Steckel, R.H.</strong> et al. (2002). Skeletal health in the Western Hemisphere from 4000 BC to the present. <em>Evolutionary Anthropology</em>, 11(4), 142–155.',
-      doi: '10.1002/evan.10030', url: 'https://doi.org/10.1002/evan.10030'
+      cat: 'antropologia',
+      ref: '<strong>Goodman, A.H.</strong> & Leatherman, T.L. (1998). Bringing culture into human biology and biology back into anthropology. <em>American Anthropologist</em>, 100(4), 936–948.',
+      doi: null, url: 'https://doi.org/10.1111/aman.12022'
     },
+    {
+      cat: 'antropologia',
+      ref: '<strong>Bermúdez de Castro, J.M.</strong> (2010). <em>La evolución del talento</em>. Debate.',
+      doi: null, url: 'https://www.casadellibro.com/libro-la-evolucion-del-talento/9788483068472/1611215'
+    },
+
+    /* ── MUSEOS Y COLECCIONES DIGITALES ── */
+    {
+      cat: 'museos',
+      ref: '<strong>Digitised Diseases.</strong> Colección digital de restos óseos arqueológicos patológicos, desarrollada por universidades del Reino Unido. Permite explorar lesiones en alta resolución en 3D.',
+      doi: null, url: 'http://www.digitiseddiseases.org/'
+    },
+    {
+      cat: 'museos',
+      ref: '<strong>Smithsonian Institution — Human Origins Program.</strong> Colección de recursos educativos sobre evolución humana, anatomía comparada y registro fósil del Smithsonian.',
+      doi: null, url: 'https://humanorigins.si.edu/'
+    },
+    {
+      cat: 'museos',
+      ref: '<strong>Bone Clones — Human Osteology Collection.</strong> Catálogo de réplicas anatómicas y patológicas de referencia, ampliamente utilizado en docencia e investigación forense.',
+      doi: null, url: 'https://boneclones.com/category/human-osteology'
+    },
+
+    /* ── CASOS HISTÓRICOS ── */
+    {
+      cat: 'historicos',
+      ref: '<strong>Garrido Pena, R.</strong> (2020). Ötzi, el hombre del hielo en el MAN. <em>Boletín del Museo Arqueológico Nacional</em>, 39, 21.',
+      doi: null, url: 'https://www.man.es/man/estudio/publicaciones/boletin-info/2020-2029/2020-39-21-garrido-info.html'
+    },
+    {
+      cat: 'historicos',
+      ref: '<strong>Kean, W.F.</strong> et al. (2013). The musculoskeletal abnormalities of the Similaun Iceman. <em>SAGE Open Medicine</em>.',
+      doi: null, url: 'https://doi.org/10.1007/s10787-012-0153-5'
+    },
+    {
+      cat: 'historicos',
+      ref: '<strong>Murphy, W.A.</strong> et al. (2025). New insights on Ötzi\'s injuries from a clinical perspective. <em>Journal of Archaeological Science</em>.',
+      doi: null, url: 'https://doi.org/10.1038/s41598-025-27969-9'
+    },
+    {
+      cat: 'historicos',
+      ref: '<strong>Wierer, U.</strong> et al. (2018). Ötzi, the Iceman: Lyme Disease, Androgenetic Alopecia and Dark Skin. <em>PLOS ONE</em>.',
+      doi: null, url: 'https://doi.org/10.1016/J.AD.2023.09.004'
+    },
+    {
+      cat: 'historicos',
+      ref: '<strong>Appleby, J.</strong>, Mitchell, P., Robinson, C., Brough, A., Rutty, G., Harris, R. et al. (2015). Perimortem trauma in King Richard III: a skeletal analysis. <em>Lancet</em>, 385(9964), 253–259.',
+      doi: '10.1016/S0140-6736(14)60804-7', url: 'https://doi.org/10.1016/S0140-6736(14)60804-7'
+    },
+    {
+      cat: 'historicos',
+      ref: '<strong>Halsey, T.</strong>, Hutton, T., Carr, A. & Appleby, J. (2014). The scoliosis of Richard III, last Plantagenet King of England: diagnosis and clinical significance. <em>Lancet</em>, 383(9932), 1944.',
+      doi: '10.1016/S0140-6736(14)60762-5', url: 'https://doi.org/10.1016/S0140-6736(14)60762-5'
+    },
+    {
+      cat: 'historicos',
+      ref: '<strong>University of Leicester.</strong> Richard III: scientific investigation and skeletal analysis. Universidad de Leicester.',
+      doi: null, url: 'https://le.ac.uk/richard-iii/identification/osteology/analysing-the-skeleton'
+    },
+
+    /* ── COLECCIÓN ── */
+    {
+      cat: 'coleccion',
+      ref: '<strong>Robles, F.J.</strong>, González, A. & García, C. (1996). Indicadores de estrés en la población hispano-musulmana de San Nicolás (Murcia, s. XI a XIII). En Pérez-Pérez, A. (ed.), <em>Salud, enfermedad y muerte en el pasado</em>. Fundación Uriach 1838, pp. 109–119.',
+      doi: null, url: './assets/documents/mandibula-san-nicolas.pdf'
+    },
+    {
+      cat: 'coleccion',
+      ref: '<strong>Navarro Palazón, J.</strong> (1986). El cementerio islámico de San Nicolás de Murcia. Memoria preliminar. En <em>Actas del I Congreso de Arqueología Medieval Española</em>. Zaragoza, pp. 7–37.',
+      doi: null, url: './assets/documents/cementerio-san-nicolas.pdf'
+    },
+    {
+      cat: 'coleccion',
+      ref: '<strong>Pimentel de Francisco, G.</strong>, Rodríguez González, A.I., González Martín, A., Campo Martín, M., Robles Rodríguez, F.J. & Arzoz del Val, L. (2001). Evidencia de violencia en la población hispanomusulmana de San Nicolás (Murcia, s. XI a XIII). En <em>Actas del VI Congreso Nacional de Paleopatología</em>, pp. 542–544.',
+      doi: null, url: './assets/documents/craneo-trauma-san-nicolas.pdf'
+    },
+
   ];
 
   /* ═══════════════════════════════════════════════════════
@@ -1113,10 +1206,12 @@
     'TAFONOMÍA':      { color: '#d4e60a', bg: 'rgba(212,230,10,.08)' },
   };
   const BIBLIO_COLORS = {
-    paleopatologia: { color: '#c0003c', bg: 'rgba(192,0,60,.08)' },
-    metodologia:    { color: '#2979ff', bg: 'rgba(41,121,255,.08)' },
-    bioarqueologia: { color: '#00e676', bg: 'rgba(0,230,118,.08)' },
-    digital:        { color: '#aa00ff', bg: 'rgba(170,0,255,.08)' },
+    paleopatologia: { color: '#c0003c', bg: 'rgba(192,0,60,.08)'   },
+    antropologia:   { color: '#2979ff', bg: 'rgba(41,121,255,.08)' },
+    museos:         { color: '#aa00ff', bg: 'rgba(170,0,255,.08)'  },
+    historicos:     { color: '#ff9800', bg: 'rgba(255,152,0,.08)'  },
+    coleccion:      { color: '#00e676', bg: 'rgba(0,230,118,.08)'  },
+    lecturas:       { color: '#00e5ff', bg: 'rgba(0,229,255,.08)'  },
   };
   const CAT_LABELS = {
     'ORIENTACIÓN':    'Orientación',
@@ -1125,11 +1220,13 @@
     'ENFERMEDADES':   'Enfermedades',
     'PALEOPATOLOGÍA': 'Paleopatología',
     'TAFONOMÍA':      'Tafonomía',
-    // bibliografía (se quedan igual):
+    // bibliografía:
     paleopatologia: 'Paleopatología',
-    metodologia:    'Metodología',
-    bioarqueologia: 'Bioarqueología',
-    digital:        'Digitalización 3D'
+    antropologia:   'Antropología',
+    museos:         'Museos y Colecciones',
+    historicos:     'Casos Históricos',
+    coleccion:      'Colección',
+    lecturas:       'Lecturas Recomendadas'
   };
 
   /* ═══════════════════════════════════════════════════════
@@ -1458,11 +1555,9 @@ function getPlanosWidget() {
         const titulo = (ref.titulo + ' ' + (ref.editorial || '')).toLowerCase();
         let cat = 'paleopatologia';
         if (titulo.includes('3d') || titulo.includes('scan') || titulo.includes('fotogram') || titulo.includes('digital') || titulo.includes('model')) {
-          cat = 'digital';
-        } else if (titulo.includes('method') || titulo.includes('standard') || titulo.includes('manual') || titulo.includes('laboratory')) {
-          cat = 'metodologia';
+          cat = 'museos';
         } else if (titulo.includes('bioarch') || titulo.includes('bioarqueol') || titulo.includes('skeletal') || titulo.includes('esquelét')) {
-          cat = 'bioarqueologia';
+          cat = 'antropologia';
         }
 
         BIBLIOGRAFIA.push({
@@ -1477,7 +1572,23 @@ function getPlanosWidget() {
   })();
   let biblioQuery = '', biblioCat = 'all';
 
+  const BIBLIO_CTX = {
+    all:           'Explora la biblioteca científica completa del museo, incluyendo obras fundamentales de paleopatología, antropología física, museos y colecciones digitales, casos históricos y referencias vinculadas a la colección.',
+    paleopatologia:'Obras fundamentales para el diagnóstico e interpretación paleopatológica, incluyendo manuales de referencia, atlas diagnósticos y trabajos sobre limitaciones del registro osteológico.',
+    antropologia:  'Recursos orientados a antropología física, bioarqueología y perspectivas bioculturales para contextualizar el estudio del esqueleto humano.',
+    museos:        'Colecciones digitales, museos virtuales y recursos interactivos recomendados para explorar anatomía, paleopatología, bioarqueología y patrimonio osteológico.',
+    historicos:    'Estudios de casos emblemáticos utilizados en el museo para contextualizar patologías, traumas y hallazgos osteológicos relevantes.',
+    coleccion:     'Referencias directamente relacionadas con piezas de la colección paleopatológica utilizada en el proyecto, incluyendo documentos y estudios arqueológicos vinculados.',
+    lecturas:      'Selección de recursos para profundizar en patologías y conceptos específicos del museo virtual.'
+  };
+
+  function updateBiblioCtxPanel() {
+    const el = document.getElementById('biblio-ctx-text');
+    if (el) el.textContent = BIBLIO_CTX[biblioCat] || BIBLIO_CTX.all;
+  }
+
   function renderBibliografia() {
+    updateBiblioCtxPanel();
     const grid    = document.getElementById('biblio-grid');
     const countEl = document.getElementById('biblio-count');
     const q = biblioQuery.toLowerCase().trim();
