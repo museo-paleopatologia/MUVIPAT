@@ -176,6 +176,28 @@
     .glos-link { color:var(--blue); text-decoration:underline dotted; text-underline-offset:3px; font-weight:600; transition:color .15s; }
     .glos-link:hover { color:var(--crimson); }
 
+    .fe-relevancia-callout {
+      padding: 1rem 1.25rem;
+      background: rgba(0,229,255,.04);
+      border: 1.5px solid rgba(0,229,255,.25);
+      border-left: 4px solid var(--cyan);
+      border-radius: 0 2px 2px 0;
+      font-size: .88rem;
+      line-height: 1.7;
+      color: #3d3d3d;
+      font-weight: 300;
+      box-shadow: 2px 2px 0 rgba(0,180,200,.08);
+    }
+    .fe-relevancia-callout__label {
+      font-family: var(--font-head);
+      font-size: .54rem;
+      font-weight: 800;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: #0097a7;
+      margin-bottom: .55rem;
+    }
+
     @media (max-width: 700px) {
       .fe-main { grid-template-columns: 1fr; }
       .fe-main--tall {
@@ -350,6 +372,16 @@
   <div class="fe-section" id="fe-section-identificacion">
     <p class="fe-section__title">Identificación</p>
     <div class="fe-data-grid" id="fe-data-grid"></div>
+  </div>
+
+  <div class="fe-section" id="fe-section-relevancia" style="display:none">
+    <p class="fe-section__title">Relevancia</p>
+    <div class="fe-relevancia-callout" id="fe-relevancia-callout"></div>
+  </div>
+
+  <div class="fe-section" id="fe-section-contexto" style="display:none">
+    <p class="fe-section__title">Contexto arqueológico</p>
+    <div class="fe-desc-block" id="fe-contexto-block"></div>
   </div>
 
   <div class="fe-section" id="fe-section-osteologica" style="display:none">
@@ -652,6 +684,7 @@
     addDataItem(grid, 'Yacimiento', pieza.yacimiento);
     addDataItem(grid, 'Sexo biológico', sexMeta.label);
     addDataItem(grid, 'Edad estimada', pieza.edad);
+    addDataItem(grid, 'Estatura estimada', pieza.estatura);
     addDataItem(grid, 'Región anatómica', regMeta.label);
     addDataItem(grid, 'Tipo de patología', patMeta.label);
     if (pieza.historica) {
@@ -719,6 +752,27 @@
       document.getElementById('fe-section-referencias').style.display = 'block';
     }
 
+    if (pieza.relevancia) {
+      const callout = document.getElementById('fe-relevancia-callout');
+      callout.innerHTML = `<p class="fe-relevancia-callout__label">✦ Por qué es relevante</p>
+        <p class="fe-desc">${typeof glosarioLink === 'function' ? glosarioLink(pieza.relevancia) : pieza.relevancia}</p>`;
+      document.getElementById('fe-section-relevancia').style.display = 'block';
+    }
+
+    if (pieza.contexto_arqueologico?.length > 0) {
+      const block = document.getElementById('fe-contexto-block');
+      const parrafos = Array.isArray(pieza.contexto_arqueologico)
+        ? pieza.contexto_arqueologico
+        : [pieza.contexto_arqueologico];
+      parrafos.forEach(p => {
+        const el = document.createElement('p');
+        el.className = 'fe-desc';
+        el.innerHTML = typeof glosarioLink === 'function' ? glosarioLink(p) : p;
+        block.appendChild(el);
+      });
+      document.getElementById('fe-section-contexto').style.display = 'block';
+    }
+
     const masterLink = document.getElementById('fe-master-link');
     if (pieza.ficha?.includes('ficha-maestra')) {
       masterLink.href = pieza.ficha;
@@ -731,6 +785,9 @@
     const layout = pieza.layoutMode || 'default';
     if (layout !== 'default') {
       document.getElementById('fe-main').classList.add(`fe-main--${layout}`);
+    }
+    if ((layout === 'tall' || layout === 'gallery') && !pieza.modelo3d && !pieza.sketchfab_embed) {
+      document.getElementById('fe-viewer-wrap').style.setProperty('display', 'none', 'important');
     }
   
     /* Pantalla completa viewer */

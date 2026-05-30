@@ -39,320 +39,6 @@
 ══════════════════════════════════════════════════════════════════ */
 const PIEZAS = [
 
-  /* ── OV-001 ─────────────────────────────────────────────────── */
-  {
-    /* Básicos */
-    id:          'OV-001',
-    nombre:      'Cráneo con trepanación curada',
-    region:      'craneo',
-    patologia:   'trauma',
-    sexo:        'masculino',
-    epoca:       'prehistoria',
-    yacimiento:  'Cueva de los Murciélagos, Granada',
-    coords: [849, 1044],
-    descripcion: 'Trepanación circular de 35 mm en el parietal derecho con bordes completamente remodelados. Evidencia de supervivencia prolongada post-intervención.',
-    imagen:      null,
-    ficha:       '/prueba-museo/ficha-maestra.html?id=OV-001',
-    modelo3d:    '/prueba-museo/assets/models/avas_skull.glb',
-
-    /* Identificación extendida */
-    edad:        '35–45 años',
-    cronologia:  '~3200 a.C.',
-    epoca_label: 'Neolítico Final',
-    conservacion:'Muy buena',
-
-    /* Datos morfológicos */
-    indice_cefalico:   '76.4 — Mesocéfalo',
-    indice_nasal:      '42.1 — Leptorrino',
-    capacidad_craneal: '1.380 cc',
-    forma_craneal:     'Ovoide',
-    sutura_sagital:    'Sinostosis total',
-
-    /* Datos patológicos */
-    diametro_lesion:     '35 mm',
-    localizacion_lesion: 'Parietal derecho',
-    tecnica_quirurgica:  'Raspado abrasivo',
-    supervivencia:       '6–8 años post-op.',
-    bisel_interno:       'Estrías concéntricas',
-    remodelacion:        'Completa / lamelar',
-    senal_infeccion:     'Ausente',
-    inion:               'Marcado — robustez',
-    suturas_lambdoideas: 'Permeables',
-    patologia_adicional: 'No detectada',
-
-    /* Diagnóstico */
-    diagnostico_principal: 'Trepanación circular por raspado abrasivo con supervivencia confirmada',
-
-    /* Descripción osteológica (ficha estándar) */
-    descripcion_osteologica: [
-      'El espécimen presenta una <strong>morfología craneal robusta</strong>, típica de individuos masculinos del Neolítico peninsular. La normocrania general está bien preservada, con pérdida mínima de material óseo post-depositacional. El índice cefálico calculado es de 76,4 (mesocéfalo).',
-      'La <strong>capacidad craneal estimada</strong> mediante el método de Pearson es de 1.380 cc, dentro del rango normal para la especie. La sutura sagital muestra fusión completa en el tramo posterior (sinostosis senil).'
-    ],
-
-    /*
-     * hallazgos[] — fuente de texto para la ficha maestra.
-     * El índice de cada entrada se corresponde con hallazgoIndex
-     * en FICHAS_MAESTRAS['OV-001']:
-     *   [0] Vista general
-     *   [1] Norma faciei
-     *   [2] Trepanación
-     *   [3] Detalle bisel
-     *   [4] Norma occipitalis
-     */
-    hallazgos: [
-      {
-        titulo: 'Vista general',
-        items: [
-          { texto: 'Morfología craneal robusta típica de individuos masculinos del Neolítico peninsular. Normocrania bien preservada con pérdida mínima de material óseo post-depositacional. Índice cefálico de 76,4 (mesocéfalo).' },
-          { texto: 'Capacidad craneal estimada de 1.380 cc mediante el método de Pearson. Sutura sagital con fusión completa en el tramo posterior (sinostosis senil).' }
-        ]
-      },
-      {
-        titulo: 'Norma faciei',
-        items: [
-          { texto: 'Frente moderadamente inclinada con <strong>arcos superciliares</strong> marcados. Arcos cigomáticos prominentes y bien desarrollados, coherentes con una musculatura masticatoria robusta.' },
-          { texto: '<strong>Órbitas</strong> de morfología cuadrangular con bordes superiores agudos. Ligera asimetría facial izquierda, posiblemente de origen funcional. Abertura piriforme estrecha, de tipo leptorrino (índice nasal = 42,1).' }
-        ]
-      },
-      {
-        titulo: 'Trepanación — Parietal derecho',
-        items: [
-          { texto: '<strong>Trepanación circular</strong> de 35 mm de diámetro localizada en el tercio posterior del parietal derecho. Técnica de <strong>raspado por abrasión</strong>, identificable por las estrías concéntricas en el bisel interno.' },
-          { texto: 'Bordes con <strong>remodelación ósea completa</strong> y formación de tejido compacto lamelar. Supervivencia mínima de 6–8 años post-intervención, convirtiéndolo en uno de los casos más documentados de cirugía prehistórica exitosa en la Península Ibérica.' }
-        ]
-      },
-      {
-        titulo: 'Detalle del bisel',
-        items: [
-          { texto: 'Bisel interno con <strong>estrías concéntricas</strong> que revelan el movimiento rotatorio del instrumento de abrasión, posiblemente un sílex o herramienta de hueso.' },
-          { texto: '<strong>Remodelación perilesional</strong> activa: tejido óseo compacto claramente distinto al hueso original. Ausencia total de signos de infección perilesional.' }
-        ]
-      },
-      {
-        titulo: 'Norma occipitalis',
-        items: [
-          { texto: 'Inión marcado, coherente con el perfil de robustez del individuo. <strong>Suturas lambdoideas</strong> permeables, sin evidencias de sinostosis prematura ni alteraciones morfológicas adicionales.' },
-          { texto: 'Estado de conservación muy bueno en el segmento posterior. Mínima fragmentación y ausencia de pérdida de sustancia ósea post-depositacional en esta región.' }
-        ]
-      }
-    ],
-
-    referencias: [
-      { id:1, autores:'Ortner DJ', anio:2003, titulo:'Identification of Pathological Conditions in Human Skeletal Remains', editorial:'Academic Press, San Diego' },
-      { id:2, autores:'Roberts C, Manchester K', anio:2005, titulo:'The Archaeology of Disease', editorial:'Sutton Publishing, Stroud' }
-    ]
-  },
-
-  /* ── OV-002 al OV-016 — campos básicos ──────────────────────── */
-  { id:'OV-002', nombre:'Fémur con fractura consolidada',
-    region:'miembro-inferior', patologia:'trauma', sexo:'femenino', epoca:'medieval',
-    yacimiento:'Necrópolis de San Nicolás, Murcia',
-    coords: [1069, 886],
-    descripcion:'Fractura diafisaria del fémur derecho con callo óseo exuberante y acortamiento de 2,3 cm. Posible deformidad funcional residual.',
-    imagen:null, ficha:'/prueba-museo/ficha-estandar.html?id=OV-002',
-    modelo3d:'/prueba-museo/assets/models/craneo-def.glb' },
-
-  { id:'OV-003', nombre:'Cribra orbitalia bilateral',
-    region:'craneo', patologia:'metabolica', sexo:'indeterminado', epoca:'romano',
-    yacimiento:'Isturgi, Jaén',
-    coords: [731, 877],
-    descripcion:'Hiperostosis porótica en techo de ambas órbitas. Grado III según criterios de Steckel. Indicador de anemia ferropénica en edad infantil.',
-    imagen:null, ficha:'/prueba-museo/ficha-estandar.html?id=OV-003',
-    modelo3d:'/prueba-museo/assets/models/al-03-1897.glb' },
-
-  { id:'OV-004', nombre:'Vértebra con espondilitis tuberculosa',
-    region:'columna', patologia:'infecciosa', sexo:'masculino', epoca:'medieval',
-    yacimiento:'Monasterio de Suso, La Rioja',
-    coords: [867, 336],
-    descripcion:'Colapso del cuerpo vertebral T8-T9 con fusión angular (giba). Destrucción del disco intervertebral y formación de absceso paravertebral. Mal de Pott confirmado.',
-    imagen:null, ficha:'/prueba-museo/ficha-maestra.html?id=OV-004',
-    modelo3d:'/prueba-museo/assets/models/femur_a.glb' },
-
-  { id:'OV-005', nombre:'Pelvis con sacralización de L5',
-    region:'pelvis', patologia:'congenita', sexo:'masculino', epoca:'moderno',
-    yacimiento:'Cementerio de Poblet, Tarragona',
-    coords: [1323, 456],
-    descripcion:'Fusión unilateral de L5 al sacro con esclerosis de la articulación sacroilíaca ipsilateral. Variante anatómica con posible correlato doloroso.',
-    imagen:null, ficha:'/prueba-museo/ficha-estandar.html?id=OV-005' },
-
-  { id:'OV-006', nombre:'Húmero con entesopatía severa',
-    region:'miembro-superior', patologia:'congenita', sexo:'masculino', epoca:'romano',
-    yacimiento:'Barcino, Barcelona',
-    descripcion:'Robustez cortical extrema y proliferación ósea en inserción del deltoides. Compatible con actividad física intensa y repetitiva. Posible remero o trabajador portuario.',
-    imagen:null, ficha:'/prueba-museo/ficha-estandar.html?id=OV-006' },
-
-  { id:'OV-007', nombre:'Costillas con lesiones periósticas',
-    region:'torax', patologia:'infecciosa', sexo:'femenino', epoca:'medieval',
-    yacimiento:'La Olmeda, Palencia',
-    descripcion:'Formación de hueso nuevo laminar en la cara visceral de costillas 4-7 bilaterales. Probable tuberculosis pulmonar o pleuritis crónica.',
-    imagen:null, ficha:'/prueba-museo/ficha-estandar.html?id=OV-007' },
-
-  { id:'OV-008', nombre:'Rótula con osteoartritis avanzada',
-    region:'miembro-inferior', patologia:'degenerativa', sexo:'femenino', epoca:'moderno',
-    yacimiento:'San Millán de la Cogolla, La Rioja',
-    descripcion:'Erosión del cartílago articular con eburnación, osteofitosis marginal y quistes subcondrales. Estadio 4 de Kellgren-Lawrence. Individuo >55 años.',
-    imagen:null, ficha:'/prueba-museo/ficha-estandar.html?id=OV-008' },
-
-  { id:'OV-009', nombre:'Mandíbula con absceso alveolar',
-    region:'craneo', patologia:'infecciosa', sexo:'indeterminado', epoca:'prehistoria',
-    yacimiento:'Los Millares, Almería',
-    descripcion:'Orificio de drenaje en el alveolo del primer molar inferior. Reabsorción ósea periapical intensa con pérdida de diente en vida. Evidencia de enfermedad periodontal.',
-    imagen:null, ficha:'/prueba-museo/ficha-estandar.html?id=OV-009' },
-
-  { id:'OV-010', nombre:'Radio con fractura de Colles',
-    region:'miembro-superior', patologia:'trauma', sexo:'femenino', epoca:'moderno',
-    yacimiento:'Cementerio de San Isidro, Madrid',
-    descripcion:'Fractura distal del radio en patrón de Colles con desplazamiento dorsal. Consolidación en posición viciosa con limitación funcional de la muñeca.',
-    imagen:null, ficha:'/prueba-museo/ficha-estandar.html?id=OV-010' },
-
-  { id:'OV-011', nombre:'Columna lumbar con escoliosis',
-    region:'columna', patologia:'congenita', sexo:'femenino', epoca:'medieval',
-    yacimiento:'Necrópolis de Recópolis, Guadalajara',
-    descripcion:'Curvatura lateral del raquis lumbar con cuña vertebral en L3. Rotación axial de los cuerpos vertebrales. Ángulo de Cobb estimado en 35°.',
-    imagen:null, ficha:'/prueba-museo/ficha-estandar.html?id=OV-011' },
-
-  { id:'OV-012', nombre:'Húmero con osteomielitis hematógena',
-    region:'miembro-superior', patologia:'infecciosa', sexo:'masculino', epoca:'romano',
-    yacimiento:'Caesaraugusta, Zaragoza',
-    descripcion:'Involucro óseo periférico con secuestro central y fistulación cloacal. Proceso infeccioso crónico de Staphylococcus sp. compatible. Reacción perióstica extensa.',
-    imagen:null, ficha:'/prueba-museo/ficha-maestra.html?id=OV-012' },
-
-  { id:'OV-013', nombre:'Escápula con nódulos de Schmörl',
-    region:'torax', patologia:'degenerativa', sexo:'masculino', epoca:'prehistoria',
-    yacimiento:'El Argar, Almería',
-    descripcion:'Hernias discales calcificadas en platillos vertebrales T6-T10. Indicador de cargas axiales repetidas sobre la columna dorsal. Patrón compatible con trabajo agrícola.',
-    imagen:null, ficha:'/prueba-museo/ficha-estandar.html?id=OV-013' },
-
-  { id:'OV-014', nombre:'Tibia con raquitismo',
-    region:'miembro-inferior', patologia:'metabolica', sexo:'indeterminado', epoca:'medieval',
-    yacimiento:'Toledo, casco histórico',
-    descripcion:'Incurvación anterior y medial de la diáfisis tibial (tibia en sable). Porosidad cortical generalizada. Hipovitaminosis D severa en la infancia. Individuo subadulto.',
-    imagen:null, ficha:'/prueba-museo/ficha-estandar.html?id=OV-014' },
-
-  { id:'OV-015', nombre:'Pelvis con artritis séptica',
-    region:'pelvis', patologia:'infecciosa', sexo:'masculino', epoca:'romano',
-    yacimiento:'Emerita Augusta, Mérida',
-    descripcion:'Destrucción de la articulación coxofemoral izquierda con anquilosis fibrosa. Superficie articular del acetábulo completamente erosionada. Posible complicación de herida de guerra.',
-    imagen:null, ficha:'/prueba-museo/ficha-maestra.html?id=OV-015' },
-
-  { id:'OV-016', nombre:'Cráneo con trauma contuso perimortem',
-    region:'craneo', patologia:'trauma', sexo:'masculino', epoca:'medieval',
-    yacimiento:'Batalla de Nájera, La Rioja',
-    descripcion:'Fractura deprimida en el parietal izquierdo con patrón radial. Ausencia de remodelación ósea. Lesión perimortem por objeto contundente. Contexto de violencia interpersonal.',
-    imagen:null, ficha:'/prueba-museo/ficha-maestra.html?id=OV-016' },
-  
-  { id: 'OV-017',
-    nombre: 'Cráneo con traumatismo por arma blanca',
-    region: 'craneo',
-    patologia: 'trauma',
-    sexo: 'masculino',
-    epoca: 'medieval',
-    yacimiento: 'Cementerio Islámico de San Nicolás, Murcia',
-    coords: [1706, 1149],
-    descripcion: 'Lesión traumática craneal elipsoidal en cresta superciliar con evidencia de remodelación ósea parcial. Compatible con traumatismo por instrumento cortante en contexto de violencia interpersonal.',
-    imagen: null,
-    ficha: '/prueba-museo/ficha-estandar.html?id=OV-017',
-
-    cronologia: 'Siglos XI–XII',
-    edad: 'Adulto joven',
-    conservacion: null,
-
-    descripcion_osteologica: [
-      'La pieza procede de la maqbara isl\u00e1mica de San Nicol\u00e1s, un espacio funerario asociado a la poblaci\u00f3n hispano-musulmana de Murcia con uso documentado entre los siglos XI y XIII<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">\u00b9</a>. Este cementerio refleja pr\u00e1cticas isl\u00e1micas caracter\u00edsticas como enterramientos en dec\u00fabitos laterales y orientaci\u00f3n oeste-este<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">\u00b9</a>.',
-      'El individuo presenta una lesi\u00f3n traum\u00e1tica craneal de morfolog\u00eda elipsoidal, localizada en la regi\u00f3n de la cresta superciliar hasta cerca de la sutura coronal<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">\u00b2</a>. La lesi\u00f3n presenta una longitud aproximada de 66 mm y una anchura transversal de 40,2 mm<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">\u00b2</a>.',
-      'El borde derecho aparece irregular y sin signos de reparaci\u00f3n, mientras que el izquierdo muestra adelgazamiento y evidencias de remodelaci\u00f3n \u00f3sea, indicando una supervivencia inicial al trauma<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">\u00b2</a>.',
-      'Presenta otros indicadores osteol\u00f3gicos como hipoplasia de esmalte dental, c\u00e1lculo dental, caries, rebordes artr\u00f3sicos y n\u00f3dulos de Schm\u00f6rl<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">\u00b2</a>.'
-    ],
-
-    diagnostico_principal: 'Traumatismo por fuerza cortante compatible con instrumento de hoja. La morfolog\u00eda elipsoidal, su orientaci\u00f3n anat\u00f3mica y la presencia de remodelaci\u00f3n \u00f3sea parcial apoyan un episodio de violencia interpersonal no letal inicialmente.',
-
-    hallazgos: [
-      {
-        titulo: 'Traumatismo craneal',
-        items: [
-          { texto: 'Lesi\u00f3n elipsoidal en cresta superciliar con longitud de 66 mm y anchura de 40,2 mm.', refs: [2] },
-          { texto: 'Borde derecho irregular sin signos de reparaci\u00f3n; borde izquierdo con remodelaci\u00f3n \u00f3sea.', refs: [2] },
-          { texto: 'Patr\u00f3n compatible con traumatismo por instrumento cortante y violencia interpersonal.', refs: [2] }
-        ]
-      },
-      {
-        titulo: 'Indicadores osteol\u00f3gicos asociados',
-        items: [
-          { texto: 'Hipoplasia de esmalte dental, c\u00e1lculo dental y caries.', refs: [2] },
-          { texto: 'Rebordes artr\u00f3sicos y n\u00f3dulos de Schm\u00f6rl.', refs: [2] }
-        ]
-      }
-    ],
-
-    referencias: [
-      {
-        id: 1,
-        autores: 'Navarro Palaz\u00f3n, J.',
-        anio: '1986',
-        titulo: 'El cementerio isl\u00e1mico de San Nicol\u00e1s de Murcia. Memoria preliminar',
-        editorial: 'Actas del I Congreso de Arqueolog\u00eda Medieval Espa\u00f1ola, Zaragoza. p. 7\u201337'
-      },
-      {
-        id: 2,
-        autores: 'Pimentel de Francisco, G., Rodr\u00edguez Gonz\u00e1lez, A.I., Gonz\u00e1lez Mart\u00edn, A., Campo Mart\u00edn, M., Robles Rodr\u00edguez, F.J., Arzoz del Val, L.',
-        anio: '2001',
-        titulo: 'Evidencia de violencia en la poblaci\u00f3n hispanomusulmana de San Nicol\u00e1s (Murcia, s XI a s XIII)',
-        editorial: 'Actas del VI Congreso Nacional de Paleopatolog\u00eda. p. 542\u2013544'
-      }
-    ],
-
-    imagenes: [],
-    layoutMode: 'default' 
-  },
-
-  { id: 'OV-018',
-      nombre: 'Mand\u00edbula con hipoplasia de esmalte dental',
-    region: 'craneo',
-    patologia: 'metabolica',
-    sexo: 'indeterminado',
-    epoca: 'medieval',
-    yacimiento: 'Cementerio Isl\u00e1mico de San Nicol\u00e1s, Murcia',
-    coords: [1706, 1149],
-    descripcion: 'Mandíbula con defectos compatibles con hipoplasia del esmalte dental, indicador de estrés metabólico, nutricional o infeccioso durante la infancia.',
-    imagen: null,
-    ficha: '/prueba-museo/ficha-estandar.html?id=OV-018',
-
-    cronologia: 'Siglos XI\u2013XIII',
-    edad: null,
-    conservacion: null,
-
-    descripcion_osteologica: [
-      'La pieza presenta alteraciones compatibles con hipoplasia del esmalte (HE), un defecto permanente en la formaci\u00f3n del esmalte dental derivado de interrupciones durante la amelogénesis<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">\u00b9</a>.',
-      'Este hallazgo es interesante por coexistir con una elevada frecuencia poblacional de cribra orbitalia (CO), ambos indicadores asociados a estr\u00e9s metab\u00f3lico, nutricional o infeccioso<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">\u00b9</a>.'
-    ],
-
-    diagnostico_principal: 'Hipoplasia del esmalte dental compatible con alteraciones en la formaci\u00f3n del esmalte durante la infancia por estr\u00e9s metab\u00f3lico, nutricional o infeccioso.',
-
-    hallazgos: [
-      {
-        titulo: 'Hipoplasia del esmalte dental',
-        items: [
-          { texto: 'Defectos permanentes en la formaci\u00f3n del esmalte dental por interrupci\u00f3n de la amelogénesis.', refs: [1] },
-          { texto: 'Coexistencia con cribra orbitalia en la poblaci\u00f3n, ambos indicadores de estr\u00e9s sist\u00e9mico.', refs: [1] }
-        ]
-      }
-    ],
-
-    referencias: [
-      {
-        id: 1,
-        autores: 'Robles, F.J., Gonz\u00e1lez, A., Garc\u00eda, C.',
-        anio: '1996',
-        titulo: 'Indicadores de estr\u00e9s en la poblaci\u00f3n hispano-musulmana de San Nicol\u00e1s (Murcia, s. XI a XIII)',
-        editorial: 'En: P\u00e9rez-P\u00e9rez A, editor. Salud, enfermedad y muerte en el pasado. Barcelona: Fundaci\u00f3n Uriach 1838. p. 109\u2013119'
-      }
-    ],
-
-    imagenes: [],
-    layoutMode: 'default'
-  },
-
-
   /* ══════════════════════════════════════════
      PIEZAS HISTÓRICAS
   ══════════════════════════════════════════ */
@@ -413,6 +99,93 @@ const PIEZAS = [
       { src:'/prueba-museo/assets/img/H001/H001_toolkit.png', caption:'Figura 4. Proceso de uso, fractura y reacondicionamiento de una punta de flecha perteneciente al conjunto de armas asociado a Ötzi. Una similar a la representada habría sido la causa de su muerte. Tomada de Wierer et al. (2018).' }
     ],
     layoutMode:'tall'
+  },
+
+  /* ══════════════════════════════════════════
+     COLECCIÓN
+  ══════════════════════════════════════════ */
+  {
+    id: 'CH-21',
+    nombre: 'Craneosinostosis sagital',
+    region: 'craneo',
+    patologia: 'congenita',
+    sexo: 'masculino',
+    epoca: 'medieval',
+    yacimiento: 'Necrópolis sefardí "Cuesta de los Hoyos", Segovia, España',
+    descripcion: 'Cráneo masculino adulto con escafocefalia derivada de craneosinostosis sagital. El individuo alcanzó entre 35 y 50 años de edad pese a la alteración congénita, en contexto de necrópolis judía medieval segoviana.',
+    imagen: '/prueba-museo/assets/img/CH-21/superior.png',
+    ficha: '/prueba-museo/ficha-estandar.html?id=CH-21',
+    historica: false,
+    modelo3d: null,
+
+    cronologia: 'Siglos IX-XI',
+    edad: '35-50 años',
+    estatura: '165-175 cm',
+    conservacion: null,
+
+    diagnostico_principal: 'Craneosinostosis sagital que deriva en escafocefalia. La fusión prematura de la sutura sagital explica el alargamiento anteroposterior de la bóveda craneal y la presencia de una quilla sagital pronunciada.',
+
+    relevancia: 'Caso excepcional de <strong>craneosinostosis sagital</strong> documentado en contexto arqueológico medieval hispano-judío. El individuo alcanzó una edad estimada de entre 35 y 50 años<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>, lo que demuestra una supervivencia prolongada pese a la alteración congénita. El excelente estado de conservación ha permitido una reconstrucción prácticamente completa del esqueleto<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>, aportando información sobre las consecuencias de esta patología en las condiciones de vida del individuo. Por su singularidad, fue presentado en el V Congreso Nacional de Paleopatología como ejemplo de craneosinostosis sagital en poblaciones históricas<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>.',
+
+    contexto_arqueologico: [
+      'La pieza procede del yacimiento arqueológico de la "Cuesta de los Hoyos", también llamado "El Pinarillo", situado frente al antiguo barrio judío de Segovia<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>. Se trata de uno de los pocos ejemplos de cementerios judíos medievales documentados arqueológicamente en la Península Ibérica<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>.',
+      'Destaca por dos tipos de enterramiento: las cámaras hipogeas y los sepulcros en fosa<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>. Las cámaras hipogeas son estructuras talladas en roca con un <em>dromos</em> (pasillo) exterior de acceso que lleva a una cámara<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>. Las fosas antropomorfas reflejan ritos funerarios sencillos sin ajuares ostentosos<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>.',
+      'Estudios antropológicos realizados en la población exhumada han revelado una alta mortalidad infantil y signos de presiones ambientales como raquitismo y anemias<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>, aportando información sobre las condiciones de vida de la comunidad hebrea medieval segoviana.',
+    ],
+
+    descripcion_osteologica: [
+      'La pieza a detallar es el cráneo, relevante por su morfología atípica correspondiente a una escafocefalia causada por el cierre prematuro (craneosinostosis) de la sutura sagital. Esta condición genera una forma exageradamente larga en sentido anteroposterior con una quilla sagital pronunciada<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>.',
+      'El hueso occipital es muy prominente, contribuyendo así a la longitud total del cráneo<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>. La observación macroscópica revela que la sutura sagital se cerró posiblemente durante la infancia del individuo<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>.',
+      'El resto del esqueleto presenta pequeñas exóstosis vertebrales, rebordes artrósicos en la rótula izquierda y modificaciones óseas en las tuberosidades tibiales<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>.',
+      'La dentición tiene un estado de conservación excepcional, sin evidencias de caries ni pérdidas dentales <em>antemortem</em>. El desgaste dental es reducido para la edad estimada del individuo y se observan líneas de hipoplasia de esmalte compatibles con episodios de estrés fisiológico entre los 3 y 5 años de edad<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>. Este carácter, junto con la presencia de cambios óseos relacionados con la actividad física, permite plantear que el individuo mantuvo una calidad de vida relativamente favorable a pesar de la alteración congénita.',
+    ],
+
+    hallazgos: [
+      {
+        titulo: 'Hidrocefalia — Descartado',
+        items: [
+          { texto: 'La hidrocefalia suele producir una expansión generalizada de la bóveda craneal y una morfología globulosa. En este caso, la deformación se concentra en el eje anteroposterior y se acompaña de una quilla sagital, lo que es incompatible con hidrocefalia.' }
+        ]
+      },
+      {
+        titulo: 'Acondroplasia — Descartado',
+        items: [
+          { texto: 'La acondroplasia suele asociarse a macrocefalia con frente prominente, depresión del puente nasal y talla reducida. Ninguna de estas características se observa en el individuo, cuya estatura estimada se sitúa entre 165 y 175 cm.' }
+        ]
+      },
+      {
+        titulo: 'Deformación cefálica intencional — Descartado',
+        items: [
+          { texto: 'La fusión completa de la sutura sagital, observada tanto en la superficie ectocraneal como en la endocraneal, indica un origen patológico. Las deformaciones cefálicas culturales no provocan el cierre de las suturas ni la formación de una quilla sagital ósea.' }
+        ]
+      }
+    ],
+
+    referencias: [
+      {
+        id: 1,
+        autores: 'Robles FJ, Campo M, González A.',
+        anio: '1999',
+        titulo: 'Craniostenosis sagital',
+        editorial: 'En: Sánchez Sánchez JA, editor. Actas V Congreso Nacional de Paleopatología; 1999; Alcalá la Real (Jaén). Jaén: Asociación Española de Paleopatología'
+      },
+      {
+        id: 2,
+        autores: 'Fernández Esteban S.',
+        anio: '1999',
+        titulo: 'Análisis de las estructuras funerarias de la Cuesta de los Hoyos, Segovia, un ejemplo de necrópolis medieval hebrea',
+        editorial: 'En: XXIV Congreso Nacional de Arqueología; oct 1997; Cartagena. Cartagena: Universidad de Murcia; 1999. p. 225-32'
+      }
+    ],
+
+    imagenes: [
+      { src: '/prueba-museo/assets/img/CH-21/superior.png',    caption: 'Figura 1. Vista superior del cráneo CH-21. Se aprecia el alargamiento anteroposterior de la bóveda craneal característico de la escafocefalia, así como la fusión de la sutura sagital.' },
+      { src: '/prueba-museo/assets/img/CH-21/lateral-izq.png', caption: 'Figura 2. Vista lateral izquierda del cráneo CH-21. Se observa el alargamiento anteroposterior y la prominencia occipital.' },
+      { src: '/prueba-museo/assets/img/CH-21/frontal.png',     caption: 'Figura 3. Vista frontal del cráneo CH-21. La fusión de la sutura sagital produjo una modificación de la forma de la bóveda craneal, mientras que el esqueleto facial mantiene una morfología sin alteraciones significativas.' },
+      { src: '/prueba-museo/assets/img/CH-21/inferior.png',    caption: 'Figura 4. Vista inferior del cráneo CH-21. Muestra la morfología general de la base craneal y la elongación anteroposterior del individuo.' }
+    ],
+
+    layoutMode: 'gallery'
   },
 
   {
@@ -544,111 +317,6 @@ const ETIQUETAS_CAMPOS = {
      4. Copia los valores aquí y quita camera-controls
 ══════════════════════════════════════════════════════════════════ */
 const FICHAS_MAESTRAS = {
-
-  /* ── OV-001 · Cráneo con trepanación ──────────────────────── */
-  'OV-001': [
-
-    /* STEP 0 — Vista general / rotación automática */
-    {
-      hallazgoIndex: 0,
-      datosKeys:    ['yacimiento', 'cronologia', 'sexo', 'edad'],
-      accentColor:  'var(--fm-cyan)',
-      alerta:       null,
-      tags: [
-        { texto:'💀 Cráneo',      color:'#00a8bf', borderColor:'#00e5ff' },
-        { texto:'⚡ Traumatismo', color:'#c0003c', borderColor:'#c0003c' },
-        { texto:'📅 Neolítico',   color:'#b08d55', borderColor:'#b08d55' }
-      ],
-      camara: {
-        orbit:      '0deg 80deg 100%',
-        target:     '0m 0m 0m',
-        label:      'Vista general',
-        autorotate: true,
-        zoomLabel:  'zoom ×1',
-        hint:       'Vista rotativa — el modelo gira automáticamente'
-      }
-    },
-
-    /* STEP 1 — Norma faciei
-       Cambio vs anterior: zoom +28%, pivote sube hacia región orbital */
-    {
-      hallazgoIndex: 1,
-      datosKeys:    ['indice_cefalico', 'indice_nasal', 'capacidad_craneal', 'forma_craneal'],
-      accentColor:  'var(--fm-crimson)',
-      alerta:       null,
-      tags:         null,
-      camara: {
-        orbit:      '0deg 78deg 72%',
-        target:     '0m 0.04m 0.01m',
-        label:      'Vista frontal — norma faciei',
-        autorotate: false,
-        zoomLabel:  'zoom ×1.4',
-        hint:       'Acercamiento frontal — norma faciei (zoom ×1.4)'
-      }
-    },
-
-    /* STEP 2 — Trepanación parietal derecho
-       Cambio vs anterior: giro 55° + casi cenital + zoom ×1.8
-       ⚠ Si la lesión queda fuera: incrementar target Y (0.10, 0.12...)
-               o ajustar azimuth a 65–75deg si está más atrás */
-    {
-      hallazgoIndex: 2,
-      datosKeys:    ['diametro_lesion', 'localizacion_lesion', 'tecnica_quirurgica', 'supervivencia'],
-      accentColor:  'var(--fm-crimson)',
-      alerta:       'Hallazgo principal — trepanación circular de 35 mm en el tercio posterior del parietal derecho.',
-      tags:         null,
-      camara: {
-        orbit:      '55deg 35deg 55%',
-        target:     '0.02m 0.09m 0m',
-        label:      'Parietal derecho — localización',
-        autorotate: false,
-        zoomLabel:  'zoom ×1.8',
-        hint:       'Vista superior-derecha — parietal derecho (zoom ×1.8)'
-      }
-    },
-
-    /* STEP 3 — Detalle del bisel
-       Cambio vs anterior: casi cenital + zoom ×2.4 (máximo)
-       ⚠ Si el modelo se recorta: subir zoom a 48–50% */
-    {
-      hallazgoIndex: 3,
-      datosKeys:    ['bisel_interno', 'remodelacion', 'senal_infeccion', 'supervivencia'],
-      accentColor:  'var(--fm-sulfur)',
-      alerta:       null,
-      tags:         null,
-      camara: {
-        orbit:      '60deg 20deg 42%',
-        target:     '0.025m 0.1m -0.01m',
-        label:      'Detalle máximo — bisel de trepanación',
-        autorotate: false,
-        zoomLabel:  'zoom ×2.4',
-        hint:       'Vista cenital — norma verticalis, máximo detalle (zoom ×2.4)'
-      }
-    },
-
-    /* STEP 4 — Norma occipitalis
-       Cambio vs anterior: giro 180° al reverso + zoom out */
-    {
-      hallazgoIndex: 4,
-      datosKeys:    ['inion', 'suturas_lambdoideas', 'conservacion', 'patologia_adicional'],
-      accentColor:  'var(--fm-cyan)',
-      alerta:       null,
-      tags: [
-        { texto:'Pieza destacada',         color:'#8a9200', borderColor:'#d4e60a' },
-        { texto:'Ficha maestra',            color:'#00a8bf', borderColor:'#00e5ff' },
-        { texto:'Supervivencia confirmada', color:'#c0003c', borderColor:'#c0003c' }
-      ],
-      camara: {
-        orbit:      '180deg 85deg 90%',
-        target:     '0m 0.02m 0m',
-        label:      'Vista posterior — norma occipitalis',
-        autorotate: false,
-        zoomLabel:  'zoom ×1.1',
-        hint:       'Vista posterior — norma occipitalis (giro 180° respecto al frente)'
-      }
-    }
-
-  ], /* fin OV-001 */
 
   /*
    * PLANTILLA PARA NUEVA FICHA MAESTRA

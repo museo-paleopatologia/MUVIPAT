@@ -853,19 +853,19 @@
         </h1>
         <div class="col-page-header__stats">
           <div>
-            <span class="col-stat-num" id="stat-total">16</span>
+            <span class="col-stat-num" id="stat-total">—</span>
             <span class="col-stat-label">Piezas catalogadas</span>
           </div>
           <div>
-            <span class="col-stat-num">4</span>
+            <span class="col-stat-num" id="stat-maestras">—</span>
             <span class="col-stat-label">Fichas maestras</span>
           </div>
           <div>
-            <span class="col-stat-num">6</span>
+            <span class="col-stat-num" id="stat-patologias">—</span>
             <span class="col-stat-label">Tipos de patología</span>
           </div>
           <div>
-            <span class="col-stat-num">4</span>
+            <span class="col-stat-num" id="stat-epocas">—</span>
             <span class="col-stat-label">Épocas representadas</span>
           </div>
         </div>
@@ -1076,7 +1076,7 @@
        Añade isMaster:true en data.js para marcarlo,
        o define el array aquí manualmente
     ══════════════════════════════════════════ */
-    const MAESTRAS_IDS = ['OV-001', 'OV-004', 'OV-012', 'OV-015', 'OV-016'];
+    const MAESTRAS_IDS = [];
     const HISTORICAS_IDS = ['H001', 'H002'];
 
     const MASTER_COLORS = ['--cyan', '--crimson', '--sulfur', '--green', '--pink'];
@@ -1331,6 +1331,14 @@
     buildHistoricasGallery();
     initDragScroll();
     renderCatalog();
+
+    /* ── Contadores dinámicos ── */
+    document.getElementById('stat-total').textContent = PIEZAS.length;
+    document.getElementById('stat-maestras').textContent = MAESTRAS_IDS.length;
+    document.getElementById('stat-patologias').textContent =
+      new Set(PIEZAS.map(p => p.patologia)).size;
+    document.getElementById('stat-epocas').textContent =
+      new Set(PIEZAS.map(p => p.epoca)).size;
   </script>
 
 
