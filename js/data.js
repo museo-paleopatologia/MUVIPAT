@@ -189,6 +189,87 @@ const PIEZAS = [
   },
 
   {
+    id: 'M-16-0906',
+    nombre: 'Cráneo con traumatismo por arma blanca',
+    region: 'craneo',
+    patologia: 'trauma',
+    sexo: 'masculino',
+    epoca: 'medieval',
+    yacimiento: 'Necrópolis hispanomusulmana (maqbara) de San Nicolás, Murcia, España',
+    descripcion: 'Cráneo masculino adulto joven procedente de la maqbara islámica de San Nicolás (Murcia, ss. XI-XII). Presenta una lesión traumática frontal de morfología elipsoidal compatible con herida por instrumento de filo cortante, con signos de remodelación ósea parcial que evidencian supervivencia inicial al traumatismo.',
+    imagen: '/prueba-museo/assets/img/M-16-0906/traumatismo.png',
+    ficha: '/prueba-museo/ficha-estandar.html?id=M-16-0906',
+    historica: false,
+    modelo3d: null,
+
+    cronologia: 'ss. XI-XII',
+    edad: 'Adulto joven',
+    estatura: '175-180 cm',
+    conservacion: null,
+
+    diagnostico_principal: 'Traumatismo por instrumento o arma de filo cortante. Lesión craneal frontal de morfología elipsoidal (66 × 40,2 mm) con remodelación parcial del margen izquierdo, compatible con herida perimortem producida por un instrumento cortante y supervivencia inicial al traumatismo.',
+
+    relevancia: 'Este cráneo representa un <strong>testimonio directo de violencia interpersonal</strong> documentado en la <em>maqbara</em> de San Nicolás. La morfología de la lesión y la robustez del individuo sugieren un contexto de enfrentamiento bélico, aportando datos sobre la supervivencia a traumatismos en el periodo hispanomusulmán<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>.',
+
+    contexto_arqueologico: [
+      'La pieza procede de la <em>maqbara</em> islámica de San Nicolás, situada en el sector central de la ciudad de Murcia<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>. Este espacio funerario está asociado a la población hispanomusulmana de la ciudad entre los siglos XI y XIII<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>.',
+      'Las inhumaciones se realizan en fosas estrechas excavadas en tierra, en decúbito lateral derecho, con el cráneo orientado hacia el suroeste y el rostro hacia el sureste<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>, características funerarias propias de la práctica islámica.',
+      'La necrópolis se estableció sobre un antiguo alfar de los siglos X y XI y, como consecuencia del crecimiento demográfico del siglo XII, llegó a presentar una gran densidad de enterramientos superpuestos<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>.',
+    ],
+
+    descripcion_osteologica: [
+      'La pieza corresponde a un cráneo incompleto acompañado de un fragmento óseo aislado. Presenta una lesión traumática de morfología elipsoidal localizada en la región frontal, extendiéndose desde la cresta superciliar hasta una posición próxima a la sutura coronal<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>. La lesión alcanza 66 mm de longitud y 40,2 mm de anchura máxima<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>.',
+      'Los márgenes de la lesión muestran diferencias relevantes: el derecho presenta un aspecto irregular y carece de evidencias de reparación ósea, mientras que el izquierdo muestra adelgazamiento cortical y signos de remodelación, indicando una respuesta biológica posterior al traumatismo y una supervivencia inicial<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>.',
+      'El individuo presenta además hipoplasias de esmalte dental, cálculo dental, caries en caninos y premolares, rebordes artrósicos, nódulos de Schmörl, calcificación del ligamento amarillo y diversas entesopatías, compatibles con elevados niveles de actividad física en vida<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>.',
+    ],
+
+    hallazgos: [
+      {
+        titulo: 'Trepanación craneal — Poco compatible',
+        items: [
+          { texto: 'Poco compatible por morfología irregular de la lesión y patrón traumático. La trepanación produce bordes regulares y biselados, ausentes en este caso.', refs: [2] }
+        ]
+      },
+      {
+        titulo: 'Traumatismo accidental — Menos probable',
+        items: [
+          { texto: 'Morfología dirigida y patrón lesional más compatible con una agresión interpersonal que con un traumatismo accidental.', refs: [2] }
+        ]
+      },
+      {
+        titulo: 'Alteración tafonómica — Descartada',
+        items: [
+          { texto: 'Descartada por la remodelación observada, que confirma una respuesta biológica en vida y descarta un origen postmortem.', refs: [2] }
+        ]
+      }
+    ],
+
+    referencias: [
+      {
+        id: 1,
+        autores: 'Navarro Palazón J.',
+        anio: '1986',
+        titulo: 'El cementerio islámico de San Nicolás de Murcia. Memoria preliminar',
+        editorial: 'En: Actas del I Congreso de Arqueología Medieval Española; 1986; Zaragoza. p. 7-37'
+      },
+      {
+        id: 2,
+        autores: 'Pimentel de Francisco G, Rodríguez González AI, González Martín A, Campo Martín M, Robles Rodríguez FJ, Arzoz del Val L.',
+        anio: '2001',
+        titulo: 'Evidencia de violencia en la población hispanomusulmana de San Nicolás (Murcia, s XI a s XIII)',
+        editorial: 'En: Actas del VI Congreso Nacional de Paleopatología; 2001. p. 542-544'
+      }
+    ],
+
+    imagenes: [
+      { src: '/prueba-museo/assets/img/M-16-0906/traumatismo.png', caption: 'Figura 1. Detalle de la lesión craneal atribuida a un traumatismo por instrumento cortante. Se observa la remodelación del margen izquierdo. Imagen tomada de Pimentel de Francisco et al. (2001).' },
+      { src: '/prueba-museo/assets/img/M-16-0906/traumatismo-completo.png', caption: 'Figura 2. Cráneo con reposición del fragmento óseo recuperado en el enterramiento. Imagen tomada de Pimentel de Francisco et al. (2001).' }
+    ],
+
+    layoutMode: 'default'
+  },
+
+  {
     id:'H002', nombre:'Ricardo III de Inglaterra',
     region:'individuo-completo', patologia:'congenita', sexo:'masculino', epoca:'medieval',
     yacimiento:'Grey Friars, Leicester, Inglaterra',
