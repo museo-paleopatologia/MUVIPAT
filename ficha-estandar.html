@@ -198,6 +198,12 @@
       margin-bottom: .55rem;
     }
 
+    .fe-gallery-hero,
+    .fe-gallery-hero__media,
+    .fe-gallery-hero__info {
+      display: contents;
+    }
+
     @media (max-width: 700px) {
       .fe-main { grid-template-columns: 1fr; }
       .fe-main--tall {
@@ -217,6 +223,10 @@
       .fe-main--tall .fe-header,
       .fe-main--tall .fe-section,
       .fe-main--tall .fe-master-link { grid-column: auto; }
+      .fe-main--gallery .fe-gallery-hero {
+        grid-template-columns: 1fr !important;
+        gap: 1rem;
+      }
     }
     @media (max-width: 500px) {
       .fe-data-grid { grid-template-columns:1fr; }
@@ -249,24 +259,35 @@
     .fe-main--tall .fe-master-link { grid-column: 2; }
 
     .fe-main--gallery {
-      display: grid !important;
+      display: block !important;
       width: min(1200px, 96vw) !important;
-      grid-template-columns: 1fr 1fr;
-      gap: clamp(1.5rem, 3vw, 2.5rem);
-      align-items: start;
     }
     .fe-main--gallery .fe-viewer-wrap {
-      grid-column: 1 / -1; display: flex !important; margin-bottom: 0;
+      display: flex !important;
+      margin-bottom: 1.5rem;
     }
     .fe-main--gallery model-viewer {
       aspect-ratio: 3 / 2; height: auto !important;
       min-height: 300px; max-height: 520px; width: 100%;
     }
-    .fe-main--gallery .fe-gallery      { grid-column: 1; }
-    .fe-main--gallery .fe-tags         { grid-column: 2; }
-    .fe-main--gallery .fe-header       { grid-column: 2; }
-    .fe-main--gallery .fe-section      { grid-column: 2; }
-    .fe-main--gallery .fe-master-link  { grid-column: 1 / -1; }
+    .fe-main--gallery .fe-gallery-hero {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(1.5rem, 3vw, 2.5rem);
+      align-items: start;
+      margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+    }
+    .fe-main--gallery .fe-gallery-hero__media,
+    .fe-main--gallery .fe-gallery-hero__info {
+      display: block !important;
+      min-width: 0;
+    }
+    .fe-main--gallery .fe-gallery-hero--no-media {
+      grid-template-columns: 1fr;
+    }
+    .fe-main--gallery .fe-gallery-hero--no-media .fe-gallery-hero__media {
+      display: none !important;
+    }
 
     .fe-main:not(.fe-main--tall):not(.fe-main--gallery) .fe-tags        { grid-column: 1 / -1; }
     .fe-main:not(.fe-main--tall):not(.fe-main--gallery) .fe-header      { grid-column: 1 / -1; }
@@ -282,6 +303,25 @@
     }
     .fe-viewer-credit a { color: rgba(0,229,255,.6); text-decoration: none; }
     .fe-viewer-credit a:hover { color: var(--cyan); }
+
+    .fe-viewer-placeholder {
+      width: 100%; min-height: 220px;
+      display: flex; align-items: center; justify-content: center;
+      background: #111; padding: 2.5rem 1.5rem;
+    }
+    .fe-viewer-placeholder__inner {
+      display: flex; flex-direction: column;
+      align-items: center; gap: .75rem; text-align: center;
+    }
+    .fe-viewer-placeholder__title {
+      font-family: var(--font-head); font-size: .62rem; font-weight: 700;
+      letter-spacing: .18em; text-transform: uppercase;
+      color: rgba(0,229,255,.5); margin: 0;
+    }
+    .fe-viewer-placeholder__desc {
+      font-size: .72rem; color: rgba(255,255,255,.28);
+      max-width: 28ch; line-height: 1.65; font-weight: 300; margin: 0;
+    }
   </style>
 </head>
 <body>
@@ -326,7 +366,7 @@
 <main class="fe-main" id="fe-main">
 
   <div class="fe-viewer-wrap" id="fe-viewer-wrap" style="display:none">
-    <span class="fe-viewer-label">Modelo 3D · Arrastra para rotar</span>
+    <span class="fe-viewer-label" id="fe-viewer-label">Modelo 3D · Arrastra para rotar</span>
     <button class="viewer-fullscreen-btn" id="fe-fs-btn" aria-label="Pantalla completa">
       <svg class="icon-enter" viewBox="0 0 24 24" fill="currentColor"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
       <svg class="icon-exit"  viewBox="0 0 24 24" fill="currentColor"><path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/></svg>
@@ -341,42 +381,60 @@
       max-field-of-view="40deg"
       style="width:100%;height:300px;background:transparent">
     </model-viewer>
-  </div>
-
-  <div class="fe-gallery" id="fe-gallery">
-    <div class="fe-gallery__viewport" id="fe-gallery-viewport">
-      <div class="fe-img-placeholder" id="fe-img-placeholder">
-        <svg viewBox="0 0 24 24" fill="none" style="width:56px;height:56px">
-          <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" fill="currentColor"/>
+    <div class="fe-viewer-placeholder" id="fe-viewer-placeholder" style="display:none">
+      <div class="fe-viewer-placeholder__inner">
+        <svg viewBox="0 0 48 48" fill="none" style="width:44px;height:44px" aria-hidden="true">
+          <path d="M24 5L43 16V32L24 43L5 32V16L24 5Z" stroke="rgba(0,229,255,.45)" stroke-width="1.5" fill="none"/>
+          <path d="M24 43V5M5 16L24 26.5L43 16M24 26.5V43" stroke="rgba(0,229,255,.2)" stroke-width="1"/>
         </svg>
-        <span>Imagen no disponible</span>
+        <p class="fe-viewer-placeholder__title">Modelo 3D · Próximamente</p>
+        <p class="fe-viewer-placeholder__desc">La digitalización tridimensional de esta pieza está en proceso y estará disponible próximamente.</p>
       </div>
-      <span class="fe-img-badge" id="fe-img-badge">Ficha estándar</span>
     </div>
-    <div class="fe-gallery__controls" id="fe-gallery-controls" style="display:none">
-      <button class="fe-gallery__arrow" id="fe-gallery-prev" aria-label="Anterior">&#8592;</button>
-      <span class="fe-gallery__counter" id="fe-gallery-counter"><strong>1</strong> / 1</span>
-      <button class="fe-gallery__arrow" id="fe-gallery-next" aria-label="Siguiente">&#8594;</button>
+  </div>
+
+  <div class="fe-gallery-hero" id="fe-gallery-hero">
+
+    <div class="fe-gallery-hero__media">
+      <div class="fe-gallery" id="fe-gallery">
+        <div class="fe-gallery__viewport" id="fe-gallery-viewport">
+          <div class="fe-img-placeholder" id="fe-img-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" style="width:56px;height:56px">
+              <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" fill="currentColor"/>
+            </svg>
+            <span>Imagen no disponible</span>
+          </div>
+          <span class="fe-img-badge" id="fe-img-badge">Ficha estándar</span>
+        </div>
+        <div class="fe-gallery__controls" id="fe-gallery-controls" style="display:none">
+          <button class="fe-gallery__arrow" id="fe-gallery-prev" aria-label="Anterior">&#8592;</button>
+          <span class="fe-gallery__counter" id="fe-gallery-counter"><strong>1</strong> / 1</span>
+          <button class="fe-gallery__arrow" id="fe-gallery-next" aria-label="Siguiente">&#8594;</button>
+        </div>
+        <div class="fe-gallery__caption" id="fe-gallery-caption" style="display:none"></div>
+      </div>
     </div>
-    <div class="fe-gallery__caption" id="fe-gallery-caption" style="display:none"></div>
-  </div>
 
-  <div class="fe-tags" id="fe-tags"></div>
+    <div class="fe-gallery-hero__info">
+      <div class="fe-tags" id="fe-tags"></div>
 
-  <div class="fe-header">
-    <p class="fe-header__id" id="fe-id">—</p>
-    <h1 class="fe-header__title" id="fe-title">Cargando…</h1>
-    <p class="fe-header__subtitle" id="fe-subtitle"></p>
-  </div>
+      <div class="fe-header">
+        <p class="fe-header__id" id="fe-id">—</p>
+        <h1 class="fe-header__title" id="fe-title">Cargando…</h1>
+        <p class="fe-header__subtitle" id="fe-subtitle"></p>
+      </div>
 
-  <div class="fe-section" id="fe-section-identificacion">
-    <p class="fe-section__title">Identificación</p>
-    <div class="fe-data-grid" id="fe-data-grid"></div>
-  </div>
+      <div class="fe-section" id="fe-section-identificacion">
+        <p class="fe-section__title">Identificación</p>
+        <div class="fe-data-grid" id="fe-data-grid"></div>
+      </div>
 
-  <div class="fe-section" id="fe-section-relevancia" style="display:none">
-    <p class="fe-section__title">Relevancia</p>
-    <div class="fe-relevancia-callout" id="fe-relevancia-callout"></div>
+      <div class="fe-section" id="fe-section-relevancia" style="display:none">
+        <p class="fe-section__title">Relevancia</p>
+        <div class="fe-relevancia-callout" id="fe-relevancia-callout"></div>
+      </div>
+    </div>
+
   </div>
 
   <div class="fe-section" id="fe-section-contexto" style="display:none">
@@ -698,6 +756,8 @@
       buildGallery(pieza.imagenes);
     } else if (pieza.imagen) {
       buildGallery([{ src: pieza.imagen, caption: pieza.nombre }]);
+    } else {
+      document.getElementById('fe-gallery').style.display = 'none';
     }
 
     const viewerWrap = document.getElementById('fe-viewer-wrap');
@@ -786,8 +846,18 @@
     if (layout !== 'default') {
       document.getElementById('fe-main').classList.add(`fe-main--${layout}`);
     }
-    if ((layout === 'tall' || layout === 'gallery') && !pieza.modelo3d && !pieza.sketchfab_embed) {
-      document.getElementById('fe-viewer-wrap').style.setProperty('display', 'none', 'important');
+    if (!pieza.modelo3d && !pieza.sketchfab_embed && (layout === 'tall' || layout === 'gallery')) {
+      const vw = document.getElementById('fe-viewer-wrap');
+      vw.style.display = 'block';
+      document.getElementById('fe-viewer-placeholder').style.display = 'flex';
+      document.getElementById('fe-viewer-label')?.style.setProperty('display', 'none');
+      document.getElementById('fe-fs-btn')?.style.setProperty('display', 'none');
+    }
+    if (layout === 'gallery') {
+      const hasMedia = (pieza.imagenes?.length > 0) || !!pieza.imagen;
+      if (!hasMedia) {
+        document.getElementById('fe-gallery-hero')?.classList.add('fe-gallery-hero--no-media');
+      }
     }
   
     /* Pantalla completa viewer */
