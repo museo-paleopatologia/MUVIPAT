@@ -1316,11 +1316,13 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: var(--card-radius);
   box-shadow: 10px 10px 0 var(--cyan);
   width: min(560px, 100%);
-  max-height: calc(100svh - 3rem);
+  max-height: min(calc(100dvh - 3rem), calc(100svh - 3rem), 92vh);
+  overflow-x: hidden;
   overflow-y: auto;
-  overflow: hidden;
   transform: translateY(16px) scale(.97);
   transition: transform .32s cubic-bezier(.34,1.56,.64,1);
+  scrollbar-width: thin;
+  scrollbar-color: var(--dark-3) transparent;
 }
 .viewer-tutorial.is-open .vt-box {
   transform: translateY(0) scale(1);
@@ -1513,6 +1515,19 @@ h1, h2, h3, h4, h5, h6 {
   .vt-step:last-child { border-bottom: none; }
   .vt-footer { flex-direction: column; align-items: flex-start; }
   .vt-btn-ok { width: 100%; justify-content: center; }
+}
+/* Tutorial: pantallas muy pequeñas (<400px) */
+@media (max-width: 400px) {
+  .viewer-tutorial { padding: .75rem .5rem; padding-top: max(.75rem, env(safe-area-inset-top)); }
+  .vt-box { width: 100%; box-shadow: 6px 6px 0 var(--cyan); }
+  .vt-step { padding: .9rem .85rem; }
+  .vt-header { padding: .9rem 1rem .75rem; }
+  .vt-footer { padding: .7rem 1rem; }
+}
+/* Paso extra: si hay 5 pasos y el último es impar, lo ponemos a ancho completo */
+.vt-step:last-child:nth-child(odd) {
+  grid-column: span 2;
+  border-right: none;
 }
 
 /* ============================================================
@@ -1746,3 +1761,149 @@ h1, h2, h3, h4, h5, h6 {
       .viewer-fullscreen-btn .icon-exit { display: none; }
       :fullscreen .viewer-fullscreen-btn .icon-enter { display: none; }
       :fullscreen .viewer-fullscreen-btn .icon-exit  { display: block; }
+
+/* ============================================================
+   OVERLAY PANTALLA COMPLETA (viewer3d.js)
+   position:fixed · 100vw × 100dvh · z-index 99998
+   ============================================================ */
+#mv-fs-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99998;
+  width: 100vw;
+  height: 100dvh;
+  background: #080808;
+  display: none;
+  flex-direction: column;
+  /* Por encima de cualquier contenido pero bajo el guard */
+}
+#mv-fs-overlay.is-active { display: flex; }
+
+/* Topbar del overlay */
+.mv-fs-topbar {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  padding: .55rem 1rem;
+  background: rgba(10,10,10,.96);
+  border-bottom: 2px solid #1a1a1a;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  min-height: 44px;
+}
+
+.mv-fs-label {
+  font-family: var(--font-head);
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--bone-500);
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Botón cerrar overlay */
+.mv-fs-close {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  font-family: var(--font-head);
+  font-size: .62rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  padding: .4em 1em;
+  background: rgba(255,255,255,.06);
+  border: 1.5px solid rgba(255,255,255,.14);
+  border-radius: 2px;
+  color: rgba(255,255,255,.65);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background .15s, color .15s, border-color .15s, box-shadow .15s;
+}
+.mv-fs-close:hover {
+  background: rgba(192,0,60,.22);
+  border-color: var(--crimson);
+  color: var(--ivory);
+  box-shadow: 2px 2px 0 var(--crimson);
+}
+
+/* model-viewer dentro del overlay */
+#mv-fs-overlay > model-viewer,
+#mv-fs-viewer {
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  --progress-bar-color: transparent;
+  background: transparent;
+}
+
+/* ============================================================
+   SELECTOR DE MODELO (Geometría / Textura)
+   Compartido por overlay y visor inline
+   ============================================================ */
+.mv-model-selector {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  flex-wrap: wrap;
+}
+
+/* Inline: dentro del fe-viewer-wrap o fm-sticky-viewer */
+.mv-model-selector--inline {
+  padding: .5rem .75rem;
+  background: rgba(0,0,0,.5);
+  border-top: 1px solid rgba(255,255,255,.07);
+}
+
+.mv-model-btn {
+  font-family: var(--font-head);
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: .32em .85em;
+  background: transparent;
+  border: 1.5px solid rgba(255,255,255,.2);
+  border-radius: 2px;
+  color: rgba(255,255,255,.45);
+  cursor: pointer;
+  transition: background .15s, color .15s, border-color .15s, box-shadow .12s;
+  white-space: nowrap;
+}
+.mv-model-btn:hover {
+  background: rgba(0,229,255,.1);
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
+.mv-model-btn.is-active {
+  background: rgba(0,229,255,.14);
+  border-color: var(--cyan);
+  color: var(--cyan);
+  box-shadow: 2px 2px 0 rgba(0,229,255,.3);
+}
+
+/* Info educativa bajo el selector */
+.mv-model-info {
+  font-family: var(--font-ui);
+  font-size: .65rem;
+  font-weight: 300;
+  color: rgba(255,255,255,.3);
+  padding: .35rem .75rem .5rem;
+  background: rgba(0,0,0,.45);
+  line-height: 1.55;
+  border-top: 1px solid rgba(255,255,255,.05);
+}
+.mv-model-info strong {
+  font-weight: 700;
+  color: rgba(255,255,255,.5);
+}
+
+@media (max-width: 400px) {
+  .mv-fs-topbar { padding: .45rem .75rem; gap: .5rem; }
+  .mv-fs-close span { display: none; }
+}

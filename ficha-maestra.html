@@ -18,6 +18,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
   <script src="./js/data.js"></script>
+  <script src="./js/viewer3d.js"></script>
 
   <link rel="stylesheet" href="./css/style.css" />
 
@@ -271,8 +272,11 @@
       return `<div class="fm-alert-box">${ICO_ALERT}<span>${texto}</span></div>`;
     }
 
-    const heroOrbit = steps[0]?.camara?.orbit || '0deg 80deg 100%';
-    const modelSrc  = pieza.modelo3d || '';
+    const heroOrbit    = steps[0]?.camara?.orbit || '0deg 80deg 100%';
+    const modelosResueltos = window.PaleoViewer
+      ? PaleoViewer.resolveModelo(pieza.modelo3d)
+      : { geometria: pieza.modelo3d || null, textura: null };
+    const modelSrc  = modelosResueltos.geometria || modelosResueltos.textura || '';
     const [nombreBase, nombreSub] = pieza.nombre.split(' con ');
 
     const heroHTML = `
@@ -401,6 +405,15 @@
 
     document.getElementById('fm-root').classList.add('visible');
 
+    /* ── Selector de modelo dual (si aplica) ── */
+    if (window.PaleoViewer && (modelosResueltos.geometria && modelosResueltos.textura)) {
+      const mainViewer   = document.getElementById('main-viewer');
+      if (mainViewer) {
+        const hasDual = PaleoViewer.initModelSelector(mainViewer, modelosResueltos, mainViewer);
+        if (hasDual) PaleoViewer.injectDualModelTutorialStep();
+      }
+    }
+
     const hamburger = document.getElementById('nav-hamburger');
     const drawer    = document.getElementById('nav-mobile');
     let navOpen = false;
@@ -473,15 +486,16 @@
       gsap.from('.fm-hero__scroll-hint',    { y:10, opacity:0, duration:.5, ease:'power2.out', delay:.9 });
       gsap.from('.fm-hero__viewer-preview', { x:30, opacity:0, duration:.8, ease:'power3.out', delay:.4 });
     
-      /* Pantalla completa viewer */
-        document.getElementById('fm-fs-btn')?.addEventListener('click', () => {
-          const wrap = document.querySelector('.fm-sticky-viewer');
-          if (!document.fullscreenElement) {
-            wrap.requestFullscreen?.();
-          } else {
-            document.exitFullscreen?.();
-          }
-        });
+      /* Pantalla completa — overlay position:fixed (100vw × 100dvh) */
+      document.getElementById('fm-fs-btn')?.addEventListener('click', () => {
+        if (window.PaleoViewer) {
+          PaleoViewer.openFullscreen(
+            document.getElementById('main-viewer'),
+            modelosResueltos,
+            pieza.nombre
+          );
+        }
+      });
         
     });
 
@@ -617,9 +631,11 @@
           </div>
           <div class="vt-step__label">Extras</div>
           <div class="vt-step__title">Pantalla completa</div>
-          <div class="vt-step__desc">Usa el botón de pantalla completa del visualizador para maximizarlo. El botón circular ↺ restaura la posición inicial.</div>
+          <div class="vt-step__desc">Usa el botón ⛶ del visor para abrirlo a pantalla completa. Haz doble clic sobre el modelo para restablecer la vista.</div>
           <span class="vt-step__badge vt-step__badge--mouse">⛶ Pantalla completa</span>
-          <span class="vt-step__badge vt-step__badge--mouse">↺ Restablecer</span>
+          <span class="vt-step__badge vt-step__badge--touch">⛶ Pantalla completa</span>
+          <span class="vt-step__badge vt-step__badge--mouse">↩ Doble clic · restablecer</span>
+          <span class="vt-step__badge vt-step__badge--touch">↩ Doble toque · restablecer</span>
         </div>
 
       </div>

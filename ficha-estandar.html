@@ -524,6 +524,7 @@
 </footer>
 
 <script src="./js/data.js"></script>
+<script src="./js/viewer3d.js"></script>
 <script>
   const hamburger = document.getElementById('nav-hamburger');
   const drawer    = document.getElementById('nav-mobile');
@@ -761,10 +762,21 @@
       document.getElementById('fe-gallery').style.display = 'none';
     }
 
+    /* ── Resolver modelo3d (string, objeto dual o null) ── */
+    const modelos    = window.PaleoViewer ? PaleoViewer.resolveModelo(pieza.modelo3d) : { geometria: pieza.modelo3d || null, textura: null };
+    const modeloUrl  = modelos.geometria || modelos.textura || null;
+    const viewerEl   = document.getElementById('fe-model-viewer');
     const viewerWrap = document.getElementById('fe-viewer-wrap');
-    if (pieza.modelo3d) {
-      document.getElementById('fe-model-viewer').setAttribute('src', pieza.modelo3d);
+
+    if (modeloUrl) {
+      viewerEl.setAttribute('src', modeloUrl);
       viewerWrap.style.display = 'block';
+
+      /* Selector dual si existen ambos modelos */
+      if (window.PaleoViewer) {
+        const hasDual = PaleoViewer.initModelSelector(viewerEl, modelos, viewerEl);
+        if (hasDual) PaleoViewer.injectDualModelTutorialStep();
+      }
     } else if (pieza.sketchfab_embed) {
       viewerWrap.style.display = 'block';
       viewerWrap.innerHTML = `
@@ -862,13 +874,14 @@
       }
     }
   
-    /* Pantalla completa viewer */
+    /* Pantalla completa — overlay position:fixed (100vw × 100dvh) */
     document.getElementById('fe-fs-btn')?.addEventListener('click', () => {
-      const wrap = document.getElementById('fe-viewer-wrap');
-      if (!document.fullscreenElement) {
-        wrap.requestFullscreen?.();
-      } else {
-        document.exitFullscreen?.();
+      if (window.PaleoViewer) {
+        PaleoViewer.openFullscreen(
+          document.getElementById('fe-model-viewer'),
+          modelos,
+          pieza.nombre
+        );
       }
     });
 
@@ -975,9 +988,11 @@
           </div>
           <div class="vt-step__label">Extras</div>
           <div class="vt-step__title">Pantalla completa</div>
-          <div class="vt-step__desc">Usa el botón de pantalla completa del visualizador para maximizarlo. El botón circular ↺ restaura la posición inicial.</div>
+          <div class="vt-step__desc">Usa el botón ⛶ del visor para abrirlo a pantalla completa. Haz doble clic sobre el modelo para restablecer la vista.</div>
           <span class="vt-step__badge vt-step__badge--mouse">⛶ Pantalla completa</span>
-          <span class="vt-step__badge vt-step__badge--mouse">↺ Restablecer</span>
+          <span class="vt-step__badge vt-step__badge--touch">⛶ Pantalla completa</span>
+          <span class="vt-step__badge vt-step__badge--mouse">↩ Doble clic · restablecer</span>
+          <span class="vt-step__badge vt-step__badge--touch">↩ Doble toque · restablecer</span>
         </div>
 
       </div>
