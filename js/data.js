@@ -1717,6 +1717,54 @@ function glosarioLink(texto) {
 
 
 /* ══════════════════════════════════════════
+   CRONOLOGÍA HISTÓRICA
+   Fuente única de verdad para la timeline.
+   Independiente de las piezas: define todos
+   los periodos aunque no haya piezas aún.
+══════════════════════════════════════════ */
+const CRONOLOGIA_HISTORICA = [
+  {
+    bloque: 'Prehistoria', bloqueId: 'prehistoria', color: '#c0003c',
+    periodos: [
+      { id: 'paleolitico',  nombre: 'Paleolítico',               rango: '2,5 Ma – 10.000 a.C.' },
+      { id: 'mesolitico',   nombre: 'Mesolítico / Epipaleolítico', rango: '10.000 – 7.000 a.C.' },
+      { id: 'neolitico',    nombre: 'Neolítico',                  rango: '7.000 – 3.300 a.C.' },
+      { id: 'calcolítico',  nombre: 'Calcolítico',                rango: '3.300 – 2.200 a.C.' },
+      { id: 'bronce',       nombre: 'Edad del Bronce',            rango: '2.200 – 750 a.C.' },
+      { id: 'hierro',       nombre: 'Edad del Hierro',            rango: '750 – 218 a.C.' }
+    ]
+  },
+  {
+    bloque: 'Antigüedad', bloqueId: 'antiguedad', color: '#d4e60a',
+    periodos: [
+      { id: 'romano',       nombre: 'Período Romano',    rango: '218 a.C. – s. III d.C.' },
+      { id: 'tardoantiguo', nombre: 'Tardoantigüedad',   rango: 'ss. III–VII d.C.' }
+    ]
+  },
+  {
+    bloque: 'Edad Media', bloqueId: 'medieval', color: '#00e5ff',
+    periodos: [
+      { id: 'altamedieval',  nombre: 'Alta Edad Media',   rango: 'ss. V–X d.C.' },
+      { id: 'plenamedieval', nombre: 'Plena Edad Media',  rango: 'ss. XI–XIII d.C.' },
+      { id: 'bajamedieval',  nombre: 'Baja Edad Media',   rango: 'ss. XIV–XV d.C.' }
+    ]
+  },
+  {
+    bloque: 'Edad Moderna', bloqueId: 'moderno', color: '#00e676',
+    periodos: [
+      { id: 'moderno', nombre: 'Edad Moderna', rango: 'ss. XVI–XVIII d.C.' }
+    ]
+  },
+  {
+    bloque: 'Época Contemporánea', bloqueId: 'contemporaneo', color: '#ff4081',
+    periodos: [
+      { id: 'contemporaneo', nombre: 'Época Contemporánea', rango: 'ss. XIX–XXI d.C.' }
+    ]
+  }
+];
+
+
+/* ══════════════════════════════════════════
    Auto-indexación del glosario
 ══════════════════════════════════════════ */
 (function autoIndexGlosario() {

@@ -794,6 +794,363 @@
       .col-grid { grid-template-columns: 1fr; }
       .col-page-header__stats { gap: 1.5rem; }
     }
+
+    /* ═══════════════════════════════════════════
+       TIMELINE CRONOLÓGICA
+    ═══════════════════════════════════════════ */
+    .col-timeline {
+      background: #080808;
+      border-bottom: var(--col-border);
+      padding-block: clamp(3.5rem, 7vw, 6rem);
+    }
+    .col-timeline__inner {
+      width: min(860px, 96vw);
+      margin-inline: auto;
+      padding-inline: clamp(1rem, 3vw, 2rem);
+    }
+
+    /* Header */
+    .col-tl-header {
+      text-align: center;
+      margin-bottom: clamp(2.5rem, 5vw, 4rem);
+    }
+    .col-tl-eyebrow {
+      font-family: var(--font-head);
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--bone-400);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .7rem;
+      margin-bottom: .9rem;
+    }
+    .col-tl-eyebrow::before,
+    .col-tl-eyebrow::after {
+      content: '';
+      display: block;
+      height: 1px;
+      width: 36px;
+      background: var(--bone-500);
+      opacity: .35;
+    }
+    .col-tl-title {
+      font-family: var(--font-head);
+      font-size: clamp(1.9rem, 3.5vw, 3rem);
+      font-weight: 900;
+      letter-spacing: -.04em;
+      color: var(--ivory);
+      line-height: 1.05;
+      margin-bottom: .8rem;
+    }
+    .col-tl-title em {
+      font-family: var(--font-display);
+      font-style: italic;
+      color: var(--bone-400);
+      font-size: .9em;
+    }
+    .col-tl-subtitle {
+      font-size: .85rem;
+      color: var(--bone-500);
+      line-height: 1.75;
+      max-width: 520px;
+      margin-inline: auto;
+      font-weight: 300;
+    }
+
+    /* Column + spine */
+    .col-tl-column {
+      display: flex;
+      flex-direction: column;
+      gap: .35rem;
+      position: relative;
+      padding-left: 2.4rem;
+    }
+    .col-tl-column::before {
+      content: '';
+      position: absolute;
+      left: .85rem;
+      top: .5rem;
+      bottom: .5rem;
+      width: 1.5px;
+      background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(200,170,120,.3) 8%,
+        rgba(200,170,120,.15) 92%,
+        transparent 100%
+      );
+    }
+
+    /* Bloque */
+    .col-tl-bloque { position: relative; }
+
+    .col-tl-bloque__hd {
+      display: flex;
+      align-items: center;
+      gap: .85rem;
+      padding: .85rem 1rem .85rem 0;
+      background: rgba(255,255,255,.025);
+      border: 1px solid rgba(255,255,255,.055);
+      border-left: 2.5px solid var(--bloque-c, #555);
+      border-radius: 3px;
+      cursor: pointer;
+      user-select: none;
+      transition: background .18s;
+      position: relative;
+    }
+    .col-tl-bloque__hd::before {
+      content: '';
+      position: absolute;
+      left: calc(-2.4rem + .85rem - 5px);
+      top: 50%;
+      transform: translateY(-50%);
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--bloque-c, #555);
+      box-shadow: 0 0 10px color-mix(in srgb, var(--bloque-c, #555) 60%, transparent);
+      transition: box-shadow .2s;
+    }
+    .col-tl-bloque__hd:hover,
+    .col-tl-bloque__hd:focus-visible {
+      background: rgba(255,255,255,.05);
+      outline: none;
+    }
+    .col-tl-bloque__hd:focus-visible { outline: 2px solid var(--bloque-c, #555); outline-offset: 2px; }
+
+    .col-tl-bloque__accent {
+      width: 28px;
+      height: 28px;
+      flex-shrink: 0;
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: color-mix(in srgb, var(--bloque-c, #555) 12%, transparent);
+      margin-left: .75rem;
+    }
+
+    .col-tl-bloque__name {
+      font-family: var(--font-head);
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .03em;
+      color: rgba(255,255,255,.55);
+      flex: 1;
+      transition: color .18s;
+    }
+    .col-tl-bloque--has-pieces .col-tl-bloque__name,
+    .col-tl-bloque__hd:hover .col-tl-bloque__name { color: var(--ivory); }
+
+    .col-tl-bloque__cnt {
+      font-family: var(--font-head);
+      font-size: .56rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: rgba(200,170,120,.55);
+      padding: .18em .75em;
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 20px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .col-tl-bloque--has-pieces .col-tl-bloque__cnt {
+      color: var(--bloque-c, #555);
+      border-color: color-mix(in srgb, var(--bloque-c, #555) 45%, transparent);
+      background: color-mix(in srgb, var(--bloque-c, #555) 8%, transparent);
+    }
+
+    .col-tl-bloque__chevron {
+      color: rgba(200,170,120,.4);
+      flex-shrink: 0;
+      margin-right: .75rem;
+      transition: transform .25s ease, color .2s;
+    }
+    .col-tl-bloque__hd.is-open .col-tl-bloque__chevron { transform: rotate(180deg); color: var(--bone-400); }
+
+    /* Bloque body */
+    .col-tl-bloque__bd {
+      padding: .4rem 0 .4rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: .15rem;
+      position: relative;
+    }
+    .col-tl-bloque__bd::before {
+      content: '';
+      position: absolute;
+      left: calc(-.85rem - .75px);
+      top: 0; bottom: 0;
+      width: 1px;
+      background: color-mix(in srgb, var(--bloque-c, #555) 30%, transparent);
+    }
+
+    /* Period row */
+    .col-tl-period {
+      padding: .5rem .9rem .5rem 1rem;
+      border-radius: 2px;
+      position: relative;
+    }
+    .col-tl-period::before {
+      content: '';
+      position: absolute;
+      left: calc(-.85rem - 4px);
+      top: 50%;
+      transform: translateY(-50%);
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(200,170,120,.2);
+      background: #080808;
+      transition: border-color .2s, background .2s;
+    }
+    .col-tl-period--active::before {
+      border-color: var(--bloque-c, #555);
+      background: color-mix(in srgb, var(--bloque-c, #555) 25%, #080808);
+      box-shadow: 0 0 6px color-mix(in srgb, var(--bloque-c, #555) 50%, transparent);
+    }
+
+    .col-tl-period__hd {
+      display: flex;
+      align-items: center;
+      gap: .7rem;
+      flex-wrap: wrap;
+    }
+    .col-tl-period__name {
+      font-family: var(--font-head);
+      font-size: .7rem;
+      font-weight: 600;
+      color: rgba(200,170,120,.45);
+      flex: 1;
+      min-width: 130px;
+    }
+    .col-tl-period--active .col-tl-period__name {
+      color: var(--ivory);
+      font-weight: 700;
+    }
+    .col-tl-period__range {
+      font-family: var(--font-head);
+      font-size: .6rem;
+      color: rgba(200,170,120,.35);
+      font-weight: 400;
+      white-space: nowrap;
+    }
+    .col-tl-period--active .col-tl-period__range { color: var(--bone-500); opacity: .8; }
+
+    .col-tl-period__badge {
+      font-family: var(--font-head);
+      font-size: .52rem;
+      font-weight: 800;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      background: var(--bloque-c, #555);
+      color: #0d0d0d;
+      padding: .14em .55em;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    /* Piece cards */
+    .col-tl-period__pieces {
+      margin-top: .55rem;
+      display: flex;
+      flex-direction: column;
+      gap: .35rem;
+    }
+    .col-tl-piece {
+      display: grid;
+      grid-template-columns: auto 1fr auto auto;
+      align-items: center;
+      gap: .75rem;
+      padding: .65rem .85rem;
+      background: rgba(255,255,255,.028);
+      border: 1px solid rgba(255,255,255,.065);
+      border-left: 2px solid var(--bloque-c, #555);
+      border-radius: 3px;
+      text-decoration: none;
+      transition: background .15s, transform .18s ease, border-color .15s;
+    }
+    .col-tl-piece:hover {
+      background: rgba(255,255,255,.055);
+      transform: translateX(5px);
+      border-color: rgba(255,255,255,.14);
+    }
+    .col-tl-piece__id {
+      font-family: var(--font-head);
+      font-size: .55rem;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--bloque-c, #c8aa78);
+      white-space: nowrap;
+    }
+    .col-tl-piece__main {
+      display: flex;
+      flex-direction: column;
+      gap: .12rem;
+      min-width: 0;
+    }
+    .col-tl-piece__name {
+      font-family: var(--font-head);
+      font-size: .76rem;
+      font-weight: 700;
+      color: var(--ivory);
+      line-height: 1.2;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .col-tl-piece__site {
+      font-size: .62rem;
+      color: var(--bone-500);
+      font-weight: 300;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .col-tl-piece__right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: .18rem;
+      flex-shrink: 0;
+    }
+    .col-tl-piece__crono {
+      font-family: var(--font-head);
+      font-size: .57rem;
+      color: var(--bone-400);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .col-tl-piece__patol {
+      font-family: var(--font-head);
+      font-size: .54rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .col-tl-piece__arrow {
+      color: rgba(200,170,120,.35);
+      flex-shrink: 0;
+      transition: transform .18s, color .18s;
+    }
+    .col-tl-piece:hover .col-tl-piece__arrow {
+      color: var(--bloque-c, #c8aa78);
+      transform: translateX(3px);
+    }
+
+    /* Mobile */
+    @media (max-width: 640px) {
+      .col-tl-column { padding-left: 1.8rem; }
+      .col-tl-column::before { left: .65rem; }
+      .col-tl-bloque__hd::before { left: calc(-1.8rem + .65rem - 5px); }
+      .col-tl-bloque__bd::before { left: calc(-.65rem - .75px); }
+      .col-tl-period::before { left: calc(-.65rem - 4px); }
+      .col-tl-piece { grid-template-columns: auto 1fr auto; }
+      .col-tl-piece__right { display: none; }
+      .col-tl-piece__name { white-space: normal; line-clamp: 2; }
+    }
   </style>
 </head>
 <body>
@@ -979,6 +1336,30 @@
       <div class="col-gallery__track" id="gallery-track">
         <!-- Las fichas maestras se generan desde JS -->
       </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════
+       CRONOLOGÍA HISTÓRICA
+  ══════════════════════════════════ -->
+  <section class="col-timeline" aria-labelledby="tl-title">
+    <div class="col-timeline__inner">
+
+      <header class="col-tl-header">
+        <p class="col-tl-eyebrow">Contexto histórico</p>
+        <h2 class="col-tl-title" id="tl-title">
+          La colección en su<br><em>cronología</em>
+        </h2>
+        <p class="col-tl-subtitle">
+          Una cronología histórica completa sobre la que se sitúan las piezas catalogadas.
+          Los periodos sin especímenes forman parte del marco temporal y acogerán futuras incorporaciones.
+        </p>
+      </header>
+
+      <div class="col-tl-column" id="tl-column" role="list" aria-label="Cronología histórica de la colección">
+        <!-- Generado por buildTimeline() -->
+      </div>
+
     </div>
   </section>
 
@@ -1263,10 +1644,163 @@
     });
 
 
+    /* ══════════════════════════════════════════
+       TIMELINE CRONOLÓGICA
+    ══════════════════════════════════════════ */
+
+    /* Clasifica una pieza en un id de periodo a partir de epoca + cronologia */
+    function clasificarPieza(pieza) {
+      const crono = pieza.cronologia || '';
+      const e     = pieza.epoca     || '';
+
+      if (e === 'romano') {
+        return /tard[íi]a|tardío/i.test(crono) ? 'tardoantiguo' : 'romano';
+      }
+      if (e === 'medieval') {
+        if (/xiv|xv\b/i.test(crono))             return 'bajamedieval';
+        if (/xi|xii|xiii/i.test(crono))           return 'plenamedieval';
+        if (/vi{0,2}\b|vii|viii|ix|\bx\b/i.test(crono)) return 'altamedieval';
+        return 'plenamedieval';
+      }
+      if (e === 'prehistoria') {
+        if (/bronce/i.test(crono))    return 'bronce';
+        if (/hierro/i.test(crono))    return 'hierro';
+        if (/neolít/i.test(crono))    return 'neolitico';
+        if (/calcolít/i.test(crono))  return 'calcolítico';
+        return 'paleolitico';
+      }
+      if (e === 'moderno')       return 'moderno';
+      if (e === 'contemporaneo') return 'contemporaneo';
+      return null;
+    }
+
+    function buildTimeline() {
+      const col = document.getElementById('tl-column');
+      if (!col || typeof CRONOLOGIA_HISTORICA === 'undefined') return;
+
+      /* Indexar piezas por periodo */
+      const porPeriodo = {};
+      PIEZAS.forEach(p => {
+        const pid = clasificarPieza(p);
+        if (pid) { (porPeriodo[pid] = porPeriodo[pid] || []).push(p); }
+      });
+
+      CRONOLOGIA_HISTORICA.forEach(bloque => {
+        const totalBloque = bloque.periodos.reduce(
+          (n, p) => n + (porPeriodo[p.id] || []).length, 0
+        );
+        const hasPieces = totalBloque > 0;
+        const cntLabel  = hasPieces
+          ? `${totalBloque} pieza${totalBloque !== 1 ? 's' : ''}`
+          : 'Próximamente';
+
+        const bloqueEl = document.createElement('div');
+        bloqueEl.className = 'col-tl-bloque' + (hasPieces ? ' col-tl-bloque--has-pieces' : '');
+        bloqueEl.style.setProperty('--bloque-c', bloque.color);
+        bloqueEl.setAttribute('role', 'listitem');
+
+        /* ── Icono (primera letra del bloque) ── */
+        const icon = bloque.bloque.charAt(0);
+
+        bloqueEl.innerHTML =
+          `<div class="col-tl-bloque__hd" role="button" tabindex="0"
+                aria-expanded="${hasPieces ? 'true' : 'false'}"
+                aria-controls="tl-bd-${bloque.bloqueId}">
+             <div class="col-tl-bloque__accent" aria-hidden="true"
+                  style="color:${bloque.color};font-family:var(--font-head);font-size:.78rem;font-weight:900">
+               ${icon}
+             </div>
+             <span class="col-tl-bloque__name">${bloque.bloque}</span>
+             <span class="col-tl-bloque__cnt">${cntLabel}</span>
+             <svg class="col-tl-bloque__chevron" width="16" height="16" viewBox="0 0 24 24"
+                  fill="currentColor" aria-hidden="true">
+               <path d="M7 10l5 5 5-5z"/>
+             </svg>
+           </div>
+           <div class="col-tl-bloque__bd" id="tl-bd-${bloque.bloqueId}"
+                ${hasPieces ? '' : 'hidden'}>
+           </div>`;
+
+        const hd = bloqueEl.querySelector('.col-tl-bloque__hd');
+        const bd = bloqueEl.querySelector('.col-tl-bloque__bd');
+
+        /* Toggle */
+        function toggleBloque() {
+          const open = !hd.classList.contains('is-open');
+          hd.classList.toggle('is-open', open);
+          hd.setAttribute('aria-expanded', String(open));
+          open ? bd.removeAttribute('hidden') : bd.setAttribute('hidden', '');
+        }
+        hd.addEventListener('click', toggleBloque);
+        hd.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleBloque(); }
+        });
+        if (hasPieces) hd.classList.add('is-open');
+
+        /* ── Períodos ── */
+        bloque.periodos.forEach(periodo => {
+          const piezas   = porPeriodo[periodo.id] || [];
+          const active   = piezas.length > 0;
+          const periodEl = document.createElement('div');
+          periodEl.className = 'col-tl-period' + (active ? ' col-tl-period--active' : '');
+
+          periodEl.innerHTML =
+            `<div class="col-tl-period__hd">
+               <span class="col-tl-period__name">${periodo.nombre}</span>
+               <span class="col-tl-period__range">${periodo.rango}</span>
+               ${active ? `<span class="col-tl-period__badge">${piezas.length}</span>` : ''}
+             </div>`;
+
+          if (active) {
+            const piecesWrap = document.createElement('div');
+            piecesWrap.className = 'col-tl-period__pieces';
+
+            piezas.forEach(pieza => {
+              const patMeta   = VOCABULARIO.patologia[pieza.patologia] || {};
+              const siteShort = (pieza.yacimiento || '').split(',')[0]
+                .replace(/(?:necrópolis|maqbara|basílica)\s+/i, '').trim();
+
+              const a = document.createElement('a');
+              a.href  = pieza.ficha || `ficha-estandar.html?id=${pieza.id}`;
+              a.className = 'col-tl-piece';
+              a.setAttribute('aria-label', `${pieza.nombre} — ${pieza.yacimiento}`);
+
+              a.innerHTML =
+                `<span class="col-tl-piece__id">${pieza.id}</span>
+                 <div class="col-tl-piece__main">
+                   <span class="col-tl-piece__name">${pieza.nombre}</span>
+                   <span class="col-tl-piece__site">${siteShort}</span>
+                 </div>
+                 <div class="col-tl-piece__right">
+                   <span class="col-tl-piece__crono">${pieza.cronologia || ''}</span>
+                   <span class="col-tl-piece__patol"
+                         style="color:${patMeta.color || '#c8aa78'}">
+                     ${patMeta.icon || ''} ${patMeta.label || ''}
+                   </span>
+                 </div>
+                 <svg class="col-tl-piece__arrow" width="14" height="14"
+                      viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                   <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/>
+                 </svg>`;
+
+              piecesWrap.appendChild(a);
+            });
+
+            periodEl.appendChild(piecesWrap);
+          }
+
+          bd.appendChild(periodEl);
+        });
+
+        col.appendChild(bloqueEl);
+      });
+    }
+
     /* ── Init ── */
     buildGallery();
     initDragScroll();
     renderCatalog();
+    buildTimeline();
 
     /* ── Contadores dinámicos ── */
     document.getElementById('stat-total').textContent = PIEZAS.length;
