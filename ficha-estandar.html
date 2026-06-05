@@ -87,7 +87,6 @@
     .fe-tag--sexo     { border-color:var(--pink);     color:var(--pink);    background:rgba(255,64,129,.06); }
     .fe-tag--epoca    { border-color:var(--bone-400); color:var(--bone-500);background:rgba(200,170,120,.08); }
     .fe-tag--master   { border-color:var(--sulfur);   color:#6a7300;        background:rgba(212,230,10,.1); }
-    .fe-tag--historica{ border-color:var(--sulfur);   color:#6a5800;        background:rgba(230,200,10,.12); }
 
     .fe-header { margin-bottom:1.75rem; padding-bottom:1.5rem; border-bottom:var(--fe-border); }
     .fe-header__id { font-family:var(--font-head); font-size:.65rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--crimson); margin-bottom:.4rem; }
@@ -728,14 +727,13 @@
     document.title = `${pieza.nombre} · PaleoMuseo`;
 
     const badge = document.getElementById('fe-img-badge');
-    if (badge) badge.textContent = pieza.historica ? 'Pieza histórica' : 'Ficha estándar';
+    if (badge) badge.textContent = 'Ficha estándar';
 
     document.getElementById('fe-tags').innerHTML = `
       <span class="fe-tag fe-tag--region">${regMeta.icon} ${regMeta.label}</span>
       <span class="fe-tag fe-tag--patol">${patMeta.icon} ${patMeta.label}</span>
       <span class="fe-tag fe-tag--sexo">${sexMeta.icon} ${sexMeta.label}</span>
       <span class="fe-tag fe-tag--epoca">📅 ${epocMeta.label}</span>
-      ${pieza.historica ? '<span class="fe-tag fe-tag--historica">🏛️ Pieza histórica</span>' : ''}
       ${pieza.ficha?.includes('ficha-maestra') ? '<span class="fe-tag fe-tag--master">⭐ Ficha maestra</span>' : ''}
     `;
 
@@ -747,12 +745,8 @@
     addDataItem(grid, 'Estatura estimada', pieza.estatura);
     addDataItem(grid, 'Región anatómica', regMeta.label);
     addDataItem(grid, 'Tipo de patología', patMeta.label);
-    if (pieza.historica) {
-      addDataItem(grid, 'Estado de conservación', pieza.conservacion);
-    } else {
-      addDataItem(grid, 'Estado de conservación', pieza.conservacion_fisica);
-      addDataItem(grid, 'Método de digitalización', pieza.digitalizacion);
-    }
+    addDataItem(grid, 'Estado de conservación', pieza.conservacion_fisica);
+    addDataItem(grid, 'Método de digitalización', pieza.digitalizacion);
 
     if (pieza.imagenes?.length > 0) {
       buildGallery(pieza.imagenes);
@@ -859,9 +853,8 @@
     if (layout !== 'default') {
       document.getElementById('fe-main').classList.add(`fe-main--${layout}`);
     }
-    if (!pieza.modelo3d && !pieza.sketchfab_embed) {
-      const vw = document.getElementById('fe-viewer-wrap');
-      vw.style.display = 'block';
+    if (!modeloUrl && !pieza.sketchfab_embed) {
+      viewerWrap.style.display = 'block';
       document.getElementById('fe-viewer-placeholder').style.display = 'flex';
       document.getElementById('fe-viewer-label')?.style.setProperty('display', 'none', 'important');
       document.getElementById('fe-fs-btn')?.style.setProperty('display', 'none', 'important');

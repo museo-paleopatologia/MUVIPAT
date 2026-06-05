@@ -40,68 +40,6 @@
 const PIEZAS = [
 
   /* ══════════════════════════════════════════
-     PIEZAS HISTÓRICAS
-  ══════════════════════════════════════════ */
-  {
-    id:'H001', nombre:'Ötzi, el Hombre de Hielo',
-    region:'individuo-completo', patologia:'trauma', sexo:'masculino', epoca:'prehistoria',
-    yacimiento:'Tisenjoch Pass (Hauslabjoch), Alpes de Ötzal, Tirol del Sur (Italia)',
-    descripcion:'Momia calcolítica de excepcional conservación por congelación natural. Presenta traumatismo perimortem por proyectil lítico como causa probable de muerte. Conservada en el South Tyrol Museum of Archaeology, Bolzano.',
-    imagen:'/prueba-museo/assets/img/H001/H001_cuerpo_completo.png',
-    ficha:'/prueba-museo/ficha-estandar.html?id=H001',
-    historica:true,
-    modelo3d:'/prueba-museo/assets/models/H001.glb',
-    cronologia:'ca. 3350–3105 cal BC (Calcolítico / Edad del Cobre)',
-    edad:'45–46 años',
-    conservacion:'South Tyrol Museum of Archaeology, Bolzano (Italia)',
-    diagnostico_principal:'Probable muerte por hemorragia masiva secundaria a traumatismo penetrante por proyectil lítico (punta de flecha) alojada en el hemitórax izquierdo con afectación de la arteria subclavia.',
-    descripcion_osteologica: [
-      'Ötzi es un individuo adulto masculino de Homo sapiens, excepcionalmente conservado mediante momificación natural por congelación<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>. Presenta un esqueleto complejo asociado a preservación significativa de tejidos blandos<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>. Esta pieza se encuentra en el South Tyrol Museum of Archaeology en Bolzano.',
-      'Morfológicamente, es un individuo de constitución ágil, con una estatura aproximada de 1,58–1,60 m y edad estimada en torno a los 46 años<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>. Se observan variaciones anatómicas como la presencia de una costilla derecha vestigial asociada a la duodécima vértebra torácica<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a> y una vértebra lumbosacra transicional (L5), con posición inferior respecto al borde pélvico y morfología alterada por integración parcial con el sacro<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>.',
-      'A nivel craneal, se describen foveolas granulares prominentes en el hueso frontal, compatibles con variantes anatómicas no patológicas<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(3)">³</a>. La cavidad oral presenta desgaste dentario notable, diastema entre los incisivos superiores y pérdida de soporte alveolar<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>. Ausencia de terceros molares. Los estudios de isótopos en el esmalte dentario han permitido reconstruir su área de residencia en la infancia.',
-      'Se observan además alteraciones traumáticas en la región escapular izquierda y en la mano derecha<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(4)">⁴</a>, así como múltiples modificaciones postmortem derivadas de procesos tafonómicos y de la extracción del cuerpo<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(4)">⁴</a>. Los estudios radiológicos evidencian desgaste articular significativo en caderas, hombros, rodillas y columna<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>. Se documentó además la ausencia congénita del duodécimo par costal bilateral, considerada una variante anatómica infrecuente<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>.',
-    ],
-    hallazgos: [
-      { titulo:'Traumatismos', items:[
-        { texto:'Herida penetrante perimortem en región escapulotorácica izquierda compatible con impacto de proyectil.', refs:[4] },
-        { texto:'Punta lítica alojada en el hemitórax izquierdo (pulmón) con probable afectación vascular.', refs:[4] },
-        { texto:'Lesión incisa en mano derecha compatible con traumatismo por arma cortante perimortem.', refs:[4] },
-        { texto:'Posible traumatismo craneal asociado al evento perimortem.', refs:[1] }
-      ]},
-      { titulo:'Patologías degenerativas', items:[
-        { texto:'Cambios osteoarticulares compatibles con osteoartritis en caderas, hombros, rodillas y columna vertebral.', refs:[2] },
-        { texto:'Desgaste dentario avanzado con pérdida de soporte alveolar y diastema entre incisivos superiores.', refs:[2] }
-      ]},
-      { titulo:'Patologías cardiovasculares', items:[
-        { texto:'Calcificaciones vasculares compatibles con enfermedad aterosclerótica, documentadas mediante tomografía computarizada.', refs:[1] }
-      ]},
-      { titulo:'Patologías infecciosas y parasitarias', items:[
-        { texto:'Evidencia molecular de infección por Borrelia burgdorferi (enfermedad de Lyme).', refs:[1] },
-        { texto:'Presencia de Helicobacter pylori en el contenido gástrico.', refs:[1] },
-        { texto:'Huevos de Trichuris trichiura identificados en el tracto intestinal.', refs:[1] }
-      ]},
-      { titulo:'Patología oral', items:[
-        { texto:'Enfermedad periodontal avanzada con pérdida de soporte alveolar generalizada.', refs:[1] },
-        { texto:'Caries múltiples y desgaste oclusal severo compatible con dieta rica en carbohidratos.', refs:[2] }
-      ]}
-    ],
-    referencias: [
-      { id:1, autores:'Garrido Pena, R.', anio:'2020', titulo:'Ötzi, el hombre del hielo en el MAN', editorial:'Museo Arqueológico Nacional' },
-      { id:2, autores:'Kean, W.F. et al.', anio:'2013', titulo:'The musculoskeletal abnormalities of the Similaun Iceman', editorial:'SAGE Open Medicine', doi:'https://doi.org/10.1177/2050312112475428' },
-      { id:3, autores:'Murphy, W.A. et al.', anio:'2025', titulo:"New insights on Ötzi's injuries from a clinical perspective", editorial:'Journal of Archaeological Science' },
-      { id:4, autores:'Wierer, U. et al.', anio:'2018', titulo:"Ötzi, the Iceman: Lyme Disease, Androgenetic Alopecia and Dark Skin", editorial:'PLOS ONE', doi:'https://doi.org/10.1371/journal.pone.0195705' },
-      { id:5, autores:'kaoruiscool', anio:'2026', titulo:'Modelo 3D "Ötzi the Iceman", CC BY 4.0. https://skfb.ly/pGpTT' }
-    ],
-    imagenes: [
-      { src:'/prueba-museo/assets/img/H001/H001_cuerpo_completo.png', caption:'Figura 1. Vista anterior y posterior del cuerpo momificado de Ötzi, mostrando su excepcional estado de conservación y la distribución anatómica de sus tatuajes documentados. Tomada de Garrido Pena (2020).' },
-      { src:'/prueba-museo/assets/img/H001/H001_costilla_vestigial.png', caption:'Figura 2. Radiografía toracolumbar que muestra variantes anatómicas esqueléticas descritas en Ötzi, incluyendo una costilla derecha vestigial y alteraciones en la transición lumbosacra. Tomada de Kean et al. (2013).' },
-      { src:'/prueba-museo/assets/img/H001/H001_herida_mano.png', caption:'Figura 3. Detalle de la lesión traumática presente en la mano derecha de Ötzi, compatible con una herida perimortem por arma cortante. Tomada de Murphy et al. (2025).' },
-      { src:'/prueba-museo/assets/img/H001/H001_toolkit.png', caption:'Figura 4. Proceso de uso, fractura y reacondicionamiento de una punta de flecha perteneciente al conjunto de armas asociado a Ötzi. Una similar a la representada habría sido la causa de su muerte. Tomada de Wierer et al. (2018).' }
-    ],
-    layoutMode:'tall'
-  },
-
-  /* ══════════════════════════════════════════
      COLECCIÓN
   ══════════════════════════════════════════ */
   {
@@ -115,7 +53,6 @@ const PIEZAS = [
     descripcion: 'Cráneo masculino adulto con escafocefalia derivada de craneosinostosis sagital. El individuo alcanzó entre 35 y 50 años de edad pese a la alteración congénita, en contexto de necrópolis judía medieval segoviana.',
     imagen: '/prueba-museo/assets/img/CH-21/superior.png',
     ficha: '/prueba-museo/ficha-estandar.html?id=CH-21',
-    historica: false,
     modelo3d: null,
 
     cronologia: 'Siglos IX-XI',
@@ -199,7 +136,6 @@ const PIEZAS = [
     descripcion: 'Cráneo masculino adulto joven procedente de la maqbara islámica de San Nicolás (Murcia, ss. XI-XII). Presenta una lesión traumática frontal de morfología elipsoidal compatible con herida por instrumento de filo cortante, con signos de remodelación ósea parcial que evidencian supervivencia inicial al traumatismo.',
     imagen: '/prueba-museo/assets/img/M-16-0906/traumatismo.png',
     ficha: '/prueba-museo/ficha-estandar.html?id=M-16-0906',
-    historica: false,
     modelo3d: null,
 
     cronologia: 'ss. XI-XII',
@@ -280,7 +216,6 @@ const PIEZAS = [
     descripcion: 'Mandíbula procedente de la maqbara islámica de San Nicolás (Murcia, ss. XI-XIII). Presenta defectos lineales horizontales en el esmalte dental compatibles con hipoplasia de esmalte, indicador de episodios de estrés biológico ocurridos durante el desarrollo infantil.',
     imagen: '/prueba-museo/assets/img/mandibula/vista-frontal.png',
     ficha: '/prueba-museo/ficha-estandar.html?id=SN-MAND-01',
-    historica: false,
     modelo3d: null,
 
     cronologia: 'ss. XI-XIII',
@@ -360,7 +295,6 @@ const PIEZAS = [
     descripcion: 'Dos individuos femeninos adultos procedentes de la necrópolis tardoantigua de Marialba de la Ribera (León, ss. IV-VII). El individuo T.180 presenta destrucción vertebral, colapso de D8 y cifosis patológica compatible con Mal de Pott. El individuo T.160 muestra lesiones osteolíticas multifocales cuya distribución orienta el diagnóstico hacia metástasis osteolíticas.',
     imagen: '/prueba-museo/assets/img/T.160-180/enterramientos.png',
     ficha: '/prueba-museo/ficha-estandar.html?id=MARB-09-T160-T180',
-    historica: false,
     modelo3d: null,
 
     cronologia: 'Antigüedad Tardía (ss. IV-VII d.C.)',
@@ -435,61 +369,6 @@ const PIEZAS = [
     ],
 
     layoutMode: 'default'
-  },
-
-  {
-    id:'H002', nombre:'Ricardo III de Inglaterra',
-    region:'individuo-completo', patologia:'congenita', sexo:'masculino', epoca:'medieval',
-    yacimiento:'Grey Friars, Leicester, Inglaterra',
-    descripcion:'Individuo adulto masculino identificado como Ricardo III de Inglaterra mediante análisis de ADN y análisis osteológico. Presenta escoliosis idiopática adolescente severa y múltiples traumatismos perimortem compatibles con muerte violenta en combate. Recuperado en excavaciones arqueológicas bajo un aparcamiento de Leicester en 2012.',
-    imagen:'/prueba-museo/assets/img/H002/tumba.png',
-    ficha:'/prueba-museo/ficha-estandar.html?id=H002',
-    historica:true,
-    modelo3d:null,
-    sketchfab_embed:'https://sketchfab.com/models/00d23c7defd0476db1a36c08728fa60f/embed?autostart=1&camera=0&ui_inspector=0&ui_watermark_link=0&ui_watermark=0&ui_ar=0&ui_help=0&ui_settings=0&ui_vr=0&ui_fullscreen=0&ui_theme=dark',
-    sketchfab_title:"King Richard III's grave · Archaeological Services (ULAS)",
-    cronologia:'s. XV (fallecido en la batalla de Bosworth Field, 1485)',
-    edad:'30–34 años',
-    conservacion:'Leicester Cathedral, Leicester (Reino Unido)',
-    diagnostico_principal:'Traumatismo craneal severo perimortem compatible con muerte violenta en combate, asociado a escoliosis idiopática adolescente severa como patología de base.',
-    descripcion_osteologica: [
-      'El esqueleto corresponde a un individuo adulto masculino de constitución grácil identificado como Richard III<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>. Presenta una marcada deformidad vertebral compatible con una curvatura escoliótica severa localizada en la región torácica, extendiéndose aproximadamente desde T6 hasta T11, con una angulación estimada en vida de entre 70 y 90° según el ángulo de Cobb<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>.',
-      'La curvatura presenta un patrón equilibrado, con alineación compensatoria en las regiones cervical y lumbar, lo que sugiere una deformidad corporal poco visible y no incapacitante<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>.',
-      'No se observan anomalías estructurales vertebrales mayores como hemivértebras o barras unilaterales<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>.',
-      'Se documentan hasta 11 lesiones perimortem, principalmente localizadas en el cráneo, así como alteraciones postmortem compatibles con procesos tafonómicos, incluyendo fractura mandibular y otras heridas faciales<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>.',
-    ],
-    hallazgos: [
-      { titulo:'Escoliosis idiopática adolescente severa', items:[
-        { texto:'Columna torácica con curvatura lateral severa hacia la derecha.', refs:[2] },
-        { texto:'Ángulo de Cobb estimado entre 70° y 90°.', refs:[2] },
-        { texto:'Inicio probable en la adolescencia temprana (~10 años).', refs:[2] }
-      ]},
-      { titulo:'Traumatismos craneales', items:[
-        { texto:'9 heridas perimortem. Traumatismos múltiples por fuerza cortante y penetrante, compatibles con un asalto sostenido por varios atacantes.', refs:[1] },
-        { texto:'<strong>Occipital derecho:</strong> gran herida por fuerza cortante (65 mm × 50 mm) causada por un arma de hoja grande (espada o alabarda).', refs:[1] },
-        { texto:'<strong>Occipital izquierdo:</strong> herida penetrante de 32 mm cerca del foramen magnum; el arma atravesó el cerebro hasta impactar la tabla interna opuesta.', refs:[1] },
-        { texto:'<strong>Maxilar derecho:</strong> herida penetrante de 10 mm compatible con una daga rondel de sección cuadrada.', refs:[1] }
-      ]},
-      { titulo:'Traumatismos postcraneales', items:[
-        { texto:'10.ª costilla derecha: marca de herramienta por fuerza cortante a 70 mm de la cabeza de la costilla; el impacto fue desde atrás y no penetró la cavidad torácica.', refs:[1] },
-        { texto:'Pelvis: herida incisa de 30 mm que atraviesa la rama púbica superior. La trayectoria indica que el arma entró por la nalga derecha.', refs:[1] },
-        { texto:'Se considera probable que estas lesiones fueran infligidas post-mortem, dada la protección que ofrecía la armadura medieval en estas zonas.', refs:[1] }
-      ]}
-    ],
-    referencias: [
-      { id:1, autores:'Appleby J, Mitchell P, Robinson C, Brough A, Rutty G, Harris R, et al.', anio:'2015', titulo:'Perimortem trauma in King Richard III: a skeletal analysis', editorial:'Lancet', doi:'https://doi.org/10.1016/S0140-6736(14)60804-7' },
-      { id:2, autores:'Halsey T, Hutton T, Carr A, Appleby J.', anio:'2014', titulo:'The scoliosis of Richard III, last Plantagenet King of England: diagnosis and clinical significance', editorial:'Lancet', doi:'https://doi.org/10.1016/S0140-6736(14)60762-5' },
-      { id:3, autores:'Wikimedia Commons.', anio:'2026', titulo:'Portrait of King Richard III [Internet]. Wikimedia Foundation; [cited 2026 May 14]', editorial:'Wikimedia Foundation', doi:'https://commons.wikimedia.org' },
-      { id:4, autores:'University of Leicester.', anio:'2026', titulo:'Richard III: scientific investigation and skeletal analysis [Internet]. [cited 2026 May 14]', editorial:'University of Leicester', doi:'https://www.le.ac.uk/richardiii' },
-      { id:5, autores:'OpenAI.', anio:'2026', titulo:'ChatGPT [Internet]. [cited 2026 May 14]', editorial:'OpenAI, San Francisco (CA)', doi:'https://chat.openai.com' }
-    ],
-    imagenes: [
-      { src:'/prueba-museo/assets/img/H002/rey_ricardo.jpg', caption:'Figura 1. Retrato histórico de Richard III. Imagen obtenida de Wikipedia Commons.' },
-      { src:'/prueba-museo/assets/img/H002/heridas_craneales_real.jpg', caption:'Figura 2. Vista inferior del cráneo de Richard III mostrando dos traumatismos craneales perimortem potencialmente letales: 5) extensa lesión cortante occipital y 6) herida penetrante en la base izquierda del cráneo compatible con arma blanca medieval. Imagen: University of Leicester.' },
-      { src:'/prueba-museo/assets/img/H002/heridas_craneales.png', caption:'Figura 3. Reconstrucción de las principales lesiones craneales perimortem de Richard III: 1) gran lesión occipital, 2) herida penetrante en la base izquierda del cráneo, 3) corte lineal en la mandíbula derecha, 4) perforación en el maxilar derecho y 5) múltiples marcas de cortes superficiales. Ilustración generada con ChatGPT (OpenAI) a partir de evidencia paleopatológica publicada.' },
-      { src:'/prueba-museo/assets/img/H002/heridas_postcraneales.png', caption:'Figura 4. Reconstrucción de las principales lesiones postcraneales y craneales adicionales de Richard III: 1) lesión cortante en la décima costilla, 2) herida incisa en la pelvis y 3) traumatismos superficiales compatibles con agresiones peri- o postmortem. Ilustración generada con ChatGPT (OpenAI) a partir de evidencia paleopatológica publicada.' }
-    ],
-    layoutMode:'default'
   }
 
 ]; /* fin PIEZAS */

@@ -982,21 +982,6 @@
     </div>
   </section>
 
-<!-- ══════════════════════════════════
-     GALERÍA — piezas históricas
-══════════════════════════════════ -->
-<section class="col-gallery" aria-labelledby="historicas-title">
-  <div class="col-gallery__header">
-    <div>
-      <p class="col-gallery__label">Referentes históricos</p>
-      <h2 class="col-gallery__title" id="historicas-title">Piezas históricas</h2>
-    </div>
-  </div>
-  <div class="col-gallery__track-wrap" id="historicas-track-wrap">
-    <div class="col-gallery__track" id="historicas-track"></div>
-  </div>
-</section>
-
   <!-- ══════════════════════════════════
        BUSCADOR + CATÁLOGO
   ══════════════════════════════════ -->
@@ -1078,7 +1063,6 @@
        o define el array aquí manualmente
     ══════════════════════════════════════════ */
     const MAESTRAS_IDS = [];
-    const HISTORICAS_IDS = ['H001', 'H002'];
 
     const MASTER_COLORS = ['--cyan', '--crimson', '--sulfur', '--green', '--pink'];
     const PATOL_COLORS = {
@@ -1221,7 +1205,7 @@
               : `<div class="col-piece-card__img-ph">${regMeta.icon}</div>`
             }
             ${isMaster ? `<span class="col-piece-card__master-badge">Ficha maestra</span>` : ''}
-            ${pieza.historica ? `<span class="col-piece-card__master-badge" style="background:var(--sulfur);color:var(--dark);">H</span>` : ''}          </div>
+          </div>
           <div class="col-piece-card__body">
             <div class="col-piece-card__header">
               <span class="col-piece-card__id">${pieza.id}</span>
@@ -1278,58 +1262,9 @@
       }
     });
 
-    /* ── Función para la galería de piezas históricas ── */
-    function buildHistoricasGallery() {
-      const track = document.getElementById('historicas-track');
-      if (!track || typeof PIEZAS === 'undefined') return;
-
-      const historicas = PIEZAS.filter(p => HISTORICAS_IDS.includes(p.id));
-      historicas.forEach((pieza, i) => {
-        const colorVar = MASTER_COLORS[i % MASTER_COLORS.length];
-        
-        const patMeta = VOCABULARIO.patologia[pieza.patologia];
-        const regMeta = VOCABULARIO.region[pieza.region];
-        const epocMeta = VOCABULARIO.epoca[pieza.epoca];
-        
-        const card = document.createElement('a');
-        card.href = pieza.ficha || `ficha-estandar.html?id=${pieza.id}`;
-        card.className = `col-master-card col-master-card--${colorVar.replace('--','')}`;
-        
-        
-        card.innerHTML = `
-          <div class="col-master-card__strip" style="background:var(${colorVar})"></div>
-          <div class="col-master-card__img">
-            ${pieza.imagen
-              ? `<img src="${pieza.imagen}" alt="${pieza.nombre}" loading="lazy" />`
-              : `<div class="col-master-card__img-placeholder">
-                  <span style="font-size:2rem">🏛️</span>
-                </div>`
-            }
-            <span class="col-master-card__badge-3d" style="background:var(--sulfur);color:var(--dark);">H</span>
-          </div>
-          <div class="col-master-card__body">
-            <p class="col-master-card__id" style="color:var(${colorVar})">${pieza.id}</p>
-            <h3 class="col-master-card__name">${pieza.nombre}</h3>
-            <div class="col-master-card__meta">
-              <span class="col-mc-tag" style="border-color:var(${colorVar});color:var(${colorVar})">${regMeta.icon} ${regMeta.label}</span>
-              <span class="col-mc-tag" style="border-color:${patMeta.color};color:${patMeta.color}">${patMeta.icon} ${patMeta.label}</span>
-              <span class="col-mc-tag" style="border-color:rgba(200,170,120,.4);color:#b08d55">📅 ${epocMeta.label}</span>
-            </div>
-            <p class="col-master-card__link">
-              Ver ficha estándar
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/>
-              </svg>
-            </p>
-          </div>
-        `;
-          track.appendChild(card);
-      });
-    }
 
     /* ── Init ── */
     buildGallery();
-    buildHistoricasGallery();
     initDragScroll();
     renderCatalog();
 
