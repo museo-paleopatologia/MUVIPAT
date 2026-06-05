@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="./js/access-guard.js"></script>
   <link rel="icon" type="image/png" href="./assets/img/favicon.png">
   <link rel="apple-touch-icon" href="./assets/img/favicon.png">
   <meta name="description" content="Ficha estándar de pieza paleopatológica — PaleoMuseo LAV·UAM" />
@@ -846,12 +847,13 @@
     if (layout !== 'default') {
       document.getElementById('fe-main').classList.add(`fe-main--${layout}`);
     }
-    if (!pieza.modelo3d && !pieza.sketchfab_embed && (layout === 'tall' || layout === 'gallery')) {
+    if (!pieza.modelo3d && !pieza.sketchfab_embed) {
       const vw = document.getElementById('fe-viewer-wrap');
       vw.style.display = 'block';
       document.getElementById('fe-viewer-placeholder').style.display = 'flex';
-      document.getElementById('fe-viewer-label')?.style.setProperty('display', 'none');
-      document.getElementById('fe-fs-btn')?.style.setProperty('display', 'none');
+      document.getElementById('fe-viewer-label')?.style.setProperty('display', 'none', 'important');
+      document.getElementById('fe-fs-btn')?.style.setProperty('display', 'none', 'important');
+      document.getElementById('fe-model-viewer')?.style.setProperty('display', 'none', 'important');
     }
     if (layout === 'gallery') {
       const hasMedia = (pieza.imagenes?.length > 0) || !!pieza.imagen;

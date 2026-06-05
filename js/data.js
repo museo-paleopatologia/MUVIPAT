@@ -350,6 +350,94 @@ const PIEZAS = [
   },
 
   {
+    id: 'MARB-09-T160-T180',
+    nombre: 'Tumbas 160 y 180: Mal de Pott y metástasis osteolíticas',
+    region: 'columna',
+    patologia: 'especifica',
+    sexo: 'femenino',
+    epoca: 'romano',
+    yacimiento: 'Basílica Paleocristiana de Marialba de la Ribera, Villaturiel, León',
+    descripcion: 'Dos individuos femeninos adultos procedentes de la necrópolis tardoantigua de Marialba de la Ribera (León, ss. IV-VII). El individuo T.180 presenta destrucción vertebral, colapso de D8 y cifosis patológica compatible con Mal de Pott. El individuo T.160 muestra lesiones osteolíticas multifocales cuya distribución orienta el diagnóstico hacia metástasis osteolíticas.',
+    imagen: '/prueba-museo/assets/img/T.160-180/enterramientos.png',
+    ficha: '/prueba-museo/ficha-estandar.html?id=MARB-09-T160-T180',
+    historica: false,
+    modelo3d: null,
+
+    cronologia: 'Antigüedad Tardía (ss. IV-VII d.C.)',
+    edad: 'Adulto maduro',
+    conservacion: null,
+
+    diagnostico_principal: 'T.180: Mal de Pott (tuberculosis vertebral) — destrucción de D8, colapso vertebral y cifosis patológica con predominio destructivo y conservación de los arcos. T.160: Metástasis osteolíticas — lesiones multifocales de bordes suaves en múltiples regiones anatómicas, sin colapso vertebral, con afectación de arcos y pérdida generalizada de masa ósea.',
+
+    relevancia: 'El estudio de los individuos de la Tumba 180 y la Tumba 160 es una contribución esencial al registro de la <strong>tuberculosis</strong> en la Antigüedad Tardía en el noroeste de la Península Ibérica. El individuo T.180 es especialmente importante por presentar lesiones óseas suficientes para diagnosticar <strong>Mal de Pott</strong><a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>. La comparación con el individuo T.160, cuyo patrón de distribución y ausencia de destrucción vertebral orientan el diagnóstico hacia lesiones metastásicas<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>, permite comprender las dificultades diagnósticas del estudio paleopatológico de enfermedades de alta relevancia histórica.',
+
+    contexto_arqueologico: [
+      'Ambos individuos proceden de la necrópolis asociada a la Basílica Paleocristiana de Marialba de la Ribera, cuya historia funcional se inicia en el siglo IV d.C.<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>. El edificio original se proyectó como un mausoleo vinculado a las élites militares de la <em>legio VII Gemina</em>; este proyecto quedó inacabado pero a mediados del siglo IV fue transformado en un <em>martyrium</em> con cámaras funerarias destinadas al culto e inhumación de personajes destacados<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>.',
+      'Al convertir este espacio en sagrado se generó una densa área cementerial activa desde la Antigüedad Tardía hasta la Baja Edad Media<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>. Las piezas corresponden a la fase tardoantigua de la basílica<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>, caracterizada por la reutilización del espacio y la superposición de enterramientos<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>.',
+    ],
+
+    descripcion_osteologica: [
+      '<strong>Individuo T.180.</strong> Presenta una destrucción completa del cuerpo de la octava vértebra dorsal (D8) que provocó su colapso vertebral<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>. Como consecuencia desarrolló una marcada cifosis patológica identificada durante la excavación<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>. Se observa además una anquilosis vertebral que afecta probablemente a las vértebras D7-D9 y una fusión costal en el lado izquierdo del tórax<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>. El patrón lesional muestra gran predominio de procesos destructivos frente a la formación de nuevo hueso, aunque mantiene la arquitectura de los arcos vertebrales<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>.',
+      '<strong>Individuo T.160.</strong> Presenta múltiples lesiones osteolíticas distribuidas por diferentes regiones: cóndilo mandibular derecho, costillas, manubrio y cuerpo del esternón, ala ilíaca derecha y columna vertebral<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>. Las lesiones son cavidades de bordes suaves y bien delimitados, con formas circulares, ovaladas o coalescentes, de diámetros inferiores a 5 mm en la mayoría de los casos —excepto la del manubrio esternal—<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>.',
+      'A diferencia de T.180, las lesiones vertebrales de T.160 afectan tanto a los cuerpos como a los arcos vertebrales sin provocar colapso vertebral<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>. El esqueleto presenta además una pérdida generalizada de masa ósea<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>.',
+    ],
+
+    hallazgos: [
+      {
+        titulo: 'T.180 · Osteomielitis purulenta — Descartada',
+        items: [
+          { texto: 'La osteomielitis suele presentar formación de hueso nuevo (reacción perióstica) y secuestros óseos. En T.180 existe un claro predominio de la destrucción frente a la neoformación, lo que descarta este diagnóstico.', refs: [1] }
+        ]
+      },
+      {
+        titulo: 'T.180 · Procesos traumáticos o neoplásicos — Descartados',
+        items: [
+          { texto: 'Se excluyen por la conservación de la estructura de los arcos vertebrales y la especificidad del colapso vertebral con cifosis, características del Mal de Pott.', refs: [1] }
+        ]
+      },
+      {
+        titulo: 'T.160 · Tuberculosis vertebral — Descartada',
+        items: [
+          { texto: 'T.160 no presenta destrucción completa de ningún cuerpo vertebral y las lesiones afectan también a los arcos vertebrales. El diámetro de la mayoría de las lesiones es inferior a 5 mm (salvo en el esternón), patrón incompatible con tuberculosis vertebral.', refs: [1] }
+        ]
+      },
+      {
+        titulo: 'T.160 · Sarcoidosis — Menos probable',
+        items: [
+          { texto: 'La morfología de las cavidades, su distribución multifocal y la pérdida de masa ósea generalizada resultan más compatibles con un proceso metastásico osteolítico que con sarcoidosis.', refs: [1] }
+        ]
+      }
+    ],
+
+    referencias: [
+      {
+        id: 1,
+        autores: 'Cambra-Moo O, Campo Martín M, Vega Bermúdez R, Elvira Martín A, San Román Fernández F, González Martín A.',
+        anio: '2013',
+        titulo: '¿Dos posibles casos de tuberculosis entre las inhumaciones tardoantiguas de la necrópolis de Marialba de la Ribera (Villaturiel, León)?',
+        editorial: 'En: Malgosa Morera A, Isidro Llorens A, Ibáñez Gimeno P, Prats-Muñoz G, editores. Vetera corpora morbo afflicta: Actas del XI Congreso Nacional de Paleopatología. Barcelona; 2013. p. 135-140'
+      },
+      {
+        id: 2,
+        autores: 'Gutiérrez González JA.',
+        anio: '2021',
+        titulo: 'Los oscuros orígenes de un monumento funerario y cultual: Marialba de la Ribera (León). De mausoleum-martyrium a basílica bautismal',
+        editorial: 'Gerión. 2021;39(2):567-600'
+      }
+    ],
+
+    imagenes: [
+      { src: '/prueba-museo/assets/img/T.160-180/enterramientos.png', caption: 'Figura 1. Fotografía de campo de los dos enterramientos estudiados. Se puede observar la cifosis patológica en T.180. Imagen tomada de Cambra-Moo et al. (2013).' },
+      { src: '/prueba-museo/assets/img/T.160-180/cifosis-180.png', caption: 'Figura 2. Detalle de la cifosis del individuo T.180. Imagen tomada de Cambra-Moo et al. (2013).' },
+      { src: '/prueba-museo/assets/img/T.160-180/costilla-180.png', caption: 'Figura 3. Detalle de las lesiones en la costilla del individuo T.180. Imagen tomada de Cambra-Moo et al. (2013).' },
+      { src: '/prueba-museo/assets/img/T.160-180/dorsales-160.png', caption: 'Figura 4. Detalle de las lesiones en las vértebras dorsales del individuo T.160 (vistas ventral y dorsal). Imagen tomada de Cambra-Moo et al. (2013).' },
+      { src: '/prueba-museo/assets/img/T.160-180/manubrio-160.png', caption: 'Figura 5. Detalle de las lesiones en el manubrio del esternón del individuo T.160 (vistas ventral y dorsal). Imagen tomada de Cambra-Moo et al. (2013).' }
+    ],
+
+    layoutMode: 'default'
+  },
+
+  {
     id:'H002', nombre:'Ricardo III de Inglaterra',
     region:'individuo-completo', patologia:'congenita', sexo:'masculino', epoca:'medieval',
     yacimiento:'Grey Friars, Leicester, Inglaterra',
