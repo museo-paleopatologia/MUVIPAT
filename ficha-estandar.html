@@ -716,14 +716,15 @@
       return;
     }
 
-    const patMeta  = VOCABULARIO.patologia[pieza.patologia] || { label:pieza.patologia, icon:'', color:'#ccc' };
+    const patKeys  = Array.isArray(pieza.patologia) ? pieza.patologia : [pieza.patologia];
+    const patMeta  = VOCABULARIO.patologia[patKeys[0]] || { label:patKeys[0], icon:'', color:'#ccc' };
     const regMeta  = VOCABULARIO.region[pieza.region]       || { label:pieza.region,    icon:'' };
     const sexMeta  = VOCABULARIO.sexo[pieza.sexo]           || { label:pieza.sexo,       icon:'' };
     const epocMeta = VOCABULARIO.epoca[pieza.epoca]         || { label:pieza.epoca,      range:'' };
 
     document.getElementById('fe-id').textContent       = pieza.id;
     document.getElementById('fe-title').textContent    = pieza.nombre;
-    document.getElementById('fe-subtitle').textContent = `${patMeta.label} · ${epocMeta.label}`;
+    document.getElementById('fe-subtitle').textContent = `${patKeys.map(k => (VOCABULARIO.patologia[k] || {label:k}).label).join(' / ')} · ${epocMeta.label}`;
     document.title = `${pieza.nombre} · PaleoMuseo`;
 
     const badge = document.getElementById('fe-img-badge');
@@ -731,7 +732,10 @@
 
     document.getElementById('fe-tags').innerHTML = `
       <span class="fe-tag fe-tag--region">${regMeta.icon} ${regMeta.label}</span>
-      <span class="fe-tag fe-tag--patol">${patMeta.icon} ${patMeta.label}</span>
+      ${patKeys.map(k => {
+        const m = VOCABULARIO.patologia[k] || { label: k, icon: '' };
+        return `<span class="fe-tag fe-tag--patol">${m.icon} ${m.label}</span>`;
+      }).join('')}
       <span class="fe-tag fe-tag--sexo">${sexMeta.icon} ${sexMeta.label}</span>
       <span class="fe-tag fe-tag--epoca">📅 ${epocMeta.label}</span>
       ${pieza.ficha?.includes('ficha-maestra') ? '<span class="fe-tag fe-tag--master">⭐ Ficha maestra</span>' : ''}
@@ -744,7 +748,7 @@
     addDataItem(grid, 'Edad estimada', pieza.edad);
     addDataItem(grid, 'Estatura estimada', pieza.estatura);
     addDataItem(grid, 'Región anatómica', regMeta.label);
-    addDataItem(grid, 'Tipo de patología', patMeta.label);
+    addDataItem(grid, 'Tipo de patología', patKeys.map(k => (VOCABULARIO.patologia[k] || {label:k}).label).join(' / '));
     addDataItem(grid, 'Estado de conservación', pieza.conservacion_fisica);
     addDataItem(grid, 'Método de digitalización', pieza.digitalizacion);
 

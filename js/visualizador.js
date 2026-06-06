@@ -5,42 +5,38 @@
  */
 
 /* ══════════════════════════════════════════════════
-   DATOS: 8 patologías en array ordenado 4×2
-   Fila 1 (idx 0-3): trauma, infecciosa, especifica, metabolica
-   Fila 2 (idx 4-7): endocrino, tumor, degenerativa, congenita
+   DATOS: 7 patologías en array ordenado 4×3
+   Fila 1 (idx 0-3): trauma, infecciosa, congenita, degenerativa
+   Fila 2 (idx 4-6): metabolica, tumor, estudio
 ══════════════════════════════════════════════════ */
 const PATOLOGIA_INFO = [
   { key: 'trauma',
-    icon: '🦴', name: 'Traumatismos', count: '4 piezas', color: '#FF4D6D',
-    body: 'Son la segunda condición más prevalente en el registro paleopatológico. Comprenden cualquier evento extrínseco que altere la integridad o morfología ósea. Su análisis permite diferenciar entre accidentes, violencia o intervenciones quirúrgicas (trepanaciones) registrando así riesgos ambientales y comportamientos culturales.' },
+    icon: '⚡', name: 'Traumatismos', count: '2 piezas', color: '#FF4D6D',
+    body: 'Lesiones que alteran la integridad estructural del hueso como resultado de un impacto mecánico directo o indirecto. Comprenden fracturas, luxaciones y heridas inciso-contusas. Su estudio permite identificar episodios de violencia interpersonal, accidentes laborales o actividades de riesgo, así como intervenciones quirúrgicas como las trepanaciones.' },
 
   { key: 'infecciosa',
-    icon: '🦠', name: 'Infecciones', count: '4 piezas', color: '#00B8CC',
-    body: 'Procesos inflamatorios crónicos derivados de la invasión de patógenos en el tejido esquelético. Dado que el hueso solo registra infecciones de larga duración, las lesiones visibles testimonian una respuesta inmune prolongada. Cada resto infectado documenta la evolución de la patogenicidad y la resiliencia biológica.' },
-
-  { key: 'especifica',
-    icon: '🔬', name: 'Enf. específicas', count: '—', color: '#7B00CC',
-    body: 'Procesos granulomatosos con patrones de diagnóstico distintivos, centrados en la tuberculosis, la lepra y la treponematosis (sífilis). Alteran el tejido mediante focos destructivos o proliferativos característicos, como la caries sicca craneal o el colapso vertebral (Mal de Pott), permitiendo rastrear la coevolución entre humanos y patógenos específicos.' },
-
-  { key: 'metabolica',
-    icon: '🧬', name: 'Deficiencias y nutrición', count: '2 piezas', color: '#8FA800',
-    body: 'Trastornos sistémicos derivados de dietas inadecuadas o fallos metabólicos que alteran la mineralización ósea. Incluye el escorbuto (déficit de Vit. C) y el raquitismo (déficit de Vit. D), manifestándose en deformaciones plásticas o porosidad. Estos restos actúan como bioindicadores cruciales de estrés biológico y de la ecología dietética de la población.' },
-
-  { key: 'endocrino',
-    icon: '⚗️', name: 'T. endocrinos', count: '—', color: '#C87800',
-    body: 'Alteraciones esqueléticas derivadas de disfunciones en las glándulas pituitaria y tiroides, responsables de regular el crecimiento y la maduración ósea. El hiperpituitarismo se manifiesta como gigantismo o acromegalia, mientras que el hipotiroidismo resulta en diversas formas de enanismo. Documentan fallos en la homeostasis hormonal y su impacto en el desarrollo morfológico del individuo.' },
-
-  { key: 'tumor',
-    icon: '🔴', name: 'Tumores y quistes', count: '—', color: '#CC4400',
-    body: 'Proliferaciones anómalas de los componentes del tejido óseo, clasificadas en benignas y malignas. Los tumores primarios suelen manifestarse en periodos de crecimiento, mientras que las metástasis predominan en individuos de edad avanzada. Permiten documentar la antigüedad de los procesos neoplásicos en relación con la longevidad y la exposición ambiental.' },
-
-  { key: 'degenerativa',
-    icon: '🦷', name: 'Enf. articulares', count: '2 piezas', color: '#8A6800',
-    body: 'Alteraciones morfológicas resultantes de desequilibrio mecánico y fisiológico en superficies de contacto óseo, con la osteoartritis como condición más frecuente. Mediante la identificación de eburnación y osteofitos, permiten reconstruir patrones de estrés físico, especialización laboral y longevidad en las poblaciones del pasado.' },
+    icon: '🦠', name: 'Enfermedades Infecciosas', count: '1 pieza', color: '#00B8CC',
+    body: 'Procesos patológicos causados por microorganismos —bacterias, hongos o parásitos— que invaden el tejido óseo. Dado que el esqueleto solo registra infecciones de larga evolución, las lesiones observadas evidencian respuestas inflamatorias crónicas. Incluyen la tuberculosis ósea (Mal de Pott), la lepra o la treponematosis, permitiendo rastrear la historia evolutiva de estas enfermedades.' },
 
   { key: 'congenita',
-    icon: '🧩', name: 'Anomalías del desarrollo', count: '2 piezas', color: '#AA0060',
-    body: 'Desviaciones estructurales derivadas de fallos genéticos o ambientales durante la embriogénesis y el crecimiento. Incluyen desde displasias sistémicas como la acondroplasia hasta malformaciones como la espina bífida o craneosinostosis. Su presencia documenta la variabilidad biológica y, a menudo, la capacidad de cuidado y cohesión social hacia individuos con discapacidades.' }
+    icon: '🧬', name: 'Alteraciones Congénitas y del Desarrollo', count: '1 pieza', color: '#AA0060',
+    body: 'Desviaciones de la morfología normal debidas a alteraciones genéticas o perturbaciones ocurridas durante el desarrollo prenatal o postnatal. Abarcan desde malformaciones estructurales como la craneosinostosis hasta displasias sistémicas como la acondroplasia. Su registro documenta la variabilidad biológica y, en ocasiones, las capacidades de cuidado y cohesión social del grupo.' },
+
+  { key: 'degenerativa',
+    icon: '⚙️', name: 'Artropatías y Enfermedades Degenerativas', count: '1 pieza', color: '#FFB300',
+    body: 'Alteraciones del cartílago y las superficies articulares derivadas del desequilibrio mecánico acumulado a lo largo de la vida. La osteoartritis es la condición más frecuente, caracterizada por eburnación, osteofitosis y reordenamiento subcondral. Su análisis permite reconstruir patrones de actividad física, especialización laboral y longevidad en las poblaciones del pasado.' },
+
+  { key: 'metabolica',
+    icon: '🔬', name: 'Alteraciones Metabólicas y Marcadores de Estrés', count: '1 pieza', color: '#C6E800',
+    body: 'Modificaciones del tejido óseo derivadas de déficits nutricionales, enfermedades sistémicas o episodios repetidos de estrés fisiológico durante el crecimiento. Incluyen el escorbuto, el raquitismo o la hipoplasia de esmalte dental. Actúan como indicadores sensibles de las condiciones de vida, la calidad de la dieta y los episodios de crisis en la población estudiada.' },
+
+  { key: 'tumor',
+    icon: '🔴', name: 'Tumores y Proliferaciones Óseas', count: '1 pieza', color: '#CC4400',
+    body: 'Crecimientos anómalos del tejido óseo, clasificados en benignos y malignos según su comportamiento biológico. Los tumores primarios del hueso suelen afectar a individuos jóvenes, mientras que las metástasis óseas predominan en edades avanzadas. Su identificación en el registro arqueológico amplía el conocimiento sobre la antigüedad de los procesos neoplásicos y su prevalencia histórica.' },
+
+  { key: 'estudio',
+    icon: '🔍', name: 'Patologías en Estudio', count: '—', color: '#7B00CC',
+    body: 'Agrupa piezas cuyo diagnóstico paleopatológico está pendiente de confirmación o requiere análisis complementarios, así como lesiones que no encajan claramente en las categorías establecidas. Refleja los límites del diagnóstico macroscópico y la necesidad de metodologías como el análisis de ADN antiguo, la histología o la fluorescencia de rayos X para su caracterización definitiva.' }
 ];
 
 /* ══════════════════════════════════════════════════
@@ -635,7 +631,10 @@ function getFilteredPieces() {
   const { region, patologia, sexo, epoca, query } = state.filters;
   return PIEZAS.filter(p => {
     if (region.size    > 0 && !region.has(p.region))       return false;
-    if (patologia.size > 0 && !patologia.has(p.patologia))  return false;
+    if (patologia.size > 0) {
+      const pats = Array.isArray(p.patologia) ? p.patologia : [p.patologia];
+      if (!pats.some(k => patologia.has(k))) return false;
+    }
     if (sexo.size      > 0 && !sexo.has(p.sexo))            return false;
     if (epoca.size     > 0 && !epoca.has(p.epoca))          return false;
     if (query) {
@@ -684,7 +683,8 @@ function buildResultCard(pieza, index) {
   if (typeof VOCABULARIO === 'undefined') return document.createElement('div');
 
   const regMeta  = VOCABULARIO.region?.[pieza.region]   || { icon: '', label: pieza.region };
-  const patMeta  = VOCABULARIO.patologia?.[pieza.patologia] || { icon: '', label: pieza.patologia, color: '#ccc' };
+  const patKeys  = Array.isArray(pieza.patologia) ? pieza.patologia : [pieza.patologia];
+  const patMeta  = VOCABULARIO.patologia?.[patKeys[0]] || { icon: '', label: patKeys[0], color: '#ccc' };
   const sexMeta  = VOCABULARIO.sexo?.[pieza.sexo]        || { icon: '', label: pieza.sexo };
   const epocMeta = VOCABULARIO.epoca?.[pieza.epoca]      || { icon: '', label: pieza.epoca };
 
@@ -701,8 +701,11 @@ function buildResultCard(pieza, index) {
     <h3 class="result-card__title">${pieza.nombre}</h3>
     <p class="result-card__desc">${pieza.descripcion}</p>
     <div class="result-card__meta">
-      <span class="result-tag" data-clickable data-filter-type="region"   data-filter-val="${pieza.region}">${regMeta.icon} ${regMeta.label}</span>
-      <span class="result-tag" data-clickable data-filter-type="patologia" data-filter-val="${pieza.patologia}">${patMeta.icon} ${patMeta.label}</span>
+      <span class="result-tag" data-clickable data-filter-type="region" data-filter-val="${pieza.region}">${regMeta.icon} ${regMeta.label}</span>
+      ${patKeys.map(k => {
+        const m = VOCABULARIO.patologia?.[k] || { icon: '', label: k };
+        return `<span class="result-tag" data-clickable data-filter-type="patologia" data-filter-val="${k}">${m.icon} ${m.label}</span>`;
+      }).join('')}
       <span class="result-tag">${sexMeta.icon} ${sexMeta.label}</span>
     </div>
     <a href="${pieza.ficha || '#'}" class="result-card__link">

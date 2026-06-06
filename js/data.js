@@ -53,7 +53,7 @@ const PIEZAS = [
     descripcion: 'Cráneo masculino adulto con escafocefalia derivada de craneosinostosis sagital. El individuo alcanzó entre 35 y 50 años de edad pese a la alteración congénita, en contexto de necrópolis judía medieval segoviana.',
     imagen: '/prueba-museo/assets/img/CH-21/superior.png',
     ficha: '/prueba-museo/ficha-estandar.html?id=CH-21',
-    modelo3d: null,
+    modelo3d: 'assets/models/CH-21-textura.glb',
 
     cronologia: 'Siglos IX-XI',
     edad: '35-50 años',
@@ -122,7 +122,7 @@ const PIEZAS = [
       { src: '/prueba-museo/assets/img/CH-21/inferior.png',    caption: 'Figura 4. Vista inferior del cráneo CH-21. Muestra la morfología general de la base craneal y la elongación anteroposterior del individuo.' }
     ],
 
-    layoutMode: 'gallery'
+    layoutMode: 'default'
   },
 
   {
@@ -288,7 +288,7 @@ const PIEZAS = [
     id: 'MARB-09-T160-T180',
     nombre: 'Tumbas 160 y 180: Mal de Pott y metástasis osteolíticas',
     region: 'columna',
-    patologia: 'especifica',
+    patologia: ['infecciosa', 'tumor'],
     sexo: 'femenino',
     epoca: 'romano',
     yacimiento: 'Basílica Paleocristiana de Marialba de la Ribera, Villaturiel, León',
@@ -366,6 +366,191 @@ const PIEZAS = [
       { src: '/prueba-museo/assets/img/T.160-180/costilla-180.png', caption: 'Figura 3. Detalle de las lesiones en la costilla del individuo T.180. Imagen tomada de Cambra-Moo et al. (2013).' },
       { src: '/prueba-museo/assets/img/T.160-180/dorsales-160.png', caption: 'Figura 4. Detalle de las lesiones en las vértebras dorsales del individuo T.160 (vistas ventral y dorsal). Imagen tomada de Cambra-Moo et al. (2013).' },
       { src: '/prueba-museo/assets/img/T.160-180/manubrio-160.png', caption: 'Figura 5. Detalle de las lesiones en el manubrio del esternón del individuo T.160 (vistas ventral y dorsal). Imagen tomada de Cambra-Moo et al. (2013).' }
+    ],
+
+    layoutMode: 'default'
+  },
+
+  /* ══════════════════════════════════════════
+     ANQUILOSIS DE RODILLA EN ALMANSA
+  ══════════════════════════════════════════ */
+  {
+    id: 'ALM-ANQR-01',
+    nombre: 'Anquilosis de rodilla en Almansa',
+    region: 'miembro-inferior',
+    patologia: 'degenerativa',
+    sexo: 'masculino',
+    epoca: 'moderno',
+    yacimiento: 'Osario de Santa María de la Soledad, Almansa, Albacete',
+    descripcion: 'Bloque óseo fusionado que integra el fémur, la tibia y la rótula derecha de un individuo masculino adulto, con un ángulo de flexión de 117,5°. Procede del osario de Almansa (ss. XIII-XVIII). La anquilosis total evidencia una inmovilización prolongada de la articulación compatible con traumatismo severo o tuberculosis osteoarticular.',
+    imagen: '/prueba-museo/assets/img/anquilosis/anquilosis-lateral.png',
+    ficha: '/prueba-museo/ficha-estandar.html?id=ALM-ANQR-01',
+    modelo3d: 'assets/models/anquilosis.glb',
+
+    cronologia: 's. XIII-XVIII',
+    edad: 'Adulta',
+    conservacion: null,
+
+    diagnostico_principal: 'Anquilosis total de la articulación de la rodilla derecha con fusión completa de fémur, tibia y rótula en posición de flexión de 117,5°. Diagnóstico principal: traumatismo severo o tuberculosis osteoarticular como causa de la inmovilización irreversible de la articulación.',
+
+    relevancia: 'En esta pieza se puede ver una <strong>fusión ósea completa</strong> entre fémur, tibia y rótula con un ángulo de flexión de 117,5º, lo que sugiere una inmovilización prolongada del individuo. Esta anquilosis permite plantear diagnósticos diferenciales entre traumatismos mal curados e infecciones bacterianas como la tuberculosis<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>, además de ser clave para la reconstrucción de las condiciones de vida de la población de Almansa entre los siglos XIII y XVIII<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>.',
+
+    contexto_arqueologico: [
+      'El conjunto de restos óseos, datado entre los siglos XIII y XVIII, fue descubierto en 2008 durante la demolición de una vivienda en el casco histórico de la ciudad de Almansa<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>. El solar reveló restos humanos vinculados a la antigua iglesia de Santa María de la Soledad, el templo medieval más documentado en Almansa<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>.',
+      'Se considera un depósito secundario ya que los restos se hallaron sin conexión anatómica y en gran acumulación<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>. Su formación probablemente corresponda a las <em>mondas</em>, procesos en los que se vaciaban las sepulturas de las iglesias para liberar suelo sagrado y reutilizarlo, trasladando los cuerpos a criptas o grandes osarios<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>. Aunque no está confirmado, este traslado masivo podría estar relacionado con hambrunas, epidemias o eventos bélicos como la Batalla de Almansa (1707)<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>.',
+      'El estudio se realizó sobre una muestra de 50 conjuntos (de un total de 200), identificando 14.100 restos postcraneales y estimando un Número Mínimo de Individuos (NMI) de 159.',
+    ],
+
+    descripcion_osteologica: [
+      'Esta pieza consiste en un bloque óseo fusionado que integra el fémur, la tibia y la rótula derecha de un individuo adulto. Muestra una anquilosis total por la soldadura por osificación de la extremidad ósea de la rótula, fémur y tibia. El análisis macroscópico revela una alteración severa de la anatomía funcional de la rodilla.',
+      '<strong>Fusión y puentes óseos:</strong> se observa la formación de puentes óseos en la cara lateral de la pieza, los cuales han generado la fusión permanente del conjunto óseo.',
+      '<strong>Desplazamiento anatómico:</strong> tanto la tibia como la rótula se encuentran desplazadas lateralmente respecto a su eje anatómico original.',
+      '<strong>Alteraciones del tejido óseo:</strong> el individuo muestra evidencia de osteólisis localizada en el cóndilo lateral del fémur. Asimismo, se han identificado procesos concurrentes de osteopenia y osteogénesis, signos indicativos de una respuesta biológica activa ante procesos infecciosos o traumáticos.',
+      '<strong>Análisis métrico:</strong> el estudio radiológico ha determinado que la articulación quedó inmovilizada en un ángulo de flexión de 117,5º. Es significativo que, a pesar de la gravedad de la patología articular, tanto la zona proximal del fémur como el extremo distal de la tibia conservan una morfología normal sin alteraciones patológicas.',
+    ],
+
+    hallazgos: [
+      {
+        titulo: 'Traumatismo severo — Diagnóstico principal',
+        items: [
+          { texto: 'Un traumatismo se considera diagnóstico principal porque si no es tratado adecuadamente puede desencadenar procesos degenerativos que culminen en la fusión completa de la articulación. Si la fractura afectó a la articulación o hubo dislocación, el hemartros resultante aumenta el riesgo de osificación y anquilosis.' }
+        ]
+      },
+      {
+        titulo: 'Tuberculosis osteoarticular — Diagnóstico principal alternativo',
+        items: [
+          { texto: 'El 90% de las lesiones esqueléticas por tuberculosis afectan a una articulación, siendo la rodilla una de las más frecuentes. El proceso observado de osteólisis inicial en el cóndilo lateral del fémur, seguido de osteogénesis y osteopenia, coincide con el curso clínico de la infección por <em>Mycobacterium tuberculosis</em> en el tejido óseo.' }
+        ]
+      },
+      {
+        titulo: 'Artritis reumatoide o espondiloartropatías — Menos probable',
+        items: [
+          { texto: 'Aunque estas patologías pueden causar anquilosis, la pieza no presenta el patrón de morbilidad sistémico ni las erosiones marginales típicas de las artropatías inflamatorias. Además, la conservación de la zona proximal del fémur y distal de la tibia sugiere un proceso localizado.' }
+        ]
+      },
+      {
+        titulo: 'Artritis séptica — Menos probable',
+        items: [
+          { texto: 'Las infecciones piógenas agudas como la artritis séptica pueden causar destrucción rápida y posterior anquilosis, pero suelen presentar reacción perióstica más extensa y signos de involucro (secuestros) que no se describen en este caso.' }
+        ]
+      },
+      {
+        titulo: 'Inmovilización simple — Descartada',
+        items: [
+          { texto: 'La inmovilización por sí sola puede causar atrofia o rigidez, pero la presencia de puentes óseos robustos, desplazamiento anatómico de tibia y rótula y zonas de osteólisis activa confirman la existencia de una afección previa (traumática o infecciosa) y no solo falta de uso.' }
+        ]
+      }
+    ],
+
+    referencias: [
+      {
+        id: 1,
+        autores: 'Nacarino Meneses C, García Gil O, Aguilar Lazagabaster I, Pérez Pachón L, Lanseros M.',
+        anio: '2013',
+        titulo: 'Un caso de anquilosis de la articulación de la rodilla perteneciente a una población de Almansa (Albacete)',
+        editorial: 'En: Malgosa A, Isidro A, Ibáñez-Gimeno P, Prats-Muñoz G, editores. Vetera corpora morbo afflicta: Actas del XI Congreso Nacional de Paleopatología; 2013. p. 459-464'
+      },
+      {
+        id: 2,
+        autores: 'Aguilar Lazagabaster I.',
+        anio: '2011',
+        titulo: 'El conocimiento de las poblaciones del pasado a través de los restos óseos: estudio del osario de la iglesia de Santa María de la Soledad, Almansa (Albacete, s.XIII–XVIII). Creación de un catálogo digital mediante una base de datos relacional en red',
+        editorial: 'Proyecto Fin de Carrera. Madrid: Facultad de Ciencias, Universidad Autónoma de Madrid; 2011'
+      }
+    ],
+
+    imagenes: [
+      { src: '/prueba-museo/assets/img/anquilosis/anquilosis-lateral.png', caption: 'Figura 1. Vista lateral de la anquilosis de la articulación de la rodilla en un individuo de la población de Almansa (Albacete).' },
+      { src: '/prueba-museo/assets/img/anquilosis/anquilosis-frontal.png', caption: 'Figura 2. Vista frontal de la anquilosis de la articulación de la rodilla en un individuo de la población de Almansa (Albacete).' },
+      { src: '/prueba-museo/assets/img/anquilosis/anquilosis-radio.png',   caption: 'Figura 3. Radiografía de la anquilosis de la articulación de la rodilla en un individuo de la población de Almansa (Albacete).' }
+    ],
+
+    layoutMode: 'default'
+  },
+
+  /* ══════════════════════════════════════════
+     CRÁNEO CON TRAUMATISMO EN ASTERION
+  ══════════════════════════════════════════ */
+  {
+    id: 'ALM-ASTER-01',
+    nombre: 'Cráneo con traumatismo en asterión',
+    region: 'craneo',
+    patologia: 'trauma',
+    sexo: 'indeterminado',
+    epoca: 'moderno',
+    yacimiento: 'Osario de Santa María de la Soledad, Almansa, Albacete',
+    descripcion: 'Cráneo adulto de sexo indeterminado procedente del osario de Almansa (ss. XIII-XVIII) que presenta una lesión inciso-contusa en el asterión derecho. El orificio de ~20 mm con bordes angulosos y afilados, sin remodelación ósea, y un fragmento óseo desplazado al interior del cráneo permiten diagnosticar un traumatismo perimortem.',
+    imagen: '/prueba-museo/assets/img/asterion/asterion-lateral.png',
+    ficha: '/prueba-museo/ficha-estandar.html?id=ALM-ASTER-01',
+    modelo3d: 'assets/models/asterion-web.glb',
+
+    cronologia: 's. XII-XVIII',
+    edad: 'Adulta',
+    conservacion: null,
+
+    diagnostico_principal: 'Traumatismo craneal directo de tipo inciso-contuso en el asterión derecho. La lesión perimortem presenta bordes afilados y angulosos (componente inciso), patrón de fractura con línea que asciende al parietal derecho (componente contuso) y fragmento óseo desplazado al interior craneal, sin signos de remodelación que evidencien supervivencia posterior.',
+
+    relevancia: 'Esta pieza destaca por una <strong>lesión de tipo inciso-contuso</strong> localizada en el asterión derecho, con un patrón de fractura lineal y desprendimiento de un fragmento óseo hacia el interior de la cavidad craneal, lo que constituye una prueba sólida de su carácter perimortem<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>. Es fundamental la correcta diferenciación de estas lesiones frente a pseudopatologías por su similitud, ya que permite reconstruir aspectos sobre la morbilidad y el comportamiento humano en poblaciones históricas.',
+
+    contexto_arqueologico: [
+      'El conjunto de restos óseos, datado entre los siglos XII y XVIII, fue descubierto en 2008 durante la demolición de una vivienda en el casco histórico de la ciudad de Almansa<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>. El solar reveló restos humanos vinculados a la antigua iglesia de Santa María de la Soledad, el templo medieval más documentado en Almansa<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>.',
+      'Se considera un depósito secundario ya que los restos se hallaron sin conexión anatómica y en gran acumulación<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>. Su formación probablemente corresponda a las <em>mondas</em>, procesos en los que se vaciaban las sepulturas de las iglesias para liberar suelo sagrado y reutilizarlo, trasladando los cuerpos a criptas o grandes osarios. Aunque no está confirmado, este traslado masivo podría estar relacionado con hambrunas, epidemias o eventos bélicos como la Batalla de Almansa (1707)<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>.',
+      'El estudio se realizó sobre una muestra de 50 conjuntos (de un total de 200), identificando 14.100 restos postcraneales y estimando un Número Mínimo de Individuos (NMI) de 159.',
+    ],
+
+    descripcion_osteologica: [
+      'Esta pieza corresponde a un cráneo de un individuo adulto con buen estado de conservación<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>. Por su procedencia de un osario, no ha sido posible determinar el sexo ni la edad precisa del sujeto<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>.',
+      'La pieza muestra una pérdida de continuidad ósea en la región del asterión derecho. El impacto generó un orificio de aproximadamente 20 mm de anchura<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>, caracterizado por contornos angulosos y bordes afilados que no muestran signos biológicos de remodelación o formación de callo óseo<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>. A partir de esta lesión se desarrolla una línea de fractura que asciende por el hueso parietal derecho hasta alcanzar la sutura sagital.',
+      'En el interior del cráneo se localizó un fragmento óseo plano de 43,8 × 43,55 mm que conserva parte de la lámina externa original<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>. Su morfología coincide con el orificio del asterión, confirmando que es material óseo desplazado hacia el interior por el impacto. Su permanencia en el interior craneal indica que, tras el impacto, debió quedar retenido por el tejido blando hasta su descomposición.',
+    ],
+
+    hallazgos: [
+      {
+        titulo: 'Traumatismo craneal directo de tipo inciso-contuso — Diagnóstico principal',
+        items: [
+          { texto: 'Los bordes afilados y angulosos del orificio sugieren un objeto con capacidad de corte (componente inciso), mientras que el patrón de fractura y el desprendimiento interior indican aplicación de fuerza considerable (componente contuso). La lesión se determina perimortem por la elasticidad del hueso al fracturarse y la ausencia de signos de remodelación, indicando que no hubo cicatrización en vida.' }
+        ]
+      },
+      {
+        titulo: 'Lesiones antemortem — Descartadas',
+        items: [
+          { texto: 'Se descartan por la ausencia de procesos de reparación ósea. Cualquier lesión sufrida en vida habría dejado señales de remodelado, formación de callo o reacción perióstica que no se observan en esta pieza.' }
+        ]
+      },
+      {
+        titulo: 'Pseudopatologías / Alteraciones postmortem — Descartadas',
+        items: [
+          { texto: 'Las fracturas postmortem en hueso seco suelen ser irregulares con bordes frescos o patinados uniformes y no conservan fragmentos en posición anatómica ni en el interior del cráneo, como ocurre en este caso.' }
+        ]
+      },
+      {
+        titulo: 'Trepanación — Descartada',
+        items: [
+          { texto: 'Aunque la ubicación y el tamaño de la lesión podrían recordar a una intervención quirúrgica intencionada, la existencia de una fractura lineal que se extiende hasta la sutura sagital y el desprendimiento óseo interior invalidan esta interpretación.', refs: [2] }
+        ]
+      }
+    ],
+
+    referencias: [
+      {
+        id: 1,
+        autores: 'Aguilar Lazagabaster I.',
+        anio: '2011',
+        titulo: 'El conocimiento de las poblaciones del pasado a través de los restos óseos: estudio del osario de la iglesia de Santa María de la Soledad, Almansa (Albacete, s.XIII–XVIII). Creación de un catálogo digital mediante una base de datos relacional en red',
+        editorial: 'Proyecto Fin de Carrera. Madrid: Facultad de Ciencias, Universidad Autónoma de Madrid; 2011'
+      },
+      {
+        id: 2,
+        autores: 'Lanseros M, Nacarino Meneses C, García Gil O, Aguilar Lazagabaster I, Pérez Pachón L.',
+        anio: '2013',
+        titulo: 'Un caso de traumatismo craneal perteneciente a una colección de Almansa (Albacete)',
+        editorial: 'En: Malgosa A, Isidro A, Ibáñez-Gimeno P, Prats-Muñoz G, editores. Vetera corpora morbo afflicta. Actas del XI Congreso Nacional de Paleopatología; 2011 sep; Andorra la Vella. Madrid: Sociedad Española de Paleopatología; 2013. p. 389-94'
+      }
+    ],
+
+    imagenes: [
+      { src: '/prueba-museo/assets/img/asterion/asterion-lateral.png', caption: 'Figura 1. Vista lateral del cráneo con la lesión en el asterión derecho.' },
+      { src: '/prueba-museo/assets/img/asterion/asterion-detalle.png', caption: 'Figura 2. A. Detalle del fragmento óseo encontrado en el interior craneal. B. Detalle de la fractura en el asterión.' }
     ],
 
     layoutMode: 'default'
@@ -489,14 +674,13 @@ const VOCABULARIO = {
     'individuo-completo': { label:'Individuo completo', icon:'🧍🏼' }
   },
   patologia: {
-    trauma:       { label:'Traumatismos',            icon:'⚡',  color:'#FF4D6D' },
-    infecciosa:   { label:'Infecciosas',             icon:'🦠',  color:'#00E5FF' },
-    especifica:   { label:'Enf. específicas',        icon:'🔬',  color:'#7B00CC' },
-    metabolica:   { label:'Metabólicas',             icon:'🧬',  color:'#C6E800' },
-    endocrino:    { label:'T. endocrinos',           icon:'⚗️', color:'#C87800' },
-    tumor:        { label:'Tumores y quistes',       icon:'🔴',  color:'#CC4400' },  
-    degenerativa: { label:'Degenerativas',           icon:'⚙️', color:'#FFB300' },
-    congenita:    { label:'Congénitas',              icon:'🧬',  color:'#FF6EB4' },
+    trauma:       { label:'Traumatismos',                                   icon:'⚡',  color:'#FF4D6D' },
+    infecciosa:   { label:'Enfermedades Infecciosas',                       icon:'🦠',  color:'#00B8CC' },
+    congenita:    { label:'Alteraciones Congénitas y del Desarrollo',       icon:'🧬',  color:'#AA0060' },
+    degenerativa: { label:'Artropatías y Enfermedades Degenerativas',       icon:'⚙️', color:'#FFB300' },
+    metabolica:   { label:'Alteraciones Metabólicas y Marcadores de Estrés', icon:'🔬', color:'#C6E800' },
+    tumor:        { label:'Tumores y Proliferaciones Óseas',                icon:'🔴',  color:'#CC4400' },
+    estudio:      { label:'Patologías en Estudio',                          icon:'🔍',  color:'#7B00CC' },
   }, 
 sexo: {
     masculino:     { label:'Masculino',     icon:'♂' },

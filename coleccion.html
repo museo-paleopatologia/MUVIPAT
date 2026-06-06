@@ -854,7 +854,7 @@
     }
     .col-tl-subtitle {
       font-size: .85rem;
-      color: #9e8b6e;
+      color: #ede04c;
       line-height: 1.75;
       max-width: 540px;
       margin-inline: auto;
@@ -1387,11 +1387,12 @@
       <div class="col-quick-filters" role="group" aria-label="Filtros rápidos">
         <button class="col-qf-pill active" data-qf="all">Todas</button>
         <button class="col-qf-pill" data-qf="trauma">⚡ Traumatismos</button>
-        <button class="col-qf-pill" data-qf="infecciosa">🦠 Infecciosas</button>
-        <button class="col-qf-pill" data-qf="metabolica">🔬 Metabólicas</button>
-        <button class="col-qf-pill" data-qf="degenerativa">⚙️ Degenerativas</button>
-        <button class="col-qf-pill" data-qf="congenita">🧬 Congénitas</button>
-        <button class="col-qf-pill" data-qf="marcador">💪 Marcadores</button>
+        <button class="col-qf-pill" data-qf="infecciosa">🦠 Enfermedades Infecciosas</button>
+        <button class="col-qf-pill" data-qf="congenita">🧬 Alt. Congénitas y Desarrollo</button>
+        <button class="col-qf-pill" data-qf="degenerativa">⚙️ Artropatías Degenerativas</button>
+        <button class="col-qf-pill" data-qf="metabolica">🔬 Alt. Metabólicas y Estrés</button>
+        <button class="col-qf-pill" data-qf="tumor">🔴 Tumores y Prolif. Óseas</button>
+        <button class="col-qf-pill" data-qf="estudio">🔍 Patologías en Estudio</button>
       </div>
 
       <!-- Grid de piezas -->
@@ -1439,11 +1440,12 @@
     const MASTER_COLORS = ['--cyan', '--crimson', '--sulfur', '--green', '--pink'];
     const PATOL_COLORS = {
       trauma:       '#FF4D6D',
-      infecciosa:   '#00E5FF',
-      metabolica:   '#C6E800',
+      infecciosa:   '#00B8CC',
+      congenita:    '#AA0060',
       degenerativa: '#FFB300',
-      congenita:    '#FF6EB4',
-      marcador:     '#3D5AFE'
+      metabolica:   '#C6E800',
+      tumor:        '#CC4400',
+      estudio:      '#7B00CC',
     };
 
     /* ── Galería horizontal ── */
@@ -1529,7 +1531,8 @@
 
     function getFilteredPiezas() {
       return PIEZAS.filter(p => {
-        const matchFilter = currentFilter === 'all' || p.patologia === currentFilter;
+        const pats = Array.isArray(p.patologia) ? p.patologia : [p.patologia];
+        const matchFilter = currentFilter === 'all' || pats.includes(currentFilter);
         const q = currentQuery.toLowerCase().trim();
         const matchQuery = !q || `${p.id} ${p.nombre} ${p.descripcion} ${p.yacimiento} ${p.epoca}`.toLowerCase().includes(q);
         return matchFilter && matchQuery;
@@ -1557,11 +1560,12 @@
       }
 
       results.forEach((pieza, i) => {
-        const patMeta  = VOCABULARIO.patologia[pieza.patologia];
+        const patKeys  = Array.isArray(pieza.patologia) ? pieza.patologia : [pieza.patologia];
+        const patMeta  = VOCABULARIO.patologia[patKeys[0]] || { label: patKeys[0], icon: '', color: '#ccc' };
         const regMeta  = VOCABULARIO.region[pieza.region];
         const epocMeta = VOCABULARIO.epoca[pieza.epoca];
         const isMaster = MAESTRAS_IDS.includes(pieza.id);
-        const patColor = PATOL_COLORS[pieza.patologia] || '#c8aa78';
+        const patColor = PATOL_COLORS[patKeys[0]] || '#c8aa78';
 
         const card = document.createElement('a');
         card.href = pieza.ficha || `ficha-estandar.html?id=${pieza.id}`;
@@ -1587,7 +1591,11 @@
             <p class="col-piece-card__desc">${pieza.descripcion}</p>
             <div class="col-piece-card__tags">
               <span class="col-pc-tag col-pc-tag--region">${regMeta.icon} ${regMeta.label}</span>
-              <span class="col-pc-tag col-pc-tag--patol" style="--tag-c:${patColor}">${patMeta.icon} ${patMeta.label}</span>
+              ${patKeys.map(k => {
+                const m = VOCABULARIO.patologia[k] || { label: k, icon: '' };
+                const c = PATOL_COLORS[k] || '#c8aa78';
+                return `<span class="col-pc-tag col-pc-tag--patol" style="--tag-c:${c}">${m.icon} ${m.label}</span>`;
+              }).join('')}
             </div>
             <span class="col-piece-card__link">
               ${isMaster ? 'Ver ficha inmersiva' : 'Ver ficha estándar'}
@@ -1704,7 +1712,8 @@
 
       function showTooltip(pin, pieza, eraColor) {
         clearTimeout(hideTimer);
-        var patMeta   = VOCABULARIO.patologia[pieza.patologia] || {};
+        var patKey0  = Array.isArray(pieza.patologia) ? pieza.patologia[0] : pieza.patologia;
+        var patMeta  = VOCABULARIO.patologia[patKey0] || {};
         var siteShort = (pieza.yacimiento || '').split(',')[0]
           .replace(/(?:necrópolis|maqbara|basílica)\s+/i, '').trim();
         var href = pieza.ficha || ('ficha-estandar.html?id=' + pieza.id);
@@ -1840,8 +1849,14 @@
     /* ── Contadores dinámicos ── */
     document.getElementById('stat-total').textContent = PIEZAS.length;
     document.getElementById('stat-maestras').textContent = MAESTRAS_IDS.length;
-    document.getElementById('stat-patologias').textContent =
-      new Set(PIEZAS.map(p => p.patologia)).size;
+    (function() {
+      const allPats = new Set();
+      PIEZAS.forEach(p => {
+        const ks = Array.isArray(p.patologia) ? p.patologia : [p.patologia];
+        ks.forEach(k => allPats.add(k));
+      });
+      document.getElementById('stat-patologias').textContent = allPats.size;
+    })();
     document.getElementById('stat-epocas').textContent =
       new Set(PIEZAS.map(p => p.epoca)).size;
   </script>
