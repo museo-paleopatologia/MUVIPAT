@@ -874,8 +874,6 @@
     if (layout !== 'default') {
       document.getElementById('fe-main').classList.add(`fe-main--${layout}`);
     }
-     _showPlaceholder();
-    }
     if (layout === 'gallery') {
       const hasMedia = (pieza.imagenes?.length > 0) || !!pieza.imagen;
       if (!hasMedia) {
