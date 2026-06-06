@@ -874,8 +874,7 @@
     if (layout !== 'default') {
       document.getElementById('fe-main').classList.add(`fe-main--${layout}`);
     }
-    if (!modeloUrl && !pieza.sketchfab_embed) {
-      _showPlaceholder();
+     _showPlaceholder();
     }
     if (layout === 'gallery') {
       const hasMedia = (pieza.imagenes?.length > 0) || !!pieza.imagen;
