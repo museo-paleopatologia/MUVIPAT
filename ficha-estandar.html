@@ -875,11 +875,7 @@
       document.getElementById('fe-main').classList.add(`fe-main--${layout}`);
     }
     if (!modeloUrl && !pieza.sketchfab_embed) {
-      viewerWrap.style.display = 'block';
-      document.getElementById('fe-viewer-placeholder').style.display = 'flex';
-      document.getElementById('fe-viewer-label')?.style.setProperty('display', 'none', 'important');
-      document.getElementById('fe-fs-btn')?.style.setProperty('display', 'none', 'important');
-      document.getElementById('fe-model-viewer')?.style.setProperty('display', 'none', 'important');
+      _showPlaceholder();
     }
     if (layout === 'gallery') {
       const hasMedia = (pieza.imagenes?.length > 0) || !!pieza.imagen;
