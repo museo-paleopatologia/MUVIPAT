@@ -766,14 +766,31 @@
     const viewerEl   = document.getElementById('fe-model-viewer');
     const viewerWrap = document.getElementById('fe-viewer-wrap');
 
+    function _showPlaceholder() {
+      viewerWrap.style.display = 'block';
+      document.getElementById('fe-viewer-placeholder').style.display = 'flex';
+      viewerEl.style.setProperty('display', 'none', 'important');
+      document.getElementById('fe-viewer-label')?.style.setProperty('display', 'none', 'important');
+      document.getElementById('fe-fs-btn')?.style.setProperty('display', 'none', 'important');
+    }
+
     if (modeloUrl) {
-      viewerEl.setAttribute('src', modeloUrl);
       viewerWrap.style.display = 'block';
 
-      /* Selector dual si existen ambos modelos */
-      if (window.PaleoViewer) {
-        const hasDual = PaleoViewer.initModelSelector(viewerEl, modelos, viewerEl);
-        if (hasDual) PaleoViewer.injectDualModelTutorialStep();
+      /* Si model-viewer no está registrado (sin CDN/internet), mostrar placeholder */
+      if (!customElements.get('model-viewer')) {
+        _showPlaceholder();
+      } else {
+        viewerEl.setAttribute('src', modeloUrl);
+
+        /* Fallback: si el modelo falla al cargar, mostrar placeholder */
+        viewerEl.addEventListener('error', _showPlaceholder, { once: true });
+
+        /* Selector dual si existen ambos modelos */
+        if (window.PaleoViewer) {
+          const hasDual = PaleoViewer.initModelSelector(viewerEl, modelos, viewerEl);
+          if (hasDual) PaleoViewer.injectDualModelTutorialStep();
+        }
       }
     } else if (pieza.sketchfab_embed) {
       viewerWrap.style.display = 'block';
