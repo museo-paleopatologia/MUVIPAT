@@ -696,6 +696,31 @@ h1, h2, h3, h4, h5, h6 {
 .module-card--coleccion .module-card__strip { background: var(--crimson); }
 .module-card:hover .module-card__strip { transform: scaleX(1); }
 
+/* — Background images: reposo (::before) y hover (::after) — */
+.module-card::before,
+.module-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-size: cover;
+  background-position: center;
+  transition: opacity 0.4s ease;
+}
+.module-card::before  { opacity: 0.15; }
+.module-card::after   { opacity: 0; }
+.module-card:hover::after { opacity: 0.4; }
+
+.module-card--anatomia::before  { background-image: url('../assets/img/anatomia-bg.png'); }
+.module-card--anatomia::after   { background-image: url('../assets/img/anatomia-hover.png'); }
+.module-card--patologia::before { background-image: url('../assets/img/patologia-bg.png'); }
+.module-card--patologia::after  { background-image: url('../assets/img/patologia-hover.png'); }
+.module-card--coleccion::before { background-image: url('../assets/img/coleccion-bg.png'); }
+.module-card--coleccion::after  { background-image: url('../assets/img/coleccion-hover.png'); }
+
+.module-card__inner { position: relative; z-index: 2; }
+
 /* ============================================================
    SECONDARY MODULES
    ============================================================ */
