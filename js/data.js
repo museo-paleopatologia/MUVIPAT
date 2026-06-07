@@ -865,7 +865,7 @@ const GLOSARIO = [
     acepciones: [
       "s.f. Cuerpo o tallo de un hueso largo, desarrollado a partir de un centro de osificación primario y comprendido entre sus extremos o epífisis."
     ],
-    sinonimos: [],
+    sinonimos: ["tallo óseo"],
     obs: "",
     fuentes: [
       { nombre: "RANME", url: "https://dptm.es/" }
@@ -917,7 +917,7 @@ const GLOSARIO = [
     acepciones: [
       "s.m. Pequeño orificio situado en la superficie de los huesos a través del cual pasan los vasos sanguíneos que nutren el tejido óseo. Estos vasos, conocidos como arterias nutricias, penetran en el hueso compacto para suministrar nutrientes y oxígeno a la médula ósea y al propio hueso."
     ],
-    sinonimos: [],
+    sinonimos: ["agujero nutricio", "canal nutricio"],
     obs: "",
     fuentes: [
       { nombre: "IMAIOS", url: "https://www.imaios.com/" }
@@ -969,7 +969,7 @@ const GLOSARIO = [
     acepciones: [
       "s.m. Tejido óseo formado por una trama tridimensional de trabéculas óseas que delimita espacios ocupados por la médula ósea."
     ],
-    sinonimos: [],
+    sinonimos: ["hueso trabecular", "tejido esponjoso", "tejido trabecular"],
     obs: "",
     fuentes: [],
     contextoPaleopatologico: "Como alberga la médula ósea, el hueso esponjoso tiene una tasa de remodelado entre 5 y 10 veces más rápida que el compacto, lo que lo convierte en el primer tejido en registrar desequilibrios metabólicos y sistémicos: - Osteoporosis y Osteomalacia: Por su alta actividad fisiológica, los tejidos ricos en hueso esponjoso (vértebras, costillas o pelvis) son los más afectados por osteoporosis. - Tuberculosis: Por contener la médula roja hematopoyética (muy vascularizada), el tejido esponjoso es el establecimiento principal de bacterias con diseminación hematógena. En enfermedades como la tuberculosis, el bacilo anida en estas áreas destruyendo la trama de trabéculas y generando cavidades líticas. - Anemias Crónicas: Ante anemias severas, el cuerpo necesita producir más glóbulos rojos y la médula de los espacios trabeculares se hipertrofia. En el cráneo, esta expansión del tejido esponjoso reduce el número de trabéculas y las reorganiza de forma radial, empujando y destruyendo la capa cortical exterior."
@@ -1028,10 +1028,14 @@ const GLOSARIO = [
   {
     termino: "Cresta ósea",
     categoria: "ANATOMÍA",
-    acepciones: [],
-    sinonimos: [],
+    acepciones: [
+      "loc. nom. Prominencia, reborde o elevación lineal presente en la superficie o márgenes de un hueso, cuya función principal es servir como área de inserción de músculos, tendones o ligamentos. Un ejemplo característico es la cresta ilíaca."
+    ],
+    sinonimos: ["reborde óseo", "prominencia de inserción"],
     obs: "",
-    fuentes: [],
+    fuentes: [
+      { nombre: "Ortner & Turner-Walker (2003)", url: "" }
+    ],
     contextoPaleopatologico: "Al ser zonas de anclaje de músculos y ligamentos, soportan gran tensión mecánica. Un uso intensivo de un músculo a lo largo del tiempo genera microtraumatismos en la cresta. Para compensarlo, el cuerpo desarrolla proyecciones óseas anormales o hipertróficas llamadas entesopatías, las cuales permiten deducir que la persona estuvo sometida a exigencia física. Además, las crestas óseas son centros de osificación y crecimiento que se fusionan al resto del hueso a edades específicas. Por ejemplo, en la pelvis, los centros de crecimiento de la cresta ilíaca son de los últimos en fusionarse por completo, alrededor de los 25 años de edad. Observar la fusión de estas crestas es muy útil para estimar la fecha de muerte en adultos jóvenes."
   },
   {
@@ -1040,7 +1044,7 @@ const GLOSARIO = [
     acepciones: [
       "s.f. Excavación, cavidad, hueco, depresión o área hundida en una estructura anatómica."
     ],
-    sinonimos: [],
+    sinonimos: ["cavidad", "depresión"],
     obs: "",
     fuentes: [
       { nombre: "RANME", url: "https://dptm.es/" }
@@ -1051,7 +1055,7 @@ const GLOSARIO = [
     termino: "Surco",
     categoria: "ANATOMÍA",
     acepciones: [
-      "s.m. Depresión lineal o hendidura."
+      "s.m. Depresión lineal o hendidura en la superficie del hueso."
     ],
     sinonimos: [],
     obs: "",
@@ -1064,11 +1068,13 @@ const GLOSARIO = [
     termino: "Escotadura",
     categoria: "ANATOMÍA",
     acepciones: [
-      "s.f. incisura."
+      "s.f. Incisura, hendidura o depresión, generalmente en el borde de un hueso u órgano."
     ],
     sinonimos: [],
-    obs: "",
-    fuentes: [],
+    obs: "En anatomía osteológica se usa indistintamente escotadura e incisura para referirse a los mismos accidentes óseos.",
+    fuentes: [
+      { nombre: "RANME", url: "https://dptm.es/" }
+    ],
     contextoPaleopatologico: "Estas estructuras articulares no suelen ser focos primarios de enfermedad sino herramientas para conocer la demografía del individuo. Para determinar el sexo del individuo (característica esencial para diagnosticar patologías específicas), las variaciones en la pelvis aportan la información más fiable. Por adaptaciones en el canal del parto, la escotadura ciática mayor adopta un ángulo mucho más amplio y abierto en las mujeres mientras que en hombres es más cerrada."
   },
   {
@@ -1151,10 +1157,14 @@ const GLOSARIO = [
   {
     termino: "Cartílago articular",
     categoria: "ANATOMÍA",
-    acepciones: [],
-    sinonimos: [],
+    acepciones: [
+      "loc. nom. Capa especializada de cartílago hialino que recubre las superficies de deslizamiento de todas las articulaciones verdaderas. Está compuesto por células y una matriz intercelular organizada en densas capas de fibrillas de colágeno. Se caracteriza por estar pobremente vascularizado, por lo que depende del líquido sinovial para recibir nutrientes y eliminar los metabolitos resultantes de su actividad celular."
+    ],
+    sinonimos: ["cartílago hialino articular"],
     obs: "",
-    fuentes: [],
+    fuentes: [
+      { nombre: "Ortner & Turner-Walker (2003)", url: "" }
+    ],
     contextoPaleopatologico: "Este tejido rara vez se conserva en contextos arqueológicos pero sus alteraciones dejan en el hueso seco marcadores de esfuerzo. Por su escaso riego sanguíneo, cuando este cartílago se desgasta o daña en un adulto, prácticamente no tiene capacidad para repararse a sí mismo. Por ello, cuando el estrés mecánico o enfermedades como la artrosis destruyen este cartílago, los huesos están expuestos y empiezan a rozar entre sí. Esta fricción pule la superficie del hueso (eburnación). Encontrar un hueso pulido es prueba de que el individuo sufría artrosis severa."
   },
   {
@@ -1238,13 +1248,68 @@ const GLOSARIO = [
     contextoPaleopatologico: "A nivel microscópico, el proceso de remodelado osteonal (renovación) registra fielmente la edad, el estrés metabólico y diversas enfermedades: - Reloj Biológico: A lo largo de la vida, el hueso compacto renueva sus osteonas constantemente. Por ello, son útiles en un recuento histológico que compare osteonas intactas, fragmentos antiguos y canales no remodelados para determinar la edad del individuo. - Osteoporosis: Con el envejecimiento, el ritmo de relleno de los osteoblastos disminuye. El resultado es que las paredes de la osteona se vuelven más delgadas y el canal central de Havers queda agrandado, provocando una mayor fragilidad del hueso compacto. - Enfermedad de Paget: En esta enfermedad que acelera la destrucción y formación ósea, la estructura de la osteona se distorsiona y se vuelve irregular. - Marcadores Tumorales: Las variaciones en la morfología osteonal también ayudan al diagnóstico oncológico en huesos secos."
   },
 
+  {
+    termino: "Arco Vertebral",
+    categoria: "ANATOMÍA",
+    acepciones: [
+      "loc. nom. Arco óseo que constituye la porción posterior de la vértebra y cuya cara anterior delimita, en combinación con la cara posterior del cuerpo vertebral, el agujero vertebral. La porción anterior (pedículo vertebral) de cada mitad izquierda y derecha del arco vertebral se une a la cara posterior correspondiente del cuerpo vertebral. La porción posterior (lámina vertebral) de cada mitad del arco vertebral confluye con la otra en la zona central posterior del arco, de la cual nace una apófisis espinosa única. En la cara lateral de cada mitad izquierda y derecha del arco vertebral se originan la apófisis transversa y las apófisis articulares superior e inferior de la vértebra."
+    ],
+    sinonimos: ["arco neural"],
+    obs: "",
+    fuentes: [
+      { nombre: "Ortner & Putschar (1981)", url: "" }
+    ],
+    contextoPaleopatologico: "Para investigadores el arco vertebral es importante para identificar dos problemas de espalda muy comunes en el pasado: - Falta de fusión (Espina bífida): Durante el desarrollo las distintas partes de este arco no llegan a unirse por completo. En su forma leve (espina bífida oculta), es una anomalía que dejaba el canal medular expuesto, pero que normalmente no causaba problemas graves al individuo en vida. - Fracturas por Sobreesfuerzo (Espondilólisis): Una parte importante del arco neural se separa del resto de la vértebra por pequeñas fracturas por fatiga o estrés físico constante en la zona baja de la espalda. Esta marca ayuda a descubrir si un grupo humano estaba sometido a exigencia biomecánica."
+  },
+  {
+    termino: "Asterion",
+    categoria: "ANATOMÍA",
+    acepciones: [
+      "s.m. Punto anatómico de referencia en la cara lateral del cráneo, formado por la confluencia de tres huesos: el occipital, el temporal y el parietal. En ese punto convergen también tres suturas: la lambdoidea, la occipitomastoidea y la parietomastoidea. Internamente se relaciona con los senos transverso y sigmoideo y marca el sitio de la fontanela mastoidea cerrada."
+    ],
+    sinonimos: [],
+    obs: "",
+    fuentes: [
+      { nombre: "National Library of Medicine", url: "https://www.ncbi.nlm.nih.gov/books/" },
+      { nombre: "Ortner & Putschar (1981)", url: "" }
+    ],
+    contextoPaleopatologico: "Su importancia es triple: - Sirve como referencia en mediciones radiológicas y antropológicas del cráneo. Este tipo de marcas es muy importante para identificar anomalías en el tamaño o forma del hueso, ayudándonos a distinguir entre un desarrollo normal y procesos patológicos. - Es el extremo posterior de la sutura parietotemporal (conexión de los huesos laterales y superiores del cráneo), cuyo extremo anterior es el pterion. - Resulta relevante en cirugía ya que la anatomía sutural del asterion guía los abordajes hacia la fosa posterior del cráneo, protegiendo estructuras vulnerables."
+  },
+  {
+    termino: "Cabeza de la Mandíbula",
+    categoria: "ANATOMÍA",
+    acepciones: [
+      "loc. nom. Eminencia redondeada posterosuperior de la rama mandibular, en el extremo de la apófisis condilar, que se articula con la fosa mandibular del hueso temporal."
+    ],
+    sinonimos: ["cóndilo mandibular", "cóndilo de la mandíbula"],
+    obs: "",
+    fuentes: [
+      { nombre: "RANME", url: "https://dptm.es/" }
+    ],
+    contextoPaleopatologico: "Esta región anatómica destaca principalmente en la identificación de dos tipos de alteraciones: - Desgaste por la masticación (Artrosis): Esta zona soporta un estrés biomecánico constante al masticar. En esta zona la artrosis severa no es tan común como en otras zonas y rara vez desarrolla osteofitos típicos de otras articulaciones. Cuando está afectada se observa una superficie porosa, un pulido anormal por la eburnación y un engrosamiento de la zona. - Acromegalia: El cartílago de la cabeza de la mandíbula es un centro de crecimiento. Si un individuo adulto desarrolla un tumor pituitario que genera exceso de la hormona del crecimiento (acromegalia), el cartílago de este cóndilo se reactiva y vuelve a crecer de forma anormal. En hueso seco se observa un alargamiento de la mandíbula inferior que hace que sobresalga hacia delante (prognatismo severo) y provoca que los dientes superiores e inferiores dejen de encajar."
+  },
+  {
+    termino: "Manubrio Esternal",
+    categoria: "ANATOMÍA",
+    acepciones: [
+      "loc. nom. Porción superior, cuadrangular y robusta del esternón, que se articula con las clavículas y con las dos primeras costillas de cada lado y presenta una escotadura media en su borde craneal, la escotadura yugular."
+    ],
+    sinonimos: [],
+    obs: "",
+    fuentes: [
+      { nombre: "RANME", url: "https://dptm.es/" }
+    ],
+    contextoPaleopatologico: "Aunque el esternón en conjunto sufre menos enfermedades que las costillas, el manubrio es la zona que concentra las lesiones cuando estas ocurren, siendo un elemento clave para el diagnóstico diferencial de ciertas patologías destructivas: - Aneurisma aórtico: La porción ascendente del arco de la aorta se sitúa detrás del manubrio esternal. Si el individuo desarrolla un gran aneurisma (dilatación anormal de la arteria, muchas veces de origen sifilítico), la presión constante contra el hueso provoca erosión profunda en la superficie posterior del manubrio. - Tuberculosis: Las infecciones por tuberculosis que alcanzan el esternón también tienen predilección por el manubrio. Esta enfermedad genera lesiones líticas que pueden perforar tanto la corteza anterior como la posterior y, a menudo, se extienden a los lados hasta invadir la articulación esternoclavicular y la porción medial de las clavículas."
+  },
+
   // ── LESIONES ─────────────────────────────────────────────────────────────
   {
     termino: "Osteoclástica",
     categoria: "LESIONES",
     acepciones: [
       "adj. De los osteoclastos o relacionado con ellos.",
-      "adj. Aplicado a una lesión ósea: que presenta reabsorción osteoclástica."
+      "adj. Aplicado a una lesión ósea: que presenta reabsorción osteoclástica.",
+      "adj. Alteración morfológica caracterizada por destrucción localizada o pérdida anormal de tejido óseo, resultante de un aumento en la actividad de los osteoclastos (células responsables de la resorción del hueso) que supera a la formación de los osteoblastos como respuesta a un proceso mórbido o enfermedad."
     ],
     sinonimos: [],
     obs: "",
@@ -1584,6 +1649,19 @@ const GLOSARIO = [
     contextoPaleopatologico: ""
   },
   {
+    termino: "Secuestro Óseo",
+    categoria: "LESIONES",
+    acepciones: [
+      "loc. nom. Fragmento o porción de tejido óseo necrosado, de formas y tamaños variados, de color blanco nacarado, que conserva su grado de calcificación y puede reabsorberse o revitalizarse como un injerto, o más frecuentemente transformarse en un cuerpo extraño que origina una supuración que tiende a abrirse camino hacia el exterior a través de fístulas dérmicas y que no cesa hasta que se elimina, espontánea o quirúrgicamente, el secuestro. También el periostio que lo rodea sufre una reacción inflamatoria y se forma una especie de cápsula de hueso neoformado, llamado involucro, que aloja el secuestro. En el examen radiográfico, el secuestro presenta mayor densidad que el hueso vecino, que está descalcificado por el proceso hiperémico."
+    ],
+    sinonimos: [],
+    obs: "",
+    fuentes: [
+      { nombre: "RANME", url: "https://dptm.es/" }
+    ],
+    contextoPaleopatologico: ""
+  },
+  {
     termino: "Aplastamiento Vertebral",
     categoria: "LESIONES",
     acepciones: [
@@ -1598,6 +1676,102 @@ const GLOSARIO = [
   },
 
   // ── ENFERMEDADES ─────────────────────────────────────────────────────────
+  {
+    termino: "Brucelosis",
+    categoria: "ENFERMEDADES",
+    acepciones: [
+      "s.f. Cualquier enfermedad infecciosa causada por brucelas tras el contacto directo con animales infectados, el consumo de sus productos o la inhalación de sus aerosoles. El período de incubación dura entre 2 y 4 semanas, y las manifestaciones clínicas, heterogéneas, se corresponden de ordinario con un síndrome febril sin focalidad aparente. Las infecciones por B. melitensis suelen ser más graves que las producidas por B. abortus y B. suis. Las formas focales son variadas: osteoarticular (la más común), genitourinaria, neurobrucelosis, endocarditis, etc. El término \"brucelosis crónica\" debe reservarse para la enfermedad de más de 6 meses de duración."
+    ],
+    sinonimos: [],
+    obs: "",
+    fuentes: [
+      { nombre: "RANME", url: "https://dptm.es/" },
+      { nombre: "Ortner & Turner-Walker (2003)", url: "" }
+    ],
+    contextoPaleopatologico: "La brucelosis es una de las enfermedades infecciosas más relevantes en el estudio de poblaciones antiguas practicantes de ganadería. Su análisis se centra en las siguientes características óseas: - Afección Osteoarticular: Es la complicación más frecuente y se manifiesta principalmente en la columna vertebral (espondilitis brucelar), prefiriendo la región lumbar. - Lesiones Vertebrales: A diferencia de la tuberculosis, la brucelosis tiende a ser menos destructiva. Las lesiones suelen ser pequeñas, focales y se localizan en los ángulos anteriores de los cuerpos vertebrales. Un rasgo distintivo es la formación de osteofitos y la curación con esclerosis ósea. Es crucial distinguirla de la tuberculosis vertebral (Mal de Pott). Mientras que la tuberculosis suele causar colapso vertebral severo (cifosis o giba) y grandes abscesos, la brucelosis presenta una destrucción ósea más limitada y una capacidad de formación de hueso reactivo."
+  },
+  {
+    termino: "Cifosis",
+    categoria: "ENFERMEDADES",
+    acepciones: [
+      "s.f. Curvatura normal de convexidad posterior en el plano sagital de las regiones torácica y sacra de la columna vertebral."
+    ],
+    sinonimos: ["giba", "gibosidad", "cifosis angular"],
+    obs: "",
+    fuentes: [
+      { nombre: "RANME", url: "https://dptm.es/" },
+      { nombre: "Ortner & Turner-Walker (2003)", url: "" }
+    ],
+    contextoPaleopatologico: "La cifosis es un indicador morfológico de diversas condiciones que modifican la integridad estructural de la columna: - Tuberculosis Vertebral (Mal de Pott): Es la causa más conocida de la cifosis severa en restos óseos. La infección destruye la porción anterior de los cuerpos vertebrales, provocando un colapso que resulta en una angulación conocida como giba. - Enfermedad de Paget: En casos avanzados de Paget multióseos, la columna puede mostrar cifoescoliosis por fracturas de compresión causadas por la debilidad del hueso remodelado por la patología. - Fracturas por Compresión: La cifosis también puede ser resultado de traumas u osteoporosis, donde las vértebras pierden densidad trabecular y colapsan bajo el peso del cuerpo, alterando la alineación sagital."
+  },
+  {
+    termino: "Craneosinostosis",
+    categoria: "ENFERMEDADES",
+    acepciones: [
+      "s.f. Cierre prematuro de las suturas craneales. Existen varios tipos: escafocefalia, braquicefalia, trigonocefalia, plagiocefalia, acrocefalia y otras."
+    ],
+    sinonimos: [],
+    obs: "",
+    fuentes: [],
+    contextoPaleopatologico: ""
+  },
+  {
+    termino: "Escafocefalia",
+    categoria: "ENFERMEDADES",
+    acepciones: [
+      "s.f. Configuración anómala del cráneo consistente en un alargamiento de su diámetro anteroposterior y estrechamiento del transversal, asociados a grandes abombamientos frontal y occipital. Está producida por una sinostosis precoz de la sutura sagital."
+    ],
+    sinonimos: [],
+    obs: "",
+    fuentes: [],
+    contextoPaleopatologico: ""
+  },
+  {
+    termino: "Hiperostosis Idiopática Difusa",
+    categoria: "ENFERMEDADES",
+    acepciones: [
+      "loc. nom. Enfermedad hiperostótica del aparato locomotor, de carácter no inflamatorio, caracterizada por la osificación del ligamento longitudinal anterior vertebral y de las inserciones de tendones y cápsulas en la cara anterolateral de los cuerpos vertebrales. Se manifiesta principalmente por la formación de masas óseas en al menos cuatro vértebras contiguas, comúnmente en la región dorsal o cervical, sin afectar el espacio intervertebral ni las articulaciones sacroilíacas. Puede provocar síntomas mecánicos como disfagia o, raramente, compromiso respiratorio debido a la protrusión de las masas óseas en la faringe."
+    ],
+    sinonimos: ["enfermedad de Forestier-Rotes Querol", "hiperostosis anquilosante senil de la columna vertebral"],
+    obs: "",
+    fuentes: [
+      { nombre: "Sánchez González et al. (2006)", url: "" }
+    ],
+    contextoPaleopatologico: ""
+  },
+  {
+    termino: "Mal de Pott",
+    categoria: "ENFERMEDADES",
+    acepciones: [
+      "loc. nom. Infección tuberculosa de la columna vertebral por la llegada por vía hematógena de Mycobacterium tuberculosis, procedente de otro foco tuberculoso (generalmente pulmonar), al cuerpo vertebral, con posterior afectación del disco intervertebral y frecuente formación de abscesos osifluentes, que a veces emigran a gran distancia del foco siguiendo los caminos de menor resistencia. Se localiza con más frecuencia en las últimas vértebras torácicas y en las primeras lumbares. Cursa con dolor, rigidez muscular y limitación de movimientos; más adelante, la destrucción vertebral puede originar una angulación de la columna vertebral (cifosis, escoliosis, cifoescoliosis)."
+    ],
+    sinonimos: [],
+    obs: "",
+    fuentes: [],
+    contextoPaleopatologico: ""
+  },
+  {
+    termino: "Patognomónico, -ca",
+    categoria: "ENFERMEDADES",
+    acepciones: [
+      "adj. Aplicado a un signo o un síntoma: característico y específico de una enfermedad determinada, suficiente por sí solo para identificarla y diagnosticarla."
+    ],
+    sinonimos: [],
+    obs: "",
+    fuentes: [],
+    contextoPaleopatologico: ""
+  },
+  {
+    termino: "Sarcoidosis",
+    categoria: "ENFERMEDADES",
+    acepciones: [
+      "s.f. Enfermedad multisistémica de causa desconocida, caracterizada por la presencia de granulomas no caseificantes en los órganos afectados: pulmón, ganglios linfáticos, sistema nervioso, piel, glándulas exocrinas y endocrinas, globo ocular, músculo esquelético, corazón, vasos, tubo digestivo, riñón, sistema reticuloendotelial, etc. En los niños se manifiesta particularmente por fatiga, anorexia, pérdida de peso, dolores óseos, anemia, exantema eritematoso maculopapuloso, uveítis y artritis. No hay un test específico para el diagnóstico; la biopsia de los tejidos afectados mostrará lesiones granulomatosas y, para afirmar el diagnóstico, se deben excluir otras causas conocidas de enfermedades granulomatosas."
+    ],
+    sinonimos: [],
+    obs: "",
+    fuentes: [],
+    contextoPaleopatologico: ""
+  },
   {
     termino: "Anemia Osteoesclerótica",
     categoria: "ENFERMEDADES",
@@ -1880,6 +2054,247 @@ const GLOSARIO = [
     contextoPaleopatologico: "Las pseudopatologías son el resultado del entorno de entierro (acción de microorganismos, componentes químicos de la tierra o fauna) y el uso de técnicas de excavación descuidadas. Distinguir una pseudopatología de una patología real no es sencillo. Por ejemplo, un daño causado por una pala durante la excavación puede confundirse con un trauma antemortem. Por otro lado, se debe ser cuidadoso al clasificar un daño ambiental como pseudopatología, puesto que muchas enfermedades reales debilitan el hueso en vida, haciéndolo más susceptible a deteriorarse rápidamente en la tierra tras el entierro.",
     imagen: "./assets/img/glosario/pseudopatologia.png",
     imagenCaption: "Diferencias macroscópicas entre lesión patológica y pseudopatología."
+  },
+  {
+    termino: "Alofiso",
+    categoria: "PALEOPATOLOGÍA",
+    acepciones: [
+      "adj. Dicho del individuo cuyos restos no permiten determinar su sexo debido al mal estado de conservación en que se encuentran o porque los caracteres indicadores no son evidentes."
+    ],
+    sinonimos: [],
+    obs: "",
+    fuentes: [
+      { nombre: "TERMCAT", url: "https://www.termcat.cat/" }
+    ],
+    contextoPaleopatologico: ""
+  },
+  {
+    termino: "Antropología física",
+    categoria: "PALEOPATOLOGÍA",
+    acepciones: [
+      "loc. nom. Disciplina científica que estudia las características biológicas y conductuales de los seres humanos, así como de sus parientes más cercanos (los primates no humanos) y sus ancestros, con el objetivo de comprender la evolución humana y qué significa ser humano.",
+      "loc. nom. Subdisciplina de la antropología que investiga la biología humana desde una perspectiva evolutiva, centrándose en el estudio de la variación biológica (genética y fenotípica) entre las poblaciones y los mecanismos de adaptación fisiológica frente al estrés del entorno a lo largo del tiempo."
+    ],
+    sinonimos: [],
+    obs: "",
+    fuentes: [
+      { nombre: "Jurmain et al. (2012)", url: "" }
+    ],
+    contextoPaleopatologico: ""
+  },
+  {
+    termino: "Bioarqueología",
+    categoria: "PALEOPATOLOGÍA",
+    acepciones: [],
+    sinonimos: [],
+    obs: "",
+    fuentes: [],
+    contextoPaleopatologico: ""
+  },
+  {
+    termino: "Diagnóstico Diferencial",
+    categoria: "PALEOPATOLOGÍA",
+    acepciones: [
+      "loc. nom. Conjunto de opciones diagnósticas probables (tales como traumatismos, enfermedades infecciosas, displasias, neoplasias o trastornos metabólicos) que se proponen y justifican a partir de las evidencias físicas, morfológicas y celulares previas encontradas en los restos esqueléticos del individuo.",
+      "loc. nom. Proceso metodológico utilizado en las ciencias clínicas y en la paleopatología, que permite distinguir e identificar la enfermedad específica causante de una lesión mediante comparación, evaluación y exclusión sistemática de otras afecciones patológicas que producen respuestas óseas o alteraciones idénticas o similares."
+    ],
+    sinonimos: [],
+    obs: "",
+    fuentes: [
+      { nombre: "Ortner & Putschar (1981)", url: "" }
+    ],
+    contextoPaleopatologico: "Es un gran desafío para los paleopatólogos cuando examinan únicamente el hueso. Esto se debe a la baja especificidad de la mayoría de las lesiones esqueléticas que hace que el diagnóstico exacto sea a veces imposible. Para realizar un diagnóstico diferencial adecuado el investigador debe tener en cuenta además de las lesiones otras variables como la edad, el sexo, su distribución geográfica, la paleoepidemiología, el entorno cultural y análisis bioquímicos de los restos."
+  },
+  {
+    termino: "Estrés fisiológico",
+    categoria: "PALEOPATOLOGÍA",
+    acepciones: [],
+    sinonimos: [],
+    obs: "",
+    fuentes: [],
+    contextoPaleopatologico: ""
+  },
+  {
+    termino: "Heterogeneidad Oculta",
+    categoria: "PALEOPATOLOGÍA",
+    acepciones: [
+      "Toda población está compuesta por una mezcla de individuos que varía en su susceptibilidad a enfermar y morir. Esta variación hace casi imposible interpretar qué riesgos reales corría un individuo en el pasado. Por esto, en el estudio de la salud en el registro paleoantropológico surge la contraintuitiva de que \"una mejor salud produce peores esqueletos\"."
+    ],
+    sinonimos: [],
+    obs: "",
+    fuentes: [],
+    contextoPaleopatologico: ""
+  },
+  {
+    termino: "Marcador inespecífico de estrés",
+    categoria: "PALEOPATOLOGÍA",
+    acepciones: [],
+    sinonimos: [],
+    obs: "",
+    fuentes: [],
+    contextoPaleopatologico: ""
+  },
+  {
+    termino: "Mortalidad Selectiva",
+    categoria: "PALEOPATOLOGÍA",
+    acepciones: [
+      "Los esqueletos nunca son una muestra representativa de todos los individuos que estaban en riesgo a una edad determinada, sino solamente de aquellos que murieron a esa edad. Por ello, los individuos muertos son una muestra sesgada que tiende a sobreestimar la prevalencia de condiciones patológicas con respecto a la población viva."
+    ],
+    sinonimos: [],
+    obs: "",
+    fuentes: [],
+    contextoPaleopatologico: ""
+  },
+  {
+    termino: "Mortalidad vs. Fecundidad",
+    categoria: "PALEOPATOLOGÍA",
+    acepciones: [
+      "Las estadísticas a menudo reflejan fluctuaciones en la fertilidad de la población más que en la mortalidad. Si en un yacimiento la edad media de los restos es muy baja no significa que esa población tuviera una salud mala sino que en la mayoría de los casos esto indica que la población estaba creciendo y había gran número de nacimientos (que siempre tienen una alta mortalidad natural)."
+    ],
+    sinonimos: [],
+    obs: "",
+    fuentes: [],
+    contextoPaleopatologico: ""
+  },
+  {
+    termino: "Paleodemografía",
+    categoria: "PALEOPATOLOGÍA",
+    acepciones: [],
+    sinonimos: [],
+    obs: "",
+    fuentes: [],
+    contextoPaleopatologico: ""
+  },
+  {
+    termino: "Paradoja Osteológica",
+    categoria: "PALEOPATOLOGÍA",
+    acepciones: [
+      "loc. nom. Concepto teórico y metodológico de paleopatología que advierte que una mayor prevalencia de lesiones óseas en una muestra arqueológica no equivale automáticamente a un peor estado de salud en la población original; por el contrario, la presencia de lesiones evidencia la resistencia fisiológica del individuo para sobrevivir al estrés o a la enfermedad en el tiempo suficiente como para que el tejido óseo reaccione.",
+      "loc. nom. Conjunto de sesgos interpretativos que surgen al intentar inferir la salud prehistórica a partir de series esqueléticas, derivados del hecho de que los restos óseos son muestras compuestas exclusivamente por individuos muertos, lo cual distorsiona las estimaciones reales de riesgo y morbilidad de la población viva."
+    ],
+    sinonimos: [],
+    obs: "Articulado por James W. Wood y colaboradores en 1992, esta paradoja desafía el pensamiento tradicional de que ciertos indicadores como la frecuencia de lesiones esqueléticas o la edad media de muerte reflejan de forma directa la salud de las poblaciones del pasado.",
+    fuentes: [
+      { nombre: "Wood et al. (1992)", url: "" }
+    ],
+    contextoPaleopatologico: ""
+  },
+  {
+    termino: "Perspectiva biocultural",
+    categoria: "PALEOPATOLOGÍA",
+    acepciones: [],
+    sinonimos: [],
+    obs: "",
+    fuentes: [],
+    contextoPaleopatologico: ""
+  },
+
+  // ── TAFONOMÍA ────────────────────────────────────────────────────────────
+  {
+    termino: "Tafonomía",
+    categoria: "TAFONOMÍA",
+    acepciones: [
+      "s.f. Disciplina científica que estudia los procesos mediante los cuales los huesos y otros materiales orgánicos llegan a ser enterrados en la tierra y logran preservarse como fósiles a lo largo del tiempo."
+    ],
+    sinonimos: [],
+    obs: "",
+    fuentes: [
+      { nombre: "Jurmain et al. (2012)", url: "" }
+    ],
+    contextoPaleopatologico: "En la investigación de restos óseos, los tafónomos intentan comprender y reconstruir los sucesos que afectaron al cuerpo postmortem. Entre sus temas claves se encuentran la sedimentación, propiedades de preservación del propio hueso y factores de perturbación causados por animales carnívoros u otros agentes ambientales. Este control es esencial en paleopatología para poder distinguir las lesiones producidas por enfermedad de aquellas pseudopatológicas causadas por el entorno de enterramiento. Gracias a tecnologías de digitalización del patrimonio, la disciplina se ha ampliado hacia lo virtual combinando los registros de los restos humanos con datos tridimensionales de la superficie de excavación e integrándolos para documentar y estudiar de manera más precisa los cambios tafonómicos que ha sufrido el resto óseo."
+  },
+  {
+    termino: "Alteración Tafonómica",
+    categoria: "TAFONOMÍA",
+    acepciones: [],
+    sinonimos: [],
+    obs: "",
+    fuentes: [],
+    contextoPaleopatologico: ""
+  },
+  {
+    termino: "Concreción",
+    categoria: "TAFONOMÍA",
+    acepciones: [
+      "s.f. Acumulación o compactación de partículas que se agregan para formar una masa sólida.",
+      "s.f. Masa sólida formada por acumulación y compactación de partículas, por lo general, en circunstancias patológicas."
+    ],
+    sinonimos: [],
+    obs: "",
+    fuentes: [],
+    contextoPaleopatologico: ""
+  },
+  {
+    termino: "Erosión",
+    categoria: "TAFONOMÍA",
+    acepciones: [
+      "s.f. Desgaste, alteración o destrucción física que sufren los restos orgánicos, huesos, fósiles o superficies terrestres a lo largo del tiempo, provocada por la acción continua de fuerzas ambientales como el viento, el agua, las corrientes o las heladas.",
+      "s.f. Tipo de osteólisis o destrucción ósea localizada que se produce de forma específica y en un área limitada sobre la superficie externa de un hueso vivo como consecuencia de una enfermedad. Si esta destrucción es más extensa, se prefiere utilizar el término \"caries\"."
+    ],
+    sinonimos: [],
+    obs: "",
+    fuentes: [
+      { nombre: "Ortner & Putschar (1981)", url: "" }
+    ],
+    contextoPaleopatologico: "Desde la perspectiva de la tafonomía, la erosión es un proceso postmortem que afecta a la preservación del hueso y está condicionado por el entorno. Esta erosión tafonómica es una de las principales causas de pseudopatologías, ya que este desgaste físico puede imitar el daño de un trauma o enfermedad real. Se debe ser cuidadoso en la interpretación de estas alteraciones. No todo deterioro ambiental debe descartarse como un daño tafonómico, ya que muchas patologías debilitan el hueso durante la vida del individuo, dejándolo más vulnerable a sufrir una rápida erosión en la tierra."
+  },
+  {
+    termino: "Meteorización",
+    categoria: "TAFONOMÍA",
+    acepciones: [
+      "s.f. Proceso de degradación y alteración física que experimentan los restos óseos o carcasas biológicas al quedar expuestos a los agentes atmosféricos e intemperie. Actúa como una presión selectiva que determina qué partes de una comunidad viva lograrán preservarse en el registro arqueológico y cuáles serán destruidas."
+    ],
+    sinonimos: [],
+    obs: "",
+    fuentes: [
+      { nombre: "Behrensmeyer & Hill (1980)", url: "" }
+    ],
+    contextoPaleopatologico: "La meteorización (weathering) no se entiende como un daño aislado al hueso, sino como un proceso para comprender la formación de los yacimientos. El estudio de la descomposición de carcasas y su exposición al clima ha demostrado que no existe una correspondencia directa entre una comunidad viva y la muestra ósea que acaba preservándose. Los especímenes que sobreviven son el resultado de varias presiones. Por tanto, evaluar el grado de meteorización de huesos permite evaluar los patrones espaciales del yacimiento (cómo se depositó el material) y deducir qué información ha quedado fuera de la muestra por su destrucción."
+  },
+  {
+    termino: "Mineralización",
+    categoria: "TAFONOMÍA",
+    acepciones: [
+      "s.f. Proceso fisiológico en el cual la matriz proteica u orgánica (como el osteoide o el cartílago) se impregna de componentes minerales, principalmente hidroxiapatita (calcio y fosfato), para endurecerse y formar tejido óseo o dental funcional.",
+      "s.f. Proceso de fosilización mediante el cual las partes biológicas de animales o plantas se transforman en estructuras similares a la piedra a lo largo del tiempo.",
+      "s.f. Deposición o impregnación mineral anormal en tejidos que en vida no deberían estar osificados, como ocurre en el cartílago y los discos intervertebrales frente a ciertas afecciones."
+    ],
+    sinonimos: [],
+    obs: "",
+    fuentes: [
+      { nombre: "Ortner & Putschar (1981)", url: "" },
+      { nombre: "Jurmain et al. (2012)", url: "" }
+    ],
+    contextoPaleopatologico: "La mineralización es el mecanismo central que preserva los restos fósiles. Este proceso ocurre de manera lenta cuando el agua subterránea que transporta minerales se filtra y penetra en los espacios del hueso. En cuanto a patologías, el estudio de la mineralización biológica de los huesos permite detectar desórdenes en la salud antigua. Si el proceso de mineralización de la matriz ósea fracasa, los huesos permanecen blandos dando lugar a patologías como el raquitismo en niños o la osteomalacia en adultos. Por el contrario, la mineralización excesiva en los discos intervertebrales puede sugerir el diagnóstico de enfermedades raras como la ocronosis."
+  },
+  {
+    termino: "Postmortem o Tafonómico",
+    categoria: "TAFONOMÍA",
+    acepciones: [],
+    sinonimos: [],
+    obs: "",
+    fuentes: [],
+    contextoPaleopatologico: ""
+  },
+  {
+    termino: "Preservación diferencial",
+    categoria: "TAFONOMÍA",
+    acepciones: [],
+    sinonimos: [],
+    obs: "",
+    fuentes: [],
+    contextoPaleopatologico: ""
+  },
+  {
+    termino: "Raíces / daño radicular",
+    categoria: "TAFONOMÍA",
+    acepciones: [
+      "Daño de excavación."
+    ],
+    sinonimos: [],
+    obs: "",
+    fuentes: [],
+    contextoPaleopatologico: ""
   }
 
 ];
