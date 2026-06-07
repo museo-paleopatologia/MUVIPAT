@@ -390,7 +390,7 @@ const PIEZAS = [
     descripcion: 'Bloque óseo fusionado que integra el fémur, la tibia y la rótula derecha de un individuo masculino adulto, con un ángulo de flexión de 117,5°. Procede del osario de Almansa (ss. XIII-XVIII). La anquilosis total evidencia una inmovilización prolongada de la articulación compatible con traumatismo severo o tuberculosis osteoarticular.',
     imagen: '/prueba-museo/assets/img/anquilosis/anquilosis-lateral.png',
     ficha: '/prueba-museo/ficha-estandar.html?id=ALM-ANQR-01',
-    modelo3d: './assets/models/anquilosis.glb',
+    modelo3d: './assets/models/anquilosis-web.glb',
 
     cronologia: 's. XIII-XVIII',
     edad: 'Adulta',
