@@ -857,7 +857,7 @@ const GLOSARIO = [
     fuentes: [
       { nombre: "RANME", url: "https://dptm.es/" }
     ],
-    contextoPaleopatologico: ""
+    contextoPaleopatologico: "Por su desarrollo y vascularización, las epífisis muestran indicadores patológicos específicos: - Barrera cartilaginosa: Durante el crecimiento, el cartílago aísla la epífisis y realiza función protectora frenando el avance de infecciones como la osteomielitis o tumores destructivos originados en el resto del hueso. - Tumores exclusivos: A pesar de su protección es la región preferente de algunos tumores como el condroblastoma (tumor benigno) o el tumor de células gigantes. - Necrosis aséptica: Esta región es muy sensible a cortes de riego sanguíneo por traumas o estrés. Esto causa necrosis localizada en el hueso sin infección, provocando desprendimientos o colapsos en la articulación (como la osteocondritis disecante) que derivan en artrosis. - Marcador de escorbuto: Ante un déficit de vitamina C en la infancia, el borde de la epífisis reacciona creando una capa de cartílago denso. En radiografías esto se detecta como una línea blanca llamada \"anillo de Wimberger\"."
   },
   {
     termino: "Diáfisis",
@@ -870,7 +870,7 @@ const GLOSARIO = [
     fuentes: [
       { nombre: "RANME", url: "https://dptm.es/" }
     ],
-    contextoPaleopatologico: ""
+    contextoPaleopatologico: "La diáfisis es una de las regiones más estudiadas del esqueleto por su gruesa corteza compacta con registro de infecciones, trastornos circulatorios y estrés: - Osteomielitis: Cuando la infección destruye el hueso desde dentro, un segmento de la diáfisis muere formando el secuestro y el cuerpo intenta aislarlo rodeándolo con una gruesa capa de hueso nuevo llamado involucro. - Sífilis: La periostitis crónica hace que se depositen gruesas capas de tejido nuevo. En la tibia, esto deforma y curva la diáfisis hacia delante. - Osteoartropatía hipertrófica: Problemas pulmonares graves o cánceres pueden provocar una reacción en todo el cuerpo que deposita una costra de hueso rugoso simétrico en la zona media de las diáfisis de las piernas y brazos."
   },
   {
     termino: "Metáfisis",
@@ -883,7 +883,7 @@ const GLOSARIO = [
     fuentes: [
       { nombre: "RANME", url: "https://dptm.es/" }
     ],
-    contextoPaleopatologico: ""
+    contextoPaleopatologico: "Al ser la zona de mayor actividad de formación y remodelado óseo durante el crecimiento, la metáfisis es una región central de numerosas lesiones: - Infecciones: En niños y adolescentes, casi todas las infecciones transmitidas por sangre comienzan en la metáfisis por su gran vascularización. Desde aquí, el pus perfora la corteza y se expande bajo el periostio. - Raquitismo y Escorbuto: Por deficiencias nutricionales, la metáfisis altera su forma. En el raquitismo, la incapacidad de mineralizar el hueso nuevo hace que la metáfisis se ensanche y deforme adoptando una forma de cáliz. En el escorbuto severo, la metáfisis se vuelve tan frágil que el hueso colapsa, dislocando la articulación. - Tumores y Displasias: Por su ritmo de multiplicación celular durante el crecimiento, la metáfisis es un lugar común de origen de tumores óseos malignos (osteosarcoma o condrosarcoma) y benignos (osteocondromas). Además, fallos genéticos en su desarrollo (displasia metafisiaria o enfermedad de Pyle) pueden impedir su estrechamiento normal, dejando una deformidad permanente."
   },
   {
     termino: "Apófisis",
@@ -896,7 +896,7 @@ const GLOSARIO = [
     fuentes: [
       { nombre: "RANME", url: "https://dptm.es/" }
     ],
-    contextoPaleopatologico: ""
+    contextoPaleopatologico: "En la investigación paleopatológica, el análisis de las apófisis tiene una triple relevancia para investigadores: 1. Indicador de desarrollo y madurez Las apófisis son centros de crecimiento secundario y se terminan fusionando con el hueso principal a edades específicas por lo que observar si una apófisis está abierta o soldada permite calcular con precisión la edad de muerte en niños y adolescentes. 2. Huellas de estrés mecánico Son zonas de anclaje que soportan mucha tensión mecánica. Un desarrollo muy marcado o presencia de microtraumatismos revela que el individuo estuvo sometido a exigencia física o estrés biomecánico durante el crecimiento. 3. Diagnóstico diferencial de tumores Localizar una lesión en una apófisis es un marcador para identificar patologías específicas en el hueso. Por ejemplo, el condroblastoma (tumor óseo benigno poco frecuente) es el único tumor óseo que siempre surge y a menudo se limita solo a una epífisis o una apófisis, lo cual es muy relevante para el diagnóstico paleopatológico."
   },
   {
     termino: "Entesis",
@@ -909,7 +909,7 @@ const GLOSARIO = [
     fuentes: [
       { nombre: "RANME", url: "https://dptm.es/" }
     ],
-    contextoPaleopatologico: ""
+    contextoPaleopatologico: "Estas regiones son buenos indicadores ya que aquí el hueso es mucho más plástico y responde a estímulos de la vida diaria como: - Entesopatías: El uso intenso y repetitivo de un músculo a lo largo del tiempo genera microtraumatismos constantes en la entesis. El hueso responde a esta tensión creando proyecciones óseas denominadas entesopatías o entesofitos. Esto permite reconstruir patrones de actividad física. - Enfermedades Sistémicas: Ayuda a identificar espondiloartropatías y diferenciarlas de otras afecciones como la artritis reumatoide por la creación descontrolada de tejido en esta zona que pueden generar anquilosis."
   },
   {
     termino: "Foramen Nutricio",
@@ -922,7 +922,7 @@ const GLOSARIO = [
     fuentes: [
       { nombre: "IMAIOS", url: "https://www.imaios.com/" }
     ],
-    contextoPaleopatologico: ""
+    contextoPaleopatologico: "Es un elemento relevante en el diagnóstico de enfermedades destructivas relacionadas al riego sanguíneo dentro del hueso: - Diseminación hematógena: Además de nutrientes, el foramen nutricio es la principal vía de entrada física para agentes infecciosos (como estafilococos o estreptococos) que viajan por el torrente sanguíneo. Al ingresar a través de las arterias nutricias, estas bacterias logran invadir la médula y las metáfisis, provocando el inicio de infecciones severas como la osteomielitis hematógena. - Necrosis isquémica: Las arterias y vasos que entran por el foramen nutricio tienen paredes muy finas y discurren por un compartimento óseo rígido y totalmente inextensible. Si una infección genera acumulación de pus en el interior del hueso, la presión interna aumenta dramáticamente, comprimiendo y colapsando los vasos nutricios. Al perder su suministro de sangre por compresión vascular, el tejido óseo necrosa, dando lugar a un secuestro."
   },
   {
     termino: "Periostio",
@@ -935,7 +935,7 @@ const GLOSARIO = [
     fuentes: [
       { nombre: "RANME", url: "https://dptm.es/" }
     ],
-    contextoPaleopatologico: ""
+    contextoPaleopatologico: "Debido a su importante vascularización, el periostio es un tejido responsable de muchas lesiones óseas observadas en restos arqueológicos ya que cualquier estímulo que genera inflamación o irritación puede activar los osteoblastos para depositar nuevo hueso sobre la superficie cortical original. Esto se manifiesta como periostitis, que no es una enfermedad en sí misma, sino un indicador inespecífico de una respuesta patológica."
   },
   {
     termino: "Endostio",
@@ -948,7 +948,7 @@ const GLOSARIO = [
     fuentes: [
       { nombre: "RANME", url: "https://dptm.es/" }
     ],
-    contextoPaleopatologico: ""
+    contextoPaleopatologico: "Al igual que el periostio, el endostio es una membrana viva y activa cuyas células dejan un registro en los huesos. El comportamiento de esta membrana interna revela dos procesos opuestos: - Osteoporosis: Con el envejecimiento o ante problemas metabólicos, los osteoclastos del endostio comienzan a reabsorber mucho más hueso del que se produce. Como resultado, la cavidad medular se ensancha eliminando capa cortical dura desde dentro, lo que vuelve al hueso más frágil. - Endostosis: Cuando el cuerpo sufre una infección profunda o crónica, los osteoblastos depositan capas de hueso nuevo sobre la superficie interna de la cavidad medular. Este proceso es la endostosis. En restos gravemente afectados, se observa que esta reacción llega a bloquear por completo el canal medular hueco, rellenándolo de hueso esclerótico."
   },
   {
     termino: "Capa Cortical o Hueso Compacto",
@@ -961,7 +961,7 @@ const GLOSARIO = [
     fuentes: [
       { nombre: "RANME", url: "https://dptm.es/" }
     ],
-    contextoPaleopatologico: ""
+    contextoPaleopatologico: "Esta capa cortical es un archivo de vida y enfermedades de los individuos, especialmente de dos procesos: - Osteopenia y Osteoporosis: La renovación en esta capa es mucho más lenta que en el tejido esponjoso interior, por lo que tarda más en mostrar los efectos del envejecimiento. Con la edad o malnutrición, el cuerpo va reabsorbiendo esta capa cortical desde su interior (ensanchando la cavidad medular hueca) y sus canales vasculares se agrandan. Como resultado, con el paso del tiempo este hueso se vuelve más frágil y con aspecto poroso. - Mineralización: Como el hueso compacto está completamente mineralizado, denso y duro, no tiene espacio para alojar tejido nuevo en su interior. Cuando el cuerpo sufre una infección severa (como osteomielitis o sífilis) o un trauma crónico, la defensa del hueso es depositar capas nuevas de hueso sobre su superficie original. Por ello, un hueso cortical anormalmente engrosado o deformado externamente es la pista de que el individuo sufrió y resistió un proceso inflamatorio o infeccioso prolongado."
   },
   {
     termino: "Hueso Trabecular o Esponjoso",
@@ -972,7 +972,7 @@ const GLOSARIO = [
     sinonimos: [],
     obs: "",
     fuentes: [],
-    contextoPaleopatologico: ""
+    contextoPaleopatologico: "Como alberga la médula ósea, el hueso esponjoso tiene una tasa de remodelado entre 5 y 10 veces más rápida que el compacto, lo que lo convierte en el primer tejido en registrar desequilibrios metabólicos y sistémicos: - Osteoporosis y Osteomalacia: Por su alta actividad fisiológica, los tejidos ricos en hueso esponjoso (vértebras, costillas o pelvis) son los más afectados por osteoporosis. - Tuberculosis: Por contener la médula roja hematopoyética (muy vascularizada), el tejido esponjoso es el establecimiento principal de bacterias con diseminación hematógena. En enfermedades como la tuberculosis, el bacilo anida en estas áreas destruyendo la trama de trabéculas y generando cavidades líticas. - Anemias Crónicas: Ante anemias severas, el cuerpo necesita producir más glóbulos rojos y la médula de los espacios trabeculares se hipertrofia. En el cráneo, esta expansión del tejido esponjoso reduce el número de trabéculas y las reorganiza de forma radial, empujando y destruyendo la capa cortical exterior."
   },
   {
     termino: "Cavidad Medular",
@@ -996,7 +996,7 @@ const GLOSARIO = [
     fuentes: [
       { nombre: "RANME", url: "https://dptm.es/" }
     ],
-    contextoPaleopatologico: ""
+    contextoPaleopatologico: "Los cóndilos de las rodillas (formados por los del fémur y la tibia) son estructuras sometidas a gran carga mecánica y de peso, por lo que son grandes indicadores de estrés físico y diversas enfermedades: - Artrosis: Los cóndilos sufren gran desgaste por lo que en casos de artrosis severa, la pérdida de cartílago provoca que el hueso roce directamente. En articulaciones bisagra como la rodilla o el codo, esta fricción genera eburnación con surcos paralelos a la dirección del movimiento. - Osteocondritis disecante: Por traumatismos repetidos o problemas vasculares, un pequeño fragmento de hueso y cartílago en la superficie del cóndilo necrosa y se desprende hacia el interior de la articulación. Esto en un yacimiento deja una depresión o cráter en la superficie lisa del cóndilo. - Condroblastoma: Existe un tumor benigno óseo, el condroblastoma, que tiene la peculiaridad de que casi siempre surge y se confina a las epífisis o apófisis que en muchos casos coincide con los cóndilos."
   },
   {
     termino: "Tuberosidad",
@@ -1009,7 +1009,7 @@ const GLOSARIO = [
     fuentes: [
       { nombre: "RANME", url: "https://dptm.es/" }
     ],
-    contextoPaleopatologico: ""
+    contextoPaleopatologico: "Este tipo de estructuras sirve como marcador de la relación entre el sistema musculoesquelético y el entorno: - Marcadores de Actividad (Entesis): Las tuberosidades son sitios de inserción para músculos y ligamentos. El tamaño y rugosidad de estas protuberancias dependen de la ley de Wolff (el hueso se fortalece y se remodela allí donde hay mayor tracción mecánica). Por lo tanto, el análisis de tuberosidades permite reconstruir patrones de actividad física o trabajos repetitivos. - Entesopatías: Cuando una tuberosidad presenta además entesofitos o una porosidad inusual puede indicar una entesopatía. Esto ocurre cuando el estrés mecánico excesivo o procesos inflamatorios crónicos desequilibran la acción de células óseas, provocando que el hueso crezca de forma irregular en el punto de inserción. Es importante la distinción entre una tuberosidad prominente normal (por uso intenso) y una alterada por enfermedades sistémicas."
   },
   {
     termino: "Tubérculo",
@@ -1023,7 +1023,7 @@ const GLOSARIO = [
     fuentes: [
       { nombre: "RANME", url: "https://dptm.es/" }
     ],
-    contextoPaleopatologico: ""
+    contextoPaleopatologico: "El tubérculo como estructura anatómica sirve como punto de anclaje para músculos y ligamentos. Su desarrollo refleja uso muscular continuo en vida. En el contexto de enfermedades, el tubérculo es la unidad biológica fundamental de la tuberculosis. Este sirve para encerrar a las bacterias y está compuesto por células especializadas que rodean un centro de necrosis caseosa. Si el sistema inmunitario no logra contener la infección en los pulmones, las bacterias viajan por la sangre y forman nuevos tubérculos en el tejido óseo, especialmente en áreas con médula roja como las vértebras. Ya extendida produce una destrucción localizada (caries ósea) con muy poca reacción defensiva (rasgo característico para el diagnóstico de tuberculosis)."
   },
   {
     termino: "Cresta ósea",
@@ -1032,7 +1032,7 @@ const GLOSARIO = [
     sinonimos: [],
     obs: "",
     fuentes: [],
-    contextoPaleopatologico: ""
+    contextoPaleopatologico: "Al ser zonas de anclaje de músculos y ligamentos, soportan gran tensión mecánica. Un uso intensivo de un músculo a lo largo del tiempo genera microtraumatismos en la cresta. Para compensarlo, el cuerpo desarrolla proyecciones óseas anormales o hipertróficas llamadas entesopatías, las cuales permiten deducir que la persona estuvo sometida a exigencia física. Además, las crestas óseas son centros de osificación y crecimiento que se fusionan al resto del hueso a edades específicas. Por ejemplo, en la pelvis, los centros de crecimiento de la cresta ilíaca son de los últimos en fusionarse por completo, alrededor de los 25 años de edad. Observar la fusión de estas crestas es muy útil para estimar la fecha de muerte en adultos jóvenes."
   },
   {
     termino: "Fosa",
@@ -1045,7 +1045,7 @@ const GLOSARIO = [
     fuentes: [
       { nombre: "RANME", url: "https://dptm.es/" }
     ],
-    contextoPaleopatologico: ""
+    contextoPaleopatologico: "Las fosas óseas, especialmente aquellas que forman parte de articulaciones, son indicadores para evaluar procesos degenerativos y mecánicos: - Relleno por artrosis severa: En articulaciones de bisagra como el codo, la artrosis avanzada no solo erosiona el cartílago, sino que provoca la formación de hueso hipertrófico que llega a rellenar de forma parcial o total fosas. Este relleno permite deducir una limitación de movimiento de flexión y extensión del individuo en vida. - Porosidad por estrés articular: Las superficies de las fosas articulares son susceptibles a desgaste mecánico, mostrando lesiones porótias y erosión en las áreas donde hay mayor presión. - Espacio de invasión tumoral: Las fosas del cráneo pueden verse alteradas por procesos neoplásicos. Algunos tumores benignos del tejido óseo denso (osteomas) pueden crecer y proyectarse ocupando el espacio de cavidades como los senos paranasales o la fosa craneal anterior."
   },
   {
     termino: "Surco",
@@ -1058,7 +1058,7 @@ const GLOSARIO = [
     fuentes: [
       { nombre: "RANME", url: "https://dptm.es/" }
     ],
-    contextoPaleopatologico: ""
+    contextoPaleopatologico: "El análisis de un surco en paleopatología se centra en la patogénesis (el origen que lo generó): - Dinámica Celular: La formación o alteración de un surco es el resultado de la perturbación entre osteoclastos y osteoblastos. - Diagnóstico Cronológico: Para determinar que ha sido un proceso antemortem se establece que los surcos deben tener bordes suaves, redondeados o lisos indicando remodelación ósea. Por el contrario, para lesiones postmortem los bordes deben ser afilados, irregulares o dentados evidenciando su formación por factores del entorno y confirmando ser una pseudopatología. - Patologías: En el cráneo, la alteración de surcos que alojan vasos sanguíneos puede indicar irritaciones crónicas o enfermedades como la anemia y el escorbuto. Además, los surcos también pueden formarse por la presión constante de crecimientos lentos (quistes o tumores), obligando su remodelación."
   },
   {
     termino: "Escotadura",
@@ -1069,7 +1069,7 @@ const GLOSARIO = [
     sinonimos: [],
     obs: "",
     fuentes: [],
-    contextoPaleopatologico: ""
+    contextoPaleopatologico: "Estas estructuras articulares no suelen ser focos primarios de enfermedad sino herramientas para conocer la demografía del individuo. Para determinar el sexo del individuo (característica esencial para diagnosticar patologías específicas), las variaciones en la pelvis aportan la información más fiable. Por adaptaciones en el canal del parto, la escotadura ciática mayor adopta un ángulo mucho más amplio y abierto en las mujeres mientras que en hombres es más cerrada."
   },
   {
     termino: "Incisura",
@@ -1096,7 +1096,7 @@ const GLOSARIO = [
     fuentes: [
       { nombre: "RANME", url: "https://dptm.es/" }
     ],
-    contextoPaleopatologico: ""
+    contextoPaleopatologico: "Estos son elementos clave para el diagnóstico diferencial de patologías de la columna vertebral: - Desgaste y artrosis: En el hueso seco, la artrosis de estas facetas se identifica por la aparición de porosidad, pulido por fricción intensa (eburnación) y, especialmente, por el desarrollo de rebordes óseos patológicos (labiación o formación de osteofitos marginales). - Fusión y Enfermedades Autoinmunes: El estado de las carillas articulares es la pista para diferenciar enfermedades que fusionan la columna. En la espondilitis anquilosante (enfermedad autoinmune grave), la inflamación crónica destruye el cartílago de las facetas y provoca una anquilosis ósea uniéndose una vértebra con otra a través de sus carillas. En la hiperostosis esquelética idiopática difusa (DISH), aunque los cuerpos vertebrales queden soldados, las carillas articulares permanecen intactas y sin fusionar."
   },
   {
     termino: "Platillo vertebral",
@@ -1109,7 +1109,7 @@ const GLOSARIO = [
     fuentes: [
       { nombre: "RANME", url: "https://dptm.es/" }
     ],
-    contextoPaleopatologico: ""
+    contextoPaleopatologico: "La integridad de los platillos vertebrales es fundamental para el diagnóstico de enfermedades degenerativas e infecciosas de la columna. Como es la zona de contacto entre el cuerpo vertebral y el disco intervertebral, refleja procesos de estrés biomecánico y patológico. Las manifestaciones más comunes son: - Nódulos de Schmorl: Depresiones en el platillo vertebral causadas por herniación del núcleo pulposo a través del cartílago hacia el tejido esponjoso del cuerpo vertebral. - Osteoartritis y Osteofitosis: El desgaste del disco intervertebral provoca una reacción ósea en los márgenes de los platillos provocando la formación de osteofitos. - Infecciones (Tuberculosis/Pott): El platillo vertebral es frecuentemente el sitio inicial de destrucción en la tuberculosis de la columna (Mal de Pott)."
   },
   {
     termino: "Sutura craneal",
@@ -1120,7 +1120,7 @@ const GLOSARIO = [
     sinonimos: [],
     obs: "",
     fuentes: [],
-    contextoPaleopatologico: ""
+    contextoPaleopatologico: "Estas suturas en concreto son las que permiten el crecimiento de la bóveda craneal sincronizado con el desarrollo cerebral en la infancia. El momento de cierre y transformación a hueso sólido de estas suturas es un indicador de salud. Un cierre prematuro puede provocar deformidades y un aumento de la presión intracraneal."
   },
   {
     termino: "Trabécula",
@@ -1133,7 +1133,7 @@ const GLOSARIO = [
     fuentes: [
       { nombre: "RANME", url: "https://dptm.es/" }
     ],
-    contextoPaleopatologico: ""
+    contextoPaleopatologico: "Además de separar cavidades, las trabéculas son muy sensibles a la salud interna del individuo. Se ha visto que las trabéculas se organizan siguiendo las líneas de estrés físico (Ley de Wolff). En una persona sana forman una red suficiente para soportar peso; sin embargo, cuando el cuerpo sufre enfermedades metabólicas, esta red es la primera en ser sacrificada para liberar minerales al torrente sanguíneo. Tienen mucha relación con la osteoporosis. En esta condición las trabéculas se vuelven más delgadas y escasas, aumentando el riesgo de fracturas por compresión, especialmente en la columna vertebral."
   },
   {
     termino: "Médula Ósea",
@@ -1146,7 +1146,7 @@ const GLOSARIO = [
     fuentes: [
       { nombre: "RANME", url: "https://dptm.es/" }
     ],
-    contextoPaleopatologico: ""
+    contextoPaleopatologico: "Por ser el tejido encargado de la producción de sangre y estar muy vascularizado, la médula ósea es el epicentro de muchas patologías que alteran la estructura del hueso: - Hiperplasia: Ante enfermedades como las anemias crónicas severas (talasemia, anemia falciforme), el cuerpo requiere la producción de más glóbulos rojos y la médula hematopoyética responde expandiéndose. Esta hiperplasia ensancha la cavidad medular y adelgaza las paredes del hueso cortical. En el cráneo, la expansión de la médula empuja y destruye la capa externa, provocando hiperostosis porótica o criba craneal. - Osteomielitis hematógena: Por su vascularización, la médula ósea es la zona donde se alojan bacterias que se transportan por el torrente sanguíneo. Las infecciones profundas comienzan en esta región, generando pus que incrementa la presión interna, destruye el hueso desde dentro y colapsa los vasos, lo que acaba necrosando al tejido óseo subyacente y generando un secuestro. - Tumores y Metástasis: Esta región es el lugar de origen de neoplasias malignas primarias, como la leucemia en la infancia o el mieloma múltiple en adultos. Además, las células de carcinomas de otros órganos que se diseminan por la sangre tienden a colonizar preferentemente las zonas de médula hematopoyética activa, como la columna vertebral, la pelvis o el esternón."
   },
   {
     termino: "Cartílago articular",
@@ -1155,7 +1155,7 @@ const GLOSARIO = [
     sinonimos: [],
     obs: "",
     fuentes: [],
-    contextoPaleopatologico: ""
+    contextoPaleopatologico: "Este tejido rara vez se conserva en contextos arqueológicos pero sus alteraciones dejan en el hueso seco marcadores de esfuerzo. Por su escaso riego sanguíneo, cuando este cartílago se desgasta o daña en un adulto, prácticamente no tiene capacidad para repararse a sí mismo. Por ello, cuando el estrés mecánico o enfermedades como la artrosis destruyen este cartílago, los huesos están expuestos y empiezan a rozar entre sí. Esta fricción pule la superficie del hueso (eburnación). Encontrar un hueso pulido es prueba de que el individuo sufría artrosis severa."
   },
   {
     termino: "Fibra de Sharpey",
@@ -1169,7 +1169,7 @@ const GLOSARIO = [
     fuentes: [
       { nombre: "RANME", url: "https://dptm.es/" }
     ],
-    contextoPaleopatologico: ""
+    contextoPaleopatologico: "A nivel microscópico son un elemento diagnóstico relevante para identificar la naturaleza de ciertas formaciones óseas: - Miositis Osificante: Las zonas de inserción muscular a menudo presentan superficies rugosas o la formación de espolones óseos (exostosis). Mediante microscopía se puede conocer si fueron causadas por estrés físico excesivo o un traumatismo directo (miositis osificante). - Reacciones Meníngeas: En la lámina endocraneal, especialmente en subadultos, se pueden encontrar reacciones meníngeas inflamatorias o hemorrágicas. Estas nuevas capas de hueso son muy ricas en fibras de Sharpey y tienen un aspecto blanquecino y mate."
   },
   {
     termino: "Sinartrosis",
@@ -1182,7 +1182,7 @@ const GLOSARIO = [
     fuentes: [
       { nombre: "RANME", url: "https://dptm.es/" }
     ],
-    contextoPaleopatologico: ""
+    contextoPaleopatologico: "Estas articulaciones son fundamentales para evaluar el desarrollo biológico y la respuesta al estrés mecánico o patológico, ya que su estado de fusión es un indicador clave de edad y salud. Son interesantes en paleopatología cuando presentan anomalías como una sinostosis prematura. Esta patología consiste en una sinartrosis (específicamente una sutura craneal) que se cierra y convierte en hueso antes de tiempo. Esta condición deforma el cráneo por la presión del cerebro en crecimiento."
   },
   {
     termino: "Sindesmosis",
@@ -1195,7 +1195,7 @@ const GLOSARIO = [
     fuentes: [
       { nombre: "RANME", url: "https://dptm.es/" }
     ],
-    contextoPaleopatologico: ""
+    contextoPaleopatologico: "Al ser una articulación donde los huesos están unidos por ligamentos o membranas interóseas, cualquier trauma o estrés persistente puede desencadenar una respuesta de formación ósea anormal. Para estas articulaciones destacan los siguientes fenómenos: - Osificación Postraumática: Las lesiones en los ligamentos de la sindesmosis pueden provocar la formación de puentes óseos (sinostosis) entre los dos huesos involucrados. - Reacciones Periósticas: Las infecciones cercanas o traumatismos en zonas de inserción de la membrana interósea pueden estimular la capa interna para depositar hueso reactivo, lo que puede detectarse en los restos óseos."
   },
   {
     termino: "Sincondrosis",
@@ -1208,7 +1208,7 @@ const GLOSARIO = [
     fuentes: [
       { nombre: "RANME", url: "https://dptm.es/" }
     ],
-    contextoPaleopatologico: ""
+    contextoPaleopatologico: "La sincondrosis es una articulación temporal clave que actúa como un centro de osificación primario. Su relevancia se centra en: - Estimación de la Edad Biológica por su estado de fusión. Muy útil en individuos subadultos. - Marcador de Estrés y Displasias: Las anomalías en el desarrollo de la sincondrosis pueden indicar trastornos metabólicos o genéticos. Por ejemplo, el cierre prematuro de las sincondrosis de la base del cráneo puede provocar deformaciones craneofaciales severas, mientras que su retraso puede estar vinculado a deficiencias nutricionales o enfermedades del crecimiento."
   },
   {
     termino: "Sutura",
@@ -1222,7 +1222,7 @@ const GLOSARIO = [
     sinonimos: ["sinfibrosis", "sutura anatómica", "comisura (infrecuente)", "saturación", "síntesis", "sutura quirúrgica"],
     obs: "",
     fuentes: [],
-    contextoPaleopatologico: ""
+    contextoPaleopatologico: "Las suturas son indicadoras del desarrollo porque permiten el crecimiento del cráneo durante la infancia hasta que se cierran mediante sinostosis. El análisis de estas es muy útil para distinguir procesos normales de patologías sistémicas. Ciertas patologías metabólicas o inflamatorias pueden afectar a la integridad de estas uniones, permitiendo identificar carencias nutricionales o respuestas de infecciones crónicas en poblaciones antiguas."
   },
   {
     termino: "Osteona",
@@ -1235,7 +1235,7 @@ const GLOSARIO = [
     fuentes: [
       { nombre: "RANME", url: "https://dptm.es/" }
     ],
-    contextoPaleopatologico: ""
+    contextoPaleopatologico: "A nivel microscópico, el proceso de remodelado osteonal (renovación) registra fielmente la edad, el estrés metabólico y diversas enfermedades: - Reloj Biológico: A lo largo de la vida, el hueso compacto renueva sus osteonas constantemente. Por ello, son útiles en un recuento histológico que compare osteonas intactas, fragmentos antiguos y canales no remodelados para determinar la edad del individuo. - Osteoporosis: Con el envejecimiento, el ritmo de relleno de los osteoblastos disminuye. El resultado es que las paredes de la osteona se vuelven más delgadas y el canal central de Havers queda agrandado, provocando una mayor fragilidad del hueso compacto. - Enfermedad de Paget: En esta enfermedad que acelera la destrucción y formación ósea, la estructura de la osteona se distorsiona y se vuelve irregular. - Marcadores Tumorales: Las variaciones en la morfología osteonal también ayudan al diagnóstico oncológico en huesos secos."
   },
 
   // ── LESIONES ─────────────────────────────────────────────────────────────
@@ -1299,7 +1299,7 @@ const GLOSARIO = [
     fuentes: [
       { nombre: "RANME", url: "https://dptm.es/" }
     ],
-    contextoPaleopatologico: ""
+    contextoPaleopatologico: "A nivel microscópico, la evidencia de que existió actividad osteoclástica activa en vida es la identificación de las lagunas de Howship, que son depresiones cóncavas en la superficie del hueso dejadas por la acción de estas células. A nivel macroscópico, una lesión osteoclástica sirve para indicar la velocidad y agresividad de la enfermedad. Si la destrucción fue lenta o se detuvo, el hueso reacciona o aísla la lesión con hueso compacto y denso (reacción esclerótica). Si la enfermedad avanza con mayor velocidad, se observan bordes líticos afilados y definidos, sin tiempo para que se forme un anillo de hueso esclerótico alrededor. Por último, si el proceso fue muy rápido y agresivo no hay márgenes definidos y en su lugar se observa un gradiente de destrucción ósea. Esto sirve para distinguir enfermedades agudas de las crónicas y evaluar el nivel de resistencia o fragilidad del individuo frente a la enfermedad antes de su muerte."
   },
   {
     termino: "Osteoesclerosis",
@@ -1730,7 +1730,7 @@ const GLOSARIO = [
     fuentes: [
       { nombre: "RANME", url: "https://dptm.es/" }
     ],
-    contextoPaleopatologico: ""
+    contextoPaleopatologico: "Esta es la condición patológica más frecuente encontrada en restos arqueológicos. Su análisis se basa en tres variables: - Eburnación (Pulido): Es el rasgo patognomónico de la artrosis severa en restos óseos. El cartílago desaparece por completo y el contacto de hueso con hueso genera una superficie pulida, similar a la porcelana. - Reacción Ósea (Esclerosis y Porosidad): El hueso subcondral reacciona al estrés mecánico aumentando su densidad (esclerosis). Además se produce porosidad en la superficie articular, que puede deberse a la penetración del tejido vascular a través del hueso expuesto. - Osteofitos: Crecimientos óseos reactivos en los márgenes de la articulación. Pueden ser también respuesta funcional a estrés, no siempre indican una enfermedad. La prevalencia de esta enfermedad aumenta con la edad, afectando comúnmente a rodillas, manos, cadera y columna vertebral. El patrón de distribución puede inferir patrones de actividad física."
   },
   {
     termino: "Traumatismo",
@@ -1756,7 +1756,7 @@ const GLOSARIO = [
     fuentes: [
       { nombre: "RANME", url: "https://dptm.es/" }
     ],
-    contextoPaleopatologico: ""
+    contextoPaleopatologico: "Las anomalías congénitas más graves suelen deberse a fallos en el cierre de hendiduras fetales o la supresión de partes del mesénquima esqueletogénico. Algunos ejemplos fatales comunes son la anencefalia (falta de desarrollo de la bóveda craneal) y la craneorraquisquisis (cierre defectuoso del tubo neural). Otras malformaciones son menos severas, como el labio leporino o el paladar hendido, compatibles con la vida hasta la madurez, aunque en la antigüedad presentaban un alto riesgo de mortalidad infantil por dificultades en la lactancia. Entre las enfermedades congénitas más reportadas en restos arqueológicos se encuentran la hidrocefalia (agrandamiento de la bóveda craneal por acumulación de líquido cefalorraquídeo), herniaciones congénitas de las meninges y defectos en el desarrollo maxilar."
   },
   {
     termino: "Traumática",
