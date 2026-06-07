@@ -540,6 +540,43 @@
       text-transform: uppercase;
     }
 
+    /* ── Simulaciones Clínicas (sidebar) ── */
+    .sim-section {
+      margin-top: 1.75rem;
+      padding-top: 1.2rem;
+      border-top: var(--au-border);
+    }
+    .sim-case-btn {
+      display: block; text-decoration: none;
+      border: var(--au-border); border-radius: 2px;
+      background: var(--au-ink); color: var(--ivory);
+      padding: .75rem .9rem;
+      box-shadow: var(--au-shadow);
+      transition: transform .15s, box-shadow .15s;
+    }
+    .sim-case-btn:hover {
+      transform: translate(-2px,-2px);
+      box-shadow: 7px 7px 0 var(--au-ink);
+    }
+    .sim-case-btn__badge {
+      display: inline-block;
+      font-family: var(--font-head); font-size: .48rem; font-weight: 900;
+      letter-spacing: .18em; text-transform: uppercase;
+      background: #C0003C; color: #fff;
+      padding: .1rem .35rem; border-radius: 2px; margin-bottom: .35rem;
+    }
+    .sim-case-btn__type {
+      display: block;
+      font-family: var(--font-head); font-size: .6rem; font-weight: 900;
+      letter-spacing: .14em; text-transform: uppercase; color: #00E5C8;
+      margin-bottom: .18rem;
+    }
+    .sim-case-btn__name {
+      display: block;
+      font-family: var(--font-head); font-size: .7rem; font-weight: 700;
+      line-height: 1.35; color: var(--ivory);
+    }
+
     /* Área principal del quiz */
     .quiz-area { min-height: 400px; }
     .quiz-card {
@@ -935,6 +972,16 @@
         <aside class="quiz-sidebar">
           <p class="quiz-sidebar__title">Tests disponibles</p>
           <div class="quiz-list" id="quiz-list"></div>
+
+          <!-- SIMULACIONES CLÍNICAS -->
+          <div class="sim-section">
+            <p class="quiz-sidebar__title">Simulaciones Clínicas</p>
+            <a href="./simulador.html" class="sim-case-btn">
+              <span class="sim-case-btn__badge">NUEVO</span>
+              <span class="sim-case-btn__type">SIMULACIÓN 2D</span>
+              <span class="sim-case-btn__name">Caso 01<br>El misterio de la fosa común</span>
+            </a>
+          </div>
         </aside>
 
         <!-- Área quiz activa -->
