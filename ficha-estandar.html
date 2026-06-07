@@ -322,6 +322,270 @@
       font-size: .72rem; color: rgba(255,255,255,.28);
       max-width: 28ch; line-height: 1.65; font-weight: 300; margin: 0;
     }
+
+    /* ═══════════════════════════════════════════════════
+       LAYOUT: COMPARISON
+       Dos visores 3D en paralelo para comparación bilateral
+    ═══════════════════════════════════════════════════ */
+    .fe-main--comparison {
+      display: block !important;
+      width: min(1400px, 96vw) !important;
+    }
+    .fe-main--comparison .fe-viewer-wrap { display: none !important; }
+
+    .fe-comp-panel {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: .75rem;
+    }
+    .fe-comp-viewer {
+      border: var(--fe-border);
+      border-radius: 4px;
+      background: var(--fe-ink);
+      box-shadow: var(--fe-shadow);
+      overflow: hidden;
+      position: relative;
+    }
+    .fe-comp-viewer__header {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .5rem .75rem;
+      background: rgba(0, 0, 0, .3);
+      border-bottom: 1.5px solid rgba(0, 229, 255, .15);
+      min-height: 38px;
+    }
+    .fe-comp-viewer__title {
+      font-family: var(--font-head);
+      font-size: .58rem;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, .75);
+      flex: 1;
+    }
+    .fe-comp-viewer__badge {
+      font-family: var(--font-head);
+      font-size: .52rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: .18em .55em;
+      border: 1.5px solid rgba(0, 229, 255, .5);
+      color: var(--cyan);
+      border-radius: 2px;
+    }
+    .fe-comp-viewer model-viewer {
+      width: 100% !important;
+      height: clamp(260px, 34vw, 460px) !important;
+      background: transparent;
+      --progress-bar-color: transparent;
+      display: block;
+    }
+
+    .fe-sync-row {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+      padding: .55rem .85rem;
+      background: rgba(0, 229, 255, .04);
+      border: 1.5px solid rgba(0, 229, 255, .15);
+      border-radius: 2px;
+    }
+    .fe-sync-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      font-family: var(--font-head);
+      font-size: .58rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: rgba(0, 229, 255, .75);
+      cursor: pointer;
+      user-select: none;
+    }
+    .fe-sync-toggle input[type="checkbox"] { accent-color: var(--cyan); cursor: pointer; }
+    .fe-sync-hint {
+      font-family: var(--font-head);
+      font-size: .55rem;
+      color: var(--fe-mid);
+      opacity: .65;
+    }
+
+    @media (max-width: 700px) {
+      .fe-comp-panel { grid-template-columns: 1fr; }
+      .fe-comp-viewer model-viewer { height: clamp(220px, 60vw, 360px) !important; }
+    }
+
+    /* ═══════════════════════════════════════════════════
+       LAYOUT: PROGRESSION
+       Tres visores con toggle pill y escala de severidad
+    ═══════════════════════════════════════════════════ */
+    .fe-main--progression {
+      display: block !important;
+      width: min(1400px, 96vw) !important;
+    }
+    .fe-main--progression .fe-viewer-wrap { display: none !important; }
+
+    .fe-prog-panel {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: .75rem;
+    }
+    .fe-prog-viewer {
+      border: var(--fe-border);
+      border-radius: 4px;
+      background: var(--fe-ink);
+      box-shadow: var(--fe-shadow);
+      overflow: hidden;
+      position: relative;
+    }
+    .fe-prog-viewer__header {
+      display: flex;
+      align-items: center;
+      gap: .45rem;
+      padding: .45rem .7rem;
+      background: rgba(0, 0, 0, .25);
+      border-bottom: 1.5px solid rgba(255, 255, 255, .07);
+      min-height: 36px;
+    }
+    .fe-prog-viewer__title {
+      font-family: var(--font-head);
+      font-size: .56rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, .6);
+      flex: 1;
+    }
+
+    /* Badges de severidad */
+    .fe-severity-badge {
+      font-family: var(--font-head);
+      font-size: .5rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: .16em .52em;
+      border-radius: 2px;
+      border: 1.5px solid;
+    }
+    .fe-severity-badge--leve     { color: #4ade80; border-color: rgba(74, 222, 128, .55); }
+    .fe-severity-badge--moderado { color: #fbbf24; border-color: rgba(251, 191, 36,  .55); }
+    .fe-severity-badge--severo   { color: #fb7185; border-color: rgba(251, 113, 133, .55); }
+
+    /* Toggle pill geometría / textura */
+    .fe-toggle-pill {
+      display: flex;
+      margin: .5rem .7rem;
+      border: 1.5px solid rgba(0, 229, 255, .22);
+      border-radius: 3px;
+      overflow: hidden;
+      background: rgba(0, 0, 0, .2);
+    }
+    .fe-toggle-pill__btn {
+      flex: 1;
+      padding: .3em .4em;
+      font-family: var(--font-head);
+      font-size: .5rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      border: none;
+      background: transparent;
+      color: rgba(255, 255, 255, .32);
+      cursor: pointer;
+      transition: background .17s, color .17s;
+      line-height: 1.3;
+    }
+    .fe-toggle-pill__btn.is-active {
+      background: var(--cyan);
+      color: #0d0d0d;
+    }
+    .fe-toggle-pill__btn:not(.is-active):hover {
+      background: rgba(0, 229, 255, .1);
+      color: var(--cyan);
+    }
+
+    .fe-prog-viewer model-viewer {
+      width: 100% !important;
+      height: clamp(190px, 24vw, 340px) !important;
+      background: transparent;
+      --progress-bar-color: transparent;
+      display: block;
+    }
+
+    /* Barra de severidad (escritorio) */
+    .fe-severity-scale {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      margin-bottom: 1.5rem;
+      border: var(--fe-border);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .fe-severity-scale__seg { height: 8px; }
+    .fe-severity-scale__seg--leve     { background: #4ade80; }
+    .fe-severity-scale__seg--moderado { background: #fbbf24; }
+    .fe-severity-scale__seg--severo   { background: #fb7185; }
+
+    /* Indicador de pasos (móvil) */
+    .fe-severity-steps {
+      display: none;
+      flex-direction: row;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    .fe-severity-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .3rem;
+      flex: 0 0 auto;
+    }
+    .fe-severity-step__connector {
+      flex: 1;
+      height: 2px;
+      background: var(--fe-bone);
+      align-self: center;
+      margin-bottom: 1rem;
+    }
+    .fe-severity-step__dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2px solid;
+    }
+    .fe-severity-step__label {
+      font-family: var(--font-head);
+      font-size: .5rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .fe-severity-step--leve     .fe-severity-step__dot   { border-color: #4ade80; background: rgba(74, 222, 128, .25); }
+    .fe-severity-step--moderado .fe-severity-step__dot   { border-color: #fbbf24; background: rgba(251, 191, 36,  .25); }
+    .fe-severity-step--severo   .fe-severity-step__dot   { border-color: #fb7185; background: rgba(251, 113, 133, .25); }
+    .fe-severity-step--leve     .fe-severity-step__label { color: #4ade80; }
+    .fe-severity-step--moderado .fe-severity-step__label { color: #fbbf24; }
+    .fe-severity-step--severo   .fe-severity-step__label { color: #fb7185; }
+
+    @media (max-width: 860px) {
+      .fe-prog-panel { grid-template-columns: 1fr 1fr; }
+      .fe-prog-viewer model-viewer { height: clamp(180px, 36vw, 300px) !important; }
+    }
+    @media (max-width: 600px) {
+      .fe-prog-panel { grid-template-columns: 1fr; }
+      .fe-prog-viewer model-viewer { height: clamp(220px, 55vw, 360px) !important; }
+      .fe-severity-scale { display: none; }
+      .fe-severity-steps { display: flex !important; }
+    }
   </style>
 </head>
 <body>
@@ -705,6 +969,226 @@
     grid.appendChild(div);
   }
 
+  /* ═══════════════════════════════════════════════════════════
+     LAYOUT COMPARISON — renderizado y sincronización de rotación
+  ═══════════════════════════════════════════════════════════ */
+  function renderComparisonLayout(pieza) {
+    var main       = document.getElementById('fe-main');
+    var galleryHero = document.getElementById('fe-gallery-hero');
+    var modelos    = pieza.modelos_comparacion;
+    if (!main || !galleryHero || !modelos) return;
+
+    var FS_SVG =
+      '<svg class="icon-enter" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' +
+        '<path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>' +
+      '</svg>' +
+      '<svg class="icon-exit" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' +
+        '<path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/>' +
+      '</svg>';
+
+    var panel = document.createElement('div');
+    panel.className = 'fe-comp-panel';
+
+    var mvIds = modelos.map(function(_, i) { return 'mv-comp-' + i; });
+
+    modelos.forEach(function(m, i) {
+      var wrap = document.createElement('div');
+      wrap.className = 'fe-comp-viewer';
+      wrap.innerHTML =
+        '<div class="fe-comp-viewer__header">' +
+          '<span class="fe-comp-viewer__title">' + m.titulo + '</span>' +
+          '<span class="fe-comp-viewer__badge">' + m.badge + '</span>' +
+          '<button class="viewer-fullscreen-btn" id="fe-comp-fs-' + i + '" aria-label="Pantalla completa · ' + m.titulo + '">' +
+            FS_SVG +
+          '</button>' +
+        '</div>' +
+        '<model-viewer' +
+          ' id="' + mvIds[i] + '"' +
+          ' src="' + m.src + '"' +
+          ' alt="' + m.titulo + '"' +
+          ' camera-controls auto-rotate' +
+          ' shadow-intensity="1.2" exposure="0.8"' +
+          ' environment-image="neutral"' +
+          ' field-of-view="15deg" min-field-of-view="8deg" max-field-of-view="40deg"' +
+          ' style="width:100%;background:transparent;--progress-bar-color:transparent">' +
+        '</model-viewer>';
+      panel.appendChild(wrap);
+    });
+
+    main.insertBefore(panel, galleryHero);
+
+    /* Fila de sincronización */
+    var syncRow = document.createElement('div');
+    syncRow.className = 'fe-sync-row';
+    syncRow.innerHTML =
+      '<label class="fe-sync-toggle" for="fe-sync-check">' +
+        '<input type="checkbox" id="fe-sync-check" checked>' +
+        '<span>Sincronizar rotación</span>' +
+      '</label>' +
+      '<span class="fe-sync-hint">Arrastra cualquier modelo para rotar ambos a la vez</span>';
+    main.insertBefore(syncRow, galleryHero);
+
+    /* Botones de pantalla completa */
+    modelos.forEach(function(m, i) {
+      var btn = document.getElementById('fe-comp-fs-' + i);
+      if (btn) btn.addEventListener('click', function() {
+        if (window.PaleoViewer) {
+          PaleoViewer.openFullscreen(
+            document.getElementById(mvIds[i]),
+            { geometria: m.src, textura: null },
+            m.titulo
+          );
+        }
+      });
+    });
+
+    /* Sincronización de cámara entre los dos visores */
+    initComparisonSync(mvIds[0], mvIds[1]);
+  }
+
+  function initComparisonSync(idA, idB) {
+    var busyA = false;
+    var busyB = false;
+
+    function syncFrom(src, dst, getBusy, setBusy) {
+      var chk = document.getElementById('fe-sync-check');
+      if (!chk || !chk.checked || getBusy()) return;
+      setBusy(true);
+      dst.cameraOrbit = src.cameraOrbit;
+      dst.cameraTarget = src.cameraTarget;
+      requestAnimationFrame(function() { setBusy(false); });
+    }
+
+    /* Esperar a que model-viewer esté registrado antes de añadir listeners */
+    var whenReady = customElements.whenDefined
+      ? customElements.whenDefined('model-viewer')
+      : Promise.resolve();
+
+    whenReady.then(function() {
+      var mvA = document.getElementById(idA);
+      var mvB = document.getElementById(idB);
+      if (!mvA || !mvB) return;
+
+      mvA.addEventListener('camera-change', function() {
+        syncFrom(mvA, mvB, function(){ return busyB; }, function(v){ busyA = v; });
+      });
+      mvB.addEventListener('camera-change', function() {
+        syncFrom(mvB, mvA, function(){ return busyA; }, function(v){ busyB = v; });
+      });
+    });
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     LAYOUT PROGRESSION — tres visores con toggle y escala
+  ═══════════════════════════════════════════════════════════ */
+  function renderProgressionLayout(pieza) {
+    var main        = document.getElementById('fe-main');
+    var galleryHero = document.getElementById('fe-gallery-hero');
+    var modelos     = pieza.modelos_progresion;
+    if (!main || !galleryHero || !modelos) return;
+
+    var FS_SVG =
+      '<svg class="icon-enter" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' +
+        '<path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>' +
+      '</svg>' +
+      '<svg class="icon-exit" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' +
+        '<path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/>' +
+      '</svg>';
+
+    /* Panel de tres visores */
+    var panel = document.createElement('div');
+    panel.className = 'fe-prog-panel';
+
+    modelos.forEach(function(m, i) {
+      var vid  = 'mv-prog-' + i;
+      var wrap = document.createElement('div');
+      wrap.className = 'fe-prog-viewer';
+      wrap.innerHTML =
+        '<div class="fe-prog-viewer__header">' +
+          '<span class="fe-prog-viewer__title">' + m.titulo + '</span>' +
+          '<span class="fe-severity-badge fe-severity-badge--' + m.badge_color + '">' + m.badge + '</span>' +
+          '<button class="viewer-fullscreen-btn" id="fe-prog-fs-' + i + '" aria-label="Pantalla completa · ' + m.titulo + '">' +
+            FS_SVG +
+          '</button>' +
+        '</div>' +
+        '<div class="fe-toggle-pill" role="group" aria-label="Modo de visualización">' +
+          '<button class="fe-toggle-pill__btn is-active" data-viewer="' + vid + '" data-src="' + m.geometria + '" aria-pressed="true">Geometría</button>' +
+          '<button class="fe-toggle-pill__btn" data-viewer="' + vid + '" data-src="' + m.textura + '" aria-pressed="false">Textura</button>' +
+        '</div>' +
+        '<model-viewer' +
+          ' id="' + vid + '"' +
+          ' src="' + m.geometria + '"' +
+          ' alt="' + m.titulo + ' · ' + m.badge + '"' +
+          ' camera-controls auto-rotate' +
+          ' shadow-intensity="1.2" exposure="0.8"' +
+          ' environment-image="neutral"' +
+          ' field-of-view="15deg" min-field-of-view="8deg" max-field-of-view="40deg"' +
+          ' style="width:100%;background:transparent;--progress-bar-color:transparent">' +
+        '</model-viewer>';
+      panel.appendChild(wrap);
+    });
+
+    main.insertBefore(panel, galleryHero);
+
+    /* Eventos de los toggle pills */
+    panel.querySelectorAll('.fe-toggle-pill__btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var mv = document.getElementById(btn.dataset.viewer);
+        if (mv && btn.dataset.src) mv.setAttribute('src', btn.dataset.src);
+        var pill = btn.closest('.fe-toggle-pill');
+        pill.querySelectorAll('.fe-toggle-pill__btn').forEach(function(b) {
+          var active = b === btn;
+          b.classList.toggle('is-active', active);
+          b.setAttribute('aria-pressed', String(active));
+        });
+      });
+    });
+
+    /* Barra de severidad (escritorio) */
+    var scale = document.createElement('div');
+    scale.className = 'fe-severity-scale';
+    scale.setAttribute('aria-hidden', 'true');
+    modelos.forEach(function(m) {
+      var seg = document.createElement('div');
+      seg.className = 'fe-severity-scale__seg fe-severity-scale__seg--' + m.badge_color;
+      scale.appendChild(seg);
+    });
+    main.insertBefore(scale, galleryHero);
+
+    /* Indicador de pasos (móvil) */
+    var steps = document.createElement('div');
+    steps.className = 'fe-severity-steps';
+    steps.setAttribute('aria-hidden', 'true');
+    modelos.forEach(function(m, i) {
+      if (i > 0) {
+        var conn = document.createElement('div');
+        conn.className = 'fe-severity-step__connector';
+        steps.appendChild(conn);
+      }
+      var step = document.createElement('div');
+      step.className = 'fe-severity-step fe-severity-step--' + m.badge_color;
+      step.innerHTML =
+        '<div class="fe-severity-step__dot"></div>' +
+        '<span class="fe-severity-step__label">' + m.badge + '</span>';
+      steps.appendChild(step);
+    });
+    main.insertBefore(steps, galleryHero);
+
+    /* Botones de pantalla completa — abre el overlay con selector dual */
+    modelos.forEach(function(m, i) {
+      var btn = document.getElementById('fe-prog-fs-' + i);
+      if (btn) btn.addEventListener('click', function() {
+        if (window.PaleoViewer) {
+          PaleoViewer.openFullscreen(
+            document.getElementById('mv-prog-' + i),
+            { geometria: m.geometria, textura: m.textura },
+            m.titulo + ' · ' + m.badge
+          );
+        }
+      });
+    });
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
     const params = new URLSearchParams(window.location.search);
     const id     = params.get('id');
@@ -880,7 +1364,15 @@
         document.getElementById('fe-gallery-hero')?.classList.add('fe-gallery-hero--no-media');
       }
     }
-  
+
+    if (layout === 'comparison' && pieza.modelos_comparacion?.length >= 2) {
+      renderComparisonLayout(pieza);
+    }
+
+    if (layout === 'progression' && pieza.modelos_progresion?.length >= 2) {
+      renderProgressionLayout(pieza);
+    }
+
     /* Pantalla completa — overlay position:fixed (100vw × 100dvh) */
     document.getElementById('fe-fs-btn')?.addEventListener('click', () => {
       if (window.PaleoViewer) {
