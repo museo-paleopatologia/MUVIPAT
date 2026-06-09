@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="./js/access-guard.js"></script>
+  <link rel="icon" type="image/png" href="./assets/img/favicon.png">
+  <title>Caso 01 · Simulador · PaleoMuseo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:       #F5F0E8;
+      --ink:      #0D0D0D;
+      --mid:      #6B5A43;
+      --border:   3px solid #0D0D0D;
+      --shadow:   4px 4px 0 #0D0D0D;
+      --shadow-sm:3px 3px 0 #0D0D0D;
+      --red:      #C0003C;
+      --amber:    #C87800;
+      --green:    #006B2E;
+      --blue:     #0040CC;
+      --scan:     #00E5C8;
+      --ivory:    #F9F4E8;
+      --fh: 'Montserrat', sans-serif;
+      --fu: 'Lexend', sans-serif;
+      --fm: 'Courier New', Courier, monospace;
+    }
+    html, body { height: 100%; background: var(--bg); color: var(--ink); font-family: var(--fu); overflow-x: hidden; }
+
+    /* ══ HEADER ══ */
+    .sim-header {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--ink); color: var(--ivory);
+      display: flex; align-items: center; gap: 1rem;
+      padding: 0 1.25rem; height: 50px;
+      border-bottom: 3px solid #2a2a2a;
+    }
+    .sim-back {
+      font-family: var(--fh); font-size: .6rem; font-weight: 800;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--ivory); text-decoration: none;
+      padding: .28rem .6rem; border: 2px solid #555; border-radius: 2px;
+      transition: background .12s, color .12s; white-space: nowrap;
+    }
+    .sim-back:hover { background: #fff; color: var(--ink); border-color: #fff; }
+    .sim-header__title { flex: 1; display: flex; align-items: baseline; gap: .65rem; overflow: hidden; }
+    .sim-case-num {
+      font-family: var(--fh); font-size: .56rem; font-weight: 900; letter-spacing: .18em;
+      background: var(--red); color: #fff; padding: .14rem .42rem; border-radius: 2px; flex-shrink: 0;
+    }
+    .sim-case-title {
+      font-family: var(--fh); font-size: .82rem; font-weight: 700;
+      letter-spacing: -.01em; color: #ddd4c4;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .sim-status {
+      font-family: var(--fh); font-size: .52rem; font-weight: 800;
+      letter-spacing: .16em; text-transform: uppercase;
+      padding: .18rem .48rem; border-radius: 2px; border: 1.5px solid; flex-shrink: 0;
+    }
+    .sim-status--active  { color: var(--scan); border-color: var(--scan); }
+    .sim-status--done    { color: #00FF80;    border-color: #00FF80; }
+
+    /* ══ PROGRESS ══ */
+    .sim-progress { height: 4px; background: #ddd; }
+    .sim-progress__fill { height: 100%; background: var(--red); width: 0%; transition: width .4s ease; }
+
+    /* ══ LAYOUT ══ */
+    .sim-main {
+      display: grid; grid-template-columns: 330px 1fr;
+      height: calc(100vh - 54px); overflow: hidden;
+    }
+
+    /* ══ LEFT ══ */
+    .sim-left { border-right: var(--border); overflow-y: auto; display: flex; flex-direction: column; background: #EDE8DC; }
+
+    /* viewer header */
+    .viewer-hdr {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: .45rem .8rem; background: var(--ink); color: var(--ivory);
+      font-family: var(--fh); font-size: .58rem; font-weight: 800; letter-spacing: .15em; text-transform: uppercase;
+    }
+    .viewer-ref { font-family: var(--fm); font-size: .58rem; color: rgba(255,255,255,.38); letter-spacing: .04em; }
+
+    /* viewer wrap */
+    .viewer-wrap {
+      position: relative; background: #E4DECE;
+      display: flex; align-items: center; justify-content: center;
+      padding: 1.2rem .8rem 1.8rem; overflow: hidden; min-height: 290px;
+      border-bottom: 2px solid rgba(13,13,13,.12);
+    }
+
+    /* bone svg */
+    #bone-svg { width: 170px; max-height: 310px; position: relative; z-index: 2; }
+    #bone-svg.glitch { animation: bGlitch .55s steps(1) 4; }
+    @keyframes bGlitch {
+      0%   { filter: none; transform: translate(0,0); }
+      20%  { filter: hue-rotate(45deg) brightness(1.5) saturate(2); transform: translate(-2px,1px); }
+      40%  { filter: hue-rotate(-45deg) contrast(1.6); transform: translate(2px,-1px); }
+      65%  { filter: brightness(.75) hue-rotate(180deg); transform: translate(-1px,2px); }
+      100% { filter: none; transform: translate(0,0); }
+    }
+
+    /* scan line */
+    .scan-line {
+      position: absolute; left: 0; right: 0; top: 0; height: 2px;
+      background: var(--scan); box-shadow: 0 0 10px var(--scan), 0 0 24px rgba(0,229,200,.35);
+      opacity: 0; pointer-events: none; z-index: 10;
+    }
+    .scan-line.run { opacity: 1; animation: scanMove 1.7s linear forwards; }
+    @keyframes scanMove { from { top: 0; } to { top: 100%; } }
+
+    /* zone badges */
+    .zone-badge {
+      position: absolute; font-family: var(--fm); font-size: .56rem; font-weight: bold;
+      background: var(--ink); color: var(--scan); padding: .12rem .38rem;
+      border: 1px solid var(--scan); pointer-events: none;
+      opacity: 0; transition: opacity .35s; z-index: 5; white-space: nowrap;
+    }
+    .zone-badge.vis { opacity: 1; }
+    .zbadge-fx { top: 48%; left: 76%; transform: translateY(-50%); }
+    .zbadge-cl { top: 57%; left: 74%; }
+    .zbadge-pp { top: 30%; left: 4%; }
+
+    .view-mode-lbl {
+      position: absolute; bottom: .35rem; left: 50%; transform: translateX(-50%);
+      font-family: var(--fm); font-size: .56rem; color: var(--mid); letter-spacing: .1em;
+      background: rgba(228,222,206,.9); padding: .08rem .38rem;
+    }
+
+    /* flip animation */
+    .viewer-wrap.flip { animation: wFlip .42s ease; }
+    @keyframes wFlip {
+      0%   { transform: scaleX(1); }
+      38%  { transform: scaleX(0.03); }
+      62%  { transform: scaleX(0.03); }
+      100% { transform: scaleX(1); }
+    }
+
+    /* controls */
+    .viewer-ctrls {
+      display: flex; gap: .55rem; padding: .65rem .8rem;
+      align-items: center; border-bottom: var(--border); background: #E8E2D6;
+    }
+    .ctrl-btn {
+      font-family: var(--fh); font-size: .62rem; font-weight: 800;
+      letter-spacing: .1em; text-transform: uppercase;
+      padding: .42rem .8rem; border: var(--border); background: #fff;
+      box-shadow: var(--shadow-sm); cursor: pointer; border-radius: 2px;
+      transition: transform .12s, box-shadow .12s;
+    }
+    .ctrl-btn:hover:not(:disabled) { transform: translate(-2px,-2px); box-shadow: var(--shadow); }
+    .ctrl-btn:active:not(:disabled) { transform: translate(1px,1px); box-shadow: 1px 1px 0 var(--ink); }
+    .ctrl-btn:disabled { opacity: .4; cursor: not-allowed; }
+    .ctrl-btn--scan { background: var(--ink); color: var(--scan); }
+    .ctrl-btn--scan:hover:not(:disabled) { background: #181818; }
+    .view-ctr-lbl { margin-left: auto; font-family: var(--fm); font-size: .58rem; color: var(--mid); letter-spacing: .07em; }
+
+    /* specimen panel */
+    .spec-hdr {
+      padding: .45rem .8rem; background: var(--ink); color: var(--ivory);
+      font-family: var(--fh); font-size: .58rem; font-weight: 800; letter-spacing: .15em; text-transform: uppercase;
+    }
+    .spec-body { padding: .8rem; }
+    .data-tbl { width: 100%; border-collapse: collapse; font-family: var(--fm); font-size: .68rem; }
+    .data-tbl tr { border-bottom: 1px solid rgba(13,13,13,.1); }
+    .data-tbl tr:last-child { border-bottom: none; }
+    .data-tbl td { padding: .34rem .22rem; }
+    .data-tbl td:first-child { color: var(--mid); font-weight: bold; letter-spacing: .04em; white-space: nowrap; padding-right: .7rem; }
+    .ctx-txt {
+      margin-top: .8rem; font-family: var(--fu); font-size: .7rem; font-weight: 300;
+      color: #5a4a35; line-height: 1.65; padding: .6rem .7rem;
+      border: 2px solid rgba(13,13,13,.14); border-radius: 2px; background: rgba(255,255,255,.45);
+    }
+    .ctx-txt strong { font-weight: 700; color: var(--ink); }
+
+    /* ══ RIGHT ══ */
+    .sim-right { display: flex; flex-direction: column; overflow: hidden; }
+    .nb-topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: .45rem 1.2rem; background: var(--ink); color: var(--ivory);
+      font-family: var(--fh); font-size: .58rem; font-weight: 800; letter-spacing: .15em; text-transform: uppercase;
+    }
+    .nb-id { font-family: var(--fm); font-size: .58rem; color: rgba(255,255,255,.35); letter-spacing: .07em; }
+    .nb-tabs { display: flex; border-bottom: var(--border); background: #EAE4D8; }
+    .nb-tab {
+      flex: 1; padding: .65rem; border: none; border-right: 2px solid var(--ink);
+      background: transparent; cursor: pointer; color: var(--mid);
+      font-family: var(--fh); font-size: .58rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+      transition: background .12s, color .12s;
+    }
+    .nb-tab:last-child { border-right: none; }
+    .nb-tab:hover { background: rgba(0,0,0,.07); color: var(--ink); }
+    .nb-tab.active { background: var(--ink); color: var(--ivory); }
+    .tab-badge {
+      display: none; align-items: center; justify-content: center;
+      width: 15px; height: 15px; border-radius: 50%;
+      background: var(--red); color: #fff; font-size: .48rem;
+      margin-left: .3rem; vertical-align: middle;
+    }
+    .tab-badge.show { display: inline-flex; }
+    .nb-tab.active .tab-badge { background: var(--scan); color: var(--ink); }
+    .nb-content { flex: 1; overflow-y: auto; padding: 1.15rem; }
+
+    /* ══ TAB: INSPECCIÓN ══ */
+    .diary-hdr {
+      font-family: var(--fh); font-size: .6rem; font-weight: 800; letter-spacing: .17em;
+      text-transform: uppercase; color: var(--mid);
+      margin-bottom: .8rem; padding-bottom: .45rem; border-bottom: 2px solid var(--ink);
+    }
+    .diary-intro {
+      font-family: var(--fu); font-size: .76rem; font-weight: 300;
+      line-height: 1.7; color: #444; margin-bottom: 1.15rem;
+    }
+    .diary-intro strong { font-weight: 700; color: var(--ink); }
+
+    .q-card { border: var(--border); border-radius: 2px; margin-bottom: .9rem; overflow: hidden; box-shadow: var(--shadow-sm); background: #fff; }
+    .q-card.locked { opacity: .42; pointer-events: none; background: #f0efec; }
+    .q-card.answered { border-color: var(--green); box-shadow: 3px 3px 0 var(--green); }
+    .q-num {
+      display: flex; align-items: center; gap: .5rem;
+      padding: .42rem .8rem; background: var(--ink); color: var(--ivory);
+      font-family: var(--fh); font-size: .58rem; font-weight: 900; letter-spacing: .14em; text-transform: uppercase;
+    }
+    .q-num .q-ico { margin-left: auto; font-size: .85rem; }
+    .q-card.answered .q-num { background: var(--green); }
+    .q-body { padding: .8rem; }
+    .q-text { font-family: var(--fu); font-size: .78rem; font-weight: 500; line-height: 1.6; margin-bottom: .8rem; }
+    .q-hint {
+      font-family: var(--fu); font-size: .68rem; font-weight: 300; font-style: italic; color: var(--mid);
+      padding: .38rem .58rem; border-left: 3px solid var(--amber); background: rgba(200,120,0,.07);
+      margin-bottom: .8rem;
+    }
+    .ans-opts { display: flex; flex-direction: column; gap: .46rem; }
+    .ans-opt {
+      padding: .55rem .8rem; border: 2px solid var(--ink); border-radius: 2px;
+      background: #fff; cursor: pointer; text-align: left;
+      font-family: var(--fu); font-size: .73rem; font-weight: 400; line-height: 1.4;
+      box-shadow: 2px 2px 0 var(--ink);
+      transition: transform .12s, box-shadow .12s, background .12s;
+    }
+    .ans-opt:hover:not(:disabled) { transform: translate(-1px,-1px); box-shadow: 3px 3px 0 var(--ink); background: #f6f1e8; }
+    .ans-opt.correct { background: #D4F2DE; border-color: var(--green); box-shadow: 2px 2px 0 var(--green); color: #004818; }
+    .ans-opt.wrong   { background: #FFD9E3; border-color: var(--red);   box-shadow: 2px 2px 0 var(--red);   color: var(--red); }
+    .fb-box { margin-top: .65rem; padding: .55rem .8rem; border-radius: 2px; font-family: var(--fu); font-size: .73rem; line-height: 1.55; }
+    .fb-box--ok { background: #D4F2DE; border: 2px solid var(--green); color: #004818; }
+    .fb-box--no { background: #FFD9E3; border: 2px solid var(--red);   color: var(--red); }
+    .finding-unlocked {
+      margin-top: .55rem; padding: .45rem .7rem;
+      background: var(--ink); color: var(--scan);
+      font-family: var(--fm); font-size: .62rem; border-radius: 2px;
+      display: flex; align-items: center; gap: .4rem;
+    }
+
+    /* ══ TAB: EVIDENCIAS ══ */
+    .ev-empty {
+      text-align: center; color: var(--mid); padding: 3rem 1rem;
+      font-family: var(--fh); font-size: .7rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .12em;
+    }
+    .ev-empty svg { opacity: .18; margin: 0 auto .7rem; display: block; }
+    .ev-card { border: var(--border); border-radius: 2px; margin-bottom: .8rem; overflow: hidden; box-shadow: var(--shadow-sm); background: #fff; animation: eIn .3s ease; }
+    @keyframes eIn { from { opacity:0; transform:translateY(7px); } to { opacity:1; transform:translateY(0); } }
+    .ev-card__hdr {
+      display: flex; align-items: center; gap: .55rem;
+      padding: .42rem .72rem; background: var(--ink); color: var(--ivory);
+      font-family: var(--fh); font-size: .62rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+    }
+    .sev-badge { margin-left: auto; font-size: .48rem; font-weight: 900; letter-spacing: .1em; padding: .13rem .38rem; border-radius: 2px; }
+    .sev--critica { background: var(--red);   color: #fff; }
+    .sev--alta    { background: #D45000;      color: #fff; }
+    .sev--media   { background: var(--amber); color: #fff; }
+    .sev--info    { background: var(--blue);  color: #fff; }
+    .ev-card__body { padding: .68rem .8rem; font-family: var(--fu); font-size: .73rem; font-weight: 300; line-height: 1.65; color: #444; }
+
+    /* ══ TAB: DIAG DIFERENCIAL ══ */
+    .diag-note { font-family: var(--fu); font-size: .7rem; color: var(--mid); text-align: center; padding: .6rem; font-style: italic; margin-bottom: .7rem; }
+    .diag-board { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: .7rem; }
+    .diag-col { border: var(--border); border-radius: 2px; overflow: hidden; box-shadow: var(--shadow-sm); }
+    .diag-col__hdr {
+      padding: .48rem .55rem; text-align: center;
+      font-family: var(--fh); font-size: .55rem; font-weight: 900; letter-spacing: .13em; text-transform: uppercase;
+    }
+    .dcol--compatible .diag-col__hdr { background: var(--green); color: #fff; }
+    .dcol--poco      .diag-col__hdr { background: var(--amber); color: #fff; }
+    .dcol--descartado .diag-col__hdr { background: #555; color: #fff; }
+    .diag-col__body { padding: .45rem; display: flex; flex-direction: column; gap: .38rem; min-height: 72px; }
+    .diag-card { border: 2px solid; border-radius: 2px; padding: .42rem .48rem; font-family: var(--fh); font-size: .6rem; font-weight: 700; animation: cIn .25s ease; }
+    @keyframes cIn { from { opacity:0; transform:scale(.88); } to { opacity:1; transform:scale(1); } }
+    .dc--compatible    { border-color: var(--green); background: #E4F6EC; color: #004818; }
+    .dc--poco-probable { border-color: var(--amber); background: #FFF2DC; color: #6A3E00; }
+    .dc--descartado    { border-color: #999; background: #F2F2F2; color: #999; text-decoration: line-through; }
+    .dc--principal     { border-color: var(--red); background: var(--red); color: #fff; font-size: .68rem; box-shadow: var(--shadow-sm); }
+    .dc-cat { display: block; font-size: .48rem; font-weight: 400; opacity: .65; margin-bottom: .12rem; text-transform: uppercase; letter-spacing: .07em; }
+    .final-box {
+      grid-column: 1 / -1; margin-top: .4rem;
+      border: 3px solid var(--red); background: var(--ink); color: var(--ivory);
+      padding: .9rem 1.1rem; box-shadow: var(--shadow); animation: eIn .4s ease;
+    }
+    .final-box__lbl { font-family: var(--fh); font-size: .58rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--scan); margin-bottom: .45rem; }
+    .final-box__tit { font-family: var(--fh); font-size: .95rem; font-weight: 900; color: #fff; margin-bottom: .55rem; line-height: 1.2; }
+    .final-box__txt { font-family: var(--fu); font-size: .73rem; font-weight: 300; line-height: 1.7; color: #ccc; }
+    .final-box__refs { margin-top: .65rem; font-family: var(--fm); font-size: .58rem; color: rgba(255,255,255,.35); }
+    .diag-empty { font-size: .62rem; color: #bbb; font-family: var(--fm); padding: .22rem; }
+
+    /* ══ SCROLLBAR ══ */
+    ::-webkit-scrollbar { width: 5px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: rgba(13,13,13,.22); border-radius: 3px; }
+
+    /* ══ RESPONSIVE ══ */
+    @media (max-width: 860px) {
+      .sim-main { grid-template-columns: 1fr; height: auto; overflow: visible; }
+      .sim-left { border-right: none; border-bottom: var(--border); }
+      .sim-right { height: 72vh; }
+      .diag-board { grid-template-columns: 1fr; }
+      .final-box { grid-column: 1; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header class="sim-header">
+  <a href="./aula.html" class="sim-back">← Aula</a>
+  <div class="sim-header__title">
+    <span class="sim-case-num">CASO 01</span>
+    <span class="sim-case-title">El misterio de la fosa común</span>
+  </div>
+  <span class="sim-status sim-status--active" id="sim-status">EN INVESTIGACIÓN</span>
+</header>
+
+<!-- ══ PROGRESS ══ -->
+<div class="sim-progress"><div class="sim-progress__fill" id="prog-fill"></div></div>
+
+<!-- ══ MAIN ══ -->
+<main class="sim-main">
+
+  <!-- ── LEFT: MESA DE ANÁLISIS ── -->
+  <div class="sim-left">
+
+    <!-- Viewer -->
+    <div>
+      <div class="viewer-hdr">
+        <span>Mesa de Análisis</span>
+        <span class="viewer-ref">REF: FOSA-B4-TIB-D</span>
+      </div>
+
+      <div class="viewer-wrap" id="viewer-wrap">
+        <div class="scan-line" id="scan-line"></div>
+
+        <!-- Zone badges -->
+        <div class="zone-badge zbadge-fx" id="zbadge-fx">⚠ FRACTURA + CALLO</div>
+        <div class="zone-badge zbadge-cl" id="zbadge-cl">⚠ CLOACA</div>
+        <div class="zone-badge zbadge-pp" id="zbadge-pp">⚠ PERIOSTITIS</div>
+
+        <!-- TIBIA SVG -->
+        <svg id="bone-svg" viewBox="0 0 200 475" xmlns="http://www.w3.org/2000/svg" aria-label="Tibia derecha, espécimen FOSA-B4-TIB-D">
+          <defs>
+            <pattern id="btp" patternUnits="userSpaceOnUse" width="9" height="9">
+              <circle cx="2" cy="2" r=".65" fill="#bca882" opacity=".35"/>
+              <circle cx="7" cy="7" r=".5"  fill="#bca882" opacity=".25"/>
+            </pattern>
+          </defs>
+
+          <!-- CORTICAL BONE -->
+          <path id="bone-cortical" d="
+            M 34,22 Q 100,14 166,22
+            L 170,58 L 149,76 L 133,80
+            L 131,218 C 140,230 143,253 138,278 L 132,362
+            L 139,400 L 134,442 L 100,450 L 66,442 L 61,400
+            L 68,362 L 62,278 C 57,253 60,230 69,218 L 67,80
+            L 51,76 L 30,58 Z
+          " fill="#EDE4CE" stroke="#0D0D0D" stroke-width="2.5" stroke-linejoin="round"/>
+
+          <!-- Surface texture -->
+          <path d="
+            M 34,22 Q 100,14 166,22
+            L 170,58 L 149,76 L 133,80
+            L 131,218 C 140,230 143,253 138,278 L 132,362
+            L 139,400 L 134,442 L 100,450 L 66,442 L 61,400
+            L 68,362 L 62,278 C 57,253 60,230 69,218 L 67,80
+            L 51,76 L 30,58 Z
+          " fill="url(#btp)" opacity=".55"/>
+
+          <!-- Medullary canal -->
+          <path id="bone-med" d="M 84,83 L 116,83 L 114,348 L 86,348 Z" fill="#DDD4B4" opacity=".65"/>
+
+          <!-- Tibial tuberosity -->
+          <path d="M 89,78 L 94,97 L 100,101 L 106,97 L 111,78" fill="#EDE4CE" stroke="#0D0D0D" stroke-width="1.5" stroke-linejoin="round"/>
+
+          <!-- Anterior crest -->
+          <path d="M 100,99 L 97,222 L 99,355" stroke="#C4A878" stroke-width="1.5" fill="none" stroke-linecap="round" opacity=".42"/>
+
+          <!-- ZONE: FRACTURA (hidden until Q1 answered) -->
+          <g id="zona-fractura" style="opacity:0; transition: opacity .4s">
+            <!-- Callus outline -->
+            <path d="M 57,222 L 143,222 L 143,280 L 57,280 Z"
+                  fill="rgba(192,0,60,.09)" stroke="#C0003C" stroke-width="1.5" stroke-dasharray="5,3"/>
+            <!-- Fracture crack line -->
+            <line x1="67" y1="238" x2="133" y2="255"
+                  stroke="#C0003C" stroke-width="2.5" stroke-dasharray="7,4" stroke-linecap="round"/>
+            <!-- Label connectors -->
+            <line x1="57" y1="222" x2="48" y2="211" stroke="#C0003C" stroke-width="1"/>
+            <line x1="143" y1="222" x2="152" y2="211" stroke="#C0003C" stroke-width="1"/>
+          </g>
+
+          <!-- ZONE: CLOACA (hidden until Q2 answered) -->
+          <g id="zona-cloaca" style="opacity:0; transition: opacity .4s">
+            <!-- Hole -->
+            <ellipse cx="111" cy="260" rx="6.5" ry="4.5" fill="#7A3A00" stroke="#0D0D0D" stroke-width="1.5"/>
+            <!-- Ring indicator -->
+            <circle cx="111" cy="260" r="12" fill="none" stroke="#C0003C" stroke-width="1.5" stroke-dasharray="3,2"/>
+          </g>
+
+          <!-- ZONE: PERIOSTIO (hidden until Q3 answered) -->
+          <g id="zona-periostio" style="opacity:0; transition: opacity .4s">
+            <path d="M 57,118 C 49,132 51,152 55,165 C 49,178 51,197 56,208"
+                  stroke="#D45000" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="3,4"/>
+            <path d="M 143,118 C 151,132 149,152 145,165 C 151,178 149,197 144,208"
+                  stroke="#D45000" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="3,4"/>
+          </g>
+
+          <!-- View label -->
+          <text id="svg-view-lbl" x="100" y="466" text-anchor="middle"
+                font-size="9" fill="#8B7355" font-family="'Courier New',monospace">
+            TIBIA D. — ANTERIOR
+          </text>
+        </svg>
+
+        <div class="view-mode-lbl" id="view-mode-lbl">VISTA: ANTERIOR</div>
+      </div>
+
+      <!-- Controls -->
+      <div class="viewer-ctrls">
+        <button class="ctrl-btn" id="btn-rotate" onclick="rotateView()">⟳ GIRAR</button>
+        <button class="ctrl-btn ctrl-btn--scan" id="btn-scan" onclick="runScan()">⬡ ESCANEAR</button>
+        <span class="view-ctr-lbl" id="view-ctr-lbl">VISTA 1/3</span>
+      </div>
+    </div>
+
+    <!-- Technical data -->
+    <div>
+      <div class="spec-hdr">Cuadro Técnico</div>
+      <div class="spec-body">
+        <table class="data-tbl">
+          <tr><td>SEXO</td><td>Masculino</td></tr>
+          <tr><td>EDAD</td><td>35–45 años</td></tr>
+          <tr><td>PERIODO</td><td>Medieval (s. XII–XIV d.C.)</td></tr>
+          <tr><td>YACIMIENTO</td><td>Fosa común, Sector B-4, Capa 3</td></tr>
+          <tr><td>CONSERV.</td><td>Incompleto (~40%)</td></tr>
+          <tr><td>ELEMENTO</td><td>Tibia derecha (completa)</td></tr>
+        </table>
+        <div class="ctx-txt">
+          <strong>Contexto arqueológico:</strong> Inhumación secundaria en fosa colectiva. Restos no articulados mezclados con al menos 6 individuos. Material asociado: fragmentos de cerámica vidriada verde-manganeso (s. XIII) y moneda de vellón ilegible.
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /sim-left -->
+
+  <!-- ── RIGHT: CUADERNO DE DIAGNÓSTICO ── -->
+  <div class="sim-right">
+    <div class="nb-topbar">
+      <span>Cuaderno de Diagnóstico</span>
+      <span class="nb-id">CASO-01 · FOSA-B4</span>
+    </div>
+    <div class="nb-tabs">
+      <button class="nb-tab active" data-tab="inspeccion" onclick="switchTab('inspeccion')">Inspección</button>
+      <button class="nb-tab" data-tab="evidencias" onclick="switchTab('evidencias')">
+        Evidencias<span class="tab-badge" id="badge-ev">0</span>
+      </button>
+      <button class="nb-tab" data-tab="diagnostico" onclick="switchTab('diagnostico')">Diag. Diferencial</button>
+    </div>
+    <div class="nb-content" id="nb-content"></div>
+  </div>
+
+</main>
+
+<script>
+/* ══════════════════════════════════════════════════════════════
+   DATOS — CASO 01
+══════════════════════════════════════════════════════════════ */
+const CASO = {
+  preguntas: [
+    {
+      id: 'q1',
+      texto: '¿Observas alguna deformidad en la diáfisis tibial?',
+      pista: 'Compara el grosor cortical a lo largo de todo el hueso. ¿Es uniforme?',
+      opciones: [
+        { label: 'La diáfisis parece uniforme, sin alteraciones ni angulación.',
+          correcto: false,
+          feedback: 'Observa más detenidamente el tercio medio: el grosor cortical varía de manera irregular, con un ensanchamiento focal.' },
+        { label: 'Sí — engrosamiento focal con angulación anormal en el tercio medio.',
+          correcto: true,
+          feedback: 'Correcto. Se identifica un callo óseo hipertrófico con malalineamiento axial. La fractura consolidó en posición incorrecta, indicando ausencia de inmovilización terapéutica.' }
+      ],
+      hallazgo: {
+        id: 'h1', label: 'Fractura mal consolidada',
+        descripcion: 'Callo óseo hipertrófico con malalineamiento axial en el tercio medio de la diáfisis tibial. Compatible con fractura sin inmovilización adecuada.',
+        severidad: 'alta', zona: 'zona-fractura', zbadge: 'zbadge-fx'
+      }
+    },
+    {
+      id: 'q2',
+      texto: '¿Identificas alguna abertura anormal en la cortical ósea?',
+      pista: 'Examina la cara anterior del hueso, ligeramente por debajo de la zona de fractura.',
+      opciones: [
+        { label: 'No hay orificios patológicos visibles.',
+          correcto: false,
+          feedback: 'Hay un orificio en la cara anterior del hueso, con bordes escleróticos bien definidos. Busca justo por debajo del callo.' },
+        { label: 'Sí — orificio con bordes escleróticos redondeados y canal interno visible.',
+          correcto: true,
+          feedback: 'Correcto. Cloaca de drenaje: canal patológico que comunica la cavidad medular infectada con el exterior. Es el signo patognomónico de la osteomielitis crónica.' }
+      ],
+      hallazgo: {
+        id: 'h2', label: 'Cloaca de drenaje',
+        descripcion: 'Orificio patológico con bordes escleróticos en la cortical anterior. Canal visible hacia la cavidad medular. Signo patognomónico de osteomielitis crónica.',
+        severidad: 'critica', zona: 'zona-cloaca', zbadge: 'zbadge-cl'
+      }
+    },
+    {
+      id: 'q3',
+      texto: '¿Presenta la superficie perióstica alteraciones respecto a una tibia normal?',
+      pista: 'El periostio genera hueso nuevo ante la inflamación crónica. Busca irregularidades en la superficie cortical del tercio superior-medio.',
+      opciones: [
+        { label: 'La superficie externa es lisa y homogénea.',
+          correcto: false,
+          feedback: 'Las infecciones crónicas generan reacción perióstica intensa. Observa la textura de la cortical lateral en el tercio superior de la diáfisis.' },
+        { label: 'Sí — capa de hueso neoformado rugoso e irregular sobre la cortical original.',
+          correcto: true,
+          feedback: 'Correcto. Reacción perióstica florida: el periostio responde a la infección generando woven bone sobre la cortical original, creando una superficie rugosa e irregular.' }
+      ],
+      hallazgo: {
+        id: 'h3', label: 'Reacción perióstica',
+        descripcion: 'Hueso neoformado rugoso e irregular sobre la cortical en el tercio superior-medio. El periostio responde a la infección crónica generando woven bone.',
+        severidad: 'media', zona: 'zona-periostio', zbadge: 'zbadge-pp'
+      }
+    },
+    {
+      id: 'q4',
+      texto: '¿Cuál es el patrón temporal de las lesiones según el conjunto de hallazgos?',
+      pista: 'La esclerosis de los bordes de la cloaca y la madurez del callo son indicadores del tiempo transcurrido.',
+      opciones: [
+        { label: 'Lesión aguda: el individuo murió poco después de la fractura.',
+          correcto: false,
+          feedback: 'La esclerosis perilesional, el callo óseo maduro y el grosor de la reacción perióstica apuntan inequívocamente a un proceso de larga evolución.' },
+        { label: 'Proceso crónico: supervivencia de meses o años con infección activa.',
+          correcto: true,
+          feedback: 'Correcto. El patrón morfológico es coherente con meses o años de evolución. El individuo vivió con esta condición debilitante, posiblemente con episodios recurrentes de supuración y fiebre.' }
+      ],
+      hallazgo: {
+        id: 'h4', label: 'Cronicidad confirmada',
+        descripcion: 'El patrón de remodelación ósea confirma supervivencia prolongada (meses-años) con la infección activa. Carga adaptativa sobre el esqueleto significativa.',
+        severidad: 'info', zona: null, zbadge: null
+      }
+    }
+  ],
+  diagnosticos: [
+    { id: 'd1', nombre: 'Osteomielitis crónica',  cat: 'infecciosa',  initial: 'poco-probable' },
+    { id: 'd2', nombre: 'Fractura traumática',    cat: 'traumática',  initial: 'poco-probable' },
+    { id: 'd3', nombre: 'Periostitis',             cat: 'infecciosa',  initial: 'poco-probable' },
+    { id: 'd4', nombre: 'Tuberculosis ósea',       cat: 'infecciosa',  initial: 'poco-probable' },
+    { id: 'd5', nombre: 'Sífilis ósea',            cat: 'infecciosa',  initial: 'poco-probable' },
+    { id: 'd6', nombre: 'Tumor óseo primario',     cat: 'neoplásica',  initial: 'poco-probable' }
+  ],
+  diagUpdates: {
+    h1: { d2: 'compatible' },
+    h2: { d1: 'compatible', d3: 'compatible', d6: 'descartado' },
+    h3: {},
+    h4: { d1: 'principal', d4: 'descartado', d5: 'descartado' }
+  },
+  final: {
+    titulo: 'Osteomielitis crónica post-traumática',
+    texto: 'Secuencia patológica: fractura tibial (traumatismo) → mala consolidación → sobreinfección bacteriana → osteomielitis crónica con cloaca de drenaje y reacción perióstica florida. El individuo sobrevivió meses o años con esta condición debilitante.',
+    refs: ['Ortner (2003)', 'Roberts & Manchester (2005)']
+  }
+};
+
+/* ══════════════════════════════════════════════════════════════
+   ESTADO
+══════════════════════════════════════════════════════════════ */
+const S = {
+  viewIdx:   0,
+  scanning:  false,
+  activeTab: 'inspeccion',
+  currentQ:  0,
+  findings:  [],
+  diagStates:{},
+  complete:  false
+};
+const VIEWS = [
+  { label: 'ANTERIOR',  svgLbl: 'TIBIA D. — ANTERIOR'  },
+  { label: 'LATERAL',   svgLbl: 'TIBIA D. — LATERAL'   },
+  { label: 'POSTERIOR', svgLbl: 'TIBIA D. — POSTERIOR' }
+];
+CASO.diagnosticos.forEach(d => { S.diagStates[d.id] = d.initial; });
+
+/* ══════════════════════════════════════════════════════════════
+   RENDER
+══════════════════════════════════════════════════════════════ */
+function render() {
+  updateProgress();
+  updateZones();
+  renderTab(S.activeTab);
+  updateEvidBadge();
+}
+
+function updateProgress() {
+  const pct = (S.findings.length / CASO.preguntas.length) * 100;
+  document.getElementById('prog-fill').style.width = pct + '%';
+  if (S.complete) {
+    const el = document.getElementById('sim-status');
+    el.textContent = 'RESUELTO';
+    el.className = 'sim-status sim-status--done';
+  }
+}
+
+function updateZones() {
+  S.findings.forEach(f => {
+    if (f.zona) {
+      const z = document.getElementById(f.zona);
+      if (z) z.style.opacity = '1';
+    }
+    if (f.zbadge) {
+      const b = document.getElementById(f.zbadge);
+      if (b) b.classList.add('vis');
+    }
+  });
+}
+
+function updateEvidBadge() {
+  const b = document.getElementById('badge-ev');
+  if (S.findings.length > 0) {
+    b.textContent = S.findings.length;
+    b.classList.add('show');
+  }
+}
+
+/* ── INSPECCIÓN ── */
+function renderInspeccion() {
+  let html = `
+    <p class="diary-hdr">Diario del Caso</p>
+    <p class="diary-intro">
+      Ha llegado al laboratorio un elemento óseo procedente de la excavación del
+      <strong>Sector B-4</strong> del yacimiento medieval.
+      El espécimen corresponde a una <strong>tibia derecha</strong> con evidencias
+      macroscópicas de alteraciones patológicas. Procede a su examen sistemático.
+    </p>
+  `;
+  CASO.preguntas.forEach((q, i) => {
+    const answered = S.findings.some(f => f.id === q.hallazgo.id);
+    const active   = i === S.currentQ;
+    const locked   = i > S.currentQ;
+    let cls = 'q-card' + (locked ? ' locked' : '') + (answered ? ' answered' : '');
+    let body = `<div class="q-text">${q.texto}</div><div class="q-hint">💡 ${q.pista}</div>`;
+    if (answered) {
+      const ans = q.opciones.find(o => o.correcto);
+      body += `<div class="ans-opts"><div class="ans-opt correct">✓ ${ans.label}</div></div>
+               <div class="fb-box fb-box--ok">${ans.feedback}</div>
+               <div class="finding-unlocked">▶ HALLAZGO REGISTRADO: ${q.hallazgo.label}</div>`;
+    } else if (!locked) {
+      body += `<div class="ans-opts" id="opts-${q.id}">`;
+      q.opciones.forEach((o, oi) => {
+        body += `<button class="ans-opt" onclick="selectAnswer('${q.id}',${oi})">${o.label}</button>`;
+      });
+      body += `</div><div id="fb-${q.id}"></div>`;
+    } else {
+      body += `<div class="ans-opts"><div class="ans-opt" style="opacity:.38;pointer-events:none">[Completa la observación anterior para desbloquear]</div></div>`;
+    }
+    html += `
+      <div class="${cls}">
+        <div class="q-num">OBS. ${String(i+1).padStart(2,'0')}
+          ${answered ? '<span class="q-ico">✓</span>' : locked ? '<span class="q-ico" style="opacity:.35">🔒</span>' : ''}
+        </div>
+        <div class="q-body">${body}</div>
+      </div>`;
+  });
+  return html;
+}
+
+/* ── EVIDENCIAS ── */
+function renderEvidencias() {
+  if (!S.findings.length) return `
+    <div class="ev-empty">
+      <svg width="44" height="44" viewBox="0 0 24 24" fill="currentColor"><path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/></svg>
+      Sin evidencias registradas.<br>Completa las observaciones en <em>Inspección</em>.
+    </div>`;
+  const SEV = { critica:'CRÍTICO', alta:'ALTO', media:'MODERADO', info:'INFO' };
+  return S.findings.map(f => `
+    <div class="ev-card">
+      <div class="ev-card__hdr">
+        <span>▶ ${f.label}</span>
+        <span class="sev-badge sev--${f.severidad}">${SEV[f.severidad]||f.severidad.toUpperCase()}</span>
+      </div>
+      <div class="ev-card__body">${f.descripcion}</div>
+    </div>`).join('');
+}
+
+/* ── DIAGNÓSTICO DIFERENCIAL ── */
+function renderDiagnostico() {
+  const comp  = CASO.diagnosticos.filter(d => ['compatible','principal'].includes(S.diagStates[d.id]));
+  const poco  = CASO.diagnosticos.filter(d => S.diagStates[d.id] === 'poco-probable');
+  const desc  = CASO.diagnosticos.filter(d => S.diagStates[d.id] === 'descartado');
+  const mkCard = d => {
+    const st = S.diagStates[d.id];
+    return `<div class="diag-card dc--${st === 'principal' ? 'principal' : st}">
+      <span class="dc-cat">${d.cat}</span>${d.nombre}${st === 'principal' ? ' ★★★' : ''}
+    </div>`;
+  };
+  const mkCol = (cls, lbl, items) => `
+    <div class="diag-col dcol--${cls}">
+      <div class="diag-col__hdr">${lbl}</div>
+      <div class="diag-col__body">${items.length ? items.map(mkCard).join('') : '<div class="diag-empty">—</div>'}</div>
+    </div>`;
+  let html = '';
+  if (!S.complete) html += `<p class="diag-note">${S.findings.length} / ${CASO.preguntas.length} observaciones completadas. El tablero se actualiza con cada hallazgo.</p>`;
+  html += `<div class="diag-board">
+    ${mkCol('compatible','COMPATIBLES',comp)}
+    ${mkCol('poco','POCO PROBABLES',poco)}
+    ${mkCol('descartado','DESCARTADOS',desc)}`;
+  if (S.complete) {
+    html += `<div class="final-box">
+      <div class="final-box__lbl">▶ DIAGNÓSTICO FINAL CONFIRMADO</div>
+      <div class="final-box__tit">${CASO.final.titulo}</div>
+      <div class="final-box__txt">${CASO.final.texto}</div>
+      <div class="final-box__refs">Refs: ${CASO.final.refs.join(' · ')}</div>
+    </div>`;
+  }
+  html += `</div>`;
+  return html;
+}
+
+function renderTab(tab) {
+  const el = document.getElementById('nb-content');
+  if (tab === 'inspeccion')  el.innerHTML = renderInspeccion();
+  if (tab === 'evidencias')  el.innerHTML = renderEvidencias();
+  if (tab === 'diagnostico') el.innerHTML = renderDiagnostico();
+}
+
+/* ══════════════════════════════════════════════════════════════
+   ACCIONES
+══════════════════════════════════════════════════════════════ */
+function switchTab(tab) {
+  S.activeTab = tab;
+  document.querySelectorAll('.nb-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
+  renderTab(tab);
+}
+
+function selectAnswer(qId, optIdx) {
+  const q = CASO.preguntas.find(p => p.id === qId);
+  if (!q) return;
+  const opt = q.opciones[optIdx];
+  const opts = document.querySelectorAll(`#opts-${qId} .ans-opt`);
+  const fbEl = document.getElementById(`fb-${qId}`);
+  opts.forEach(o => o.disabled = true);
+  if (opt.correcto) {
+    opts[optIdx].classList.add('correct');
+    fbEl.innerHTML = `<div class="fb-box fb-box--ok">${opt.feedback}</div>
+      <div class="finding-unlocked">▶ HALLAZGO REGISTRADO: ${q.hallazgo.label}</div>`;
+    setTimeout(() => confirmFinding(q), 650);
+  } else {
+    opts[optIdx].classList.add('wrong');
+    fbEl.innerHTML = `<div class="fb-box fb-box--no">${opt.feedback}</div>`;
+    setTimeout(() => {
+      opts.forEach(o => { o.disabled = false; o.classList.remove('wrong'); });
+      fbEl.innerHTML = '';
+    }, 1900);
+  }
+}
+
+function confirmFinding(q) {
+  S.findings.push(q.hallazgo);
+  S.currentQ = Math.min(S.currentQ + 1, CASO.preguntas.length - 1);
+  const updates = CASO.diagUpdates[q.hallazgo.id] || {};
+  Object.entries(updates).forEach(([id, st]) => { S.diagStates[id] = st; });
+  if (S.findings.length === CASO.preguntas.length) S.complete = true;
+  // glitch effect on bone
+  const svg = document.getElementById('bone-svg');
+  svg.classList.add('glitch');
+  setTimeout(() => svg.classList.remove('glitch'), 900);
+  render();
+}
+
+/* ── GIRAR ── */
+function rotateView() {
+  const wrap = document.getElementById('viewer-wrap');
+  wrap.classList.add('flip');
+  setTimeout(() => {
+    S.viewIdx = (S.viewIdx + 1) % VIEWS.length;
+    const v = VIEWS[S.viewIdx];
+    document.getElementById('view-mode-lbl').textContent = 'VISTA: ' + v.label;
+    document.getElementById('view-ctr-lbl').textContent = 'VISTA ' + (S.viewIdx + 1) + '/3';
+    document.getElementById('svg-view-lbl').textContent = v.svgLbl;
+  }, 210);
+  setTimeout(() => wrap.classList.remove('flip'), 430);
+}
+
+/* ── ESCANEAR ── */
+function runScan() {
+  if (S.scanning) return;
+  S.scanning = true;
+  const btn = document.getElementById('btn-scan');
+  btn.disabled = true;
+  btn.textContent = '⬡ ESCANEANDO...';
+  const sl = document.getElementById('scan-line');
+  sl.classList.add('run');
+  // flash the next unanswered zone
+  const nq = CASO.preguntas[S.currentQ];
+  if (nq && nq.hallazgo.zona) {
+    const delay = 550 + S.currentQ * 150;
+    setTimeout(() => {
+      const zone = document.getElementById(nq.hallazgo.zona);
+      if (!zone) return;
+      const already = S.findings.some(f => f.id === nq.hallazgo.id);
+      if (!already) {
+        zone.style.opacity = '0.45';
+        zone.style.filter = 'drop-shadow(0 0 5px rgba(0,229,200,.9))';
+        setTimeout(() => {
+          if (!S.findings.some(f => f.id === nq.hallazgo.id)) {
+            zone.style.opacity = '0';
+            zone.style.filter = 'none';
+          }
+        }, 500);
+      }
+    }, delay);
+  }
+  setTimeout(() => {
+    sl.classList.remove('run');
+    S.scanning = false;
+    btn.disabled = false;
+    btn.textContent = '⬡ ESCANEAR';
+    updateZones();
+  }, 1800);
+}
+
+/* ══ INIT ══ */
+render();
+</script>
+</body>
+</html>

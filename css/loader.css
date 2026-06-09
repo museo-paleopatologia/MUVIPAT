@@ -1,0 +1,93 @@
+/* ══════════════════════════════════════════════════
+   MODEL-VIEWER · Overlay de carga
+   Se inyecta automáticamente por loader.js en cada
+   elemento <model-viewer> de la página.
+══════════════════════════════════════════════════ */
+
+.mv-loader {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  background: #0d0d0d;
+  transition: opacity 0.5s ease;
+}
+
+.mv-loader.is-done {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ── Spinner ────────────────────────────────────── */
+.mv-loader__spinner {
+  position: relative;
+  width: 54px;
+  height: 54px;
+}
+
+.mv-loader__ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 229, 255, 0.1);
+  border-top-color: #00e5ff;
+  animation: mv-spin 1.1s linear infinite;
+}
+
+.mv-loader__ring--slow {
+  inset: -9px;
+  border-width: 1.5px;
+  border-top-color: rgba(0, 229, 255, 0.3);
+  animation-duration: 1.9s;
+  animation-direction: reverse;
+}
+
+@keyframes mv-spin {
+  to { transform: rotate(360deg); }
+}
+
+.mv-loader__glyph {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  animation: mv-breathe 2.2s ease-in-out infinite;
+}
+
+@keyframes mv-breathe {
+  0%, 100% { opacity: 0.28; transform: scale(0.88); }
+  50%       { opacity: 0.85; transform: scale(1.06); }
+}
+
+/* ── Barra de progreso ──────────────────────────── */
+.mv-loader__progress {
+  width: 100px;
+  height: 1.5px;
+  background: rgba(0, 229, 255, 0.1);
+  border-radius: 1px;
+  overflow: hidden;
+}
+
+.mv-loader__fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, rgba(0, 229, 255, 0.4), #00e5ff);
+  border-radius: 1px;
+  transition: width 0.3s ease;
+}
+
+/* ── Etiqueta ───────────────────────────────────── */
+.mv-loader__text {
+  font-family: 'Lexend', 'Montserrat', sans-serif;
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(0, 229, 255, 0.38);
+}

@@ -1,0 +1,1588 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="./js/access-guard.js"></script>
+  <link rel="icon" type="image/png" href="./assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="./assets/img/favicon.png">
+  <meta name="description" content="Ficha estándar de pieza paleopatológica — PaleoMuseo LAV·UAM" />
+  <title>Ficha Estándar · PaleoMuseo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lexend:wght@300;400;500;600;700;800&family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  <link rel="stylesheet" href="./css/style.css" />
+
+  <link rel="stylesheet" href="./css/loader.css" />
+
+  <style>
+    :root {
+      --fe-bg:     #f4f1ea;
+      --fe-ink:    #0d0d0d;
+      --fe-mid:    #6b5a43;
+      --fe-bone:   #e8dfc8;
+      --fe-border: 3px solid #0d0d0d;
+      --fe-shadow: 4px 4px 0 #0d0d0d;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    body { background: var(--fe-bg); }
+
+    .fe-nav-bar { background:var(--fe-bg); border-top:1.5px solid var(--fe-bone); border-bottom:1.5px solid var(--fe-bone); padding:.65rem 0; }
+    .fe-nav-bar__inner { width:min(1200px,96vw); margin-inline:auto; padding-inline:clamp(1rem,3vw,2rem); display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; }
+    .fe-nav-bar__back { display:inline-flex; align-items:center; gap:.5rem; font-family:var(--font-head); font-size:.65rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--fe-mid); text-decoration:none; transition:color .15s,gap .15s; }
+    .fe-nav-bar__back:hover { color:var(--fe-ink); gap:.7rem; }
+    .fe-nav-bar__actions { display:flex; align-items:center; gap:.5rem; flex-wrap:wrap; }
+    .fe-nav-btn { display:inline-flex; align-items:center; gap:.4rem; font-family:var(--font-head); font-size:.6rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; padding:.4em .9em; border:2px solid; border-radius:2px; cursor:pointer; text-decoration:none; transition:transform .12s,box-shadow .12s,background .15s; box-shadow:2px 2px 0; white-space:nowrap; }
+    .fe-nav-btn:hover { transform:translate(-2px,-2px); }
+    .fe-nav-btn--region { background:rgba(0,180,200,.06); border-color:#0097a7; color:#0097a7; box-shadow:2px 2px 0 #0097a7; }
+    .fe-nav-btn--region:hover { background:rgba(0,180,200,.14); box-shadow:4px 4px 0 #0097a7; }
+    .fe-nav-btn--buscar { background:rgba(192,0,60,.06); border-color:var(--crimson); color:var(--crimson); box-shadow:2px 2px 0 var(--crimson); }
+    .fe-nav-btn--buscar:hover { background:rgba(192,0,60,.14); box-shadow:4px 4px 0 var(--crimson); }
+
+    .fe-main {
+      width: min(1000px, 96vw);
+      margin-inline: auto;
+      padding-inline: clamp(1rem, 3vw, 2rem);
+      padding-top: calc(clamp(1.5rem,3vw,2.5rem) + clamp(56px,7vw,70px));
+      padding-bottom: clamp(2rem,4vw,4rem);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      align-items: start;
+    }
+
+    .fe-gallery { border:var(--fe-border); border-radius:4px; overflow:hidden; background:#111; box-shadow:var(--fe-shadow); margin-bottom:1.5rem; position:relative; }
+    .fe-gallery__viewport { width:100%; aspect-ratio:3/2; overflow:hidden; position:relative; background:#111; }
+    .fe-gallery__track { display:flex; width:100%; height:100%; }
+    .fe-gallery__slide { flex:0 0 100%; width:100%; height:100%; overflow:hidden; cursor:zoom-in; }
+    .fe-gallery__slide img { width:100%; height:100%; object-fit:contain; object-position:center; display:block; background:#111; transition:transform .2s; }
+    .fe-gallery__slide:hover img { transform:scale(1.015); }
+    .fe-img-badge { position:absolute; top:.75rem; left:.75rem; z-index:2; background:var(--fe-ink); color:var(--ivory); font-family:var(--font-head); font-size:.58rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; padding:.22em .65em; border-radius:2px; pointer-events:none; }
+    .fe-img-placeholder { width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.75rem; opacity:.3; }
+    .fe-img-placeholder span { font-family:var(--font-head); font-size:.62rem; font-weight:700; letter-spacing:.15em; text-transform:uppercase; color:var(--fe-mid); }
+    .fe-gallery__controls { display:flex; align-items:center; justify-content:space-between; background:var(--fe-ink); padding:.45rem .75rem; min-height:38px; }
+    .fe-gallery__arrow { width:28px; height:28px; border-radius:2px; background:rgba(255,255,255,.1); color:var(--ivory); border:1.5px solid rgba(255,255,255,.2); font-size:.9rem; font-weight:700; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:background .15s,opacity .15s; user-select:none; }
+    .fe-gallery__arrow:hover { background:rgba(255,255,255,.22); }
+    .fe-gallery__arrow:disabled { opacity:.22; pointer-events:none; }
+    .fe-gallery__counter { font-family:var(--font-head); font-size:.6rem; font-weight:700; letter-spacing:.12em; color:rgba(255,255,255,.55); }
+    .fe-gallery__counter strong { color:#fff; }
+    .fe-gallery__caption { padding:.6rem .9rem; background:rgba(255,255,255,.6); border-top:1px solid var(--fe-bone); font-family:var(--font-ui); font-size:.72rem; line-height:1.55; color:var(--fe-mid); font-style:italic; }
+
+    .fe-lightbox { position:fixed; inset:0; z-index:9999; background:rgba(13,13,13,.93); backdrop-filter:blur(6px); display:none; align-items:center; justify-content:center; padding:1.5rem; }
+    .fe-lightbox.is-open { display:flex; }
+    .fe-lightbox__inner { position:relative; max-width:min(92vw,1100px); width:100%; display:flex; flex-direction:column; gap:.75rem; }
+    .fe-lightbox__img { width:100%; max-height:80vh; object-fit:contain; border-radius:2px; border:2px solid rgba(255,255,255,.12); }
+    .fe-lightbox__caption { font-family:var(--font-ui); font-size:.78rem; line-height:1.6; color:rgba(255,255,255,.7); font-style:italic; text-align:center; }
+    .fe-lightbox__close { position:absolute; top:-.6rem; right:-.6rem; width:34px; height:34px; border-radius:50%; background:var(--crimson); color:#fff; border:none; font-size:1rem; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:2; }
+
+    .fe-viewer-wrap { border:var(--fe-border); border-radius:4px; overflow:hidden; background:var(--fe-ink); box-shadow:var(--fe-shadow); margin-bottom:1.5rem; position:relative; }
+    .fe-viewer-label { position:absolute; top:.75rem; right:.75rem; background:rgba(0,229,255,.15); border:1.5px solid var(--cyan); color:var(--cyan); font-family:var(--font-head); font-size:.55rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; padding:.2em .6em; border-radius:2px; z-index:2; pointer-events:none; }
+    model-viewer { width:100%; height:300px; background:transparent; --progress-bar-color:transparent; }
+
+    .fe-tags { display:flex; flex-wrap:wrap; gap:.45rem; margin-bottom:2rem; }
+    .fe-tag { font-family:var(--font-head); font-size:.6rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; padding:.28em .7em; border:2px solid; border-radius:2px; }
+    .fe-tag--region   { border-color:var(--cyan);    color:var(--cyan);    background:rgba(0,229,255,.06); }
+    .fe-tag--patol    { border-color:var(--crimson);  color:var(--crimson); background:rgba(192,0,60,.06); }
+    .fe-tag--sexo     { border-color:var(--pink);     color:var(--pink);    background:rgba(255,64,129,.06); }
+    .fe-tag--epoca    { border-color:var(--bone-400); color:var(--bone-500);background:rgba(200,170,120,.08); }
+    .fe-tag--master   { border-color:var(--sulfur);   color:#6a7300;        background:rgba(212,230,10,.1); }
+
+    .fe-header { margin-bottom:1.75rem; padding-bottom:1.5rem; border-bottom:var(--fe-border); }
+    .fe-header__id { font-family:var(--font-head); font-size:.65rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--crimson); margin-bottom:.4rem; }
+    .fe-header__title { font-family:var(--font-head); font-size:clamp(1.6rem,3vw,2.4rem); font-weight:900; letter-spacing:-.04em; line-height:1.05; color:var(--fe-ink); margin-bottom:.75rem; }
+    .fe-header__subtitle { font-family:var(--font-display); font-style:italic; font-size:clamp(.9rem,1.4vw,1.05rem); color:var(--fe-mid); font-weight:400; }
+
+    .fe-section { margin-bottom:2rem; }
+    .fe-section__title { font-family:var(--font-head); font-size:.6rem; font-weight:800; letter-spacing:.2em; text-transform:uppercase; color:var(--fe-mid); margin-bottom:.85rem; padding-bottom:.4rem; border-bottom:1.5px solid var(--fe-bone); display:flex; align-items:center; gap:.5rem; }
+    .fe-section__title::before { content:''; display:block; width:16px; height:2px; background:var(--crimson); flex-shrink:0; }
+
+    .fe-data-grid { display:grid; grid-template-columns:1fr 1fr; gap:.6rem; }
+    .fe-data-item { background:#fff; border:2px solid var(--fe-ink); border-radius:2px; padding:.65rem .85rem; box-shadow:2px 2px 0 var(--fe-ink); }
+    .fe-data-item--full { grid-column:span 2; }
+    .fe-data-item__label { font-family:var(--font-head); font-size:.55rem; font-weight:700; letter-spacing:.15em; text-transform:uppercase; color:var(--fe-mid); margin-bottom:.25rem; }
+    .fe-data-item__value { font-family:var(--font-head); font-size:.85rem; font-weight:700; color:var(--fe-ink); line-height:1.3; }
+
+    .fe-desc-block { display:flex; flex-direction:column; gap:.9rem; }
+    .fe-desc { font-size:clamp(.85rem,1.3vw,.95rem); line-height:1.8; color:#3d3d3d; font-weight:300; }
+    .fe-desc strong { color:var(--fe-ink); font-weight:700; }
+
+    .fe-diag-summary { padding:.9rem 1.1rem; background:#fff; border-left:4px solid var(--crimson); border-radius:0 2px 2px 0; font-size:.88rem; line-height:1.65; color:#3d3d3d; font-weight:300; box-shadow:2px 2px 0 var(--fe-bone); margin-bottom:1rem; }
+
+    .fe-accordion { display:flex; flex-direction:column; gap:.45rem; }
+    .fe-accordion__item { border:2px solid var(--fe-bone); border-radius:2px; overflow:hidden; background:#fff; transition:border-color .2s; }
+    .fe-accordion__item.is-open { border-color:var(--fe-ink); }
+    .fe-accordion__trigger { width:100%; display:flex; align-items:center; justify-content:space-between; padding:.75rem 1rem; background:none; border:none; cursor:pointer; font-family:var(--font-head); font-size:.75rem; font-weight:700; letter-spacing:.04em; color:var(--fe-ink); text-align:left; transition:background .2s,color .2s; }
+    .fe-accordion__trigger:hover { background:var(--fe-bg); }
+    .fe-accordion__item.is-open .fe-accordion__trigger { background:var(--fe-ink); color:var(--ivory); }
+    .fe-accordion__chevron { width:18px; height:18px; flex-shrink:0; transition:transform .3s cubic-bezier(.4,0,.2,1); display:flex; align-items:center; justify-content:center; }
+    .fe-accordion__item.is-open .fe-accordion__chevron { transform:rotate(180deg); }
+
+    .fe-accordion__body {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows .32s cubic-bezier(.4,0,.2,1);
+      overflow: hidden;
+    }
+    .fe-accordion__body-inner {
+      min-height: 0; overflow: hidden;
+      padding: 0 1rem;
+      border-top: 0px solid var(--fe-bone);
+      transition: padding .32s cubic-bezier(.4,0,.2,1), border-top-color .1s;
+    }
+    .fe-accordion__item.is-open .fe-accordion__body { grid-template-rows: 1fr; }
+    .fe-accordion__item.is-open .fe-accordion__body-inner {
+      padding: .75rem 1rem 1rem;
+      border-top: 1.5px solid var(--fe-bone);
+    }
+
+    .fe-hallazgo-list { display:flex; flex-direction:column; gap:.5rem; margin:0; padding:0; list-style:none; }
+    .fe-hallazgo-item {
+      display:flex; align-items:flex-start; gap:.65rem;
+      padding:.6rem .8rem; background:var(--fe-bg);
+      border-radius:2px; border:1.5px solid var(--fe-bone);
+      opacity:0; transform:translateY(6px);
+      transition:opacity .2s ease, transform .2s ease;
+    }
+    .fe-accordion__item.is-open .fe-hallazgo-item { opacity:1; transform:translateY(0); }
+    .fe-accordion__item.is-open .fe-hallazgo-item:nth-child(1) { transition-delay:.08s; }
+    .fe-accordion__item.is-open .fe-hallazgo-item:nth-child(2) { transition-delay:.13s; }
+    .fe-accordion__item.is-open .fe-hallazgo-item:nth-child(3) { transition-delay:.18s; }
+    .fe-accordion__item.is-open .fe-hallazgo-item:nth-child(4) { transition-delay:.23s; }
+    .fe-accordion__item.is-open .fe-hallazgo-item:nth-child(5) { transition-delay:.28s; }
+
+    .fe-hallazgo-item__dot { width:7px; height:7px; border-radius:50%; background:var(--crimson); flex-shrink:0; margin-top:.38rem; }
+    .fe-hallazgo-item__text { font-size:.82rem; color:#3d3d3d; line-height:1.6; font-weight:300; flex:1; }
+    .fe-ref-link { font-family:var(--font-head); font-size:.62rem; font-weight:700; color:var(--crimson); text-decoration:none; vertical-align:super; line-height:0; margin-left:.08em; transition:color .12s; }
+    .fe-ref-link:hover { color:var(--fe-ink); }
+
+    .fe-bib-list { display:flex; flex-direction:column; gap:.5rem; }
+    .fe-bib-item { font-size:.78rem; color:#3d3d3d; line-height:1.65; padding:.7rem .85rem .7rem 1rem; background:#fff; border-left:3px solid var(--blue); font-weight:300; scroll-margin-top:100px; transition:background .2s,border-color .2s; }
+    .fe-bib-item.fe-ref-highlight { border-left-color:var(--crimson); animation:fe-ref-pulse 1.6s ease-out forwards; }
+    @keyframes fe-ref-pulse { 0%{background:rgba(192,0,60,.18);} 50%{background:rgba(192,0,60,.08);} 100%{background:#fff;} }
+    .fe-bib-item__num { font-family:var(--font-head); font-size:.65rem; font-weight:800; color:var(--crimson); margin-right:.4rem; }
+    .fe-bib-item em { font-style:italic; }
+    .fe-bib-item strong { color:var(--fe-ink); font-weight:700; }
+    .fe-bib-item a { color:var(--blue); font-weight:600; font-family:var(--font-head); font-size:.68rem; letter-spacing:.06em; text-transform:uppercase; text-decoration:none; display:inline-flex; align-items:center; gap:.25rem; margin-top:.3rem; }
+    .fe-bib-item a:hover { color:var(--crimson); }
+
+    .fe-master-link { display:flex; align-items:center; justify-content:space-between; padding:1.1rem 1.3rem; background:var(--fe-ink); border:var(--fe-border); border-radius:4px; box-shadow:var(--fe-shadow); text-decoration:none; color:var(--ivory); margin-top:1.5rem; transition:transform .15s,box-shadow .15s; }
+    .fe-master-link:hover { transform:translate(-3px,-3px); box-shadow:7px 7px 0 var(--fe-ink); }
+    .fe-master-link__eyebrow { font-family:var(--font-head); font-size:.58rem; font-weight:700; letter-spacing:.15em; text-transform:uppercase; color:var(--sulfur); margin-bottom:.25rem; }
+    .fe-master-link__title { font-family:var(--font-head); font-size:.92rem; font-weight:800; }
+    .fe-master-link__arrow { font-size:1.3rem; color:var(--sulfur); flex-shrink:0; transition:transform .2s; }
+    .fe-master-link:hover .fe-master-link__arrow { transform:translateX(5px); }
+
+    .glos-link { color:var(--blue); text-decoration:underline dotted; text-underline-offset:3px; font-weight:600; transition:color .15s; }
+    .glos-link:hover { color:var(--crimson); }
+
+    .fe-relevancia-callout {
+      padding: 1rem 1.25rem;
+      background: rgba(0,229,255,.04);
+      border: 1.5px solid rgba(0,229,255,.25);
+      border-left: 4px solid var(--cyan);
+      border-radius: 0 2px 2px 0;
+      font-size: .88rem;
+      line-height: 1.7;
+      color: #3d3d3d;
+      font-weight: 300;
+      box-shadow: 2px 2px 0 rgba(0,180,200,.08);
+    }
+    .fe-relevancia-callout__label {
+      font-family: var(--font-head);
+      font-size: .54rem;
+      font-weight: 800;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: #0097a7;
+      margin-bottom: .55rem;
+    }
+
+    .fe-gallery-hero,
+    .fe-gallery-hero__media,
+    .fe-gallery-hero__info {
+      display: contents;
+    }
+
+    @media (max-width: 700px) {
+      .fe-main { grid-template-columns: 1fr; }
+      .fe-main--tall {
+        grid-template-columns: 1fr !important;
+      }
+      .fe-main--tall .fe-viewer-wrap {
+        grid-column: auto; grid-row: auto;
+        position: static;
+      }
+      .fe-main--tall model-viewer {
+        height: 55vw !important;
+        min-height: 220px !important;
+        max-height: 380px !important;
+      }
+      .fe-main--tall .fe-gallery,
+      .fe-main--tall .fe-tags,
+      .fe-main--tall .fe-header,
+      .fe-main--tall .fe-section,
+      .fe-main--tall .fe-master-link { grid-column: auto; }
+      .fe-main--gallery .fe-gallery-hero {
+        grid-template-columns: 1fr !important;
+        gap: 1rem;
+      }
+    }
+    @media (max-width: 500px) {
+      .fe-data-grid { grid-template-columns:1fr; }
+      .fe-data-item--full { grid-column:auto; }
+    }
+
+    .fe-main--tall {
+      display: grid !important;
+      width: min(1300px, 96vw) !important;
+      grid-template-columns: 260px 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+    .fe-main--tall .fe-viewer-wrap {
+      grid-column: 1; grid-row: 1 / 8;
+      display: flex !important; flex-direction: column;
+      position: sticky;
+      top: calc(clamp(56px, 7vw, 70px) + 1rem);
+      margin-bottom: 0;
+    }
+    .fe-main--tall model-viewer {
+      width: 100% !important; height: 70vh !important;
+      min-height: 500px !important;
+      --min-field-of-view: 10deg; --max-field-of-view: 35deg;
+    }
+    .fe-main--tall .fe-gallery     { grid-column: 2; }
+    .fe-main--tall .fe-tags        { grid-column: 2; }
+    .fe-main--tall .fe-header      { grid-column: 2; }
+    .fe-main--tall .fe-section     { grid-column: 2; }
+    .fe-main--tall .fe-master-link { grid-column: 2; }
+
+    .fe-main--gallery {
+      display: block !important;
+      width: min(1200px, 96vw) !important;
+    }
+    .fe-main--gallery .fe-viewer-wrap {
+      display: flex !important;
+      margin-bottom: 1.5rem;
+    }
+    .fe-main--gallery model-viewer {
+      aspect-ratio: 3 / 2; height: auto !important;
+      min-height: 300px; max-height: 520px; width: 100%;
+    }
+    .fe-main--gallery .fe-gallery-hero {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(1.5rem, 3vw, 2.5rem);
+      align-items: start;
+      margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+    }
+    .fe-main--gallery .fe-gallery-hero__media,
+    .fe-main--gallery .fe-gallery-hero__info {
+      display: block !important;
+      min-width: 0;
+    }
+    .fe-main--gallery .fe-gallery-hero--no-media {
+      grid-template-columns: 1fr;
+    }
+    .fe-main--gallery .fe-gallery-hero--no-media .fe-gallery-hero__media {
+      display: none !important;
+    }
+
+    .fe-main:not(.fe-main--tall):not(.fe-main--gallery) .fe-tags        { grid-column: 1 / -1; }
+    .fe-main:not(.fe-main--tall):not(.fe-main--gallery) .fe-header      { grid-column: 1 / -1; }
+    .fe-main:not(.fe-main--tall):not(.fe-main--gallery) .fe-section     { grid-column: 1 / -1; }
+    .fe-main:not(.fe-main--tall):not(.fe-main--gallery) .fe-master-link { grid-column: 1 / -1; }
+
+    .fe-viewer-credit {
+      display: block; padding: .35rem .75rem;
+      font-family: var(--font-head); font-size: .52rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: rgba(0,229,255,.45); background: var(--fe-ink);
+      border-top: 1px solid rgba(0,229,255,.12);
+    }
+    .fe-viewer-credit a { color: rgba(0,229,255,.6); text-decoration: none; }
+    .fe-viewer-credit a:hover { color: var(--cyan); }
+
+    .fe-viewer-placeholder {
+      width: 100%; min-height: 220px;
+      display: flex; align-items: center; justify-content: center;
+      background: #111; padding: 2.5rem 1.5rem;
+    }
+    .fe-viewer-placeholder__inner {
+      display: flex; flex-direction: column;
+      align-items: center; gap: .75rem; text-align: center;
+    }
+    .fe-viewer-placeholder__title {
+      font-family: var(--font-head); font-size: .62rem; font-weight: 700;
+      letter-spacing: .18em; text-transform: uppercase;
+      color: rgba(0,229,255,.5); margin: 0;
+    }
+    .fe-viewer-placeholder__desc {
+      font-size: .72rem; color: rgba(255,255,255,.28);
+      max-width: 28ch; line-height: 1.65; font-weight: 300; margin: 0;
+    }
+
+    /* ═══════════════════════════════════════════════════
+       LAYOUT: COMPARISON
+       Dos visores 3D en paralelo para comparación bilateral
+    ═══════════════════════════════════════════════════ */
+    .fe-main--comparison {
+      display: block !important;
+      width: min(1400px, 96vw) !important;
+    }
+    .fe-main--comparison .fe-viewer-wrap { display: none !important; }
+
+    .fe-comp-panel {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: .75rem;
+    }
+    .fe-comp-viewer {
+      border: var(--fe-border);
+      border-radius: 4px;
+      background: var(--fe-ink);
+      box-shadow: var(--fe-shadow);
+      overflow: hidden;
+      position: relative;
+    }
+    .fe-comp-viewer__header {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .5rem .75rem;
+      background: rgba(0, 0, 0, .3);
+      border-bottom: 1.5px solid rgba(0, 229, 255, .15);
+      min-height: 38px;
+    }
+    .fe-comp-viewer__title {
+      font-family: var(--font-head);
+      font-size: .58rem;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, .75);
+      flex: 1;
+    }
+    .fe-comp-viewer__badge {
+      font-family: var(--font-head);
+      font-size: .52rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: .18em .55em;
+      border: 1.5px solid rgba(0, 229, 255, .5);
+      color: var(--cyan);
+      border-radius: 2px;
+    }
+    .fe-comp-viewer model-viewer {
+      width: 100% !important;
+      height: clamp(260px, 34vw, 460px) !important;
+      background: transparent;
+      --progress-bar-color: transparent;
+      display: block;
+    }
+
+    .fe-sync-row {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+      padding: .55rem .85rem;
+      background: rgba(0, 229, 255, .04);
+      border: 1.5px solid rgba(0, 229, 255, .15);
+      border-radius: 2px;
+    }
+    .fe-sync-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      font-family: var(--font-head);
+      font-size: .58rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: rgba(0, 229, 255, .75);
+      cursor: pointer;
+      user-select: none;
+    }
+    .fe-sync-toggle input[type="checkbox"] { accent-color: var(--cyan); cursor: pointer; }
+    .fe-sync-hint {
+      font-family: var(--font-head);
+      font-size: .55rem;
+      color: var(--fe-mid);
+      opacity: .65;
+    }
+
+    @media (max-width: 700px) {
+      .fe-comp-panel { grid-template-columns: 1fr; }
+      .fe-comp-viewer model-viewer { height: clamp(220px, 60vw, 360px) !important; }
+    }
+
+    /* ═══════════════════════════════════════════════════
+       LAYOUT: PROGRESSION
+       Tres visores con toggle pill y escala de severidad
+    ═══════════════════════════════════════════════════ */
+    .fe-main--progression {
+      display: block !important;
+      width: min(1400px, 96vw) !important;
+    }
+    .fe-main--progression .fe-viewer-wrap { display: none !important; }
+
+    .fe-prog-panel {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: .75rem;
+    }
+    .fe-prog-viewer {
+      border: var(--fe-border);
+      border-radius: 4px;
+      background: var(--fe-ink);
+      box-shadow: var(--fe-shadow);
+      overflow: hidden;
+      position: relative;
+    }
+    .fe-prog-viewer__header {
+      display: flex;
+      align-items: center;
+      gap: .45rem;
+      padding: .45rem .7rem;
+      background: rgba(0, 0, 0, .25);
+      border-bottom: 1.5px solid rgba(255, 255, 255, .07);
+      min-height: 36px;
+    }
+    .fe-prog-viewer__title {
+      font-family: var(--font-head);
+      font-size: .56rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, .6);
+      flex: 1;
+    }
+
+    /* Badges de severidad */
+    .fe-severity-badge {
+      font-family: var(--font-head);
+      font-size: .5rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: .16em .52em;
+      border-radius: 2px;
+      border: 1.5px solid;
+    }
+    .fe-severity-badge--leve     { color: #4ade80; border-color: rgba(74, 222, 128, .55); }
+    .fe-severity-badge--moderado { color: #fbbf24; border-color: rgba(251, 191, 36,  .55); }
+    .fe-severity-badge--severo   { color: #fb7185; border-color: rgba(251, 113, 133, .55); }
+
+    /* Toggle pill geometría / textura */
+    .fe-toggle-pill {
+      display: flex;
+      margin: .5rem .7rem;
+      border: 1.5px solid rgba(0, 229, 255, .22);
+      border-radius: 3px;
+      overflow: hidden;
+      background: rgba(0, 0, 0, .2);
+    }
+    .fe-toggle-pill__btn {
+      flex: 1;
+      padding: .3em .4em;
+      font-family: var(--font-head);
+      font-size: .5rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      border: none;
+      background: transparent;
+      color: rgba(255, 255, 255, .32);
+      cursor: pointer;
+      transition: background .17s, color .17s;
+      line-height: 1.3;
+    }
+    .fe-toggle-pill__btn.is-active {
+      background: var(--cyan);
+      color: #0d0d0d;
+    }
+    .fe-toggle-pill__btn:not(.is-active):hover {
+      background: rgba(0, 229, 255, .1);
+      color: var(--cyan);
+    }
+
+    .fe-prog-viewer model-viewer {
+      width: 100% !important;
+      height: clamp(190px, 24vw, 340px) !important;
+      background: transparent;
+      --progress-bar-color: transparent;
+      display: block;
+    }
+
+    /* Barra de severidad (escritorio) */
+    .fe-severity-scale {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      margin-bottom: 1.5rem;
+      border: var(--fe-border);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .fe-severity-scale__seg { height: 8px; }
+    .fe-severity-scale__seg--leve     { background: #4ade80; }
+    .fe-severity-scale__seg--moderado { background: #fbbf24; }
+    .fe-severity-scale__seg--severo   { background: #fb7185; }
+
+    /* Indicador de pasos (móvil) */
+    .fe-severity-steps {
+      display: none;
+      flex-direction: row;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    .fe-severity-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .3rem;
+      flex: 0 0 auto;
+    }
+    .fe-severity-step__connector {
+      flex: 1;
+      height: 2px;
+      background: var(--fe-bone);
+      align-self: center;
+      margin-bottom: 1rem;
+    }
+    .fe-severity-step__dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2px solid;
+    }
+    .fe-severity-step__label {
+      font-family: var(--font-head);
+      font-size: .5rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .fe-severity-step--leve     .fe-severity-step__dot   { border-color: #4ade80; background: rgba(74, 222, 128, .25); }
+    .fe-severity-step--moderado .fe-severity-step__dot   { border-color: #fbbf24; background: rgba(251, 191, 36,  .25); }
+    .fe-severity-step--severo   .fe-severity-step__dot   { border-color: #fb7185; background: rgba(251, 113, 133, .25); }
+    .fe-severity-step--leve     .fe-severity-step__label { color: #4ade80; }
+    .fe-severity-step--moderado .fe-severity-step__label { color: #fbbf24; }
+    .fe-severity-step--severo   .fe-severity-step__label { color: #fb7185; }
+
+    @media (max-width: 860px) {
+      .fe-prog-panel { grid-template-columns: 1fr 1fr; }
+      .fe-prog-viewer model-viewer { height: clamp(180px, 36vw, 300px) !important; }
+    }
+    @media (max-width: 600px) {
+      .fe-prog-panel { grid-template-columns: 1fr; }
+      .fe-prog-viewer model-viewer { height: clamp(220px, 55vw, 360px) !important; }
+      .fe-severity-scale { display: none; }
+      .fe-severity-steps { display: flex !important; }
+    }
+
+    /* ═══════════════════════════════════════════════════
+       PROGRESSION: propaga paleta de severidad
+       a los marcadores y bordes de los bloques de texto,
+       creando el hilo visual Visor → Escala → Texto.
+    ═══════════════════════════════════════════════════ */
+    .fe-main--progression .fe-section__title::before {
+      background: linear-gradient(to right, #4ade80, #fbbf24, #fb7185);
+    }
+    .fe-main--progression .fe-diag-summary {
+      border-left-color: #fbbf24;
+    }
+    .fe-main--progression .fe-bib-item {
+      border-left-color: rgba(74, 222, 128, .55);
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header" id="site-header">
+  <div class="container">
+    <nav class="nav" role="navigation" aria-label="Navegación principal">
+      <a href="./index.html" class="nav__logo" aria-label="PaleoMuseo — Inicio">
+        <img src="./assets/img/lav_uam.png" alt="LAV · UAM" class="nav__logo-img" />
+        <div>
+          <div>Paleo<strong>Museo</strong></div>
+          <div style="font-size:0.6em;font-weight:400;opacity:0.5;letter-spacing:0.1em">PALEOPATOLOGÍA</div>
+        </div>
+      </a>
+      <ul class="nav__links" role="list">
+        <li><a href="./exploracion.html" class="nav__link">Exploración</a></li>
+        <li><a href="./coleccion.html"   class="nav__link active">Colección</a></li>
+        <li><a href="./aula.html"        class="nav__link">Aula Virtual</a></li>
+        <li><a href="./actualidad.html"  class="nav__link">Actualidad</a></li>
+        <li><a href="./index.html#proyecto" class="nav__link">Proyecto</a></li>
+      </ul>
+      <div class="nav__actions">
+        <a href="./coleccion.html" class="btn btn--primary" style="font-size:.78rem;padding:.55em 1.2em;">
+          <span>Ver colección</span>
+        </a>
+      </div>
+      <button class="nav__hamburger" id="nav-hamburger" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </div>
+  <div class="nav__mobile" id="nav-mobile">
+    <ul role="list" style="display:flex;flex-direction:column;align-items:center;gap:2rem;text-align:center;">
+      <li><a href="./exploracion.html" class="nav__link" style="font-size:1.6rem">Exploración</a></li>
+      <li><a href="./coleccion.html"   class="nav__link" style="font-size:1.6rem">Colección</a></li>
+      <li><a href="./aula.html"        class="nav__link" style="font-size:1.6rem">Aula Virtual</a></li>
+      <li><a href="./actualidad.html"  class="nav__link" style="font-size:1.6rem">Actualidad</a></li>
+    </ul>
+  </div>
+</header>
+
+<main class="fe-main" id="fe-main">
+
+  <div class="fe-viewer-wrap" id="fe-viewer-wrap" style="display:none">
+    <span class="fe-viewer-label" id="fe-viewer-label">Modelo 3D · Arrastra para rotar</span>
+    <button class="viewer-fullscreen-btn" id="fe-fs-btn" aria-label="Pantalla completa">
+      <svg class="icon-enter" viewBox="0 0 24 24" fill="currentColor"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+      <svg class="icon-exit"  viewBox="0 0 24 24" fill="currentColor"><path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/></svg>
+    </button>
+    <model-viewer id="fe-model-viewer"
+      alt="Modelo 3D"
+      camera-controls auto-rotate
+      shadow-intensity="1.2" exposure="0.8"
+      environment-image="neutral"
+      field-of-view="15deg"
+      min-field-of-view="8deg"
+      max-field-of-view="40deg"
+      style="width:100%;height:300px;background:transparent">
+    </model-viewer>
+    <div class="fe-viewer-placeholder" id="fe-viewer-placeholder" style="display:none">
+      <div class="fe-viewer-placeholder__inner">
+        <svg viewBox="0 0 48 48" fill="none" style="width:44px;height:44px" aria-hidden="true">
+          <path d="M24 5L43 16V32L24 43L5 32V16L24 5Z" stroke="rgba(0,229,255,.45)" stroke-width="1.5" fill="none"/>
+          <path d="M24 43V5M5 16L24 26.5L43 16M24 26.5V43" stroke="rgba(0,229,255,.2)" stroke-width="1"/>
+        </svg>
+        <p class="fe-viewer-placeholder__title">Modelo 3D · Próximamente</p>
+        <p class="fe-viewer-placeholder__desc">La digitalización tridimensional de esta pieza está en proceso y estará disponible próximamente.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="fe-gallery-hero" id="fe-gallery-hero">
+
+    <div class="fe-gallery-hero__media">
+      <div class="fe-gallery" id="fe-gallery">
+        <div class="fe-gallery__viewport" id="fe-gallery-viewport">
+          <div class="fe-img-placeholder" id="fe-img-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" style="width:56px;height:56px">
+              <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" fill="currentColor"/>
+            </svg>
+            <span>Imagen no disponible</span>
+          </div>
+          <span class="fe-img-badge" id="fe-img-badge">Ficha estándar</span>
+        </div>
+        <div class="fe-gallery__controls" id="fe-gallery-controls" style="display:none">
+          <button class="fe-gallery__arrow" id="fe-gallery-prev" aria-label="Anterior">&#8592;</button>
+          <span class="fe-gallery__counter" id="fe-gallery-counter"><strong>1</strong> / 1</span>
+          <button class="fe-gallery__arrow" id="fe-gallery-next" aria-label="Siguiente">&#8594;</button>
+        </div>
+        <div class="fe-gallery__caption" id="fe-gallery-caption" style="display:none"></div>
+      </div>
+    </div>
+
+    <div class="fe-gallery-hero__info">
+      <div class="fe-tags" id="fe-tags"></div>
+
+      <div class="fe-header">
+        <p class="fe-header__id" id="fe-id">—</p>
+        <h1 class="fe-header__title" id="fe-title">Cargando…</h1>
+        <p class="fe-header__subtitle" id="fe-subtitle"></p>
+      </div>
+
+      <div class="fe-section" id="fe-section-identificacion">
+        <p class="fe-section__title">Identificación</p>
+        <div class="fe-data-grid" id="fe-data-grid"></div>
+      </div>
+
+      <div class="fe-section" id="fe-section-relevancia" style="display:none">
+        <p class="fe-section__title">Relevancia</p>
+        <div class="fe-relevancia-callout" id="fe-relevancia-callout"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="fe-section" id="fe-section-contexto" style="display:none">
+    <p class="fe-section__title">Contexto arqueológico</p>
+    <div class="fe-desc-block" id="fe-contexto-block"></div>
+  </div>
+
+  <div class="fe-section" id="fe-section-osteologica" style="display:none">
+    <p class="fe-section__title">Descripción osteológica</p>
+    <div class="fe-desc-block" id="fe-desc-block"></div>
+  </div>
+
+  <div class="fe-section" id="fe-section-diagnostico" style="display:none">
+    <p class="fe-section__title">Diagnóstico</p>
+    <div class="fe-diag-summary" id="fe-diag-summary" style="display:none"></div>
+    <div class="fe-accordion" id="fe-accordion"></div>
+  </div>
+
+  <div class="fe-section" id="fe-section-referencias" style="display:none">
+    <p class="fe-section__title">Referencias bibliográficas</p>
+    <div class="fe-bib-list" id="fe-bib-list"></div>
+  </div>
+
+  <a href="#" class="fe-master-link" id="fe-master-link" style="display:none">
+    <div>
+      <p class="fe-master-link__eyebrow">Disponible para esta pieza</p>
+      <p class="fe-master-link__title">Ver ficha maestra inmersiva →</p>
+    </div>
+    <span class="fe-master-link__arrow">⟶</span>
+  </a>
+
+</main>
+
+<div class="fe-nav-bar">
+  <div class="fe-nav-bar__inner">
+    <a href="./exploracion.html" class="fe-nav-bar__back">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+      Volver al explorador
+    </a>
+    <div class="fe-nav-bar__actions">
+      <a href="#" class="fe-nav-btn fe-nav-btn--region" id="fe-btn-region">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+        Explorar región anatómica
+      </a>
+      <a href="./coleccion.html" class="fe-nav-btn fe-nav-btn--buscar">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        Buscar más piezas
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="fe-lightbox" id="fe-lightbox" role="dialog" aria-modal="true" aria-label="Imagen ampliada">
+  <div class="fe-lightbox__inner">
+    <button class="fe-lightbox__close" id="fe-lightbox-close" aria-label="Cerrar">✕</button>
+    <img class="fe-lightbox__img" id="fe-lightbox-img" src="" alt="" />
+    <p class="fe-lightbox__caption" id="fe-lightbox-caption"></p>
+  </div>
+</div>
+
+<footer class="site-footer" role="contentinfo">
+  <div class="container">
+    <div class="footer__inner">
+        <div class="footer__logos">
+          <a href="https://www.lavidamata.xyz/" target="_blank" rel="noopener" aria-label="Laboratorio de Antropología Virtual · UAM"></a>
+            <img src="./assets/img/lav_uam2.png" alt="Laboratorio de Antropología Virtual · UAM" class="footer__logo-img footer__logo-img--lav2" />
+          </a>
+          <a href="https://www.uam.es/ciencias/inicio" target="_blank" rel="noopener" aria-label="Facultad de Ciencias · UAM">
+            <img src="./assets/img/uamciencias_blanco.png" alt="Facultad de Ciencias · UAM" class="footer__logo-img footer__logo-img--facultad" />
+          </a>
+        </div>
+      <p class="footer__meta">
+        Trabajo de Fin de Grado · Grado en Biología<br>
+        <span style="opacity:0.5">Museo Virtual de Paleopatología · 2025–2026</span>
+      </p>
+      <nav class="footer__links" aria-label="Pie de página">
+        <a href="./exploracion.html" class="footer__link">Exploración</a>
+        <a href="./coleccion.html"   class="footer__link">Colección</a>
+        <a href="./aula.html"        class="footer__link">Aula</a>
+        <a href="./actualidad.html"  class="footer__link">Actualidad</a>
+        <a href="./index.html#proyecto" class="footer__link">Proyecto</a>
+        <a href="./contacto.html"       class="footer__link">Contacto</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<script src="./js/data.js"></script>
+<script src="./js/viewer3d.js"></script>
+<script>
+  const hamburger = document.getElementById('nav-hamburger');
+  const drawer    = document.getElementById('nav-mobile');
+  let navOpen = false;
+  hamburger?.addEventListener('click', () => {
+    navOpen = !navOpen;
+    hamburger.classList.toggle('open', navOpen);
+    drawer.classList.toggle('open', navOpen);
+    hamburger.setAttribute('aria-expanded', String(navOpen));
+    document.body.style.overflow = navOpen ? 'hidden' : '';
+  });
+  window.addEventListener('scroll', () => {
+    document.getElementById('site-header')?.classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive: true });
+
+  let galleryImages = [];
+  let galleryIdx    = 0;
+
+  function buildGallery(imagenes) {
+    if (!imagenes || imagenes.length === 0) return;
+    galleryImages = imagenes;
+    const viewport    = document.getElementById('fe-gallery-viewport');
+    const controls    = document.getElementById('fe-gallery-controls');
+    const caption     = document.getElementById('fe-gallery-caption');
+    const placeholder = document.getElementById('fe-img-placeholder');
+    if (placeholder) placeholder.remove();
+    const track = document.createElement('div');
+    track.id = 'fe-gallery-track';
+    track.style.cssText = 'display:flex;width:100%;height:100%;will-change:transform;transition:transform .38s cubic-bezier(.4,0,.2,1);';
+    imagenes.forEach((img, i) => {
+      const slide = document.createElement('div');
+      slide.style.cssText = 'flex:0 0 100%;width:100%;height:100%;overflow:hidden;cursor:zoom-in;flex-shrink:0;';
+      const image = document.createElement('img');
+      image.src     = img.src;
+      image.alt     = `Figura ${i + 1}`;
+      image.loading = i === 0 ? 'eager' : 'lazy';
+      image.style.cssText = 'width:100%;height:100%;object-fit:contain;object-position:center;display:block;background:#111;';
+      slide.addEventListener('click', () => openLightbox(i));
+      slide.appendChild(image);
+      track.appendChild(slide);
+    });
+    viewport.insertBefore(track, viewport.firstChild);
+    if (imagenes.length > 1) {
+      controls.style.display = 'flex';
+      document.getElementById('fe-gallery-prev').addEventListener('click', () => moveGallery(-1));
+      document.getElementById('fe-gallery-next').addEventListener('click', () => moveGallery(1));
+    }
+    caption.style.display = 'block';
+    updateGallery(0, false);
+  }
+
+  function updateGallery(idx, animate) {
+    const track   = document.getElementById('fe-gallery-track');
+    const counter = document.getElementById('fe-gallery-counter');
+    const caption = document.getElementById('fe-gallery-caption');
+    const prev    = document.getElementById('fe-gallery-prev');
+    const next    = document.getElementById('fe-gallery-next');
+    if (!track) return;
+    galleryIdx = idx;
+    const vpWidth = document.getElementById('fe-gallery-viewport').offsetWidth;
+    track.style.transition = animate ? 'transform .38s cubic-bezier(.4,0,.2,1)' : 'none';
+    track.style.transform  = `translateX(${-(idx * vpWidth)}px)`;
+    if (counter) counter.innerHTML = `<strong>${idx + 1}</strong> / ${galleryImages.length}`;
+    if (caption) caption.textContent = galleryImages[idx]?.caption || '';
+    if (prev) prev.disabled = idx === 0;
+    if (next) next.disabled = idx === galleryImages.length - 1;
+  }
+
+  function moveGallery(dir) {
+    const newIdx = galleryIdx + dir;
+    if (newIdx < 0 || newIdx >= galleryImages.length) return;
+    updateGallery(newIdx, true);
+  }
+
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => updateGallery(galleryIdx, false), 120);
+  }, { passive: true });
+
+  function openLightbox(idx) {
+    document.getElementById('fe-lightbox-img').src = galleryImages[idx].src;
+    document.getElementById('fe-lightbox-img').alt = `Figura ${idx + 1}`;
+    document.getElementById('fe-lightbox-caption').textContent = galleryImages[idx].caption || '';
+    document.getElementById('fe-lightbox').classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    document.getElementById('fe-lightbox').classList.remove('is-open');
+    document.body.style.overflow = '';
+  }
+  document.getElementById('fe-lightbox-close').addEventListener('click', closeLightbox);
+  document.getElementById('fe-lightbox').addEventListener('click', e => { if (e.target === e.currentTarget) closeLightbox(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+  function scrollToRef(refId) {
+    const target = document.getElementById('fe-ref-' + refId);
+    if (!target) return;
+    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    target.classList.remove('fe-ref-highlight');
+    void target.offsetWidth;
+    target.classList.add('fe-ref-highlight');
+    target.addEventListener('animationend', () => target.classList.remove('fe-ref-highlight'), { once: true });
+  }
+
+  const SUP = {'1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'};
+  function makeRefsSup(refs) {
+    if (!refs || refs.length === 0) return '';
+    return refs.map(r =>
+      `<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(${r})" aria-label="Ver referencia ${r}">${SUP[String(r)] || r}</a>`
+    ).join('');
+  }
+
+  function buildAccordion(hallazgos) {
+    const container = document.getElementById('fe-accordion');
+    hallazgos.forEach((grupo, i) => {
+      const item = document.createElement('div');
+      item.className = 'fe-accordion__item' + (i === 0 ? ' is-open' : '');
+
+      const trigger = document.createElement('button');
+      trigger.className = 'fe-accordion__trigger';
+      trigger.setAttribute('aria-expanded', i === 0 ? 'true' : 'false');
+      trigger.innerHTML = `<span>${grupo.titulo}</span><span class="fe-accordion__chevron" aria-hidden="true">▾</span>`;
+      trigger.addEventListener('click', () => {
+        const open = item.classList.toggle('is-open');
+        trigger.setAttribute('aria-expanded', String(open));
+      });
+
+      const body  = document.createElement('div');
+      body.className = 'fe-accordion__body';
+
+      const inner = document.createElement('div');
+      inner.className = 'fe-accordion__body-inner';
+
+      const list = document.createElement('ul');
+      list.className = 'fe-hallazgo-list';
+      grupo.items.forEach(h => {
+        const li = document.createElement('li');
+        li.className = 'fe-hallazgo-item';
+        li.innerHTML = `<span class="fe-hallazgo-item__dot"></span>
+          <span class="fe-hallazgo-item__text">${h.texto}${makeRefsSup(h.refs)}</span>`;
+        list.appendChild(li);
+      });
+
+      inner.appendChild(list);
+      body.appendChild(inner);
+      item.appendChild(trigger);
+      item.appendChild(body);
+      container.appendChild(item);
+    });
+  }
+
+  function buildRefs(referencias) {
+    const container = document.getElementById('fe-bib-list');
+    referencias.forEach(ref => {
+      const div = document.createElement('div');
+      div.className = 'fe-bib-item';
+      div.id        = 'fe-ref-' + ref.id;
+      div.setAttribute('tabindex', '-1');
+      let html = `<span class="fe-bib-item__num">[${ref.id}]</span>`;
+      html += `<strong>${ref.autores}</strong> (${ref.anio}). <em>${ref.titulo}</em>. ${ref.editorial || ''}.`;
+      if (ref.doi) {
+        html += ` <a href="${ref.doi}" target="_blank" rel="noopener noreferrer">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+          DOI
+        </a>`;
+      }
+      div.innerHTML = html;
+      container.appendChild(div);
+    });
+  }
+
+  function addDataItem(grid, label, value, full = false) {
+    if (value === null || value === undefined || value === '') return;
+    const div = document.createElement('div');
+    div.className = 'fe-data-item' + (full ? ' fe-data-item--full' : '');
+    div.innerHTML = `<p class="fe-data-item__label">${label}</p>
+                     <p class="fe-data-item__value">${value}</p>`;
+    grid.appendChild(div);
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     LAYOUT COMPARISON — renderizado y sincronización de rotación
+  ═══════════════════════════════════════════════════════════ */
+  function renderComparisonLayout(pieza) {
+    var main       = document.getElementById('fe-main');
+    var galleryHero = document.getElementById('fe-gallery-hero');
+    var modelos    = pieza.modelos_comparacion;
+    if (!main || !galleryHero || !modelos) return;
+
+    var FS_SVG =
+      '<svg class="icon-enter" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' +
+        '<path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>' +
+      '</svg>' +
+      '<svg class="icon-exit" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' +
+        '<path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/>' +
+      '</svg>';
+
+    var panel = document.createElement('div');
+    panel.className = 'fe-comp-panel';
+
+    var mvIds = modelos.map(function(_, i) { return 'mv-comp-' + i; });
+
+    modelos.forEach(function(m, i) {
+      var wrap = document.createElement('div');
+      wrap.className = 'fe-comp-viewer';
+      wrap.innerHTML =
+        '<div class="fe-comp-viewer__header">' +
+          '<span class="fe-comp-viewer__title">' + m.titulo + '</span>' +
+          '<span class="fe-comp-viewer__badge">' + m.badge + '</span>' +
+          '<button class="viewer-fullscreen-btn" id="fe-comp-fs-' + i + '" aria-label="Pantalla completa · ' + m.titulo + '">' +
+            FS_SVG +
+          '</button>' +
+        '</div>' +
+        '<model-viewer' +
+          ' id="' + mvIds[i] + '"' +
+          ' src="' + m.src + '"' +
+          ' alt="' + m.titulo + '"' +
+          ' camera-controls auto-rotate' +
+          ' shadow-intensity="1.2" exposure="0.8"' +
+          ' environment-image="neutral"' +
+          ' field-of-view="15deg" min-field-of-view="8deg" max-field-of-view="40deg"' +
+          ' style="width:100%;background:transparent;--progress-bar-color:transparent">' +
+        '</model-viewer>';
+      panel.appendChild(wrap);
+    });
+
+    main.insertBefore(panel, galleryHero);
+
+    /* Fila de sincronización */
+    var syncRow = document.createElement('div');
+    syncRow.className = 'fe-sync-row';
+    syncRow.innerHTML =
+      '<label class="fe-sync-toggle" for="fe-sync-check">' +
+        '<input type="checkbox" id="fe-sync-check" checked>' +
+        '<span>Sincronizar rotación</span>' +
+      '</label>' +
+      '<span class="fe-sync-hint">Arrastra cualquier modelo para rotar ambos a la vez</span>';
+    main.insertBefore(syncRow, galleryHero);
+
+    /* Botones de pantalla completa */
+    modelos.forEach(function(m, i) {
+      var btn = document.getElementById('fe-comp-fs-' + i);
+      if (btn) btn.addEventListener('click', function() {
+        if (window.PaleoViewer) {
+          PaleoViewer.openFullscreen(
+            document.getElementById(mvIds[i]),
+            { geometria: m.src, textura: null },
+            m.titulo
+          );
+        }
+      });
+    });
+
+    /* Sincronización de cámara entre los dos visores */
+    initComparisonSync(mvIds[0], mvIds[1]);
+  }
+
+  function initComparisonSync(idA, idB) {
+    var busyA = false;
+    var busyB = false;
+
+    function syncFrom(src, dst, getBusy, setBusy) {
+      var chk = document.getElementById('fe-sync-check');
+      if (!chk || !chk.checked || getBusy()) return;
+      setBusy(true);
+      dst.cameraOrbit = src.cameraOrbit;
+      dst.cameraTarget = src.cameraTarget;
+      requestAnimationFrame(function() { setBusy(false); });
+    }
+
+    /* Esperar a que model-viewer esté registrado antes de añadir listeners */
+    var whenReady = customElements.whenDefined
+      ? customElements.whenDefined('model-viewer')
+      : Promise.resolve();
+
+    whenReady.then(function() {
+      var mvA = document.getElementById(idA);
+      var mvB = document.getElementById(idB);
+      if (!mvA || !mvB) return;
+
+      mvA.addEventListener('camera-change', function() {
+        syncFrom(mvA, mvB, function(){ return busyB; }, function(v){ busyA = v; });
+      });
+      mvB.addEventListener('camera-change', function() {
+        syncFrom(mvB, mvA, function(){ return busyA; }, function(v){ busyB = v; });
+      });
+    });
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     LAYOUT PROGRESSION — tres visores con toggle y escala
+  ═══════════════════════════════════════════════════════════ */
+  function renderProgressionLayout(pieza) {
+    var main        = document.getElementById('fe-main');
+    var galleryHero = document.getElementById('fe-gallery-hero');
+    var modelos     = pieza.modelos_progresion;
+    if (!main || !galleryHero || !modelos) return;
+
+    var FS_SVG =
+      '<svg class="icon-enter" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' +
+        '<path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>' +
+      '</svg>' +
+      '<svg class="icon-exit" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' +
+        '<path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/>' +
+      '</svg>';
+
+    /* Panel de tres visores */
+    var panel = document.createElement('div');
+    panel.className = 'fe-prog-panel';
+
+    modelos.forEach(function(m, i) {
+      var vid  = 'mv-prog-' + i;
+      var wrap = document.createElement('div');
+      wrap.className = 'fe-prog-viewer';
+      wrap.innerHTML =
+        '<div class="fe-prog-viewer__header">' +
+          '<span class="fe-prog-viewer__title">' + m.titulo + '</span>' +
+          '<span class="fe-severity-badge fe-severity-badge--' + m.badge_color + '">' + m.badge + '</span>' +
+          '<button class="viewer-fullscreen-btn" id="fe-prog-fs-' + i + '" aria-label="Pantalla completa · ' + m.titulo + '">' +
+            FS_SVG +
+          '</button>' +
+        '</div>' +
+        '<div class="fe-toggle-pill" role="group" aria-label="Modo de visualización">' +
+          '<button class="fe-toggle-pill__btn is-active" data-viewer="' + vid + '" data-src="' + m.geometria + '" aria-pressed="true">Geometría</button>' +
+          '<button class="fe-toggle-pill__btn" data-viewer="' + vid + '" data-src="' + m.textura + '" aria-pressed="false">Textura</button>' +
+        '</div>' +
+        '<model-viewer' +
+          ' id="' + vid + '"' +
+          ' src="' + m.geometria + '"' +
+          ' alt="' + m.titulo + ' · ' + m.badge + '"' +
+          ' camera-controls auto-rotate' +
+          ' shadow-intensity="1.2" exposure="0.8"' +
+          ' environment-image="neutral"' +
+          ' field-of-view="15deg" min-field-of-view="8deg" max-field-of-view="40deg"' +
+          ' style="width:100%;background:transparent;--progress-bar-color:transparent">' +
+        '</model-viewer>';
+      panel.appendChild(wrap);
+    });
+
+    main.insertBefore(panel, galleryHero);
+
+    /* Eventos de los toggle pills */
+    panel.querySelectorAll('.fe-toggle-pill__btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var mv = document.getElementById(btn.dataset.viewer);
+        if (mv && btn.dataset.src) mv.setAttribute('src', btn.dataset.src);
+        var pill = btn.closest('.fe-toggle-pill');
+        pill.querySelectorAll('.fe-toggle-pill__btn').forEach(function(b) {
+          var active = b === btn;
+          b.classList.toggle('is-active', active);
+          b.setAttribute('aria-pressed', String(active));
+        });
+      });
+    });
+
+    /* Barra de severidad (escritorio) */
+    var scale = document.createElement('div');
+    scale.className = 'fe-severity-scale';
+    scale.setAttribute('aria-hidden', 'true');
+    modelos.forEach(function(m) {
+      var seg = document.createElement('div');
+      seg.className = 'fe-severity-scale__seg fe-severity-scale__seg--' + m.badge_color;
+      scale.appendChild(seg);
+    });
+    main.insertBefore(scale, galleryHero);
+
+    /* Indicador de pasos (móvil) */
+    var steps = document.createElement('div');
+    steps.className = 'fe-severity-steps';
+    steps.setAttribute('aria-hidden', 'true');
+    modelos.forEach(function(m, i) {
+      if (i > 0) {
+        var conn = document.createElement('div');
+        conn.className = 'fe-severity-step__connector';
+        steps.appendChild(conn);
+      }
+      var step = document.createElement('div');
+      step.className = 'fe-severity-step fe-severity-step--' + m.badge_color;
+      step.innerHTML =
+        '<div class="fe-severity-step__dot"></div>' +
+        '<span class="fe-severity-step__label">' + m.badge + '</span>';
+      steps.appendChild(step);
+    });
+    main.insertBefore(steps, galleryHero);
+
+    /* Botones de pantalla completa — abre el overlay con selector dual */
+    modelos.forEach(function(m, i) {
+      var btn = document.getElementById('fe-prog-fs-' + i);
+      if (btn) btn.addEventListener('click', function() {
+        if (window.PaleoViewer) {
+          PaleoViewer.openFullscreen(
+            document.getElementById('mv-prog-' + i),
+            { geometria: m.geometria, textura: m.textura },
+            m.titulo + ' · ' + m.badge
+          );
+        }
+      });
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    const id     = params.get('id');
+    if (!id || typeof PIEZAS === 'undefined') return;
+
+    const pieza = PIEZAS.find(p => p.id === id);
+    if (!pieza) {
+      document.getElementById('fe-title').textContent = 'Pieza no encontrada';
+      return;
+    }
+
+    const patKeys  = Array.isArray(pieza.patologia) ? pieza.patologia : [pieza.patologia];
+    const patMeta  = VOCABULARIO.patologia[patKeys[0]] || { label:patKeys[0], icon:'', color:'#ccc' };
+    const regMeta  = VOCABULARIO.region[pieza.region]       || { label:pieza.region,    icon:'' };
+    const sexMeta  = VOCABULARIO.sexo[pieza.sexo]           || { label:pieza.sexo,       icon:'' };
+    const epocMeta = VOCABULARIO.epoca[pieza.epoca]         || { label:pieza.epoca,      range:'' };
+
+    document.getElementById('fe-id').textContent       = pieza.id;
+    document.getElementById('fe-title').textContent    = pieza.nombre;
+    document.getElementById('fe-subtitle').textContent = `${patKeys.map(k => (VOCABULARIO.patologia[k] || {label:k}).label).join(' / ')} · ${epocMeta.label}`;
+    document.title = `${pieza.nombre} · PaleoMuseo`;
+
+    const badge = document.getElementById('fe-img-badge');
+    if (badge) badge.textContent = 'Ficha estándar';
+
+    document.getElementById('fe-tags').innerHTML = `
+      <span class="fe-tag fe-tag--region">${regMeta.icon} ${regMeta.label}</span>
+      ${patKeys.map(k => {
+        const m = VOCABULARIO.patologia[k] || { label: k, icon: '' };
+        return `<span class="fe-tag fe-tag--patol">${m.icon} ${m.label}</span>`;
+      }).join('')}
+      <span class="fe-tag fe-tag--sexo">${sexMeta.icon} ${sexMeta.label}</span>
+      <span class="fe-tag fe-tag--epoca">📅 ${epocMeta.label}</span>
+      ${pieza.ficha?.includes('ficha-maestra') ? '<span class="fe-tag fe-tag--master">⭐ Ficha maestra</span>' : ''}
+    `;
+
+    const grid = document.getElementById('fe-data-grid');
+    addDataItem(grid, 'Cronología', pieza.cronologia || `${epocMeta.label} · ${epocMeta.range}`);
+    addDataItem(grid, 'Yacimiento', pieza.yacimiento);
+    addDataItem(grid, 'Sexo biológico', sexMeta.label);
+    addDataItem(grid, 'Edad estimada', pieza.edad);
+    addDataItem(grid, 'Estatura estimada', pieza.estatura);
+    addDataItem(grid, 'Región anatómica', regMeta.label);
+    addDataItem(grid, 'Tipo de patología', patKeys.map(k => (VOCABULARIO.patologia[k] || {label:k}).label).join(' / '));
+    addDataItem(grid, 'Estado de conservación', pieza.conservacion_fisica);
+    addDataItem(grid, 'Método de digitalización', pieza.digitalizacion);
+
+    if (pieza.imagenes?.length > 0) {
+      buildGallery(pieza.imagenes);
+    } else if (pieza.imagen) {
+      buildGallery([{ src: pieza.imagen, caption: pieza.nombre }]);
+    } else {
+      document.getElementById('fe-gallery').style.display = 'none';
+    }
+
+    /* ── Resolver modelo3d (string, objeto dual o null) ── */
+    const modelos    = window.PaleoViewer ? PaleoViewer.resolveModelo(pieza.modelo3d) : { geometria: pieza.modelo3d || null, textura: null };
+    const modeloUrl  = modelos.geometria || modelos.textura || null;
+    const viewerEl   = document.getElementById('fe-model-viewer');
+    const viewerWrap = document.getElementById('fe-viewer-wrap');
+
+    function _showPlaceholder() {
+      viewerWrap.style.display = 'block';
+      document.getElementById('fe-viewer-placeholder').style.display = 'flex';
+      viewerEl.style.setProperty('display', 'none', 'important');
+      document.getElementById('fe-viewer-label')?.style.setProperty('display', 'none', 'important');
+      document.getElementById('fe-fs-btn')?.style.setProperty('display', 'none', 'important');
+    }
+
+    if (modeloUrl) {
+      viewerWrap.style.display = 'block';
+
+      /* Si model-viewer no está registrado (sin CDN/internet), mostrar placeholder */
+      if (!customElements.get('model-viewer')) {
+        _showPlaceholder();
+      } else {
+        viewerEl.setAttribute('src', modeloUrl);
+
+        /* Fallback: si el modelo falla al cargar, mostrar placeholder */
+        viewerEl.addEventListener('error', _showPlaceholder, { once: true });
+
+        /* Selector dual si existen ambos modelos */
+        if (window.PaleoViewer) {
+          const hasDual = PaleoViewer.initModelSelector(viewerEl, modelos, viewerEl);
+          if (hasDual) PaleoViewer.injectDualModelTutorialStep();
+        }
+      }
+    } else if (pieza.sketchfab_embed) {
+      viewerWrap.style.display = 'block';
+      viewerWrap.innerHTML = `
+        <span class="fe-viewer-label">Modelo 3D · Sketchfab</span>
+        <iframe
+          src="${pieza.sketchfab_embed}"
+          title="${pieza.sketchfab_title || 'Modelo 3D'}"
+          frameborder="0"
+          allow="autoplay; fullscreen; xr-spatial-tracking"
+          allowfullscreen
+          style="width:100%;height:320px;border:0;display:block;background:#0d0d0d;">
+        </iframe>
+        <span class="fe-viewer-credit">
+          <a href="https://sketchfab.com" target="_blank" rel="noopener noreferrer">Sketchfab</a>
+        </span>`;
+    } else if (pieza.layoutMode !== 'comparison' && pieza.layoutMode !== 'progression') {
+      _showPlaceholder();
+    }
+
+    if (pieza.descripcion_osteologica) {
+      const block    = document.getElementById('fe-desc-block');
+      const parrafos = Array.isArray(pieza.descripcion_osteologica)
+        ? pieza.descripcion_osteologica
+        : [pieza.descripcion_osteologica];
+      parrafos.forEach(p => {
+        const el = document.createElement('p');
+        el.className = 'fe-desc';
+        el.innerHTML = typeof glosarioLink === 'function' ? glosarioLink(p) : p;
+        block.appendChild(el);
+      });
+      document.getElementById('fe-section-osteologica').style.display = 'block';
+    }
+
+    const hasDiag      = !!pieza.diagnostico_principal;
+    const hasHallazgos = pieza.hallazgos?.length > 0;
+    if (hasDiag || hasHallazgos) {
+      document.getElementById('fe-section-diagnostico').style.display = 'block';
+      if (hasDiag) {
+        const summary = document.getElementById('fe-diag-summary');
+        summary.textContent = pieza.diagnostico_principal;
+        summary.style.display = 'block';
+      }
+      if (hasHallazgos) buildAccordion(pieza.hallazgos);
+    }
+
+    if (pieza.referencias?.length > 0) {
+      buildRefs(pieza.referencias);
+      document.getElementById('fe-section-referencias').style.display = 'block';
+    }
+
+    if (pieza.relevancia) {
+      const callout = document.getElementById('fe-relevancia-callout');
+      callout.innerHTML = `<p class="fe-relevancia-callout__label">✦ Por qué es relevante</p>
+        <p class="fe-desc">${typeof glosarioLink === 'function' ? glosarioLink(pieza.relevancia) : pieza.relevancia}</p>`;
+      document.getElementById('fe-section-relevancia').style.display = 'block';
+    }
+
+    if (pieza.contexto_arqueologico?.length > 0) {
+      const block = document.getElementById('fe-contexto-block');
+      const parrafos = Array.isArray(pieza.contexto_arqueologico)
+        ? pieza.contexto_arqueologico
+        : [pieza.contexto_arqueologico];
+      parrafos.forEach(p => {
+        const el = document.createElement('p');
+        el.className = 'fe-desc';
+        el.innerHTML = typeof glosarioLink === 'function' ? glosarioLink(p) : p;
+        block.appendChild(el);
+      });
+      document.getElementById('fe-section-contexto').style.display = 'block';
+    }
+
+    const masterLink = document.getElementById('fe-master-link');
+    if (pieza.ficha?.includes('ficha-maestra')) {
+      masterLink.href = pieza.ficha;
+      masterLink.style.display = 'flex';
+    }
+
+    const btnRegion = document.getElementById('fe-btn-region');
+    if (btnRegion) btnRegion.href = `./exploracion.html?vista=anatomica&region=${pieza.region}`;
+
+    const layout = pieza.layoutMode || 'default';
+    if (layout !== 'default') {
+      document.getElementById('fe-main').classList.add(`fe-main--${layout}`);
+    }
+    if (layout === 'gallery') {
+      const hasMedia = (pieza.imagenes?.length > 0) || !!pieza.imagen;
+      if (!hasMedia) {
+        document.getElementById('fe-gallery-hero')?.classList.add('fe-gallery-hero--no-media');
+      }
+    }
+
+    if (layout === 'comparison' && pieza.modelos_comparacion?.length >= 2) {
+      renderComparisonLayout(pieza);
+    }
+
+    if (layout === 'progression' && pieza.modelos_progresion?.length >= 2) {
+      renderProgressionLayout(pieza);
+    }
+
+    /* Pantalla completa — overlay position:fixed (100vw × 100dvh) */
+    document.getElementById('fe-fs-btn')?.addEventListener('click', () => {
+      if (window.PaleoViewer) {
+        PaleoViewer.openFullscreen(
+          document.getElementById('fe-model-viewer'),
+          modelos,
+          pieza.nombre
+        );
+      }
+    });
+
+  });
+</script>
+
+  <!-- ═══════════════════════════════════════════════════════
+       TUTORIAL DEL VISUALIZADOR 3D
+       Ficha estándar: NO lleva data-scrollytelling
+  ═══════════════════════════════════════════════════════ -->
+  <div class="viewer-tutorial" id="viewerTutorial"
+       role="dialog" aria-modal="true" aria-label="Tutorial del visualizador 3D">
+    <div class="vt-box">
+
+      <div class="vt-header">
+        <div class="vt-header__left">
+          <span class="vt-eyebrow">Guía de uso</span>
+          <h2 class="vt-title">Visualizador 3D</h2>
+        </div>
+        <button class="vt-close" id="vtClose" aria-label="Cerrar tutorial">✕</button>
+      </div>
+
+      <div class="vt-steps">
+
+        <div class="vt-step">
+          <div class="vt-icon vt-icon--rotate" aria-hidden="true">
+            <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="26" cy="26" rx="14" ry="18" stroke="#252525" stroke-width="2" fill="#1a1a1a"/>
+              <ellipse cx="26" cy="26" rx="10" ry="13" stroke="#3d3d3d" stroke-width="1.5" fill="none"/>
+              <line x1="26" y1="10" x2="26" y2="42" stroke="#3d3d3d" stroke-width="1"/>
+              <g class="icon-hand">
+                <path d="M38 32 C43 28, 46 22, 42 17" stroke="#00e5ff" stroke-width="2" stroke-linecap="round" fill="none"/>
+                <circle cx="42" cy="17" r="3" fill="#00e5ff" opacity=".7"/>
+                <path d="M10 32 C5 28, 2 22, 6 17" stroke="#00e5ff" stroke-width="2" stroke-linecap="round" fill="none" opacity=".4"/>
+              </g>
+              <path d="M14 40 A18 18 0 0 0 38 40" stroke="#00e5ff" stroke-width="1.5" stroke-linecap="round" fill="none" opacity=".3" stroke-dasharray="3 3"/>
+            </svg>
+          </div>
+          <div class="vt-step__label">Gesto 01</div>
+          <div class="vt-step__title">Rotar</div>
+          <div class="vt-step__desc">Arrastra con un dedo o mantén pulsado el botón izquierdo del ratón para girar el modelo en cualquier dirección.</div>
+          <span class="vt-step__badge vt-step__badge--touch">👆 Táctil</span>
+          <span class="vt-step__badge vt-step__badge--mouse">🖱 Ratón</span>
+        </div>
+
+        <div class="vt-step">
+          <div class="vt-icon vt-icon--zoom" aria-hidden="true">
+            <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <ellipse class="icon-circle-outer" cx="26" cy="26" rx="18" ry="18" stroke="#00e5ff" stroke-width="1.5" fill="none" opacity=".3" stroke-dasharray="4 3"/>
+              <ellipse cx="26" cy="26" rx="11" ry="14" stroke="#252525" stroke-width="2" fill="#1a1a1a"/>
+              <ellipse cx="26" cy="26" rx="7" ry="10" stroke="#3d3d3d" stroke-width="1.5" fill="none"/>
+              <circle cx="40" cy="12" r="7" fill="#0d0d0d" stroke="#00e5ff" stroke-width="1.5"/>
+              <line x1="37" y1="12" x2="43" y2="12" stroke="#00e5ff" stroke-width="1.5" stroke-linecap="round"/>
+              <line x1="40" y1="9" x2="40" y2="15" stroke="#00e5ff" stroke-width="1.5" stroke-linecap="round"/>
+              <circle cx="12" cy="40" r="7" fill="#0d0d0d" stroke="#00e5ff" stroke-width="1.5" opacity=".5"/>
+              <line x1="9" y1="40" x2="15" y2="40" stroke="#00e5ff" stroke-width="1.5" stroke-linecap="round" opacity=".5"/>
+            </svg>
+          </div>
+          <div class="vt-step__label">Gesto 02</div>
+          <div class="vt-step__title">Zoom</div>
+          <div class="vt-step__desc">Pellizca con dos dedos para acercar o alejar. En escritorio usa la rueda del ratón o el gesto de pellizco en el trackpad.</div>
+          <span class="vt-step__badge vt-step__badge--touch">✌ Pellizco</span>
+          <span class="vt-step__badge vt-step__badge--mouse">⚙ Rueda</span>
+        </div>
+
+        <div class="vt-step">
+          <div class="vt-icon vt-icon--drag" aria-hidden="true">
+            <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="22" cy="26" rx="11" ry="14" stroke="#252525" stroke-width="2" fill="#1a1a1a"/>
+              <ellipse cx="22" cy="26" rx="7" ry="10" stroke="#3d3d3d" stroke-width="1.5" fill="none"/>
+              <g class="icon-hand">
+                <rect x="12" y="33" width="20" height="12" rx="3" fill="#1a1a1a" stroke="#b08d55" stroke-width="1.5"/>
+                <line x1="17" y1="33" x2="17" y2="28" stroke="#b08d55" stroke-width="1.5" stroke-linecap="round"/>
+                <line x1="22" y1="33" x2="22" y2="27" stroke="#b08d55" stroke-width="1.5" stroke-linecap="round"/>
+                <line x1="27" y1="33" x2="27" y2="28" stroke="#b08d55" stroke-width="1.5" stroke-linecap="round"/>
+              </g>
+              <g class="icon-arrow">
+                <line x1="35" y1="26" x2="47" y2="26" stroke="#00e5ff" stroke-width="2" stroke-linecap="round"/>
+                <polyline points="43,22 47,26 43,30" stroke="#00e5ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              </g>
+            </svg>
+          </div>
+          <div class="vt-step__label">Gesto 03</div>
+          <div class="vt-step__title">Desplazar</div>
+          <div class="vt-step__desc">Arrastra con dos dedos o mantén pulsado el botón derecho del ratón para mover el modelo horizontalmente.</div>
+          <span class="vt-step__badge vt-step__badge--touch">☞ 2 dedos</span>
+          <span class="vt-step__badge vt-step__badge--mouse">🖱 Btn. derecho</span>
+        </div>
+
+        <div class="vt-step">
+          <div class="vt-icon vt-icon--expand" aria-hidden="true">
+            <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="26" cy="26" rx="10" ry="13" stroke="#252525" stroke-width="2" fill="#1a1a1a"/>
+              <g class="icon-corner">
+                <polyline points="6,14 6,6 14,6"    stroke="#00e5ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                <polyline points="38,6 46,6 46,14"  stroke="#00e5ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                <polyline points="46,38 46,46 38,46" stroke="#00e5ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                <polyline points="14,46 6,46 6,38"   stroke="#00e5ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              </g>
+              <circle cx="42" cy="10" r="6" fill="#0d0d0d" stroke="#b08d55" stroke-width="1.5"/>
+              <path d="M39.5 10 A3 3 0 1 1 42 13" stroke="#b08d55" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+              <polyline points="42,13 44,11 42,9" stroke="#b08d55" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+          </div>
+          <div class="vt-step__label">Extras</div>
+          <div class="vt-step__title">Pantalla completa</div>
+          <div class="vt-step__desc">Usa el botón ⛶ del visor para abrirlo a pantalla completa. Haz doble clic sobre el modelo para restablecer la vista.</div>
+          <span class="vt-step__badge vt-step__badge--mouse">⛶ Pantalla completa</span>
+          <span class="vt-step__badge vt-step__badge--touch">⛶ Pantalla completa</span>
+          <span class="vt-step__badge vt-step__badge--mouse">↩ Doble clic · restablecer</span>
+          <span class="vt-step__badge vt-step__badge--touch">↩ Doble toque · restablecer</span>
+        </div>
+
+      </div>
+
+      <!-- Hint scrollytelling — oculto en ficha estándar (no hay data-scrollytelling) -->
+      <div class="vt-scroll-hint" id="vtScrollHint" style="display:none; margin-top:.75rem; margin-bottom:.75rem;">
+        <span class="vt-scroll-hint__icon">📜</span>
+        <p class="vt-scroll-hint__text">
+          <strong>Ficha maestra</strong> — mientras lees, la cámara se mueve automáticamente hacia cada lesión descrita. Solo desplázate hacia abajo y el modelo te guiará.
+        </p>
+      </div>
+
+      <div class="vt-footer">
+        <label class="vt-check-label">
+          <input type="checkbox" id="vtDontShow">
+          <span>No volver a mostrar</span>
+        </label>
+        <button class="vt-btn-ok" id="vtOk">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+          ¡Entendido!
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    const STORAGE_KEY = 'mvp_viewer_tutorial_seen';
+    const overlay    = document.getElementById('viewerTutorial');
+    const btnClose   = document.getElementById('vtClose');
+    const btnOk      = document.getElementById('vtOk');
+    const chkDont    = document.getElementById('vtDontShow');
+    const scrollHint = document.getElementById('vtScrollHint');
+
+    const isScrollytelling = overlay && overlay.dataset.scrollytelling === 'true';
+    if (isScrollytelling && scrollHint) scrollHint.style.display = 'flex';
+
+    function openTutorial() {
+      if (!overlay) return;
+      overlay.classList.add('is-open');
+      overlay.focus();
+    }
+
+    function closeTutorial() {
+      if (!overlay) return;
+      overlay.classList.remove('is-open');
+      if (chkDont && chkDont.checked) {
+        sessionStorage.setItem(STORAGE_KEY, '1');
+      }
+    }
+
+    window.openTutorial = openTutorial;
+
+    if (!sessionStorage.getItem(STORAGE_KEY)) {
+      setTimeout(openTutorial, 600);
+    }
+
+    btnClose && btnClose.addEventListener('click', closeTutorial);
+    btnOk    && btnOk.addEventListener('click', closeTutorial);
+
+    overlay && overlay.addEventListener('click', function (e) {
+      if (e.target === overlay) closeTutorial();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && overlay && overlay.classList.contains('is-open')) {
+        closeTutorial();
+      }
+    });
+  })();
+  </script>
+
+<script src="./js/loader.js"></script>
+
+</body>
+</html>
