@@ -730,6 +730,72 @@ const PIEZAS = [
     imagenes: null,
 
     layoutMode: 'default'
+  },
+
+  {
+    id: 'AV-0001',
+    nombre: 'Cráneo con meningioma y osteoma',
+    region: 'craneo',
+    patologia: 'tumor',
+    sexo: 'femenino',
+    epoca: 'medieval',
+    yacimiento: 'Necrópolis judía de San Nicolás (Ávila)',
+    coords: [1245, 645],
+    descripcion: 'Cráneo femenino adulto procedente de la necrópolis judía medieval de San Nicolás (Ávila), que presenta dos lesiones neoplásicas poco frecuentes en el registro paleopatológico: un meningioma con afectación ósea en el parietal izquierdo y un osteoma en el temporal derecho.',
+    imagen: null,
+    ficha: '/prueba-museo/ficha-estandar.html?id=AV-0001',
+    modelo3d: './assets/models/craneo-def.glb',
+
+    cronologia: 'Siglo XII',
+    edad: 'Adulta',
+    conservacion: null,
+
+    diagnostico_principal: 'Meningioma con afectación ósea en el parietal izquierdo y osteoma en el temporal derecho. La lesión parietal izquierda presenta una intensa remodelación tanto en la superficie ectocraneal como en la endocraneal, un patrón compatible con un meningioma. La prominencia ósea temporal derecha, de superficie lisa y límites bien definidos, es compatible con un osteoma, un tumor benigno formado por hueso maduro compacto.',
+
+    relevancia: 'Las evidencias óseas de procesos neoplásicos son menos habituales que otras categorías paleopatológicas, como los traumatismos, en las colecciones osteoarqueológicas. Esta pieza resulta especialmente relevante por presentar dos lesiones compatibles con un proceso neoplásico: un <strong>meningioma</strong> con afectación ósea y un <strong>osteoma</strong>. Los meningiomas son tumores originados en las meninges que, en algunos casos, inducen una remodelación del hueso craneal adyacente; la preservación de esta respuesta ósea permite identificar la enfermedad siglos después de la muerte del individuo, constituyendo una valiosa evidencia para el estudio de las patologías neoplásicas en poblaciones históricas.',
+
+    contexto_arqueologico: [
+      'La pieza procede de la necrópolis judía medieval de San Nicolás, situada al norte de la muralla histórica de Ávila<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>. El yacimiento fue identificado en 2012 durante unas obras de construcción, documentándose más de un centenar de enterramientos asociados a la comunidad sefardí medieval de la ciudad<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>.',
+      'Las sepulturas son mayoritariamente fosas escalonadas y fosas simples excavadas en el terreno, con los individuos depositados generalmente en decúbito supino y orientación oeste-este<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>. Un aspecto destacado del conjunto es la presencia relativamente abundante de elementos de ajuar, una circunstancia poco frecuente en contextos funerarios judíos medievales debido a su concepción igualitaria de la muerte<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>.',
+      'La necrópolis estuvo en uso entre los siglos XII y XV, hasta la expulsión de la población judía de los reinos hispánicos en 1492, y constituye actualmente uno de los conjuntos funerarios sefardíes mejor documentados de la península<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>.'
+    ],
+
+    descripcion_osteologica: [
+      'Esta pieza consiste en un cráneo completo perteneciente a una mujer adulta, con parte de la dentición asociada.',
+      'La alteración más llamativa se localiza en la región parietal izquierda, próxima a la sutura sagital. Consiste en una abertura de contornos redondeados rodeada por un borde remodelado; la superficie endocraneal adyacente muestra también una remodelación ósea y una alteración de la arquitectura normal del hueso.',
+      'Además, se observa una prominencia ósea bien delimitada en la región temporal derecha, próxima a la sutura escamosa. La lesión presenta una superficie lisa y unos límites definidos, rasgos característicos de un osteoma.',
+      'En la dentición destacan tinciones verdosas localizadas en varios premolares y molares del lado izquierdo, probablemente relacionadas con procesos tafonómicos o con la oxidación por contacto con elementos metálicos.'
+    ],
+
+    hallazgos: [
+      {
+        titulo: 'Trepanación — Poco compatible',
+        items: [
+          { texto: 'La morfología general de la lesión parietal recuerda a una trepanación; sin embargo, la alteración observada en la cara endocraneal sugiere un origen patológico más que quirúrgico.' }
+        ]
+      },
+      {
+        titulo: 'Defecto tafonómico post mortem — Descartado',
+        items: [
+          { texto: 'Descartado por la presencia de remodelación ósea alrededor de la lesión, evidencia de una respuesta biológica en vida del individuo.' }
+        ]
+      }
+    ],
+
+    referencias: [
+      {
+        id: 1,
+        autores: 'Cabrera González B, Caballero Arribas J, Díaz de la Torre J.',
+        anio: '2013',
+        titulo: 'El cementerio judío medieval de "la Encarnación" en Ávila',
+        editorial: 'Sefarad, 73(2), 309-338',
+        doi: 'https://doi.org/10.3989/sefarad.013.010'
+      }
+    ],
+
+    imagenes: null,
+
+    layoutMode: 'default'
   }
 
 ]; /* fin PIEZAS */
