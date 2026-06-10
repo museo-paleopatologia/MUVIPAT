@@ -2484,7 +2484,7 @@ function glosarioLink(texto) {
   sorted.forEach(entry => {
     const regex = new RegExp(`(?<!<[^>]*)\\b(${entry.termino})\\b`, 'gi');
     result = result.replace(regex, match =>
-      `<a href="/prueba-museo/aula.html?glos=${slugify(entry.termino)}" class="glos-link" title="${(entry.acepciones[0] || '').slice(0,80)}…">${match}</a>`
+      `<button type="button" class="glos-link" data-glos="${slugify(entry.termino)}" title="${(entry.acepciones[0] || '').slice(0,80)}…">${match}</button>`
     );
   });
   return result;
@@ -2546,18 +2546,22 @@ const CRONOLOGIA_HISTORICA = [
   if (typeof PIEZAS === 'undefined') return;
   GLOSARIO.forEach(entry => {
     if (!entry.termino) return;
-    const regex = new RegExp(`\\b${entry.termino}\\b`, 'gi');
+    entry.piezas = [];
+    const regex = new RegExp(`\\b${entry.termino}\\b`, 'i');
     PIEZAS.forEach(pieza => {
       const textos = [
         pieza.descripcion,
         pieza.diagnostico_principal,
+        pieza.relevancia,
         ...(Array.isArray(pieza.descripcion_osteologica)
           ? pieza.descripcion_osteologica
           : [pieza.descripcion_osteologica || '']),
+        ...(Array.isArray(pieza.contexto_arqueologico)
+          ? pieza.contexto_arqueologico
+          : [pieza.contexto_arqueologico || '']),
         ...(pieza.hallazgos || []).flatMap(g => g.items.map(i => i.texto))
       ].filter(Boolean).join(' ');
-      if (regex.test(textos) && !entry._piezasAuto) entry._piezasAuto = [];
-      if (regex.test(textos)) entry._piezasAuto.push(pieza.id);
+      if (regex.test(textos)) entry.piezas.push(pieza.id);
     });
   });
 })();
