@@ -208,7 +208,7 @@ const PIEZAS = [
   },
 
   {
-    id: 'SN-MAND-01',
+    id: 'M-16-0906',
     nombre: 'Mandíbula con hipoplasia de esmalte dental',
     region: 'craneo',
     patologia: 'metabolica',
@@ -796,6 +796,152 @@ const PIEZAS = [
     imagenes: null,
 
     layoutMode: 'default'
+  },
+
+  /* ══════════════════════════════════════════
+     TIBIA CON SÍFILIS
+     layout: comparison · tibia sana vs tibia patológica
+  ══════════════════════════════════════════ */
+  {
+    id: 'TIB-SIF-01',
+    nombre: 'Tibia con sífilis',
+    region: 'miembro-inferior',
+    patologia: 'infecciosa',
+    sexo: 'indeterminado',
+    epoca: 'indeterminado',
+    yacimiento: null,
+    coords: null,
+    descripcion: 'Tibia con marcada alteración morfológica compatible con treponematosis. Presenta engrosamiento diafisario masivo, superficie cortical rugosa y porosa, y reacción periostal difusa asociada a una infección crónica prolongada.',
+    imagen: null,
+    ficha: '/prueba-museo/ficha-estandar.html?id=TIB-SIF-01',
+    modelo3d: null,
+
+    cronologia: null,
+    edad: null,
+    conservacion: null,
+
+    diagnostico_principal: 'Treponematosis (sífilis). La distribución difusa de la lesión, el intenso engrosamiento diafisario y la reacción periostal son compatibles con manifestaciones esqueléticas características de sífilis en estados avanzados.',
+
+    relevancia: 'La treponematosis es uno de los grupos de enfermedades infecciosas más destacado del registro paleopatológico. Tiene una gran capacidad para provocar reacciones óseas diseminadas por todo el hueso que permiten identificar individuos afectados fielmente. La tibia es uno de los huesos más frecuentemente alterados por la inflamación crónica del periostio y del tejido óseo cortical. Esta pieza muestra una remodelación extrema de la diáfisis, siendo un gran ejemplo de esta infección sistémica prolongada.',
+
+    contexto_arqueologico: null,
+
+    descripcion_osteologica: [
+      'La pieza es una tibia con una gran alteración en su morfología. En comparación con un ejemplar sano, la diáfisis presenta un aumento muy relevante de su grosor, alcanzando varias veces el diámetro habitual observado en una tibia sin patología.',
+      'El engrosamiento afecta de manera prácticamente uniforme al hueso, generando una pérdida de los contornos anatómicos normales. La superficie cortical tiene un aspecto rugoso y poroso, resultado de una importante neoformación ósea por procesos inflamatorios crónicos.',
+      'Se puede ver una reacción periostal distribuida a lo largo de la diáfisis, acompañada por remodelación cortical y depósito continuado de nuevo tejido óseo. A diferencia de otros casos de sífilis avanzada, esta tibia no presenta morfología de “tibia en sable”, predominando el engrosamiento y la alteración superficial.'
+    ],
+
+    hallazgos: [
+      {
+        titulo: 'Osteomielitis crónica — Diagnóstico diferencial',
+        items: [
+          { texto: 'Esta enfermedad puede producir engrosamiento cortical y neoformación ósea. Sin embargo, suele generar lesiones más localizadas y acompañadas de secuestros óseos y cloacas de drenaje, ausentes en este ejemplar.' }
+        ]
+      },
+      {
+        titulo: 'Periostitis inespecífica — Menos probable',
+        items: [
+          { texto: 'Puede producir superficies rugosas y neoformación ósea, pero generalmente genera una afectación menos extensa y menor remodelación cortical que la observada en esta tibia.' }
+        ]
+      },
+      {
+        titulo: 'Osteoartropatía hipertrófica — Diagnóstico diferencial',
+        items: [
+          { texto: 'Produce neoformación periostal bilateral. Suele afectar simultáneamente varios huesos largos y genera una morfología diferente a la observada en esta pieza.' }
+        ]
+      }
+    ],
+
+    referencias: [
+      {
+        id: 1,
+        autores: 'Ortner DJ.',
+        anio: '2003',
+        titulo: 'Identification of pathological conditions in human skeletal remains',
+        editorial: '2nd ed. San Diego: Academic Press'
+      }
+    ],
+
+    imagenes: null,
+
+    layoutMode: 'comparison',
+    modelos_comparacion: [
+      {
+        src: './assets/models/tibia.glb',
+        titulo: 'Tibia sana',
+        badge: 'Sana'
+      },
+      {
+        titulo: 'Tibia con sífilis',
+        badge: 'Patológica',
+        geometria: './assets/models/tibia-s-blue.glb',
+        textura: './assets/models/tibia-s.glb'
+      }
+    ]
+  },
+
+  /* ══════════════════════════════════════════
+     CRÁNEO CON TREPANACIÓN
+     layout: default · modelo único
+  ══════════════════════════════════════════ */
+  {
+    id: 'AL-03-1897',
+    nombre: 'Cráneo con trepanación',
+    region: 'craneo',
+    patologia: 'trauma',
+    sexo: 'indeterminado',
+    epoca: 'moderno',
+    yacimiento: 'Osario de Santa María de la Soledad, Almansa, Albacete',
+    coords: [1729.55, 966.92],
+    descripcion: 'Cráneo procedente del osario de Santa María de la Soledad que presenta una trepanación localizada en el hueso parietal izquierdo, próxima a la sutura sagital y con afectación de la sutura coronal.',
+    imagen: null,
+    ficha: '/prueba-museo/ficha-estandar.html?id=AL-03-1897',
+    modelo3d: './assets/models/al-03-1897.glb',
+
+    cronologia: null,
+    edad: null,
+    conservacion: null,
+
+    diagnostico_principal: 'Trepanación craneal localizada en el hueso parietal izquierdo, próxima a la sutura sagital y con afectación de la sutura coronal.',
+
+    relevancia: 'La pieza presenta una trepanación en el hueso parietal izquierdo, situada cerca de la sutura sagital y cortando la sutura coronal. Este tipo de lesión resulta especialmente relevante para el estudio de prácticas quirúrgicas o intervenciones craneales en poblaciones históricas.',
+
+    contexto_arqueologico: [
+      'El conjunto de restos óseos procede del osario de Santa María de la Soledad, en Almansa, Albacete. Este contexto se interpreta como un depósito secundario vinculado al antiguo espacio funerario de la iglesia.'
+    ],
+
+    descripcion_osteologica: [
+      'La pieza corresponde a un cráneo con una abertura artificial localizada en el hueso parietal izquierdo. La lesión se sitúa próxima a la sutura sagital y afecta parcialmente a la sutura coronal.',
+      'La morfología de la abertura, su localización anatómica y la delimitación de sus bordes permiten interpretarla como una trepanación craneal. La descripción detallada del grado de remodelación de los márgenes queda pendiente de observación directa de la pieza o del modelo tridimensional.'
+    ],
+
+    hallazgos: [
+      {
+        titulo: 'Fractura traumática — Diagnóstico diferencial',
+        items: [
+          { texto: 'Una fractura craneal puede producir pérdidas óseas o aberturas irregulares. Sin embargo, la localización y morfología organizada de la lesión favorecen la interpretación como trepanación.' }
+        ]
+      },
+      {
+        titulo: 'Alteración tafonómica — Menos probable',
+        items: [
+          { texto: 'Los procesos post mortem pueden generar roturas o pérdidas de tejido óseo, pero normalmente presentan bordes irregulares y ausencia de patrón técnico. La interpretación debe confirmarse mediante el análisis de los bordes de la abertura.' }
+        ]
+      },
+      {
+        titulo: 'Lesión quirúrgica o intervención intencional — Diagnóstico principal',
+        items: [
+          { texto: 'La localización parietal y la morfología de la abertura son compatibles con una trepanación, entendida como una intervención intencional sobre el cráneo.' }
+        ]
+      }
+    ],
+
+    referencias: null,
+
+    imagenes: null,
+
+    layoutMode: 'default'
   }
 
 ]; /* fin PIEZAS */
@@ -930,10 +1076,11 @@ sexo: {
     indeterminado: { label:'Indeterminado', icon:'◎' }
   },
   epoca: {
-    prehistoria: { label:'Prehistoria',   range:'—3000 a.C.'   },
-    romano:      { label:'Época romana',  range:'I–V d.C.'     },
-    medieval:    { label:'Edad Media',    range:'V–XV d.C.'    },
-    moderno:     { label:'Época moderna', range:'XVI–XIX d.C.' }
+    prehistoria:   { label:'Prehistoria',   range:'—3000 a.C.'   },
+    romano:        { label:'Época romana',  range:'I–V d.C.'     },
+    medieval:      { label:'Edad Media',    range:'V–XV d.C.'    },
+    moderno:       { label:'Época moderna', range:'XVI–XIX d.C.' },
+    indeterminado: { label:'Indeterminado', range:'—'            }
   }
 };
 

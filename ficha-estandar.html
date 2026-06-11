@@ -1080,6 +1080,8 @@
     modelos.forEach(function(m, i) {
       var wrap = document.createElement('div');
       wrap.className = 'fe-comp-viewer';
+      var hasToggle  = !m.src && m.geometria;
+      var initialSrc = m.src || m.geometria;
       wrap.innerHTML =
         '<div class="fe-comp-viewer__header">' +
           '<span class="fe-comp-viewer__title">' + m.titulo + '</span>' +
@@ -1088,9 +1090,15 @@
             FS_SVG +
           '</button>' +
         '</div>' +
+        (hasToggle ?
+          '<div class="fe-toggle-pill" role="group" aria-label="Modo de visualización">' +
+            '<button class="fe-toggle-pill__btn is-active" data-viewer="' + mvIds[i] + '" data-src="' + m.geometria + '" aria-pressed="true">Geometría</button>' +
+            '<button class="fe-toggle-pill__btn" data-viewer="' + mvIds[i] + '" data-src="' + m.textura + '" aria-pressed="false">Textura</button>' +
+          '</div>'
+        : '') +
         '<model-viewer' +
           ' id="' + mvIds[i] + '"' +
-          ' src="' + m.src + '"' +
+          ' src="' + initialSrc + '"' +
           ' alt="' + m.titulo + '"' +
           ' camera-controls auto-rotate' +
           ' shadow-intensity="1.2" exposure="0.8"' +
@@ -1102,6 +1110,20 @@
     });
 
     main.insertBefore(panel, galleryHero);
+
+    /* Eventos de los toggle pills (geometría/textura) */
+    panel.querySelectorAll('.fe-toggle-pill__btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var mv = document.getElementById(btn.dataset.viewer);
+        if (mv && btn.dataset.src) mv.setAttribute('src', btn.dataset.src);
+        var pill = btn.closest('.fe-toggle-pill');
+        pill.querySelectorAll('.fe-toggle-pill__btn').forEach(function(b) {
+          var active = b === btn;
+          b.classList.toggle('is-active', active);
+          b.setAttribute('aria-pressed', String(active));
+        });
+      });
+    });
 
     /* Fila de sincronización */
     var syncRow = document.createElement('div');
@@ -1121,7 +1143,7 @@
         if (window.PaleoViewer) {
           PaleoViewer.openFullscreen(
             document.getElementById(mvIds[i]),
-            { geometria: m.src, textura: null },
+            m.src ? { geometria: m.src, textura: null } : { geometria: m.geometria, textura: m.textura },
             m.titulo
           );
         }
