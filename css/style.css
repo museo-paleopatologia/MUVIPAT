@@ -86,10 +86,14 @@ ul { list-style: none; }
 /* ── Logos institucionales en footer ── */
 .footer__logos {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 1rem;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: clamp(1.25rem, 3vw, 2rem);
 }
+.footer__logo-link { display: flex; align-items: center; }
+
+.footer__logo-img--lapp,
 .footer__logo-img--lav2 {
   height: clamp(44px, 6vw, 64px);
   width: auto;
@@ -796,9 +800,11 @@ h1, h2, h3, h4, h5, h6 {
    FOOTER
    ============================================================ */
 .site-footer { background: var(--dark); border-top: var(--border-thick); padding-block: clamp(2rem,4vw,3.5rem); color: var(--bone-400); }
-.footer__inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
+.footer__inner { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 1.75rem 3rem; }
+.footer__left { display: flex; flex-direction: column; gap: 1.25rem; }
 .footer__brand { font-family: var(--font-head); font-weight: 900; font-size: 0.9rem; letter-spacing: -0.02em; color: var(--ivory); text-transform: uppercase; }
-.footer__meta { font-size: 0.78rem; line-height: 1.6; text-align: center; }
+.footer__meta { font-size: 0.78rem; line-height: 1.6; text-align: right; }
+.footer__meta strong { color: var(--ivory); letter-spacing: 0.05em; }
 .footer__links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
 .footer__link { font-family: var(--font-head); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--bone-400); transition: color 0.2s; }
 .footer__link:hover { color: var(--cyan); }
@@ -856,6 +862,9 @@ h1, h2, h3, h4, h5, h6 {
   .module-card--coleccion .module-card__inner { flex-direction: column; }
   .hero__stats { gap: 1.5rem; }
   .footer__inner { flex-direction: column; text-align: center; }
+  .footer__left { align-items: center; }
+  .footer__meta { text-align: center; }
+  .footer__logo-link--lav, .footer__logo-link--facultad { display: none; }
   .footer__links { justify-content: center; }
   .modules__header { flex-direction: column; align-items: flex-start; }
 }
