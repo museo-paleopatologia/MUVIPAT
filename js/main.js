@@ -1,5 +1,5 @@
 /**
- * PaleoMuseo · main.js
+ * MUVIPAT · main.js
  * Nav scroll · Hamburger · Scroll reveal (progressive) · GSAP hero
  */
 

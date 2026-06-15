@@ -1,5 +1,5 @@
 /**
- * PaleoMuseo · visualizador.js
+ * MUVIPAT · visualizador.js
  * Filtrado OR dentro de categoría, AND entre categorías
  * Row-injection con GSAP · Slider independiente por fila
  */

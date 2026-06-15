@@ -1,5 +1,5 @@
 /**
- * PaleoMuseo · glosario-modal.js
+ * MUVIPAT · glosario-modal.js
  * ─────────────────────────────────────────────────────────────────
  * Módulo reutilizable del modal de glosario (#glos-modal).
  * Requiere que el documento incluya:

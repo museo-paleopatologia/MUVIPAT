@@ -1,5 +1,5 @@
 /**
- * PaleoMuseo · data.js
+ * MUVIPAT · data.js
  * ─────────────────────────────────────────────────────────────────
  * FUENTE ÚNICA DE VERDAD de todo el contenido del museo.
  *

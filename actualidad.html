@@ -7,7 +7,7 @@
   <link rel="icon" type="image/png" href="./assets/img/favicon.png">
   <link rel="apple-touch-icon" href="./assets/img/favicon.png">
   <meta name="description" content="Actualidad en paleopatología — noticias, eventos y nuevas publicaciones académicas." />
-  <title>Actualidad · PaleoMuseo</title>
+  <title>Actualidad · MUVIPAT</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -474,10 +474,10 @@
   <header class="site-header" id="site-header">
     <div class="container">
       <nav class="nav" role="navigation" aria-label="Navegación principal">
-        <a href="./index.html" class="nav__logo" aria-label="PaleoMuseo — Inicio">
+        <a href="./index.html" class="nav__logo" aria-label="MUVIPAT — Inicio">
           <img src="./assets/img/lav_uam.png" alt="Laboratorio de Antropología Virtual · UAM" class="nav__logo-img" />
           <div>
-            <div>Paleo<strong>Museo</strong></div>
+            <div>MUVI<strong>PAT</strong></div>
             <div style="font-size:0.6em;font-weight:400;opacity:0.5;letter-spacing:0.1em">PALEOPATOLOGÍA</div>
           </div>
         </a>
@@ -618,14 +618,14 @@
       id: 'n001', tipo: 'noticia', destacada: true,
       titulo: 'Descubren una trepanación de 3.500 años en los Andes con evidencias de supervivencia',
       descripcion: 'Un equipo de arqueólogos ha documentado en el yacimiento de Huaca Pucllana (Perú) una trepanación craneal con bordes completamente remodelados, indicando que el individuo sobrevivió al menos cinco años tras la intervención. Es uno de los casos más antiguos de cirugía exitosa documentado en América del Sur.',
-      fecha: '2025-03-15', fuente: 'PaleoMuseo · Divulgación propia',
+      fecha: '2025-03-15', fuente: 'MUVIPAT · Divulgación propia',
       color: '#c0003c', url: 'https://www.nature.com', imagen: null, emoji: '🦴'
     },
     {
       id: 'n002', tipo: 'divulgacion', destacada: false,
       titulo: 'La paleopatología en el aula: nuevas herramientas digitales para la enseñanza',
       descripcion: 'El uso de modelos 3D y museos virtuales está transformando la forma en que se enseña bioarqueología en las universidades españolas. Este artículo recoge experiencias de varios grupos de investigación que están integrando la digitalización patrimonial en sus programas docentes.',
-      fecha: '2025-02-28', fuente: 'PaleoMuseo · Artículo propio',
+      fecha: '2025-02-28', fuente: 'MUVIPAT · Artículo propio',
       color: '#aa00ff', url: '#', imagen: null, emoji: '🎓'
     },
     {
@@ -639,14 +639,14 @@
       id: 'n004', tipo: 'noticia', destacada: false,
       titulo: 'Identificada la primera evidencia de escorbuto en población medieval andalusí',
       descripcion: 'El análisis de restos óseos procedentes de la necrópolis de Madinat al-Zahra ha permitido identificar lesiones compatibles con escorbuto en individuos adultos, sugiriendo déficit de vitamina C en ciertos grupos poblacionales de Al-Ándalus.',
-      fecha: '2024-12-10', fuente: 'PaleoMuseo · Divulgación propia',
+      fecha: '2024-12-10', fuente: 'MUVIPAT · Divulgación propia',
       color: '#ff6d00', url: '#', imagen: null, emoji: '⚗️'
     },
     {
       id: 'n005', tipo: 'divulgacion', destacada: false,
       titulo: '¿Qué nos dicen los huesos sobre la violencia en la Prehistoria?',
       descripcion: 'Una revisión de los patrones de trauma perimortem en Europa durante el Neolítico y la Edad del Bronce revela un aumento significativo de la violencia interpersonal coincidiendo con los primeros conflictos por recursos agrícolas y ganaderos.',
-      fecha: '2024-11-05', fuente: 'PaleoMuseo · Artículo propio',
+      fecha: '2024-11-05', fuente: 'MUVIPAT · Artículo propio',
       color: '#ff4081', url: '#', imagen: null, emoji: '⚡'
     },
   ];
@@ -811,7 +811,7 @@
     try {
       const query = encodeURIComponent('paleopathology skeletal');
       const url   = `https://api.crossref.org/works?query=${query}&rows=5&sort=published&order=desc&select=DOI,title,author,published,container-title`;
-      const data  = await fetch(url,{headers:{'User-Agent':'PaleoMuseo/1.0 (TFG UAM)'}}).then(r=>r.json());
+      const data  = await fetch(url,{headers:{'User-Agent':'MUVIPAT/1.0 (TFG UAM)'}}).then(r=>r.json());
       const items = data?.message?.items || [];
       if (!items.length) { list.innerHTML='<p style="font-size:.75rem;color:var(--ac-mid)">Sin resultados.</p>'; return; }
       list.innerHTML='';

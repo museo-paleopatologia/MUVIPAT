@@ -1,5 +1,5 @@
 /* ============================================================
-   PaleoMuseo · viewer3d.js
+   MUVIPAT · viewer3d.js
    Sistema centralizado de visualización 3D — v2
    Problemas resueltos:
      P1 · Pantalla completa con overlay position:fixed (100vw × 100dvh)
