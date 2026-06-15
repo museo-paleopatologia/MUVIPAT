@@ -89,24 +89,36 @@ ul { list-style: none; }
   flex-direction: row;
   align-items: center;
   flex-wrap: wrap;
-  gap: clamp(1.25rem, 3vw, 2rem);
+  gap: clamp(1rem, 2.5vw, 1.75rem);
 }
 .footer__logo-link { display: flex; align-items: center; }
 
-.footer__logo-img--lapp,
-.footer__logo-img--lav2 {
-  height: clamp(44px, 6vw, 64px);
-  width: auto;
+.footer__logo-img--lapp {
   display: block;
+  height: auto;
+  width: auto;
+  max-height: 56px;
+  max-width: 220px;
+  object-fit: contain;
+  filter: invert(1) brightness(1.8) contrast(1.1);
+}
+
+.footer__logo-img--lav2 {
+  display: block;
+  height: auto;
+  width: auto;
+  max-height: 50px;
+  max-width: 180px;
   object-fit: contain;
   filter: brightness(0) invert(1);
 }
 
 .footer__logo-img--facultad {
-  height: clamp(28px, 3.5vw, 40px);
-  max-width: 200px;
-  width: auto;
   display: block;
+  height: auto;
+  width: auto;
+  max-height: 50px;
+  max-width: 320px;
   object-fit: contain;
   opacity: .9;
 }
@@ -799,9 +811,9 @@ h1, h2, h3, h4, h5, h6 {
 /* ============================================================
    FOOTER
    ============================================================ */
-.site-footer { background: var(--dark); border-top: var(--border-thick); padding-block: clamp(2rem,4vw,3.5rem); color: var(--bone-400); }
-.footer__inner { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 1.75rem 3rem; }
-.footer__left { display: flex; flex-direction: column; gap: 1.25rem; }
+.site-footer { background: var(--dark); border-top: var(--border-thick); padding-block: clamp(1.5rem,3vw,2.5rem); color: var(--bone-400); }
+.footer__inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.25rem 2.5rem; }
+.footer__left { display: flex; flex-direction: column; gap: 0.85rem; }
 .footer__brand { font-family: var(--font-head); font-weight: 900; font-size: 0.9rem; letter-spacing: -0.02em; color: var(--ivory); text-transform: uppercase; }
 .footer__meta { font-size: 0.78rem; line-height: 1.6; text-align: right; }
 .footer__meta strong { color: var(--ivory); letter-spacing: 0.05em; }
@@ -864,7 +876,10 @@ h1, h2, h3, h4, h5, h6 {
   .footer__inner { flex-direction: column; text-align: center; }
   .footer__left { align-items: center; }
   .footer__meta { text-align: center; }
-  .footer__logo-link--lav, .footer__logo-link--facultad { display: none; }
+  .footer__logos { justify-content: center; }
+  .footer__logo-img--lapp { max-height: 40px; max-width: 160px; }
+  .footer__logo-img--lav2 { max-height: 36px; max-width: 140px; }
+  .footer__logo-img--facultad { max-height: 34px; max-width: 220px; }
   .footer__links { justify-content: center; }
   .modules__header { flex-direction: column; align-items: flex-start; }
 }
