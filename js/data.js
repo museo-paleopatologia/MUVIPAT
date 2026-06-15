@@ -25,7 +25,7 @@
  *     edad, cronologia, conservacion, diagnostico_principal, modelo3d,
  *     descripcion_osteologica  → string[]
  *     hallazgos                → [ { titulo, items: [ { texto, refs? } ] } ]
- *     referencias              → [ { id, autores, anio, titulo, editorial, doi? } ]
+ *     referencias              → [ { id, autores, anio, titulo, editorial, doi?, enlace? } ]
  *     imagenes                 → [ { src, caption } ]
  *
  *   Datos patológicos específicos (usados en grids de ficha maestra):
@@ -63,7 +63,7 @@ const PIEZAS = [
 
     diagnostico_principal: 'Craneosinostosis sagital que deriva en escafocefalia. La fusión prematura de la sutura sagital explica el alargamiento anteroposterior de la bóveda craneal y la presencia de una quilla sagital pronunciada.',
 
-    relevancia: 'Caso excepcional de <strong>craneosinostosis sagital</strong> documentado en contexto arqueológico medieval hispano-judío. El individuo alcanzó una edad estimada de entre 35 y 50 años<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>, lo que demuestra una supervivencia prolongada pese a la alteración congénita. El excelente estado de conservación ha permitido una reconstrucción prácticamente completa del esqueleto<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>, aportando información sobre las consecuencias de esta patología en las condiciones de vida del individuo. Por su singularidad, fue presentado en el V Congreso Nacional de Paleopatología como ejemplo de craneosinostosis sagital en poblaciones históricas<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>.',
+    relevancia: 'Caso excepcional de <strong>craneosinostosis sagital</strong> documentado en contexto arqueológico medieval hispano-judío. El individuo alcanzó una edad estimada de entre 35 y 50 años<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>, lo que demuestra una supervivencia prolongada pese a la alteración congénita. Por su singularidad, fue presentado en el V Congreso Nacional de Paleopatología como ejemplo de craneosinostosis sagital en poblaciones históricas<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>.',
 
     contexto_arqueologico: [
       'La pieza procede del yacimiento arqueológico de la "Cuesta de los Hoyos", también llamado "El Pinarillo", situado frente al antiguo barrio judío de Segovia<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>. Se trata de uno de los pocos ejemplos de cementerios judíos medievales documentados arqueológicamente en la Península Ibérica<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>.',
@@ -105,14 +105,16 @@ const PIEZAS = [
         autores: 'Robles FJ, Campo M, González A.',
         anio: '1999',
         titulo: 'Craniostenosis sagital',
-        editorial: 'En: Sánchez Sánchez JA, editor. Actas V Congreso Nacional de Paleopatología; 1999; Alcalá la Real (Jaén). Jaén: Asociación Española de Paleopatología'
+        editorial: 'En: Sánchez Sánchez JA, editor. Actas V Congreso Nacional de Paleopatología; 1999; Alcalá la Real (Jaén). Jaén: Asociación Española de Paleopatología',
+        enlace: 'https://asociacionpaleopatologia.es/actas-congresos-aep/'
       },
       {
         id: 2,
         autores: 'Fernández Esteban S.',
         anio: '1999',
         titulo: 'Análisis de las estructuras funerarias de la Cuesta de los Hoyos, Segovia, un ejemplo de necrópolis medieval hebrea',
-        editorial: 'En: XXIV Congreso Nacional de Arqueología; oct 1997; Cartagena. Cartagena: Universidad de Murcia; 1999. p. 225-32'
+        editorial: 'En: XXIV Congreso Nacional de Arqueología; oct 1997; Cartagena. Cartagena: Universidad de Murcia; 1999. p. 225-32',
+        enlace: 'https://www.academia.edu/5389566/An%C3%A1lisis_de_las_estructuras_funerarias_de_la_Cuesta_de_los_Hoyos_Segovia_un_ejemplo_de_necr%C3%B3polis_medieval_hebrea'
       }
     ],
 

@@ -1464,7 +1464,7 @@ function getPlanosWidget() {
           cat,
           ref: refText,
           doi: ref.doi ? ref.doi.replace('https://doi.org/', '') : null,
-          url: ref.doi || null,
+          url: ref.doi || ref.enlace || null,
           piezaId: pieza.id  // para filtrar por pieza en el futuro
         });
       });
@@ -1926,10 +1926,10 @@ function getPlanosWidget() {
       <div class="footer__inner">
         <div class="footer__left">
           <div class="footer__logos">
-            <a href="https://www.lavidamata.xyz/" target="_blank" rel="noopener" class="footer__logo-link footer__logo-link--lapp" aria-label="LAPP · Laboratorio de Poblaciones del Pasado · UAM">
+            <a href="https://www.uam.es/uam/investigacion/grupos-de-investigacion/detalle/f1-110" target="_blank" rel="noopener" class="footer__logo-link footer__logo-link--lapp" aria-label="LAPP · Laboratorio de Poblaciones del Pasado · UAM">
               <img src="./assets/img/logo-LAPP.png" alt="Logo del Laboratorio de Poblaciones del Pasado (LAPP) · UAM" class="footer__logo-img footer__logo-img--lapp" />
             </a>
-            <a href="https://www.lavidamata.xyz/" target="_blank" rel="noopener" class="footer__logo-link footer__logo-link--lav" aria-label="LAV · Laboratorio de Antropología Virtual · UAM">
+            <a href="https://www.uam.es/uam/investigacion/grupos-de-investigacion/detalle/f1-110" target="_blank" rel="noopener" class="footer__logo-link footer__logo-link--lav" aria-label="LAV · Laboratorio de Antropología Virtual · UAM">
               <img src="./assets/img/lav_uam2.png" alt="Logo del Laboratorio de Antropología Virtual (LAV) · UAM" class="footer__logo-img footer__logo-img--lav2" />
             </a>
             <a href="https://www.uam.es/ciencias/inicio" target="_blank" rel="noopener" class="footer__logo-link footer__logo-link--facultad" aria-label="Facultad de Ciencias · UAM">

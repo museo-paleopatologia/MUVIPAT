@@ -779,10 +779,10 @@
     <div class="footer__inner">
       <div class="footer__left">
         <div class="footer__logos">
-          <a href="https://www.lavidamata.xyz/" target="_blank" rel="noopener" class="footer__logo-link footer__logo-link--lapp" aria-label="LAPP · Laboratorio de Poblaciones del Pasado · UAM">
+          <a href="https://www.uam.es/uam/investigacion/grupos-de-investigacion/detalle/f1-110" target="_blank" rel="noopener" class="footer__logo-link footer__logo-link--lapp" aria-label="LAPP · Laboratorio de Poblaciones del Pasado · UAM">
             <img src="./assets/img/logo-LAPP.png" alt="Logo del Laboratorio de Poblaciones del Pasado (LAPP) · UAM" class="footer__logo-img footer__logo-img--lapp" />
           </a>
-          <a href="https://www.lavidamata.xyz/" target="_blank" rel="noopener" class="footer__logo-link footer__logo-link--lav" aria-label="LAV · Laboratorio de Antropología Virtual · UAM">
+          <a href="https://www.uam.es/uam/investigacion/grupos-de-investigacion/detalle/f1-110" target="_blank" rel="noopener" class="footer__logo-link footer__logo-link--lav" aria-label="LAV · Laboratorio de Antropología Virtual · UAM">
             <img src="./assets/img/lav_uam2.png" alt="Logo del Laboratorio de Antropología Virtual (LAV) · UAM" class="footer__logo-img footer__logo-img--lav2" />
           </a>
           <a href="https://www.uam.es/ciencias/inicio" target="_blank" rel="noopener" class="footer__logo-link footer__logo-link--facultad" aria-label="Facultad de Ciencias · UAM">
@@ -1045,6 +1045,12 @@
         html += ` <a href="${ref.doi}" target="_blank" rel="noopener noreferrer">
           <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
           DOI
+        </a>`;
+      }
+      if (ref.enlace) {
+        html += ` <a href="${ref.enlace}" target="_blank" rel="noopener noreferrer">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+          Ver recurso
         </a>`;
       }
       div.innerHTML = html;
