@@ -425,6 +425,74 @@
     .ac-sidebar__section::-webkit-scrollbar-thumb { background: #0d0d0d; border-radius: 2px; }
 
     /* ═══════════════════════════════════════
+       DIVULGACIÓN Y COMUNIDAD
+    ═══════════════════════════════════════ */
+    .ac-divulgacion {
+      border-top: var(--ac-border);
+      padding-top: clamp(2rem, 4vw, 3rem);
+    }
+    .ac-divulgacion__label {
+      font-family: var(--font-head);
+      font-size: .65rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
+      color: var(--cyan);
+      display: flex; align-items: center; gap: .5rem;
+      margin-bottom: .6rem;
+    }
+    .ac-divulgacion__label::before {
+      content: ''; display: block; width: 25px; height: 2.5px; background: var(--cyan);
+    }
+    .ac-divulgacion__title {
+      font-family: var(--font-head);
+      font-size: clamp(1.1rem, 2vw, 1.5rem);
+      font-weight: 900; letter-spacing: -.03em;
+      color: var(--ac-ink);
+      margin-bottom: .75rem;
+    }
+    .ac-divulgacion__scroll {
+      display: flex;
+      gap: 1rem;
+      overflow-x: scroll;
+      padding-bottom: 1rem;
+      scroll-snap-type: x mandatory;
+    }
+    .ac-divulgacion__scroll::-webkit-scrollbar { height: 5px; }
+    .ac-divulgacion__scroll::-webkit-scrollbar-track { background: #e8dfc8; }
+    .ac-divulgacion__scroll::-webkit-scrollbar-thumb { background: #0d0d0d; border-radius: 2px; }
+    .ac-divulgacion-card {
+      flex-shrink: 0;
+      width: 240px;
+      scroll-snap-align: start;
+      background: #fff;
+      border: var(--ac-border);
+      box-shadow: var(--ac-shadow-sm);
+      border-radius: 4px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+    }
+    .ac-divulgacion-card__accent { height: 4px; width: 100%; flex-shrink: 0; }
+    .ac-divulgacion-card__body { padding: 1rem; display: flex; flex-direction: column; flex: 1; }
+    .ac-divulgacion-card__tag {
+      font-size: .55rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      padding: .2em .55em; border: 1.5px solid; border-radius: 2px;
+      align-self: flex-start; margin-bottom: .6rem;
+    }
+    .ac-divulgacion-card__title {
+      font-family: var(--font-head); font-size: .85rem; font-weight: 800;
+      color: var(--ac-ink); line-height: 1.25; margin-bottom: .4rem;
+    }
+    .ac-divulgacion-card__desc {
+      font-size: .72rem; color: var(--ac-mid); line-height: 1.5; font-weight: 300; flex: 1;
+    }
+    .ac-divulgacion-card__footer {
+      margin-top: .75rem; padding-top: .6rem;
+      border-top: 1.5px solid rgba(0,0,0,.07);
+      font-size: .6rem; font-weight: 700;
+      font-family: var(--font-head); text-transform: uppercase; letter-spacing: .08em;
+    }
+
+    /* ═══════════════════════════════════════
        RESPONSIVE
     ═══════════════════════════════════════ */
     @media (max-width: 1050px) {
@@ -496,16 +564,6 @@
   </div>
 
   <!-- ══════════════════════════════════
-       HERO DESTACADO
-  ══════════════════════════════════ -->
-  <section class="ac-hero" id="hero-section">
-    <div class="ac-hero__inner">
-      <p class="ac-hero__label">Noticia destacada</p>
-      <div id="hero-card-wrap"></div>
-    </div>
-  </section>
-
-  <!-- ══════════════════════════════════
        GRID NOTICIAS + SIDEBAR
   ══════════════════════════════════ -->
   <section class="ac-main">
@@ -520,7 +578,7 @@
             <h2 class="ac-grid-title">Últimas noticias</h2>
             <span class="ac-grid-count"><strong id="news-count">—</strong> artículos</span>
           </div>
-          <p style="font-size:.7rem;color:var(--ac-mid);font-weight:300;text-align:right;margin-top:-.75rem;margin-bottom:1.25rem;font-family:var(--font-head);letter-spacing:.04em;">En el futuro, este espacio recogerá noticias y publicaciones del LAV·UAM.</p>
+          <p style="font-size:.75rem;font-style:italic;color:var(--ac-mid);margin-bottom:1rem;">En el futuro, este espacio recogerá noticias y publicaciones propias del LAV·UAM.</p>
           <div class="ac-grid" id="news-grid">
             <div class="ac-loading">
               <div class="ac-spinner"></div>
@@ -529,10 +587,91 @@
           </div>
         </div>
 
+        <!-- Divulgación y comunidad -->
+        <div class="ac-divulgacion">
+          <p class="ac-divulgacion__label">Recursos recomendados</p>
+          <h2 class="ac-divulgacion__title">Divulgación y comunidad</h2>
+          <p style="font-size:.8rem;color:var(--ac-mid);margin-bottom:1.25rem;font-weight:300;line-height:1.6;">Publicaciones, asociaciones y recursos audiovisuales para acercarse a la paleopatología y la bioarqueología más allá de la investigación especializada.</p>
+          <div class="ac-divulgacion__scroll">
+
+            <a href="https://youtu.be/z2Ks0HILZWk" target="_blank" rel="noopener noreferrer" class="ac-divulgacion-card">
+              <div class="ac-divulgacion-card__accent" style="background:#c0003c"></div>
+              <div class="ac-divulgacion-card__body">
+                <span class="ac-divulgacion-card__tag" style="border-color:#c0003c;color:#c0003c">Vídeo</span>
+                <p class="ac-divulgacion-card__title">Paleopatología: las enfermedades a través del tiempo</p>
+                <p class="ac-divulgacion-card__desc">Charla de divulgación del investigador Miguel Botella López (UGR) para público general. Explica qué es la paleopatología y qué información aportan los huesos sobre las enfermedades del pasado.</p>
+                <div class="ac-divulgacion-card__footer" style="color:#c0003c">Ver recurso →</div>
+              </div>
+            </a>
+
+            <a href="https://podcasts.apple.com/us/podcast/bioarchaeology-assessing-the-present-episode-2-of-3/id1518833495" target="_blank" rel="noopener noreferrer" class="ac-divulgacion-card">
+              <div class="ac-divulgacion-card__accent" style="background:#aa00ff"></div>
+              <div class="ac-divulgacion-card__body">
+                <span class="ac-divulgacion-card__tag" style="border-color:#aa00ff;color:#aa00ff">Podcast</span>
+                <p class="ac-divulgacion-card__title">That Anthro Podcast — Bioarchaeology series</p>
+                <p class="ac-divulgacion-card__desc">Serie de tres episodios con entrevistas a bioarqueólogos activos. Aborda métodos, tecnologías emergentes y consideraciones éticas en la investigación con restos humanos.</p>
+                <div class="ac-divulgacion-card__footer" style="color:#aa00ff">Ver recurso →</div>
+              </div>
+            </a>
+
+            <a href="https://asociacionpaleopatologia.es" target="_blank" rel="noopener noreferrer" class="ac-divulgacion-card">
+              <div class="ac-divulgacion-card__accent" style="background:#00e5ff"></div>
+              <div class="ac-divulgacion-card__body">
+                <span class="ac-divulgacion-card__tag" style="border-color:#00e5ff;color:#00e5ff">Asociación</span>
+                <p class="ac-divulgacion-card__title">Asociación Española de Paleopatología (AEP)</p>
+                <p class="ac-divulgacion-card__desc">Portal de referencia en español con noticias, publicaciones y recursos del campo. Organiza el Congreso Nacional de Paleopatología cada dos años.</p>
+                <div class="ac-divulgacion-card__footer" style="color:#00e5ff">Ver recurso →</div>
+              </div>
+            </a>
+
+            <a href="https://www.seaf.es" target="_blank" rel="noopener noreferrer" class="ac-divulgacion-card">
+              <div class="ac-divulgacion-card__accent" style="background:#00e5ff"></div>
+              <div class="ac-divulgacion-card__body">
+                <span class="ac-divulgacion-card__tag" style="border-color:#00e5ff;color:#00e5ff">Asociación</span>
+                <p class="ac-divulgacion-card__title">Sociedad Española de Antropología Física (SEAF)</p>
+                <p class="ac-divulgacion-card__desc">Sociedad científica fundada en 1976, con revista propia (REAF) y congreso bienal. Referente institucional de la antropología física en España.</p>
+                <div class="ac-divulgacion-card__footer" style="color:#00e5ff">Ver recurso →</div>
+              </div>
+            </a>
+
+            <a href="https://paleopathology-association.wildapricot.org" target="_blank" rel="noopener noreferrer" class="ac-divulgacion-card">
+              <div class="ac-divulgacion-card__accent" style="background:#2979ff"></div>
+              <div class="ac-divulgacion-card__body">
+                <span class="ac-divulgacion-card__tag" style="border-color:#2979ff;color:#2979ff">Asociación</span>
+                <p class="ac-divulgacion-card__title">The Paleopathology Association</p>
+                <p class="ac-divulgacion-card__desc">Asociación internacional de referencia, con acceso a actas de congresos, boletines y recursos académicos sobre paleopatología a nivel global.</p>
+                <div class="ac-divulgacion-card__footer" style="color:#2979ff">Ver recurso →</div>
+              </div>
+            </a>
+
+            <a href="http://www.bioarqueologia.es" target="_blank" rel="noopener noreferrer" class="ac-divulgacion-card">
+              <div class="ac-divulgacion-card__accent" style="background:#d4e60a"></div>
+              <div class="ac-divulgacion-card__body">
+                <span class="ac-divulgacion-card__tag" style="border-color:#d4e60a;color:#d4e60a">Web</span>
+                <p class="ac-divulgacion-card__title">Asociación Profesional de Bioarqueología</p>
+                <p class="ac-divulgacion-card__desc">Referente en España para la bioarqueología aplicada, con recursos profesionales, directorio de investigadores y noticias del sector.</p>
+                <div class="ac-divulgacion-card__footer" style="color:#d4e60a">Ver recurso →</div>
+              </div>
+            </a>
+
+            <a href="http://www.babao.org.uk" target="_blank" rel="noopener noreferrer" class="ac-divulgacion-card">
+              <div class="ac-divulgacion-card__accent" style="background:#2979ff"></div>
+              <div class="ac-divulgacion-card__body">
+                <span class="ac-divulgacion-card__tag" style="border-color:#2979ff;color:#2979ff">Asociación</span>
+                <p class="ac-divulgacion-card__title">BABAO — British Association for Biological Anthropology and Osteoarchaeology</p>
+                <p class="ac-divulgacion-card__desc">Asociación británica con recursos de formación, guías éticas y publicaciones especializadas en osteoarqueología y antropología biológica.</p>
+                <div class="ac-divulgacion-card__footer" style="color:#2979ff">Ver recurso →</div>
+              </div>
+            </a>
+
+          </div>
+        </div>
+
         <!-- Eventos y congresos — justo debajo del grid -->
         <div class="ac-events-inline">
           <p class="ac-events-inline__label">Próximas citas</p>
           <h2 class="ac-events-inline__title">Eventos y congresos</h2>
+          <p style="font-size:.75rem;font-style:italic;color:var(--ac-mid);margin-bottom:1rem;">Los eventos listados son orientativos. Próximamente este espacio recogerá convocatorias reales del campo.</p>
           <div class="ac-events__grid" id="events-grid"></div>
         </div>
 
@@ -829,7 +968,6 @@
   });
 
   /* ── Init ── */
-  renderHero();
   renderNewsGrid();
   renderEventos();
   fetchPubMed();
