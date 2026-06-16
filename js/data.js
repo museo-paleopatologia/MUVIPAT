@@ -49,9 +49,9 @@ const PIEZAS = [
     patologia: 'congenita',
     sexo: 'masculino',
     epoca: 'medieval',
-    yacimiento: 'Necrópolis sefardí "Cuesta de los Hoyos", Segovia, España',
+    yacimiento: 'Necrópolis medieval "Cuesta de los Hoyos", Segovia, España',
     coords: [1307.62, 602.52],
-    descripcion: 'Cráneo masculino adulto con escafocefalia derivada de craneosinostosis sagital. El individuo alcanzó entre 35 y 50 años de edad pese a la alteración congénita, en contexto de necrópolis judía medieval segoviana.',
+    descripcion: 'Cráneo masculino adulto con escafocefalia derivada de craneosinostosis sagital. El individuo alcanzó entre 35 y 50 años de edad pese a la alteración congénita.',
     imagen: '/prueba-museo/assets/img/CH-21/superior.png',
     ficha: '/prueba-museo/ficha-estandar.html?id=CH-21',
     modelo3d: './assets/models/CH-21-textura.glb',
@@ -63,12 +63,12 @@ const PIEZAS = [
 
     diagnostico_principal: 'Craneosinostosis sagital que deriva en escafocefalia. La fusión prematura de la sutura sagital explica el alargamiento anteroposterior de la bóveda craneal y la presencia de una quilla sagital pronunciada.',
 
-    relevancia: 'Caso excepcional de <strong>craneosinostosis sagital</strong> documentado en contexto arqueológico medieval hispano-judío. El individuo alcanzó una edad estimada de entre 35 y 50 años<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>, lo que demuestra una supervivencia prolongada pese a la alteración congénita. Por su singularidad, fue presentado en el V Congreso Nacional de Paleopatología como ejemplo de craneosinostosis sagital en poblaciones históricas<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>.',
+    relevancia: 'Caso excepcional de <strong>craneosinostosis sagital</strong> documentado en contexto arqueológico medieval. El individuo alcanzó una edad estimada de entre 35 y 50 años<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>, lo que demuestra una supervivencia prolongada pese a la alteración congénita. Por su singularidad, fue presentado en el V Congreso Nacional de Paleopatología como ejemplo de craneosinostosis sagital en poblaciones históricas<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>.',
 
     contexto_arqueologico: [
-      'La pieza procede del yacimiento arqueológico de la "Cuesta de los Hoyos", también llamado "El Pinarillo", situado frente al antiguo barrio judío de Segovia<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>. Se trata de uno de los pocos ejemplos de cementerios judíos medievales documentados arqueológicamente en la Península Ibérica<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>.',
+      'La pieza procede del yacimiento arqueológico de la "Cuesta de los Hoyos", también llamado "El Pinarillo", situado frente al antiguo barrio judío de Segovia<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>.',
       'Destaca por dos tipos de enterramiento: las cámaras hipogeas y los sepulcros en fosa<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>. Las cámaras hipogeas son estructuras talladas en roca con un <em>dromos</em> (pasillo) exterior de acceso que lleva a una cámara<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>. Las fosas antropomorfas reflejan ritos funerarios sencillos sin ajuares ostentosos<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>.',
-      'Estudios antropológicos realizados en la población exhumada han revelado una alta mortalidad infantil y signos de presiones ambientales como raquitismo y anemias<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>, aportando información sobre las condiciones de vida de la comunidad hebrea medieval segoviana.',
+      'Estudios antropológicos realizados en la población exhumada han revelado una alta mortalidad infantil y signos de presiones ambientales como raquitismo y anemias<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>.',
     ],
 
     descripcion_osteologica: [
@@ -312,7 +312,7 @@ const PIEZAS = [
     region: 'columna',
     patologia: ['infecciosa', 'tumor'],
     sexo: 'femenino',
-    epoca: 'romano',
+    epoca: 'medieval',
     yacimiento: 'Basílica Paleocristiana de Marialba de la Ribera, Villaturiel, León',
     coords: [1096.65, 295.66],
     descripcion: 'Dos individuos femeninos adultos procedentes de la necrópolis tardoantigua de Marialba de la Ribera (León, ss. IV-VII). El individuo T.180 presenta destrucción vertebral, colapso de D8 y cifosis patológica compatible con Mal de Pott. El individuo T.160 muestra lesiones osteolíticas multifocales cuya distribución orienta el diagnóstico hacia metástasis osteolíticas.',
@@ -758,9 +758,9 @@ const PIEZAS = [
     patologia: 'tumor',
     sexo: 'femenino',
     epoca: 'medieval',
-    yacimiento: 'Necrópolis judía de San Nicolás (Ávila)',
+    yacimiento: 'Necrópolis mudéjar de San Nicolás, Ávila, España',
     coords: [1245, 645],
-    descripcion: 'Cráneo femenino adulto procedente de la necrópolis judía medieval de San Nicolás (Ávila), que presenta dos lesiones neoplásicas poco frecuentes en el registro paleopatológico: un meningioma con afectación ósea en el parietal izquierdo y un osteoma en el temporal derecho.',
+    descripcion: 'Cráneo femenino adulto procedente de la necrópolis mudéjar medieval de San Nicolás (Ávila), que presenta dos lesiones neoplásicas poco frecuentes en el registro paleopatológico: un meningioma con afectación ósea en el parietal izquierdo y un osteoma en el temporal derecho.',
     imagen: null,
     ficha: '/prueba-museo/ficha-estandar.html?id=AV-0001',
     modelo3d: './assets/models/craneo-def.glb',
@@ -771,12 +771,12 @@ const PIEZAS = [
 
     diagnostico_principal: 'Meningioma con afectación ósea en el parietal izquierdo y osteoma en el temporal derecho. La lesión parietal izquierda presenta una intensa remodelación tanto en la superficie ectocraneal como en la endocraneal, un patrón compatible con un meningioma. La prominencia ósea temporal derecha, de superficie lisa y límites bien definidos, es compatible con un osteoma, un tumor benigno formado por hueso maduro compacto.',
 
-    relevancia: 'Las evidencias óseas de procesos neoplásicos son menos habituales que otras categorías paleopatológicas, como los traumatismos, en las colecciones osteoarqueológicas. Esta pieza resulta especialmente relevante por presentar dos lesiones compatibles con un proceso neoplásico: un <strong>meningioma</strong> con afectación ósea y un <strong>osteoma</strong>. Los meningiomas son tumores originados en las meninges que, en algunos casos, inducen una remodelación del hueso craneal adyacente; la preservación de esta respuesta ósea permite identificar la enfermedad siglos después de la muerte del individuo, constituyendo una valiosa evidencia para el estudio de las patologías neoplásicas en poblaciones históricas.',
+    relevancia: 'Las evidencias óseas de procesos neoplásicos son menos habituales que otras categorías paleopatológicas, como los traumatismos, en las colecciones osteoarqueológicas. Esta pieza resulta especialmente relevante por presentar dos lesiones compatibles con un proceso neoplásico: un <strong>meningioma</strong> con afectación ósea y un <strong>osteoma</strong>. Los meningiomas son tumores originados en las meninges que, en algunos casos, inducen una remodelación del hueso craneal adyacente; la preservación de esta respuesta ósea permite identificar la enfermedad siglos después de la muerte del individuo, constituyendo una valiosa evidencia para el estudio de las patologías neoplásicas en la comunidad mudéjar medieval de la ciudad.',
 
     contexto_arqueologico: [
-      'La pieza procede de la necrópolis judía medieval de San Nicolás, situada al norte de la muralla histórica de Ávila<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>. El yacimiento fue identificado en 2012 durante unas obras de construcción, documentándose más de un centenar de enterramientos asociados a la comunidad sefardí medieval de la ciudad<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>.',
+      'La pieza procede de la necrópolis mudéjar medieval de San Nicolás, situada al norte de la muralla histórica de Ávila<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>. El yacimiento fue identificado en 2012 durante unas obras de construcción, documentándose más de un centenar de enterramientos asociados a la comunidad mudéjar medieval de la ciudad<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>.',
       'Las sepulturas son mayoritariamente fosas escalonadas y fosas simples excavadas en el terreno, con los individuos depositados generalmente en decúbito supino y orientación oeste-este<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>. Un aspecto destacado del conjunto es la presencia relativamente abundante de elementos de ajuar, una circunstancia poco frecuente en contextos funerarios judíos medievales debido a su concepción igualitaria de la muerte<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>.',
-      'La necrópolis estuvo en uso entre los siglos XII y XV, hasta la expulsión de la población judía de los reinos hispánicos en 1492, y constituye actualmente uno de los conjuntos funerarios sefardíes mejor documentados de la península<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>.'
+      'La necrópolis estuvo en uso durante el período medieval y constituye actualmente uno de los conjuntos funerarios mudéjares mejor documentados de la provincia<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>.'
     ],
 
     descripcion_osteologica: [
@@ -964,6 +964,24 @@ const PIEZAS = [
   }
 
 ]; /* fin PIEZAS */
+
+
+/* ══════════════════════════════════════════════════════════════════
+   YACIMIENTOS SIN PIEZA
+   Yacimientos con colección depositada en el
+   LAPP·UAM pero sin fichas publicadas aún.
+   Se muestran en el mapa pero sin enlace a ficha.
+══════════════════════════════════════════════════════════════════ */
+const YACIMIENTOS_SIN_PIEZA = [
+  {
+    id: 'ENCANTADA-YAC-01',
+    nombre: 'Cerro de La Encantada, Granátula de Calatrava, Ciudad Real, España',
+    epoca: 'prehistoria',
+    cronologia: 'Edad del Bronce (c. 2200–750 a.C.)',
+    coords: [886.76, 3031.24],
+    descripcion: 'Yacimiento de la Edad del Bronce con colección osteológica depositada en el LAPP·UAM. Las piezas correspondientes se incorporarán próximamente al museo.'
+  }
+];
 
 
 /* ══════════════════════════════════════════════════════════════════

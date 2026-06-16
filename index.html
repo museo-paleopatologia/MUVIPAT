@@ -541,7 +541,6 @@
         
         <div class="yac-legend">
           <div class="yac-legend-item"><div class="yac-legend-dot" style="background:#c8793a"></div>Prehistoria</div>
-          <div class="yac-legend-item"><div class="yac-legend-dot" style="background:#c0003c"></div>Romano</div>
           <div class="yac-legend-item"><div class="yac-legend-dot" style="background:#2979ff"></div>Medieval</div>
           <div class="yac-legend-item"><div class="yac-legend-dot" style="background:#00a060"></div>Moderno</div>
         </div>
@@ -723,13 +722,20 @@
       }
     });
  
-    const yacs = Object.values(yacMap).filter(y => y.coords);
+    const yacsSinPieza = (typeof YACIMIENTOS_SIN_PIEZA !== 'undefined')
+      ? YACIMIENTOS_SIN_PIEZA.map(y => ({ ...y, piezas: [], sinPieza: true }))
+      : [];
+
+    const yacs = [
+      ...Object.values(yacMap).filter(y => y.coords),
+      ...yacsSinPieza
+    ];
  
     // ── 2. STATS ──────────────────────────────────────────────
     const statTotal  = document.getElementById('yac-stat-total');
     const statPiezas = document.getElementById('yac-stat-piezas');
     if (statTotal)  statTotal.textContent  = yacs.length;
-    if (statPiezas) statPiezas.textContent = PIEZAS.length;
+    if (statPiezas) statPiezas.textContent = PIEZAS.filter(p => p.coords).length;
  
     // ── 3. REFERENCIAS DOM ────────────────────────────────────
     const dotsLayer  = document.getElementById('yac-dots-layer');
@@ -807,6 +813,7 @@
       accItem.dataset.yac = yac.nombre;
  
       // Piezas HTML
+      const sinPieza = !!yac.sinPieza;
       const piezasHTML = yac.piezas.map(p => {
         const patLabel = p.patologia
           ? (typeof VOCABULARIO !== 'undefined' && VOCABULARIO.patologia?.[p.patologia]?.label)
@@ -824,14 +831,20 @@
             </a>
           </div>`;
       }).join('');
- 
+
+      const cuerpoHTML = sinPieza
+        ? `<p style="font-size:.7rem;color:var(--bone-500);font-style:italic;line-height:1.6;margin-bottom:.65rem;">
+             Aún no hay fichas disponibles para este yacimiento. Las piezas de esta colección se incorporarán próximamente al museo.
+           </p>`
+        : `<div class="yac-piece-list">${piezasHTML}</div>`;
+
       accItem.innerHTML = `
         <button class="yac-acc-header" aria-expanded="false"
                 aria-controls="acc-body-${CSS.escape(yac.nombre)}">
           <div class="yac-acc-dot" style="background:${color}"></div>
           <div class="yac-acc-info">
             <span class="yac-acc-name">${yac.nombre}</span>
-            <span class="yac-acc-meta">${yac.piezas.length} pieza${yac.piezas.length !== 1 ? 's' : ''}</span>
+            <span class="yac-acc-meta">${sinPieza ? 'Próximamente' : `${yac.piezas.length} pieza${yac.piezas.length !== 1 ? 's' : ''}`}</span>
           </div>
           <span class="yac-acc-tag" style="color:${color};border-color:${color}">${yac.epoca}</span>
           <svg class="yac-acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -841,12 +854,12 @@
         </button>
         <div class="yac-acc-body" id="acc-body-${CSS.escape(yac.nombre)}" role="region">
           <div class="yac-acc-inner">
-            <div class="yac-piece-list">${piezasHTML}</div>
-            <a href="${colUrl}" class="yac-acc-coleccion">
+            ${cuerpoHTML}
+            ${!sinPieza ? `<a href="${colUrl}" class="yac-acc-coleccion">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
                    aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
               Ver colección filtrada
-            </a>
+            </a>` : ''}
           </div>
         </div>`;
  
@@ -874,7 +887,9 @@
       // — Tooltip SVG —
       function showTooltip() {
         const label = yac.nombre;
-        const sub   = `${yac.piezas.length} pieza${yac.piezas.length !== 1 ? 's' : ''} · ${yac.epoca}`;
+        const sub   = sinPieza
+          ? `Próximamente · ${yac.epoca}`
+          : `${yac.piezas.length} pieza${yac.piezas.length !== 1 ? 's' : ''} · ${yac.epoca}`;
         const w = Math.max(label.length * 31 + 84, 460);
         const h = 155;
         tipRect.setAttribute('width',  w);
