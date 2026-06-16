@@ -219,7 +219,7 @@ const PIEZAS = [
   },
 
   {
-    id: 'M-16-0906',
+    id: 'SN-MAND-01',
     nombre: 'Mandíbula con hipoplasia de esmalte dental',
     region: 'craneo',
     patologia: 'metabolica',
@@ -238,37 +238,43 @@ const PIEZAS = [
 
     diagnostico_principal: 'Hipoplasia del esmalte dental. Defectos lineales horizontales en múltiples piezas dentales compatibles con interrupciones temporales de la amelogénesis, asociadas a episodios de estrés biológico (nutricional, infeccioso o metabólico) durante el desarrollo infantil, principalmente entre los 3 y 6 años de edad.',
 
-    relevancia: 'Esta pieza documenta alteraciones en la formación del esmalte compatibles con interrupciones temporales de la amelogénesis, proporcionando información sobre las condiciones de salud y desarrollo de la población hispanomusulmana de la necrópolis de San Nicolás. Estudios en esta <em>maqbara</em> relacionan la elevada frecuencia de hipoplasia de esmalte (HE) con episodios de estrés biológico ocurridos principalmente entre los 3 y 6 años de edad, coincidiendo con el destete y la exposición a agentes infecciosos<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>.',
+    relevancia: 'Esta pieza documenta alteraciones en la formación del esmalte compatibles con interrupciones temporales de la amelogénesis y proporcionando información sobre las condiciones de salud y desarrollo de la población hispanomusulmana de la necrópolis de San Nicolás. Estudios en esta <em>maqbara</em> relacionan la elevada frecuencia de hipoplasia de esmalte (HE) con episodios de estrés biológico ocurridos principalmente entre los 3 y 6 años de edad, coincidiendo con el destete (cambio de alimentación) y exposición a agentes infecciosos<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>.',
 
     contexto_arqueologico: [
       'La pieza procede de la <em>maqbara</em> islámica de San Nicolás, situada en el sector central de la ciudad de Murcia<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>. Este espacio funerario está asociado a la población hispanomusulmana de la ciudad entre los siglos XI y XIII<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>.',
-      'Las inhumaciones se realizan en fosas estrechas excavadas en tierra, en decúbito lateral derecho, con el cráneo orientado hacia el suroeste y el rostro hacia el sureste<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>, características funerarias propias de la práctica islámica.',
-      'La necrópolis se estableció sobre un antiguo alfar de los siglos X y XI y, como consecuencia del crecimiento demográfico del siglo XII, llegó a presentar una gran densidad de enterramientos superpuestos<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>.',
+      'Este yacimiento destaca por inhumaciones en fosas estrechas excavadas en tierra, depositadas en decúbito lateral derecho, con el cráneo orientado hacia el suroeste y el rostro hacia el sureste<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>. Estas características funerarias corresponden a prácticas islámicas habituales.',
+      'La necrópolis se estableció sobre un antiguo alfar (taller de arcilla o barro) de los siglos X y XI y por consecuencia del crecimiento demográfico experimentado por la ciudad en el siglo XII, llegó a presentar una gran densidad de enterramientos superpuestos<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>.',
     ],
 
     descripcion_osteologica: [
       'La pieza corresponde a una mandíbula con defectos lineales horizontales en la superficie del esmalte dental, visibles como surcos en la cara labial de las coronas. Estas alteraciones son compatibles con episodios de interrupción temporal de la amelogénesis<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>, proceso responsable de la formación del esmalte dental.',
       'Estudios realizados sobre la población de San Nicolás indican que la aparición de estos defectos se concentra principalmente entre los 3 y 6 años de edad, intervalo que coincide con períodos de mayor vulnerabilidad biológica en la infancia<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>.',
-      'La HE presenta una elevada frecuencia dentro de la población estudiada y muestra una asociación con otros indicadores, especialmente la cribra orbitalia<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>. En conjunto, estos marcadores sugieren la exposición a condiciones adversas durante el crecimiento, relacionadas con alteraciones nutricionales, procesos infecciosos o episodios de estrés metabólico, con posible influencia de episodios de inestabilidad social y crisis de alimentos en el contexto histórico medieval de Murcia<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>.',
+      'La HE presenta una elevada frecuencia dentro de la población estudiada y muestra una asociación con otros indicadores, especialmente la cribra orbitalia<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>. En conjunto, estos marcadores sugieren la exposición a condiciones adversas durante el crecimiento, relacionadas con alteraciones nutricionales, procesos infecciosos o episodios de estrés metabólico<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>. Por el contexto histórico medieval de Murcia, también se ha planteado la influencia de episodios de inestabilidad social, asedios y crisis de alimentos como posibles factores añadidos<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>.',
     ],
 
     hallazgos: [
       {
+        titulo: 'Diagnóstico principal — Hipoplasia del esmalte dental',
+        items: [
+          { texto: 'Los defectos observados son compatibles con alteraciones en la formación del esmalte dental durante el desarrollo de las coronas. La disposición de los surcos y su localización en múltiples piezas dentales son características de la HE.', refs: [1] }
+        ]
+      },
+      {
         titulo: 'Desgaste dental post-eruptivo — Descartado',
         items: [
-          { texto: 'Los procesos de desgaste modifican progresivamente superficies dentales expuestas al uso, pero no generan surcos horizontales lineales en la cara labial de las coronas.' }
+          { texto: 'Descartado. Los procesos de desgaste modifican progresivamente superficies dentales expuestas al uso, pero no generan surcos horizontales lineales.' }
         ]
       },
       {
         titulo: 'Traumatismo dental localizado — Descartado',
         items: [
-          { texto: 'Los traumatismos suelen afectar de forma aislada a una o pocas piezas. La presencia de alteraciones similares en varias piezas indica un origen sistémico.', refs: [1] }
+          { texto: 'Descartado. Los traumatismos suelen afectar de forma aislada a una o pocas piezas. La presencia de alteraciones similares en varias piezas indica un origen sistémico.' }
         ]
       },
       {
         titulo: 'Alteraciones congénitas del esmalte — Menos probable',
         items: [
-          { texto: 'Las patologías hereditarias del esmalte como la amelogénesis imperfecta son posibles, pero el patrón de distribución de los defectos y el contexto poblacional favorecen la hipótesis de la hipoplasia de origen sistémico.', refs: [1] }
+          { texto: 'Patologías hereditarias del esmalte son posibles como la amelogénesis imperfecta, pero el contexto y patrón favorecen la hipótesis de la hipoplasia.' }
         ]
       }
     ],
@@ -279,20 +285,22 @@ const PIEZAS = [
         autores: 'Robles FJ, González A, García C.',
         anio: '1996',
         titulo: 'Indicadores de estrés en la población hispano-musulmana de San Nicolás (Murcia, s. XI a XIII)',
-        editorial: 'En: Pérez-Pérez A, editor. Salud, enfermedad y muerte en el pasado. Barcelona: Fundación Uriach 1838; 1996. p. 109-119'
+        editorial: 'En: Pérez-Pérez A, editor. Salud, enfermedad y muerte en el pasado. Barcelona: Fundación Uriach 1838; 1996. p. 109-119',
+        enlace: 'https://dokumen.pub/salud-enfermedad-y-muerte-en-el-pasado.html'
       },
       {
         id: 2,
         autores: 'Navarro Palazón J.',
         anio: '1986',
         titulo: 'El cementerio islámico de San Nicolás de Murcia. Memoria preliminar',
-        editorial: 'En: Actas del I Congreso de Arqueología Medieval Española; 1986; Zaragoza. p. 7-37'
+        editorial: 'En: Actas del I Congreso de Arqueología Medieval Española; 1986; Zaragoza. p. 7-37',
+        enlace: 'https://dialnet.unirioja.es/servlet/articulo?codigo=7257068'
       }
     ],
 
     imagenes: [
       { src: '/prueba-museo/assets/img/mandibula/vista-frontal.png', caption: 'Figura 1. Vista frontal de la mandíbula, donde se aprecian las líneas de hipoplasia de esmalte presentes en la dentición anterior. Imagen tomada de Robles et al. (1996).' },
-      { src: '/prueba-museo/assets/img/mandibula/detalle-he.png', caption: 'Figura 2. Detalle de la dentición anterior de la mandíbula, donde se pueden observar los surcos horizontales lineales de HE descritos en la ficha. Imagen tomada de Robles et al. (1996).' }
+      { src: '/prueba-museo/assets/img/mandibula/detalle-he.png', caption: 'Figura 2. Detalle de la dentición anterior de la mandíbula, donde se pueden observar las líneas de HE descritas en la ficha. Imagen tomada de Robles et al. (1996).' }
     ],
 
     layoutMode: 'default'
