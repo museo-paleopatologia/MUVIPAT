@@ -86,37 +86,6 @@
       display: block;
     }
 
-    /* Filter tabs en header */
-    .ac-filter-tabs {
-      display: flex;
-      gap: 0;
-      border: var(--ac-border);
-      border-radius: 2px;
-      overflow: hidden;
-      flex-shrink: 0;
-      align-self: flex-end;
-    }
-    .ac-filter-tab {
-      display: flex;
-      align-items: center;
-      gap: .4rem;
-      padding: .6rem 1.1rem;
-      font-family: var(--font-head);
-      font-size: .68rem;
-      font-weight: 700;
-      letter-spacing: .07em;
-      text-transform: uppercase;
-      color: var(--bone-500);
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      transition: background .2s, color .2s;
-      white-space: nowrap;
-    }
-    .ac-filter-tab + .ac-filter-tab { border-left: 2px solid rgba(255,255,255,.1); }
-    .ac-filter-tab:hover  { background: rgba(255,255,255,.05); color: var(--ivory); }
-    .ac-filter-tab.active { background: var(--pink); color: #fff; }
-
     /* ═══════════════════════════════════════
        HERO DESTACADO
     ═══════════════════════════════════════ */
@@ -447,6 +416,14 @@
       color:var(--ac-mid);padding:1rem 0;
     }
 
+    .ac-sidebar__section {
+      max-height: 420px;
+      overflow-y: scroll;
+    }
+    .ac-sidebar__section::-webkit-scrollbar { width: 5px; }
+    .ac-sidebar__section::-webkit-scrollbar-track { background: #e8dfc8; }
+    .ac-sidebar__section::-webkit-scrollbar-thumb { background: #0d0d0d; border-radius: 2px; }
+
     /* ═══════════════════════════════════════
        RESPONSIVE
     ═══════════════════════════════════════ */
@@ -457,8 +434,6 @@
     @media (max-width: 760px) {
       .ac-hero-card { grid-template-columns: 1fr; }
       .ac-hero-card__img { min-height:200px;border-right:none;border-bottom:var(--ac-border); }
-      .ac-filter-tabs { width:100%; }
-      .ac-filter-tab { flex:1;justify-content:center;font-size:.6rem;padding:.55rem .35rem;white-space:normal;text-align:center;line-height:1.2; }
     }
     @media (max-width: 500px) {
       .ac-grid { grid-template-columns:1fr; }
@@ -515,22 +490,7 @@
     <div class="ac-header__inner">
       <div class="ac-header__left">
         <p class="ac-header__eyebrow">Módulo 05</p>
-        <h1 class="ac-header__title">Noticias &<br><em>Actualidad</em></h1>
-      </div>
-      <div class="ac-filter-tabs" role="group" aria-label="Filtrar contenido">
-        <button class="ac-filter-tab active" data-filter="all">Todo</button>
-        <button class="ac-filter-tab" data-filter="noticia">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 3H4v10c0 2.21 1.79 4 4 4h6c2.21 0 4-1.79 4-4v-3h2c1.11 0 2-.89 2-2V5c0-1.11-.89-2-2-2zm0 5h-2V5h2v3zM4 19h16v2H4z"/></svg>
-          Noticias
-        </button>
-        <button class="ac-filter-tab" data-filter="publicacion">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
-          Publicaciones
-        </button>
-        <button class="ac-filter-tab" data-filter="divulgacion">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
-          Divulgación
-        </button>
+        <h1 class="ac-header__title">Noticias y<br><em>Actualidad</em></h1>
       </div>
     </div>
   </div>
@@ -560,6 +520,7 @@
             <h2 class="ac-grid-title">Últimas noticias</h2>
             <span class="ac-grid-count"><strong id="news-count">—</strong> artículos</span>
           </div>
+          <p style="font-size:.7rem;color:var(--ac-mid);font-weight:300;text-align:right;margin-top:-.75rem;margin-bottom:1.25rem;font-family:var(--font-head);letter-spacing:.04em;">En el futuro, este espacio recogerá noticias y publicaciones del LAV·UAM.</p>
           <div class="ac-grid" id="news-grid">
             <div class="ac-loading">
               <div class="ac-spinner"></div>
@@ -616,38 +577,45 @@
   const NOTICIAS_PROPIAS = [
     {
       id: 'n001', tipo: 'noticia', destacada: true,
-      titulo: 'Descubren una trepanación de 3.500 años en los Andes con evidencias de supervivencia',
-      descripcion: 'Un equipo de arqueólogos ha documentado en el yacimiento de Huaca Pucllana (Perú) una trepanación craneal con bordes completamente remodelados, indicando que el individuo sobrevivió al menos cinco años tras la intervención. Es uno de los casos más antiguos de cirugía exitosa documentado en América del Sur.',
-      fecha: '2025-03-15', fuente: 'MUVIPAT · Divulgación propia',
-      color: '#c0003c', url: 'https://www.nature.com', imagen: null, emoji: '🦴'
+      titulo: 'Esqueleto de 5.500 años en Colombia revela la evidencia más antigua de sífilis en América',
+      descripcion: 'Investigadores extrajeron ADN antiguo de una tibia de un cazador-recolector del yacimiento Tequendama 1. El genoma del patógeno pertenece a Treponema pallidum pero difiere de todas las subespecies modernas conocidas, aportando un nuevo punto de referencia para el estudio de la diversificación de los patógenos treponémicos.',
+      fecha: '2026-01-23', fuente: 'Archaeology News Online',
+      color: '#c0003c', url: 'https://archaeologymag.com/2026/01/earliest-evidence-of-syphilis-in-the-americas/', imagen: null, emoji: '🦴'
     },
     {
-      id: 'n002', tipo: 'divulgacion', destacada: false,
-      titulo: 'La paleopatología en el aula: nuevas herramientas digitales para la enseñanza',
-      descripcion: 'El uso de modelos 3D y museos virtuales está transformando la forma en que se enseña bioarqueología en las universidades españolas. Este artículo recoge experiencias de varios grupos de investigación que están integrando la digitalización patrimonial en sus programas docentes.',
-      fecha: '2025-02-28', fuente: 'MUVIPAT · Artículo propio',
-      color: '#aa00ff', url: '#', imagen: null, emoji: '🎓'
+      id: 'n002', tipo: 'noticia', destacada: false,
+      titulo: 'ADN antiguo revela que la lepra llegó a América mucho antes de la colonización europea',
+      descripcion: 'Un estudio identifica un caso de lepra en restos óseos de Chile con una antigüedad de 4.000 años, atribuible a la cepa Mycobacterium lepromatosis. El hallazgo adelanta significativamente la presencia de la enfermedad en el continente americano y cuestiona los modelos de dispersión previos.',
+      fecha: '2025-06-30', fuente: 'ScienceDaily',
+      color: '#c0003c', url: 'https://www.sciencedaily.com/releases/2026/01/260125083349.htm', imagen: null, emoji: '🔬'
     },
     {
       id: 'n003', tipo: 'publicacion', destacada: false,
-      titulo: 'Nueva metodología para el diagnóstico diferencial de lesiones infecciosas en hueso seco',
-      descripcion: 'Investigadores de la UAM y la Universidad de Granada proponen un protocolo estandarizado para distinguir entre periostitis por tuberculosis, treponematosis y brucelosis en restos óseos arqueológicos, aplicando análisis histológico y micro-CT.',
-      fecha: '2025-01-20', fuente: 'International Journal of Paleopathology',
-      color: '#2979ff', url: 'https://doi.org', imagen: null, emoji: '🔬'
+      titulo: 'ADN antiguo resuelve el misterio de 12.000 años de un trastorno genético del crecimiento',
+      descripcion: 'Un equipo internacional liderado por la Universidad de Viena analizó el ADN de dos esqueletos con anomalías óseas del Mesolítico, confirmando que eran familiares de primer grado. El análisis genético reveló variantes asociadas a un trastorno del crecimiento óseo, demostrando la aplicabilidad de la paleogenómica al diagnóstico retrospectivo.',
+      fecha: '2026-02-17', fuente: 'ScienceDaily · Univ. de Viena',
+      color: '#2979ff', url: 'https://www.sciencedaily.com/releases/2026/02/260217005754.htm', imagen: null, emoji: '🧬'
     },
     {
-      id: 'n004', tipo: 'noticia', destacada: false,
-      titulo: 'Identificada la primera evidencia de escorbuto en población medieval andalusí',
-      descripcion: 'El análisis de restos óseos procedentes de la necrópolis de Madinat al-Zahra ha permitido identificar lesiones compatibles con escorbuto en individuos adultos, sugiriendo déficit de vitamina C en ciertos grupos poblacionales de Al-Ándalus.',
-      fecha: '2024-12-10', fuente: 'MUVIPAT · Divulgación propia',
-      color: '#ff6d00', url: '#', imagen: null, emoji: '⚗️'
+      id: 'n004', tipo: 'divulgacion', destacada: false,
+      titulo: 'Cráneos vikingos del siglo X revelan alta prevalencia de sinusitis y otitis crónicas',
+      descripcion: 'El análisis de restos craneales de la Era Vikinga en Suecia documentó signos de infecciones crónicas de senos paranasales y oído medio en individuos de entre 20 y 60 años. Los resultados sugieren que las condiciones de vida y el clima contribuyeron significativamente a la carga infecciosa de estas poblaciones.',
+      fecha: '2025-01-18', fuente: '2025 in Bioarchaeology',
+      color: '#aa00ff', url: 'https://en.wikipedia.org/wiki/2025_in_bioarchaeology', imagen: null, emoji: '⚗️'
     },
     {
-      id: 'n005', tipo: 'divulgacion', destacada: false,
-      titulo: '¿Qué nos dicen los huesos sobre la violencia en la Prehistoria?',
-      descripcion: 'Una revisión de los patrones de trauma perimortem en Europa durante el Neolítico y la Edad del Bronce revela un aumento significativo de la violencia interpersonal coincidiendo con los primeros conflictos por recursos agrícolas y ganaderos.',
-      fecha: '2024-11-05', fuente: 'MUVIPAT · Artículo propio',
-      color: '#ff4081', url: '#', imagen: null, emoji: '⚡'
+      id: 'n005', tipo: 'publicacion', destacada: false,
+      titulo: 'IA comercial aplicada al diagnóstico paleopatológico: hacia una nueva bioarqueología',
+      descripcion: 'Una revisión publicada en el American Journal of Physical Anthropology evalúa el rendimiento de modelos de inteligencia artificial generativa en el diagnóstico diferencial de lesiones óseas arqueológicas. El estudio concluye que la IA puede actuar como herramienta de apoyo pero no sustituye la experiencia del especialista en contexto tafonómico.',
+      fecha: '2026-05-01', fuente: 'American Journal of Physical Anthropology',
+      color: '#2979ff', url: 'https://onlinelibrary.wiley.com/doi/10.1002/oa.70129', imagen: null, emoji: '🤖'
+    },
+    {
+      id: 'n006', tipo: 'publicacion', destacada: false,
+      titulo: 'Patógenos zoonóticos en el registro zooarqueológico eurasiático de los últimos seis milenios',
+      descripcion: 'Un estudio publicado en Nature Communications analizó 346 elementos esqueléticos de animales domésticos y salvajes de 34 yacimientos eurasiáticos. Se identificaron 116 firmas de 29 patógenos antiguos, confirmando que las lesiones paleopatológicas orientan la selección de muestras para el análisis genético.',
+      fecha: '2026-04-30', fuente: 'Nature Communications',
+      color: '#2979ff', url: 'https://www.nature.com/articles/s41467-026-71543-4', imagen: null, emoji: '🦠'
     },
   ];
 
@@ -699,20 +667,18 @@
   }
 
   /* ── Grid noticias ── */
-  let activeFilter = 'all';
   function renderNewsGrid() {
     const grid    = document.getElementById('news-grid');
     const countEl = document.getElementById('news-count');
     const heroId  = (NOTICIAS_PROPIAS.find(n => n.destacada) || NOTICIAS_PROPIAS[0]).id;
     const filtered = NOTICIAS_PROPIAS
-      .filter(n => n.id !== heroId)
-      .filter(n => activeFilter === 'all' || n.tipo === activeFilter);
+      .filter(n => n.id !== heroId);
 
     if (countEl) countEl.textContent = filtered.length;
     grid.innerHTML = '';
 
     if (filtered.length === 0) {
-      grid.innerHTML = `<div class="ac-loading" style="opacity:.5">Sin artículos para este filtro</div>`;
+      grid.innerHTML = `<div class="ac-loading" style="opacity:.5">Sin artículos disponibles</div>`;
       return;
     }
 
@@ -775,7 +741,7 @@
   async function fetchPubMed() {
     const list = document.getElementById('pubmed-list');
     try {
-      const query = encodeURIComponent('paleopathology OR bioarchaeology OR "skeletal trauma"');
+      const query = encodeURIComponent('paleopathology OR bioarchaeology OR osteoarchaeology OR "skeletal remains"');
       const url   = `https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=${query}&resultType=lite&pageSize=6&sort=P_PDATE_D%20desc&format=json`;
       const data  = await fetch(url).then(r => r.json());
       const items = data?.resultList?.result || [];
@@ -809,7 +775,7 @@
   async function fetchCrossRef() {
     const list = document.getElementById('crossref-list');
     try {
-      const query = encodeURIComponent('paleopathology skeletal');
+      const query = encodeURIComponent('paleopathology bioarchaeology human bone');
       const url   = `https://api.crossref.org/works?query=${query}&rows=5&sort=published&order=desc&select=DOI,title,author,published,container-title`;
       const data  = await fetch(url,{headers:{'User-Agent':'MUVIPAT/1.0 (TFG UAM)'}}).then(r=>r.json());
       const items = data?.message?.items || [];
@@ -839,16 +805,6 @@
         <a href="https://search.crossref.org/?q=paleopathology" target="_blank" style="color:var(--orange);font-weight:600">Buscar manualmente →</a></p>`;
     }
   }
-
-  /* ── Filtros ── */
-  document.querySelectorAll('.ac-filter-tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-      document.querySelectorAll('.ac-filter-tab').forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      activeFilter = tab.dataset.filter;
-      renderNewsGrid();
-    });
-  });
 
   /* ── Nav ── */
   const hamburger = document.getElementById('nav-hamburger');
