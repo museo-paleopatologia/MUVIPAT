@@ -140,7 +140,7 @@ const PIEZAS = [
     descripcion: 'Cráneo masculino adulto joven procedente de la maqbara islámica de San Nicolás (Murcia, ss. XI-XII). Presenta una lesión traumática frontal de morfología elipsoidal compatible con herida por instrumento de filo cortante, con signos de remodelación ósea parcial que evidencian supervivencia inicial al traumatismo.',
     imagen: '/prueba-museo/assets/img/M-16-0906/traumatismo.png',
     ficha: '/prueba-museo/ficha-estandar.html?id=M-16-0906',
-    modelo3d: null,
+    modelo3d: '/prueba-museo/assets/models/espadazo.glb',
 
     cronologia: 'ss. XI-XII',
     edad: 'Adulto joven',
@@ -153,33 +153,40 @@ const PIEZAS = [
 
     contexto_arqueologico: [
       'La pieza procede de la <em>maqbara</em> islámica de San Nicolás, situada en el sector central de la ciudad de Murcia<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>. Este espacio funerario está asociado a la población hispanomusulmana de la ciudad entre los siglos XI y XIII<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>.',
-      'Las inhumaciones se realizan en fosas estrechas excavadas en tierra, en decúbito lateral derecho, con el cráneo orientado hacia el suroeste y el rostro hacia el sureste<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>, características funerarias propias de la práctica islámica.',
-      'La necrópolis se estableció sobre un antiguo alfar de los siglos X y XI y, como consecuencia del crecimiento demográfico del siglo XII, llegó a presentar una gran densidad de enterramientos superpuestos<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>.',
+      'Este yacimiento destaca por inhumaciones en fosas estrechas excavadas en tierra, depositadas en decúbito lateral derecho, con el cráneo orientado hacia el suroeste y el rostro hacia el sureste<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>. Estas características funerarias corresponden a prácticas islámicas habituales.',
+      'La necrópolis se estableció sobre un antiguo alfar (taller de arcilla o barro) de los siglos X y XI y por consecuencia del crecimiento demográfico experimentado por la ciudad en el siglo XII, llegó a presentar una gran densidad de enterramientos superpuestos<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(1)">¹</a>.',
     ],
 
     descripcion_osteologica: [
       'La pieza corresponde a un cráneo incompleto acompañado de un fragmento óseo aislado. Presenta una lesión traumática de morfología elipsoidal localizada en la región frontal, extendiéndose desde la cresta superciliar hasta una posición próxima a la sutura coronal<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>. La lesión alcanza 66 mm de longitud y 40,2 mm de anchura máxima<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>.',
-      'Los márgenes de la lesión muestran diferencias relevantes: el derecho presenta un aspecto irregular y carece de evidencias de reparación ósea, mientras que el izquierdo muestra adelgazamiento cortical y signos de remodelación, indicando una respuesta biológica posterior al traumatismo y una supervivencia inicial<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>.',
-      'El individuo presenta además hipoplasias de esmalte dental, cálculo dental, caries en caninos y premolares, rebordes artrósicos, nódulos de Schmörl, calcificación del ligamento amarillo y diversas entesopatías, compatibles con elevados niveles de actividad física en vida<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>.',
+      'Los márgenes de la lesión muestran diferencias relevantes. El derecho presenta un aspecto irregular y carece de evidencias de reparación ósea, mientras que el izquierdo muestra adelgazamiento cortical y signos de remodelación, indicando una respuesta biológica posterior al traumatismo y una supervivencia inicial<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>.',
+      'Además de la lesión craneal, el individuo presenta diversos indicadores osteológico, entre ellos hipoplasias de esmalte dental, cálculo dental, caries en caninos y premolares, rebordes artrósicos, nódulos de Schmörl, calcificación del ligamento amarillo y diversas entesopatías, compatibles con elevados niveles de actividad física en vida<a class="fe-ref-link" href="javascript:void(0)" onclick="scrollToRef(2)">²</a>.',
     ],
 
     hallazgos: [
       {
+        titulo: 'Diagnóstico principal — Traumatismo por instrumento de filo cortante',
+        items: [
+          { texto: 'La lesión craneal es compatible con una herida producida por un instrumento de filo cortante. Su morfología elipsoidal, localización y el patrón de remodelación parcial del borde izquierdo apoyan esta interpretación.', refs: [2] },
+          { texto: 'Los signos de regeneración ósea indican que el individuo sobrevivió inicialmente al traumatismo. En conjunto, las lesiones y el contexto histórico permiten interpretar la lesión como resultado de violencia interpersonal, en concreto, un ataque frontal por parte de un agresor diestro. Además, la elevada estatura del individuo, su constitución robusta y la presencia de marcadores de actividad muscular plantean la hipótesis de que puediera tratarse de un individuo vinculado a actividades militares.', refs: [2] }
+        ]
+      },
+      {
         titulo: 'Trepanación craneal — Poco compatible',
         items: [
-          { texto: 'Poco compatible por morfología irregular de la lesión y patrón traumático. La trepanación produce bordes regulares y biselados, ausentes en este caso.', refs: [2] }
+          { texto: 'Poco compatible por morfología irregular de la lesión y patrón traumático.', refs: [2] }
         ]
       },
       {
         titulo: 'Traumatismo accidental — Menos probable',
         items: [
-          { texto: 'Morfología dirigida y patrón lesional más compatible con una agresión interpersonal que con un traumatismo accidental.', refs: [2] }
+          { texto: 'Menos probable. Tiene una morfología dirigida y un patrón lesional más compatible con una agresión interpersonal.', refs: [2] }
         ]
       },
       {
         titulo: 'Alteración tafonómica — Descartada',
         items: [
-          { texto: 'Descartada por la remodelación observada, que confirma una respuesta biológica en vida y descarta un origen postmortem.', refs: [2] }
+          { texto: 'Descartada por la remodelación observada que confirma una respuesta biológica en vida y descarta un origen postmortem.', refs: [2] }
         ]
       }
     ],
@@ -190,14 +197,16 @@ const PIEZAS = [
         autores: 'Navarro Palazón J.',
         anio: '1986',
         titulo: 'El cementerio islámico de San Nicolás de Murcia. Memoria preliminar',
-        editorial: 'En: Actas del I Congreso de Arqueología Medieval Española; 1986; Zaragoza. p. 7-37'
+        editorial: 'En: Actas del I Congreso de Arqueología Medieval Española; 1986; Zaragoza. p. 7-37',
+        enlace: 'https://dialnet.unirioja.es/servlet/articulo?codigo=7257068'
       },
       {
         id: 2,
         autores: 'Pimentel de Francisco G, Rodríguez González AI, González Martín A, Campo Martín M, Robles Rodríguez FJ, Arzoz del Val L.',
         anio: '2001',
         titulo: 'Evidencia de violencia en la población hispanomusulmana de San Nicolás (Murcia, s XI a s XIII)',
-        editorial: 'En: Actas del VI Congreso Nacional de Paleopatología; 2001. p. 542-544'
+        editorial: 'En: Actas del VI Congreso Nacional de Paleopatología; 2001. p. 542-544',
+        enlace: 'https://asociacionpaleopatologia.es/actas-congresos-aep/'
       }
     ],
 
