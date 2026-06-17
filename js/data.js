@@ -53,7 +53,7 @@ const PIEZAS = [
     coords: [1307.62, 602.52],
     descripcion: 'Cráneo masculino adulto con escafocefalia derivada de craneosinostosis sagital. El individuo alcanzó entre 35 y 50 años de edad pese a la alteración congénita.',
     imagen: '/prueba-museo/assets/img/CH-21/superior.png',
-    ficha: '/prueba-museo/ficha-estandar.html?id=CH-21',
+    ficha: '/prueba-museo/ficha-maestra.html?id=CH-21',
     modelo3d: { geometria: './assets/models/CH-21-blu.glb', textura: './assets/models/CH-21-textura.glb' },
 
     cronologia: 'Siglos IX-XI',
@@ -140,7 +140,7 @@ const PIEZAS = [
     descripcion: 'Cráneo masculino adulto joven procedente de la maqbara islámica de San Nicolás (Murcia, ss. XI-XII). Presenta una lesión traumática frontal de morfología elipsoidal compatible con herida por instrumento de filo cortante, con signos de remodelación ósea parcial que evidencian supervivencia inicial al traumatismo.',
     imagen: '/prueba-museo/assets/img/M-16-0906/traumatismo.png',
     ficha: '/prueba-museo/ficha-estandar.html?id=M-16-0906',
-    modelo3d: '/prueba-museo/assets/models/espadazo.glb',
+    modelo3d: './assets/models/espadazo.glb',
 
     cronologia: 'ss. XI-XII',
     edad: 'Adulto joven',
@@ -715,7 +715,7 @@ const PIEZAS = [
         badge:       'Severo',
         badge_color: 'severo',
         geometria:   './assets/models/vertebra3-web-blue.glb',
-        textura:     './assets/models/vertebra2-we.glb'
+        textura:     './assets/models/vertebra3-web.glb'
       }
     ]
   },
@@ -978,7 +978,7 @@ const PIEZAS = [
     descripcion: null,
     imagen: null,
     ficha: '/prueba-museo/ficha-estandar.html?id=ART-PEND-01',
-    modelo3d: null,
+    modelo3d: './assets/models/artropatia.glb',
 
     cronologia: null,
     edad: null,
@@ -1112,6 +1112,83 @@ const FICHAS_MAESTRAS = {
    *   { hallazgoIndex: 1, datosKeys: [...], camara: {...} },
    * ]
    */
+
+  /* ══════════════════════════════════════════════════════════════════
+     CH-21 · CRANEOSINOSTOSIS SAGITAL
+     3 steps → 3 diagnósticos diferenciales descartados
+     Cámara: calibrar en el navegador con camera-controls activado
+             y document.querySelector('#main-viewer').cameraOrbit
+  ══════════════════════════════════════════════════════════════════ */
+  'CH-21': [
+
+    /* STEP 1 — Hidrocefalia descartada
+       Vista superior (norma verticalis): muestra la forma general
+       del cráneo y el eje anteroposterior elongado */
+    {
+      hallazgoIndex: 0,
+      datosKeys: ['yacimiento', 'cronologia', 'sexo', 'edad'],
+      accentColor: 'var(--fm-cyan)',
+      alerta: null,
+      tags: [
+        { texto: 'Diagnóstico diferencial', color: '#7B00CC', borderColor: '#7B00CC' },
+        { texto: 'Descartado',              color: '#6b5a43', borderColor: '#e8dfc8'  }
+      ],
+      camara: {
+        orbit:      '0deg 10deg 100%',
+        target:     '0m 0.05m 0m',
+        label:      'Norma verticalis',
+        autorotate: false,
+        zoomLabel:  'zoom ×1',
+        hint:       'Vista superior — morfología craneal y eje anteroposterior elongado'
+      }
+    },
+
+    /* STEP 2 — Acondroplasia descartada
+       Vista lateral izquierda (norma lateralis): evidencia el
+       alargamiento anteroposterior y la prominencia occipital */
+    {
+      hallazgoIndex: 1,
+      datosKeys: ['cronologia', 'edad', 'sexo'],
+      accentColor: 'var(--fm-crimson)',
+      alerta: null,
+      tags: [
+        { texto: 'Diagnóstico diferencial', color: '#7B00CC', borderColor: '#7B00CC' },
+        { texto: 'Descartado',              color: '#6b5a43', borderColor: '#e8dfc8'  }
+      ],
+      camara: {
+        orbit:      '-90deg 80deg 95%',
+        target:     '0m 0m 0m',
+        label:      'Norma lateralis',
+        autorotate: false,
+        zoomLabel:  'zoom ×1',
+        hint:       'Vista lateral — alargamiento anteroposterior y prominencia occipital'
+      }
+    },
+
+    /* STEP 3 — Deformación cefálica intencional descartada
+       Vista superior con zoom: permite observar la fusión completa
+       de la sutura sagital y la quilla sagital ósea */
+    {
+      hallazgoIndex: 2,
+      datosKeys: ['cronologia', 'edad', 'yacimiento'],
+      accentColor: 'var(--fm-sulfur)',
+      alerta: null,
+      tags: [
+        { texto: 'Diagnóstico diferencial',   color: '#7B00CC', borderColor: '#7B00CC' },
+        { texto: 'Descartado',                color: '#6b5a43', borderColor: '#e8dfc8'  },
+        { texto: 'Sutura sagital fusionada',  color: 'var(--fm-cyan)', borderColor: 'var(--fm-cyan)' }
+      ],
+      camara: {
+        orbit:      '0deg 12deg 80%',
+        target:     '0m 0.08m 0m',
+        label:      'Norma verticalis · zoom',
+        autorotate: false,
+        zoomLabel:  'zoom ×1.25',
+        hint:       'Vista superior con zoom — sutura sagital y quilla ósea'
+      }
+    }
+
+  ]
 
 }; /* fin FICHAS_MAESTRAS */
 
