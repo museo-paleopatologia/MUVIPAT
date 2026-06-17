@@ -54,7 +54,7 @@ const PIEZAS = [
     descripcion: 'Cráneo masculino adulto con escafocefalia derivada de craneosinostosis sagital. El individuo alcanzó entre 35 y 50 años de edad pese a la alteración congénita.',
     imagen: '/prueba-museo/assets/img/CH-21/superior.png',
     ficha: '/prueba-museo/ficha-estandar.html?id=CH-21',
-    modelo3d: './assets/models/CH-21-textura.glb',
+    modelo3d: { geometria: './assets/models/CH-21-blu.glb', textura: './assets/models/CH-21-textura.glb' },
 
     cronologia: 'Siglos IX-XI',
     edad: '35-50 años',
@@ -715,7 +715,7 @@ const PIEZAS = [
         badge:       'Severo',
         badge_color: 'severo',
         geometria:   './assets/models/vertebra3-web-blue.glb',
-        textura:     './assets/models/vertebra3-web.glb'
+        textura:     './assets/models/vertebra2-we.glb'
       }
     ]
   },
@@ -958,6 +958,37 @@ const PIEZAS = [
 
     referencias: null,
 
+    imagenes: null,
+
+    layoutMode: 'default'
+  },
+
+  /* ══════════════════════════════════════════
+     ARTROPATÍA — PENDIENTE DE CATALOGAR
+  ══════════════════════════════════════════ */
+  {
+    id: 'ART-PEND-01',
+    nombre: 'Artropatía',
+    region: null,
+    patologia: 'degenerativa',
+    sexo: 'indeterminado',
+    epoca: 'indeterminado',
+    yacimiento: null,
+    coords: null,
+    descripcion: null,
+    imagen: null,
+    ficha: '/prueba-museo/ficha-estandar.html?id=ART-PEND-01',
+    modelo3d: null,
+
+    cronologia: null,
+    edad: null,
+    conservacion: null,
+    diagnostico_principal: null,
+    relevancia: null,
+    contexto_arqueologico: null,
+    descripcion_osteologica: null,
+    hallazgos: null,
+    referencias: null,
     imagenes: null,
 
     layoutMode: 'default'
