@@ -1454,9 +1454,9 @@
       const maestras = PIEZAS.filter(p => MAESTRAS_IDS.includes(p.id));
 
       maestras.forEach((pieza, i) => {
-        const patMeta  = VOCABULARIO.patologia[pieza.patologia];
-        const regMeta  = VOCABULARIO.region[pieza.region];
-        const epocMeta = VOCABULARIO.epoca[pieza.epoca];
+        const patMeta  = VOCABULARIO.patologia[pieza.patologia] || { icon: '', label: pieza.patologia || '—', color: '#ccc' };
+        const regMeta  = VOCABULARIO.region[pieza.region]       || { icon: '🦴', label: pieza.region || 'Sin clasificar' };
+        const epocMeta = VOCABULARIO.epoca[pieza.epoca]         || { label: pieza.epoca || '—' };
         const colorVar = MASTER_COLORS[i % MASTER_COLORS.length];
         const colorVal = getComputedStyle(document.documentElement)
           .getPropertyValue(colorVar.replace('--','--')).trim() || '#00e5ff';
@@ -1560,8 +1560,8 @@
       results.forEach((pieza, i) => {
         const patKeys  = Array.isArray(pieza.patologia) ? pieza.patologia : [pieza.patologia];
         const patMeta  = VOCABULARIO.patologia[patKeys[0]] || { label: patKeys[0], icon: '', color: '#ccc' };
-        const regMeta  = VOCABULARIO.region[pieza.region];
-        const epocMeta = VOCABULARIO.epoca[pieza.epoca];
+        const regMeta  = VOCABULARIO.region[pieza.region]  || { icon: '🦴', label: pieza.region || 'Sin clasificar' };
+        const epocMeta = VOCABULARIO.epoca[pieza.epoca]    || { label: pieza.epoca || '—' };
         const isMaster = MAESTRAS_IDS.includes(pieza.id);
         const patColor = PATOL_COLORS[patKeys[0]] || '#c8aa78';
 
@@ -1586,7 +1586,7 @@
               <span class="col-piece-card__epoca">${epocMeta.label}</span>
             </div>
             <h3 class="col-piece-card__name">${pieza.nombre}</h3>
-            <p class="col-piece-card__desc">${pieza.descripcion}</p>
+            <p class="col-piece-card__desc">${pieza.descripcion || 'Información pendiente de catalogación.'}</p>
             <div class="col-piece-card__tags">
               <span class="col-pc-tag col-pc-tag--region">${regMeta.icon} ${regMeta.label}</span>
               ${patKeys.map(k => {

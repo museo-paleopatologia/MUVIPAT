@@ -416,12 +416,29 @@
        RESPONSIVE
     ═══════════════════════════════════════ */
     @media (max-width: 860px) {
-      .ac-main__inner { grid-template-columns: 1fr; }
-      .ac-sidebar { position: static; }
+      .ac-main__inner {
+        grid-template-columns: 1fr;
+        padding-block: clamp(2rem, 4vw, 3rem);
+      }
+      .ac-sidebar {
+        position: static;
+        border-top: 4px solid #0d0d0d;
+        padding-top: clamp(1.5rem, 3vw, 2.5rem);
+      }
+      .ac-sidebar__section { max-height: 280px; }
     }
-    @media (max-width: 500px) {
-      .ac-grid { grid-template-columns:1fr; }
-      .ac-events__grid { grid-template-columns:1fr; }
+    @media (max-width: 640px) {
+      .ac-grid { grid-template-columns: repeat(2, 1fr); }
+      .ac-events__grid { grid-template-columns: repeat(2, 1fr); }
+      .ac-header__title { font-size: clamp(1.8rem, 8vw, 2.8rem); }
+      .ac-divulgacion-card { width: 170px; }
+    }
+    @media (max-width: 480px) {
+      .ac-grid { grid-template-columns: 1fr; }
+      .ac-events__grid { grid-template-columns: 1fr; }
+      .ac-card__img { height: 70px; }
+      .ac-divulgacion-card { width: 155px; }
+      .ac-header__inner { padding-block: clamp(1.5rem, 4vw, 2.5rem); }
     }
   </style>
 </head>
