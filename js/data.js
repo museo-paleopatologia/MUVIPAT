@@ -52,8 +52,8 @@ const PIEZAS = [
     yacimiento: 'Necrópolis medieval "Cuesta de los Hoyos", Segovia, España',
     coords: [1307.62, 602.52],
     descripcion: 'Cráneo masculino adulto con escafocefalia derivada de craneosinostosis sagital. El individuo alcanzó entre 35 y 50 años de edad pese a la alteración congénita.',
-    imagen: '/prueba-museo/assets/img/CH-21/superior.png',
-    ficha: '/prueba-museo/ficha-maestra.html?id=CH-21',
+    imagen: './assets/img/CH-21/superior.png',
+    ficha: './ficha-maestra.html?id=CH-21',
     modelo3d: { geometria: './assets/models/CH-21-blu.glb', textura: './assets/models/CH-21-textura.glb' },
 
     cronologia: 'Siglos IX-XI',
@@ -119,10 +119,10 @@ const PIEZAS = [
     ],
 
     imagenes: [
-      { src: '/prueba-museo/assets/img/CH-21/superior.png',    caption: 'Figura 1. Vista superior del cráneo CH-21. Se aprecia el alargamiento anteroposterior de la bóveda craneal característico de la escafocefalia, así como la fusión de la sutura sagital.' },
-      { src: '/prueba-museo/assets/img/CH-21/lateral-izq.png', caption: 'Figura 2. Vista lateral izquierda del cráneo CH-21. Se observa el alargamiento anteroposterior y la prominencia occipital.' },
-      { src: '/prueba-museo/assets/img/CH-21/frontal.png',     caption: 'Figura 3. Vista frontal del cráneo CH-21. La fusión de la sutura sagital produjo una modificación de la forma de la bóveda craneal, mientras que el esqueleto facial mantiene una morfología sin alteraciones significativas.' },
-      { src: '/prueba-museo/assets/img/CH-21/inferior.png',    caption: 'Figura 4. Vista inferior del cráneo CH-21. Muestra la morfología general de la base craneal y la elongación anteroposterior del individuo.' }
+      { src: './assets/img/CH-21/superior.png',    caption: 'Figura 1. Vista superior del cráneo CH-21. Se aprecia el alargamiento anteroposterior de la bóveda craneal característico de la escafocefalia, así como la fusión de la sutura sagital.' },
+      { src: './assets/img/CH-21/lateral-izq.png', caption: 'Figura 2. Vista lateral izquierda del cráneo CH-21. Se observa el alargamiento anteroposterior y la prominencia occipital.' },
+      { src: './assets/img/CH-21/frontal.png',     caption: 'Figura 3. Vista frontal del cráneo CH-21. La fusión de la sutura sagital produjo una modificación de la forma de la bóveda craneal, mientras que el esqueleto facial mantiene una morfología sin alteraciones significativas.' },
+      { src: './assets/img/CH-21/inferior.png',    caption: 'Figura 4. Vista inferior del cráneo CH-21. Muestra la morfología general de la base craneal y la elongación anteroposterior del individuo.' }
     ],
 
     layoutMode: 'default'
@@ -138,8 +138,8 @@ const PIEZAS = [
     yacimiento: 'Necrópolis hispanomusulmana (maqbara) de San Nicolás, Murcia, España',
     coords: [1729.55, 1112.15],
     descripcion: 'Cráneo masculino adulto joven procedente de la maqbara islámica de San Nicolás (Murcia, ss. XI-XII). Presenta una lesión traumática frontal de morfología elipsoidal compatible con herida por instrumento de filo cortante, con signos de remodelación ósea parcial que evidencian supervivencia inicial al traumatismo.',
-    imagen: '/prueba-museo/assets/img/M-16-0906/traumatismo.png',
-    ficha: '/prueba-museo/ficha-estandar.html?id=M-16-0906',
+    imagen: './assets/img/M-16-0906/traumatismo.png',
+    ficha: './ficha-estandar.html?id=M-16-0906',
     modelo3d: './assets/models/espadazo.glb',
 
     cronologia: 'ss. XI-XII',
@@ -211,8 +211,8 @@ const PIEZAS = [
     ],
 
     imagenes: [
-      { src: '/prueba-museo/assets/img/M-16-0906/traumatismo.png', caption: 'Figura 1. Detalle de la lesión craneal atribuida a un traumatismo por instrumento cortante. Se observa la remodelación del margen izquierdo. Imagen tomada de Pimentel de Francisco et al. (2001).' },
-      { src: '/prueba-museo/assets/img/M-16-0906/traumatismo-completo.png', caption: 'Figura 2. Cráneo con reposición del fragmento óseo recuperado en el enterramiento. Imagen tomada de Pimentel de Francisco et al. (2001).' }
+      { src: './assets/img/M-16-0906/traumatismo.png', caption: 'Figura 1. Detalle de la lesión craneal atribuida a un traumatismo por instrumento cortante. Se observa la remodelación del margen izquierdo. Imagen tomada de Pimentel de Francisco et al. (2001).' },
+      { src: './assets/img/M-16-0906/traumatismo-completo.png', caption: 'Figura 2. Cráneo con reposición del fragmento óseo recuperado en el enterramiento. Imagen tomada de Pimentel de Francisco et al. (2001).' }
     ],
 
     layoutMode: 'default'
@@ -228,8 +228,8 @@ const PIEZAS = [
     yacimiento: 'Necrópolis hispanomusulmana (maqbara) de San Nicolás, Murcia, España',
     coords: [1729.55, 1112.15],
     descripcion: 'Mandíbula procedente de la maqbara islámica de San Nicolás (Murcia, ss. XI-XIII). Presenta defectos lineales horizontales en el esmalte dental compatibles con hipoplasia de esmalte, indicador de episodios de estrés biológico ocurridos durante el desarrollo infantil.',
-    imagen: '/prueba-museo/assets/img/mandibula/vista-frontal.png',
-    ficha: '/prueba-museo/ficha-estandar.html?id=SN-MAND-01',
+    imagen: './assets/img/mandibula/vista-frontal.png',
+    ficha: './ficha-estandar.html?id=SN-MAND-01',
     modelo3d: null,
 
     cronologia: 'ss. XI-XIII',
@@ -299,8 +299,8 @@ const PIEZAS = [
     ],
 
     imagenes: [
-      { src: '/prueba-museo/assets/img/mandibula/vista-frontal.png', caption: 'Figura 1. Vista frontal de la mandíbula, donde se aprecian las líneas de hipoplasia de esmalte presentes en la dentición anterior. Imagen tomada de Robles et al. (1996).' },
-      { src: '/prueba-museo/assets/img/mandibula/detalle-he.png', caption: 'Figura 2. Detalle de la dentición anterior de la mandíbula, donde se pueden observar las líneas de HE descritas en la ficha. Imagen tomada de Robles et al. (1996).' }
+      { src: './assets/img/mandibula/vista-frontal.png', caption: 'Figura 1. Vista frontal de la mandíbula, donde se aprecian las líneas de hipoplasia de esmalte presentes en la dentición anterior. Imagen tomada de Robles et al. (1996).' },
+      { src: './assets/img/mandibula/detalle-he.png', caption: 'Figura 2. Detalle de la dentición anterior de la mandíbula, donde se pueden observar las líneas de HE descritas en la ficha. Imagen tomada de Robles et al. (1996).' }
     ],
 
     layoutMode: 'default'
@@ -316,8 +316,8 @@ const PIEZAS = [
     yacimiento: 'Basílica Paleocristiana de Marialba de la Ribera, Villaturiel, León',
     coords: [1096.65, 295.66],
     descripcion: 'Dos individuos femeninos adultos procedentes de la necrópolis tardoantigua de Marialba de la Ribera (León, ss. IV-VII). El individuo T.180 presenta destrucción vertebral, colapso de D8 y cifosis patológica compatible con Mal de Pott. El individuo T.160 muestra lesiones osteolíticas multifocales cuya distribución orienta el diagnóstico hacia metástasis osteolíticas.',
-    imagen: '/prueba-museo/assets/img/T.160-180/enterramientos.png',
-    ficha: '/prueba-museo/ficha-estandar.html?id=MARB-09-T160-T180',
+    imagen: './assets/img/T.160-180/enterramientos.png',
+    ficha: './ficha-estandar.html?id=MARB-09-T160-T180',
     modelo3d: null,
 
     cronologia: 'Antigüedad Tardía (ss. IV-VII d.C.)',
@@ -384,11 +384,11 @@ const PIEZAS = [
     ],
 
     imagenes: [
-      { src: '/prueba-museo/assets/img/T.160-180/enterramientos.png', caption: 'Figura 1. Fotografía de campo de los dos enterramientos estudiados. Se puede observar la cifosis patológica en T.180. Imagen tomada de Cambra-Moo et al. (2013).' },
-      { src: '/prueba-museo/assets/img/T.160-180/cifosis-180.png', caption: 'Figura 2. Detalle de la cifosis del individuo T.180. Imagen tomada de Cambra-Moo et al. (2013).' },
-      { src: '/prueba-museo/assets/img/T.160-180/costilla-180.png', caption: 'Figura 3. Detalle de las lesiones en la costilla del individuo T.180. Imagen tomada de Cambra-Moo et al. (2013).' },
-      { src: '/prueba-museo/assets/img/T.160-180/dorsales-160.png', caption: 'Figura 4. Detalle de las lesiones en las vértebras dorsales del individuo T.160 (vistas ventral y dorsal). Imagen tomada de Cambra-Moo et al. (2013).' },
-      { src: '/prueba-museo/assets/img/T.160-180/manubrio-160.png', caption: 'Figura 5. Detalle de las lesiones en el manubrio del esternón del individuo T.160 (vistas ventral y dorsal). Imagen tomada de Cambra-Moo et al. (2013).' }
+      { src: './assets/img/T.160-180/enterramientos.png', caption: 'Figura 1. Fotografía de campo de los dos enterramientos estudiados. Se puede observar la cifosis patológica en T.180. Imagen tomada de Cambra-Moo et al. (2013).' },
+      { src: './assets/img/T.160-180/cifosis-180.png', caption: 'Figura 2. Detalle de la cifosis del individuo T.180. Imagen tomada de Cambra-Moo et al. (2013).' },
+      { src: './assets/img/T.160-180/costilla-180.png', caption: 'Figura 3. Detalle de las lesiones en la costilla del individuo T.180. Imagen tomada de Cambra-Moo et al. (2013).' },
+      { src: './assets/img/T.160-180/dorsales-160.png', caption: 'Figura 4. Detalle de las lesiones en las vértebras dorsales del individuo T.160 (vistas ventral y dorsal). Imagen tomada de Cambra-Moo et al. (2013).' },
+      { src: './assets/img/T.160-180/manubrio-160.png', caption: 'Figura 5. Detalle de las lesiones en el manubrio del esternón del individuo T.160 (vistas ventral y dorsal). Imagen tomada de Cambra-Moo et al. (2013).' }
     ],
 
     layoutMode: 'default'
@@ -407,8 +407,8 @@ const PIEZAS = [
     yacimiento: 'Osario de Santa María de la Soledad, Almansa, Albacete',
     coords: [1729.55, 966.92],
     descripcion: 'Bloque óseo fusionado que integra el fémur, la tibia y la rótula derecha de un individuo masculino adulto, con un ángulo de flexión de 117,5°. Procede del osario de Almansa (ss. XIII-XVIII). La anquilosis total evidencia una inmovilización prolongada de la articulación compatible con traumatismo severo o tuberculosis osteoarticular.',
-    imagen: '/prueba-museo/assets/img/anquilosis/anquilosis-lateral.png',
-    ficha: '/prueba-museo/ficha-estandar.html?id=ALM-ANQR-01',
+    imagen: './assets/img/anquilosis/anquilosis-lateral.png',
+    ficha: './ficha-estandar.html?id=ALM-ANQR-01',
     modelo3d: './assets/models/anquilosis-web.glb',
 
     cronologia: 's. XIII-XVIII',
@@ -484,9 +484,9 @@ const PIEZAS = [
     ],
 
     imagenes: [
-      { src: '/prueba-museo/assets/img/anquilosis/anquilosis-lateral.png', caption: 'Figura 1. Vista lateral de la anquilosis de la articulación de la rodilla en un individuo de la población de Almansa (Albacete).' },
-      { src: '/prueba-museo/assets/img/anquilosis/anquilosis-frontal.png', caption: 'Figura 2. Vista frontal de la anquilosis de la articulación de la rodilla en un individuo de la población de Almansa (Albacete).' },
-      { src: '/prueba-museo/assets/img/anquilosis/anquilosis-radio.png',   caption: 'Figura 3. Radiografía de la anquilosis de la articulación de la rodilla en un individuo de la población de Almansa (Albacete).' }
+      { src: './assets/img/anquilosis/anquilosis-lateral.png', caption: 'Figura 1. Vista lateral de la anquilosis de la articulación de la rodilla en un individuo de la población de Almansa (Albacete).' },
+      { src: './assets/img/anquilosis/anquilosis-frontal.png', caption: 'Figura 2. Vista frontal de la anquilosis de la articulación de la rodilla en un individuo de la población de Almansa (Albacete).' },
+      { src: './assets/img/anquilosis/anquilosis-radio.png',   caption: 'Figura 3. Radiografía de la anquilosis de la articulación de la rodilla en un individuo de la población de Almansa (Albacete).' }
     ],
 
     layoutMode: 'default'
@@ -505,8 +505,8 @@ const PIEZAS = [
     yacimiento: 'Osario de Santa María de la Soledad, Almansa, Albacete',
     coords: [1729.55, 966.92],
     descripcion: 'Cráneo adulto de sexo indeterminado procedente del osario de Almansa (ss. XIII-XVIII) que presenta una lesión inciso-contusa en el asterión derecho. El orificio de ~20 mm con bordes angulosos y afilados, sin remodelación ósea, y un fragmento óseo desplazado al interior del cráneo permiten diagnosticar un traumatismo perimortem.',
-    imagen: '/prueba-museo/assets/img/asterion/asterion-lateral.png',
-    ficha: '/prueba-museo/ficha-estandar.html?id=ALM-ASTER-01',
+    imagen: './assets/img/asterion/asterion-lateral.png',
+    ficha: './ficha-estandar.html?id=ALM-ASTER-01',
     modelo3d: './assets/models/asterion-web.glb',
 
     cronologia: 's. XII-XVIII',
@@ -574,8 +574,8 @@ const PIEZAS = [
     ],
 
     imagenes: [
-      { src: '/prueba-museo/assets/img/asterion/asterion-lateral.png', caption: 'Figura 1. Vista lateral del cráneo con la lesión en el asterión derecho.' },
-      { src: '/prueba-museo/assets/img/asterion/asterion-detalle.png', caption: 'Figura 2. A. Detalle del fragmento óseo encontrado en el interior craneal. B. Detalle de la fractura en el asterión.' }
+      { src: './assets/img/asterion/asterion-lateral.png', caption: 'Figura 1. Vista lateral del cráneo con la lesión en el asterión derecho.' },
+      { src: './assets/img/asterion/asterion-detalle.png', caption: 'Figura 2. A. Detalle del fragmento óseo encontrado en el interior craneal. B. Detalle de la fractura en el asterión.' }
     ],
 
     layoutMode: 'default'
@@ -596,7 +596,7 @@ const PIEZAS = [
     coords: [1729.55, 966.92],
     descripcion: 'Dos fémures completos procedentes del osario de Almansa (ss. XIII–XVIII) que presentan una alteración morfológica en el eje longitudinal de la diáfisis. La deformidad, más pronunciada en uno de los elementos, afecta a gran parte del cuerpo femoral sin evidencia de fractura consolidada ni callo óseo.',
     imagen: null,
-    ficha: '/prueba-museo/ficha-estandar.html?id=ALM-FEM-BIL-01',
+    ficha: './ficha-estandar.html?id=ALM-FEM-BIL-01',
     modelo3d: null,
 
     cronologia: null,
@@ -645,7 +645,7 @@ const PIEZAS = [
     coords: [1729.55, 966.92],
     descripcion: 'Tres conjuntos vertebrales de un individuo adulto procedentes del osario de Almansa (ss. XII–XVIII). Presentan osificación del ligamento amarillo con puentes óseos entre elementos vertebrales adyacentes en distintos grados de severidad, compatibles con Hiperostosis Idiopática Difusa (DISH).',
     imagen: null,
-    ficha: '/prueba-museo/ficha-estandar.html?id=ALM-VERT-DISH-01',
+    ficha: './ficha-estandar.html?id=ALM-VERT-DISH-01',
     modelo3d: null,
 
     cronologia: 's. XII–XVIII',
@@ -734,7 +734,7 @@ const PIEZAS = [
     coords: null,
     descripcion: null,
     imagen: null,
-    ficha: '/prueba-museo/ficha-estandar.html?id=ALM-PELV-ANQ-01',
+    ficha: './ficha-estandar.html?id=ALM-PELV-ANQ-01',
     modelo3d: './assets/models/pelvis-web.glb',
 
     cronologia: null,
@@ -762,7 +762,7 @@ const PIEZAS = [
     coords: [1245, 645],
     descripcion: 'Cráneo femenino adulto procedente de la necrópolis mudéjar medieval de San Nicolás (Ávila), que presenta dos lesiones neoplásicas poco frecuentes en el registro paleopatológico: un meningioma con afectación ósea en el parietal izquierdo y un osteoma en el temporal derecho.',
     imagen: null,
-    ficha: '/prueba-museo/ficha-estandar.html?id=AV-0001',
+    ficha: './ficha-estandar.html?id=AV-0001',
     modelo3d: './assets/models/craneo-def.glb',
 
     cronologia: 'Siglo XII',
@@ -832,7 +832,7 @@ const PIEZAS = [
     coords: null,
     descripcion: 'Tibia con marcada alteración morfológica compatible con treponematosis. Presenta engrosamiento diafisario masivo, superficie cortical rugosa y porosa, y reacción periostal difusa asociada a una infección crónica prolongada.',
     imagen: null,
-    ficha: '/prueba-museo/ficha-estandar.html?id=TIB-SIF-01',
+    ficha: './ficha-estandar.html?id=TIB-SIF-01',
     modelo3d: null,
 
     cronologia: null,
@@ -915,7 +915,7 @@ const PIEZAS = [
     coords: [1729.55, 966.92],
     descripcion: 'Cráneo procedente del osario de Santa María de la Soledad que presenta una trepanación localizada en el hueso parietal izquierdo, próxima a la sutura sagital y con afectación de la sutura coronal.',
     imagen: null,
-    ficha: '/prueba-museo/ficha-estandar.html?id=AL-03-1897',
+    ficha: './ficha-estandar.html?id=AL-03-1897',
     modelo3d: './assets/models/al-03-1897.glb',
 
     cronologia: null,
@@ -977,7 +977,7 @@ const PIEZAS = [
     coords: null,
     descripcion: null,
     imagen: null,
-    ficha: '/prueba-museo/ficha-estandar.html?id=ART-PEND-01',
+    ficha: './ficha-estandar.html?id=ART-PEND-01',
     modelo3d: './assets/models/artropatia.glb',
 
     cronologia: null,

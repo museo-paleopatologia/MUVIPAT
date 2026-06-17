@@ -1,4 +1,3 @@
-[README_MUVIPAT.md](https://github.com/user-attachments/files/29069122/README_MUVIPAT.md)
 <div align="center">
 
 # MUVIPAT
@@ -11,7 +10,7 @@
 ![Proyecto](https://img.shields.io/badge/proyecto-TFG-1c5d91)
 ![Tecnologías](https://img.shields.io/badge/HTML-CSS-JavaScript-0077c8)
 
-[Acceder al museo](URL_DE_GITHUB_PAGES) · [Consultar el repositorio](URL_DEL_REPOSITORIO)
+[Acceder al museo](https://museo-paleopatologia.github.io/MUVIPAT/) · [Consultar el repositorio](https://github.com/museo-paleopatologia/MUVIPAT)
 
 </div>
 
@@ -19,7 +18,7 @@
 
 ## Descripción
 
-**MUVIPAT** es un prototipo funcional de museo virtual de paleopatología desarrollado para facilitar el acceso, la divulgación y el uso docente de la colección paleopatológica vinculada al Departamento de Antropología de la Universidad Autónoma de Madrid.
+**MUVIPAT** es un prototipo funcional de museo virtual de paleopatología desarrollado para facilitar el acceso, la divulgación y el uso docente de la colección paleopatológica vinculada al Laboratorio de Antropología Virtual (LAV) de la Universidad Autónoma de Madrid.
 
 La plataforma combina fichas científicas, modelos 3D de piezas osteológicas, navegación anatómica y patológica, recursos educativos y contenidos de actualidad. Su diseño busca acercar la paleopatología tanto a estudiantes y profesionales como a personas sin formación previa en la disciplina.
 
@@ -346,11 +345,12 @@ Líneas de desarrollo futuro:
 **Proyecto:** Trabajo Fin de Grado  
 **Ámbito:** Antropología biológica, paleopatología, patrimonio digital y educación científica
 
-**Tutorización:**  
-- Armando González Martín  
-- Cecilia García Campos
+**Colaboradoras:**  
+- Cecilia García Campos  
+- María García Hernaiz  
+- Clara Martínez Menchero
 
-El proyecto se vincula con el **Laboratorio de Antropología Virtual (LAV)** y el **Laboratorio de Poblaciones del Pasado (LAPP)** de la Universidad Autónoma de Madrid.
+El proyecto se vincula con el **Laboratorio de Antropología Virtual (LAV)** y el **Laboratorio de Poblaciones del Pasado (LAPP)** del **Departamento de Biología** de la Universidad Autónoma de Madrid.
 
 ---
 
@@ -359,7 +359,7 @@ El proyecto se vincula con el **Laboratorio de Antropología Virtual (LAV)** y e
 Para citar el repositorio o la plataforma, puede utilizarse provisionalmente el siguiente formato:
 
 ```text
-Martínez Menchero, C. (2026). MUVIPAT: Museo Virtual de Paleopatología basado en modelos tridimensionales de piezas patológicas [Trabajo Fin de Grado y repositorio de software]. Universidad Autónoma de Madrid. URL_DEL_REPOSITORIO
+Martínez Menchero, C. (2026). MUVIPAT: Museo Virtual de Paleopatología basado en modelos tridimensionales de piezas patológicas [Trabajo Fin de Grado y repositorio de software]. Universidad Autónoma de Madrid. https://github.com/museo-paleopatologia/MUVIPAT
 ```
 
 Sustituye la URL y adapta el formato al estilo bibliográfico requerido. Si se publica una versión estable, se recomienda crear una *release* y archivarla en Zenodo para obtener un DOI.
@@ -383,12 +383,6 @@ Se recomienda incorporar posteriormente:
 - una licencia específica para el código fuente;
 - condiciones independientes para textos y documentación;
 - una declaración institucional para imágenes y modelos 3D.
-
----
-
-## Agradecimientos
-
-A los tutores del proyecto, al personal del Departamento de Antropología, al Laboratorio de Antropología Virtual, al Laboratorio de Poblaciones del Pasado y a todas las personas e instituciones que han contribuido a la documentación, conservación y estudio de las colecciones empleadas.
 
 ---
 
