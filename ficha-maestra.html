@@ -373,7 +373,7 @@
             </div>
             <div class="fm-footer-card">
               <p class="fm-footer-card__label">Modelo 3D</p>
-              <p class="fm-footer-card__value">${pieza.modelo3d?pieza.modelo3d.split('/').pop():'N/D'}<span>Sensor activo · Draco comprimido</span></p>
+              <p class="fm-footer-card__value">${pieza.modelo3d?(typeof pieza.modelo3d==='string'?pieza.modelo3d.split('/').pop():pieza.modelo3d.geometria?.split('/').pop()||'Sí'):'N/D'}<span>Sensor activo · Draco comprimido</span></p>
             </div>
           </div>
           <div class="fm-footer-nav">

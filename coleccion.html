@@ -1566,9 +1566,9 @@
         const patColor = PATOL_COLORS[patKeys[0]] || '#c8aa78';
 
         const card = document.createElement('a');
-        card.href = pieza.ficha || `ficha-estandar.html?id=${pieza.id}`;
+        card.href = `ficha-estandar.html?id=${pieza.id}`;
         card.className = 'col-piece-card';
-        card.setAttribute('aria-label', `${pieza.nombre} — ${isMaster ? 'Ficha maestra' : 'Ficha estándar'}`);
+        card.setAttribute('aria-label', `${pieza.nombre} — Ficha estándar`);
         card.style.animationDelay = `${i * 0.04}s`;
 
         card.innerHTML = `
@@ -1596,7 +1596,7 @@
               }).join('')}
             </div>
             <span class="col-piece-card__link">
-              ${isMaster ? 'Ver ficha inmersiva' : 'Ver ficha estándar'}
+              Ver ficha estándar
               <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/>
               </svg>
