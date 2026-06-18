@@ -1161,64 +1161,98 @@
   const QUIZZES = [
     {
       id: 'q1',
-      title: 'Patologías básicas',
+      title: 'Conceptos de paleopatología',
       color: '#FF4D6D',
       type: 'multiple',
       preguntas: [
         {
-          enunciado: '¿Qué es la cribra orbitalia?',
+          enunciado: 'Señale la respuesta correcta',
           opciones: [
-            'Porosidad en el techo de las órbitas relacionada con anemia',
-            'Fractura del hueso orbitario',
-            'Infección del seno maxilar',
-            'Deformación congénita del cráneo'
+            'En el momento actual, el principal objetivo de la paleopatología es detectar la presencia de enfermedades en los restos osteoarqueológicos para demostrar su presencia en el pasado',
+            'El aspecto más importante de la denominada "nueva paleopatología" lo constituye la aplicación de nuevas tecnologías, como la paleopatología molecular y la paleogenómica',
+            'La paleopatología actual exige una visión integradora de todas las disciplinas implicadas',
+            'b y c son correctas'
+          ],
+          correcta: 2,
+          explicacion: 'La paleopatología actual va más allá de la mera detección de enfermedades: exige una visión integradora que combina la antropología física, la arqueología, la medicina y la genética, entre otras disciplinas.'
+        },
+        {
+          enunciado: 'En relación con la metodología paleopatológica, señale la afirmación correcta',
+          opciones: [
+            'El examen directo y las técnicas de radiología simple han pasado a ocupar un lugar muy secundario tras la llegada de nuevas técnicas, mucho más precisas y resolutivas',
+            'La resonancia nuclear magnética (RNM) permite alcanzar diagnósticos de certeza en el hueso seco',
+            'El principal problema que plantea el estudio del ADN antiguo es su elevado coste',
+            'La tomografía axial computarizada (TAC) y las técnicas endoscópicas son de gran utilidad en el estudio de los restos momificados'
+          ],
+          correcta: 3,
+          explicacion: 'La TAC y la endoscopia son especialmente útiles en momias, ya que permiten estudiar tejidos blandos y cavidades internas sin manipulación directa. El examen macroscópico y la radiología convencional siguen siendo herramientas fundamentales y no han quedado obsoletas.'
+        },
+        {
+          enunciado: 'Señale la respuesta correcta',
+          opciones: [
+            'Se denominan limitaciones idiosincrásicas a las derivadas del método de recogida de datos',
+            'Para establecer un diagnóstico paleopatológico es fundamental una correcta metodología que sea capaz de recoger todos los síntomas presentes en los restos osteoarqueológicos',
+            'En la mayoría de las ocasiones, el diagnóstico paleopatológico será de presunción',
+            'Todas son correctas'
+          ],
+          correcta: 2,
+          explicacion: 'Dado que el registro osteoarqueológico raramente conserva todas las evidencias de una enfermedad, el diagnóstico paleopatológico suele ser de presunción, es decir, probable pero no de certeza absoluta.'
+        },
+        {
+          enunciado: 'Señale la respuesta correcta',
+          opciones: [
+            'En paleopatología, la naturaleza y representatividad de la muestra depende exclusivamente de su tamaño',
+            'La denominada mortalidad selectiva es un posible sesgo muy fácil de corregir si se conoce la edad media de muerte de la población problema',
+            'La denominada heterogeneidad oculta guarda relación con la diferente susceptibilidad de los miembros de una población frente a la enfermedad',
+            'En paleodemografía, la heterogeneidad oculta es un dato imprescindible para calcular la incidencia de una determinada enfermedad en la población de estudio'
+          ],
+          correcta: 2,
+          explicacion: 'La heterogeneidad oculta hace referencia a la variabilidad individual en la susceptibilidad a la enfermedad dentro de una misma población, un factor que introduce sesgos importantes en la interpretación de la mortalidad y la morbilidad paleopatológica.'
+        },
+        {
+          enunciado: 'La llamada "fractura de Colles" afecta a:',
+          opciones: [
+            'El pie derecho',
+            'El esternón',
+            'La mandíbula',
+            'El antebrazo'
+          ],
+          correcta: 3,
+          explicacion: 'La fractura de Colles es una fractura de la extremidad distal del radio (antebrazo), muy frecuente en caídas sobre la mano extendida. Es uno de los tipos de fractura más comunes en poblaciones arqueológicas y actuales.'
+        },
+        {
+          enunciado: 'Con respecto a la enfermedad, señale la respuesta correcta',
+          opciones: [
+            'Es un fenómeno exclusivamente biológico',
+            'Su papel a la hora de la reconstrucción del pasado es solo anecdótico',
+            'Conceptualmente es siempre sinónimo de una pérdida de la salud',
+            'Ninguna de las afirmaciones es correcta'
+          ],
+          correcta: 3,
+          explicacion: 'La enfermedad es un fenómeno biopsicosocial, no exclusivamente biológico. Tiene un papel central en la reconstrucción del pasado y no siempre implica una pérdida de salud en términos funcionales. Por tanto, ninguna de las afirmaciones anteriores es correcta.'
+        },
+        {
+          enunciado: 'La lesión observable en la imagen corresponde a:',
+          imagen: 'assets/img/test/vertebra-test.png',
+          opciones: [
+            'La vértebra es normal y no presenta ningún signo patológico',
+            'Una hernia de disco',
+            'Un nódulo de Schmorl',
+            'Un osteofito'
+          ],
+          correcta: 2,
+          explicacion: 'Los nódulos de Schmorl son hernias del núcleo pulposo a través de la placa terminal vertebral, que producen depresiones características en el cuerpo vertebral. Son frecuentes en paleopatología y se asocian a esfuerzo físico intenso y degeneración discal.'
+        },
+        {
+          enunciado: 'En paleopatología, es un signo patognómico de artrosis la existencia de:',
+          opciones: [
+            'Eburnación',
+            'Porosidad',
+            'Osteofitos',
+            'Labiación'
           ],
           correcta: 0,
-          explicacion: 'La cribra orbitalia es una lesión hipervascular en el techo de las órbitas, indicador de anemia ferropénica o déficit vitamínico durante la infancia.'
-        },
-        {
-          enunciado: 'La eburnación es una característica diagnóstica de:',
-          opciones: [
-            'Tuberculosis ósea',
-            'Osteoartritis avanzada',
-            'Raquitismo',
-            'Traumatismo perimortem'
-          ],
-          correcta: 1,
-          explicacion: 'La eburnación es el pulido patológico de la superficie articular que ocurre cuando se destruye el cartílago por completo, característica de la osteoartritis.'
-        },
-        {
-          enunciado: '¿Cuál de las siguientes técnicas permite datar una trepanación como curada?',
-          opciones: [
-            'Presencia de bordes irregulares y afilados',
-            'Ausencia total de hueso en el área',
-            'Remodelación ósea con tejido lamelar en los bordes',
-            'Coloración oscura del diploe'
-          ],
-          correcta: 2,
-          explicacion: 'La remodelación ósea con formación de tejido compacto lamelar en los bordes de la trepanación indica que el individuo sobrevivió a la intervención el tiempo suficiente para que el hueso cicatrizara.'
-        },
-        {
-          enunciado: '¿Qué patología produce la denominada "tibia en sable"?',
-          opciones: [
-            'Osteomielitis hematógena',
-            'Fractura de Colles consolidada en vicio',
-            'Raquitismo por déficit de vitamina D',
-            'Periostitis por treponematosis'
-          ],
-          correcta: 2,
-          explicacion: 'El raquitismo provoca reblandecimiento óseo que, combinado con la carga del peso corporal, produce la incurvación anterior de la tibia conocida como "tibia en sable".'
-        },
-        {
-          enunciado: 'El Mal de Pott es una forma de:',
-          opciones: [
-            'Traumatismo vertebral con fractura en compresión',
-            'Espondilitis tuberculosa con colapso vertebral',
-            'Escoliosis congénita por hemivértebra',
-            'Hernia discal calcificada'
-          ],
-          correcta: 1,
-          explicacion: 'El Mal de Pott es la tuberculosis de la columna vertebral, que destruye los cuerpos vertebrales y discos intervertebrales produciendo el característico colapso angular (giba).'
+          explicacion: 'La eburnación —el pulido brillante de la superficie articular por pérdida completa del cartílago— es el único signo patognómico (exclusivo y definitorio) de artrosis. Porosidad, osteofitos y labiación son indicadores asociados pero no exclusivos de esta patología.'
         }
       ]
     },
@@ -1610,11 +1644,16 @@ function getPlanosWidget() {
     const p = activeQuiz.preguntas[qIndex];
     const total = activeQuiz.preguntas.length;
     const letters = ['A','B','C','D','E'];
+    const imgHtml = p.imagen ? `
+      <div style="margin:0 0 1.25rem;border:2px solid rgba(0,0,0,.1);border-radius:4px;overflow:hidden;max-width:420px;">
+        <img src="${p.imagen}" alt="Imagen de la pregunta" style="width:100%;display:block;object-fit:cover;" />
+      </div>` : '';
     return `
       <p class="quiz-question">
         <span class="quiz-question-num">Pregunta ${qIndex+1} de ${total}</span>
         ${p.enunciado}
       </p>
+      ${imgHtml}
       <div class="quiz-options">
         ${p.opciones.map((op,i) => `
           <button class="quiz-option" data-idx="${i}">
