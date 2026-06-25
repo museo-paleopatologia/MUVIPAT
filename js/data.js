@@ -818,19 +818,19 @@ const PIEZAS = [
   },
 
   /* ══════════════════════════════════════════
-     TIBIA CON SÍFILIS
+     TIBIA CON OSTEOMIELITIS PIOGÉNICA INESPECÍFICA
      layout: comparison · tibia sana vs tibia patológica
   ══════════════════════════════════════════ */
   {
     id: 'TIB-SIF-01',
-    nombre: 'Tibia con sífilis',
+    nombre: 'Tibia con osteomielitis piogénica inespecífica',
     region: 'miembro-inferior',
     patologia: 'infecciosa',
     sexo: 'indeterminado',
     epoca: 'indeterminado',
     yacimiento: null,
     coords: null,
-    descripcion: 'Tibia con marcada alteración morfológica compatible con treponematosis. Presenta engrosamiento diafisario masivo, superficie cortical rugosa y porosa, y reacción periostal difusa asociada a una infección crónica prolongada.',
+    descripcion: 'Tibia aislada con engrosamiento diafisario, reacción periostal extensa y remodelación cortical compatibles con osteomielitis piogénica inespecífica; treponematosis/sífilis considerada dentro del diagnóstico diferencial.',
     imagen: null,
     ficha: './ficha-estandar.html?id=TIB-SIF-01',
     modelo3d: null,
@@ -839,35 +839,35 @@ const PIEZAS = [
     edad: null,
     conservacion: null,
 
-    diagnostico_principal: 'Treponematosis (sífilis). La distribución difusa de la lesión, el intenso engrosamiento diafisario y la reacción periostal son compatibles con manifestaciones esqueléticas características de sífilis en estados avanzados.',
+    diagnostico_principal: 'Diagnóstico principal: Osteomielitis piogénica inespecífica. La distribución extensa de la lesión, el intenso engrosamiento diafisario, la reacción periostal y la remodelación cortical son compatibles con un proceso infeccioso crónico del hueso. Al tratarse de una tibia aislada y no disponer de análisis molecular, el diagnóstico debe formularse como osteomielitis piogénica inespecífica, sin atribuir de forma segura una causa concreta.',
 
-    relevancia: 'La treponematosis es uno de los grupos de enfermedades infecciosas más destacado del registro paleopatológico. Tiene una gran capacidad para provocar reacciones óseas diseminadas por todo el hueso que permiten identificar individuos afectados fielmente. La tibia es uno de los huesos más frecuentemente alterados por la inflamación crónica del periostio y del tejido óseo cortical. Esta pieza muestra una remodelación extrema de la diáfisis, siendo un gran ejemplo de esta infección sistémica prolongada.',
+    relevancia: 'La osteomielitis piogénica inespecífica es un proceso infeccioso del tejido óseo que puede producir una intensa reacción inflamatoria y una remodelación marcada de la pieza. Esta tibia constituye un ejemplo especialmente útil por la extensión del engrosamiento diafisario, la neoformación ósea y la reacción periostal distribuida a lo largo del hueso. Su interés paleopatológico reside en que permite observar cómo una infección crónica puede modificar de forma profunda la morfología de un hueso largo. Aunque la treponematosis, incluida la sífilis, debe considerarse dentro del diagnóstico diferencial y constituye una de las etiologías más probables, no puede confirmarse con seguridad a partir de una tibia aislada sin análisis molecular.',
 
     contexto_arqueologico: null,
 
     descripcion_osteologica: [
-      'La pieza es una tibia con una gran alteración en su morfología. En comparación con un ejemplar sano, la diáfisis presenta un aumento muy relevante de su grosor, alcanzando varias veces el diámetro habitual observado en una tibia sin patología.',
-      'El engrosamiento afecta de manera prácticamente uniforme al hueso, generando una pérdida de los contornos anatómicos normales. La superficie cortical tiene un aspecto rugoso y poroso, resultado de una importante neoformación ósea por procesos inflamatorios crónicos.',
-      'Se puede ver una reacción periostal distribuida a lo largo de la diáfisis, acompañada por remodelación cortical y depósito continuado de nuevo tejido óseo. A diferencia de otros casos de sífilis avanzada, esta tibia no presenta morfología de “tibia en sable”, predominando el engrosamiento y la alteración superficial.'
+      'La pieza es una tibia aislada con una alteración marcada de su morfología. En comparación con un ejemplar sano, la diáfisis presenta un aumento muy relevante de su grosor, alcanzando varias veces el diámetro habitual observado en una tibia sin patología.',
+      'El engrosamiento afecta de manera extensa al hueso, generando una pérdida de los contornos anatómicos normales. La superficie cortical tiene un aspecto rugoso y poroso, compatible con neoformación ósea asociada a un proceso inflamatorio crónico.',
+      'Se observa una reacción periostal distribuida a lo largo de la diáfisis, acompañada de remodelación cortical y depósito continuado de nuevo tejido óseo. La observación macroscópica permite diagnosticar la lesión como una osteomielitis piogénica inespecífica, pero no permite atribuirla de forma concluyente a una etiología concreta.'
     ],
 
     hallazgos: [
       {
-        titulo: 'Osteomielitis crónica — Diagnóstico diferencial',
+        titulo: 'Treponematosis (sífilis)',
         items: [
-          { texto: 'Esta enfermedad puede producir engrosamiento cortical y neoformación ósea. Sin embargo, suele generar lesiones más localizadas y acompañadas de secuestros óseos y cloacas de drenaje, ausentes en este ejemplar.' }
+          { texto: 'Debe ocupar un lugar destacado en el diagnóstico diferencial, ya que puede producir engrosamiento diafisario y reacción periostal en la tibia. Es una de las etiologías más probables, pero no puede diagnosticarse con seguridad solo con una tibia aislada y sin confirmación molecular.' }
         ]
       },
       {
-        titulo: 'Periostitis inespecífica — Menos probable',
+        titulo: 'Periostitis inespecífica',
         items: [
-          { texto: 'Puede producir superficies rugosas y neoformación ósea, pero generalmente genera una afectación menos extensa y menor remodelación cortical que la observada en esta tibia.' }
+          { texto: 'Puede producir neoformación periostal y una superficie ósea rugosa, pero por sí sola resulta menos explicativa para el grado de engrosamiento y remodelación cortical observado.' }
         ]
       },
       {
-        titulo: 'Osteoartropatía hipertrófica — Diagnóstico diferencial',
+        titulo: 'Osteoartropatía hipertrófica',
         items: [
-          { texto: 'Produce neoformación periostal bilateral. Suele afectar simultáneamente varios huesos largos y genera una morfología diferente a la observada en esta pieza.' }
+          { texto: 'Produce neoformación periostal, normalmente bilateral y con afectación simultánea de varios huesos largos. La ausencia de información sobre afectación múltiple hace que sea una alternativa menos probable en esta ficha.' }
         ]
       }
     ],
@@ -892,7 +892,7 @@ const PIEZAS = [
         badge: 'Sana'
       },
       {
-        titulo: 'Tibia con sífilis',
+        titulo: 'Tibia con osteomielitis piogénica inespecífica',
         badge: 'Patológica',
         geometria: './assets/models/tibia-s-blue.glb',
         textura: './assets/models/tibia-s.glb'
